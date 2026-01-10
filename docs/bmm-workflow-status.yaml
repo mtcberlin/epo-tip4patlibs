@@ -23,7 +23,7 @@ workflow_path: "method-greenfield.yaml"
 
 workflow_status:
   # Phase 0: Discovery
-  product-brief: required  # agent: analyst
+  product-brief: docs/product-brief-tip-for-patlibs-2026-01-10.md  # agent: analyst
 
   # Phase 1: Planning
   prd: required  # agent: pm
