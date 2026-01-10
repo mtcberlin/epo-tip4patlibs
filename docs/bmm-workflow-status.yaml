@@ -26,7 +26,7 @@ workflow_status:
   product-brief: docs/product-brief-tip-for-patlibs-2026-01-10.md  # agent: analyst
 
   # Phase 1: Planning
-  prd: required  # agent: pm
+  prd: docs/PRD.md  # agent: pm
   validate-prd: optional  # agent: pm
   create-design: conditional  # agent: ux-designer (if_has_ui)
 
