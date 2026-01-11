@@ -659,28 +659,37 @@ python -c "from epo.tipdata.patstat import PatstatClient; print('OK')"
 
 ---
 
-### ADR-007: UI Framework Selection (Pending)
+### ADR-007: UI Framework Selection
 
 **Context**: TIP platform provides both `ipywidgets` (standard Jupyter widgets) and `ipyvuetify` (Material Design components). Need to choose primary UI framework for all user-facing controls.
 
-**Status**: PENDING - Spike evaluation required during Story 2.1.
+**Status**: DECIDED (2026-01-11) - Spike completed in Story 2.1.
 
-**Options Under Consideration**:
+**Spike Results** (Story 2.1):
 
-| Option | Pros | Cons |
-|--------|------|------|
-| **ipywidgets only** | Standard, well-documented, familiar to Jupyter users | Basic styling, more CSS work for polish |
-| **ipyvuetify only** | Material Design polish, consistent visual language | Steeper learning curve, less documentation |
-| **Hybrid approach** | Best of both worlds | Mixed patterns, potential inconsistency |
+| Criterion | ipywidgets | ipyvuetify | Notes |
+|-----------|------------|------------|-------|
+| Visual Polish | 3/5 | 4/5 | ipyvuetify looks nicer (Material Design) |
+| Code Complexity | 5/5 | 4/5 | ipywidgets simpler API |
+| Responsiveness | 4/5 | 4/5 | Both adequate |
+| Layout Control | 4/5 | 3/5 | VBox/HBox reliable |
+| **Rendering** | 5/5 | 2/5 | **DEAL BREAKER**: ipyvuetify floating labels clipped |
 
-**Spike Plan** (Story 2.1):
-- Build country + region cascade in both frameworks
-- Evaluate: visual polish, code complexity, responsiveness, layout control, edge cases
-- Make data-driven decision
+**Critical Finding**: ipyvuetify's Material Design floating labels do not render correctly in TIP's Jupyter environment. The label text ("Jurisdiction") gets clipped at the top of the widget container. This is a fundamental UX issue that cannot be easily fixed.
 
-**Decision**: TBD after spike evaluation.
+**Decision**: Use **ipywidgets** for all selection interface components.
 
-**Consequences**: TBD.
+**Rationale**:
+1. ipyvuetify IS available on TIP (confirmed)
+2. BUT: Label rendering bug makes ipyvuetify unsuitable for production
+3. ipywidgets renders cleanly and reliably across all TIP containers
+4. Simpler API reduces maintenance burden
+5. Adequate for MVP requirements
+
+**Consequences**:
+- All Epic 2 widgets use ipywidgets.Dropdown, ipywidgets.IntRangeSlider, etc.
+- Basic styling but functional and reliable
+- Consider CSS enhancements in future if polish needed
 
 ---
 

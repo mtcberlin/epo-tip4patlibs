@@ -45,6 +45,8 @@ __all__ = [
     'patstat_client',
     'db',
     'reference_data',
+    'state',
+    'widget_factory',
 ]
 
 # =============================================================================
@@ -57,6 +59,10 @@ db: Optional[Any] = None  # SQLAlchemy Session
 
 # Module-level reference data (initialized after PATSTAT connection)
 reference_data: Optional['ReferenceData'] = None
+
+# Module-level state and widget factory (initialized in notebook after reference data load)
+state: Optional['AnalysisState'] = None
+widget_factory: Optional['WidgetFactory'] = None
 
 
 def init_patstat() -> Tuple[PatstatClient, Any]:
@@ -314,12 +320,84 @@ class WidgetFactory:
     """
     Factory for creating pre-configured UI widgets.
 
-    Creates ipywidgets (or ipyvuetify - pending ADR-007) components
-    with valid options loaded from reference data.
+    Creates ipywidgets components (ADR-007: ipywidgets chosen over ipyvuetify
+    due to label rendering issues) with valid options loaded from reference data.
 
-    Placeholder - full implementation in Epic 2.
+    Follows ADR-003 (Prevention by Design): widgets constrain input to valid,
+    tested ranges loaded from ReferenceData.
+
+    Attributes:
+        ref: ReferenceData instance with dropdown options
+        state: AnalysisState instance to update on selection
+        _region_dropdown: Internal reference for cascade refresh (Story 2.2)
     """
-    pass
+
+    def __init__(self, reference_data: ReferenceData, state: AnalysisState):
+        """
+        Initialize WidgetFactory with reference data and state.
+
+        Args:
+            reference_data: ReferenceData instance with jurisdiction, tech field options
+            state: AnalysisState instance to update when user makes selections
+        """
+        self.ref = reference_data
+        self.state = state
+        self._region_dropdown = None  # For cascade refresh (Story 2.2)
+
+    def jurisdiction_dropdown(self) -> widgets.Dropdown:
+        """
+        Create jurisdiction selection dropdown.
+
+        Returns a dropdown populated with all patent offices from
+        ReferenceData.jurisdictions (ADR-008: filing jurisdiction).
+
+        Returns:
+            widgets.Dropdown: Configured dropdown with observe callback
+
+        Example:
+            >>> factory = WidgetFactory(reference_data, state)
+            >>> dropdown = factory.jurisdiction_dropdown()
+            >>> display(dropdown)
+        """
+        # Build options: placeholder + all jurisdictions sorted alphabetically
+        options = [('Select jurisdiction...', None)] + self.ref.jurisdictions
+
+        dropdown = widgets.Dropdown(
+            options=options,
+            value=None,
+            description='Jurisdiction:',
+            style={'description_width': '100px'},
+            layout=widgets.Layout(width='350px')
+        )
+
+        # Register callback to update state on selection change
+        dropdown.observe(self._on_jurisdiction_change, names='value')
+
+        return dropdown
+
+    def _on_jurisdiction_change(self, change):
+        """
+        Callback when jurisdiction selection changes.
+
+        Updates state.country and triggers region dropdown refresh.
+
+        Args:
+            change: ipywidgets change dict with 'new' value
+        """
+        self.state.country = change['new']
+        # Trigger region dropdown refresh (Story 2.2)
+        if self._region_dropdown is not None:
+            self._refresh_region_dropdown()
+
+    def _refresh_region_dropdown(self):
+        """
+        Refresh region dropdown based on selected jurisdiction.
+
+        Placeholder for Story 2.2 implementation.
+        Will query NUTS regions for the selected jurisdiction.
+        """
+        # TODO: Implement in Story 2.2
+        pass
 
 
 class ChartBuilder:

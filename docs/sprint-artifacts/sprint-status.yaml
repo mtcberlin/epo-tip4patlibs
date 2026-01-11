@@ -44,8 +44,8 @@ development_status:
   epic-1-retrospective: optional
 
   # Epic 2: Selection Interface
-  epic-2: backlog
-  2-1-country-selection-widget: backlog
+  epic-2: contexted  # tech-spec created 2026-01-11
+  2-1-country-selection-widget: done  # 2026-01-11 - APPROVED
   2-2-region-selection-widget-nuts: backlog
   2-3-technology-field-selection-wipo-35: backlog
   2-4-custom-ipc-cpc-entry-dual-mode: backlog
