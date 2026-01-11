@@ -29,6 +29,7 @@ The `tip4patlibs_core.py` module contains:
 |-----------|---------|--------|
 | `init_patstat()` | Initialize PATSTAT connection | Implemented |
 | `get_db()` | Get active database session | Implemented |
+| `ReferenceData` | Cached dropdown options (countries, tech fields, sectors) | Implemented |
 | `AnalysisState` | State management for user selections | Implemented |
 | `PatstatQueries` | PATSTAT query builder | Placeholder |
 | `WidgetFactory` | UI component factories | Placeholder |
@@ -37,7 +38,7 @@ The `tip4patlibs_core.py` module contains:
 
 ## Code Organization
 
-**Current LOC:** 229 lines
+**Current LOC:** 339 lines
 
 **Split Threshold:** If the module exceeds 500 LOC, it will be split into separate files under a `lib/` folder:
 

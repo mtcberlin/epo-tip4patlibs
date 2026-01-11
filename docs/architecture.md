@@ -637,13 +637,15 @@ python -c "from epo.tipdata.patstat import PatstatClient; print('OK')"
 
 ---
 
-### ADR-005: Applicant Country for Regional Analysis
+### ADR-005: Applicant Country for Regional Analysis [SUPERSEDED by ADR-008]
 
 **Context**: Could filter by filing jurisdiction or applicant location.
 
-**Decision**: Use applicant's country (`person_ctry_code`) and NUTS region from `tls206_person`.
+**Decision**: ~~Use applicant's country (`person_ctry_code`) and NUTS region from `tls206_person`.~~
 
-**Consequences**: Shows where innovation originates, not where patents are filed. SME filter added to address HQ filing bias.
+**Status**: SUPERSEDED by ADR-008. The `person_ctry_code` field in TLS206 has data quality issues and doesn't match user intent.
+
+**Consequences**: ~~Shows where innovation originates, not where patents are filed. SME filter added to address HQ filing bias.~~
 
 ---
 
@@ -679,6 +681,53 @@ python -c "from epo.tipdata.patstat import PatstatClient; print('OK')"
 **Decision**: TBD after spike evaluation.
 
 **Consequences**: TBD.
+
+---
+
+### ADR-008: Filing Jurisdiction over Applicant Country
+
+**Context**: Story 1.3 initially loaded country data from `TLS206_PERSON.person_ctry_code` (applicant's residence). Testing revealed 479 "countries" due to data quality issues in TLS206 (historical codes, organization codes, missing data). More importantly, PATLIB users want "patents filed IN Germany" not "patents BY German applicants."
+
+**Decision**: Use `TLS201_APPLN.appln_auth` (filing jurisdiction/patent office) instead of `TLS206_PERSON.person_ctry_code` for country filtering.
+
+**Rationale**:
+1. **User intent**: "Select Germany" means "patents filed at DPMA" not "patents from German applicants"
+2. **Data quality**: `appln_auth` is always populated and reliable; `person_ctry_code` has gaps and inconsistencies
+3. **Clean values**: ~50 patent office codes vs 479 messy country codes
+4. **Industry standard**: Patent analysis typically filters by filing jurisdiction first
+
+**Consequences**:
+- Supersedes ADR-005
+- Country dropdown shows patent offices (EP, US, DE, JP, CN, etc.) with friendly names
+- Regional filtering (NUTS) deferred or removed - NUTS codes relate to applicant location, not filing jurisdiction
+- SME filter remains viable (based on applicant filing history)
+
+**Reference**: PATSTAT training documentation `TLS206_PERSON.html` - person_ctry_code reliability issues.
+
+---
+
+### ADR-009: No Hardcoded Reference Data
+
+**Context**: During Story 1.3 implementation, country/jurisdiction names were hardcoded in a Python dict (`JURISDICTION_NAMES`) instead of querying PATSTAT's lookup table `tls801_country`. This creates maintenance burden, risks stale data, and violates single source of truth.
+
+**Decision**: Never hardcode reference data when PATSTAT provides lookup tables (TLS8xx series). Always query the authoritative source.
+
+**Enforcement**:
+- Any hardcoded mapping requires explicit approval from Architect (Winston) or Product Owner (BMad)
+- Approval must include documented justification
+- Story checklist item: "Verify no hardcoded reference data - check TLS8xx tables"
+
+**Lookup Tables Available**:
+| Table | Purpose |
+|-------|---------|
+| `tls801_country` | Country/jurisdiction codes and names (242 rows) |
+| `tls901_techn_field_ipc` | Technology fields and sectors |
+| `tls902_ipc_nace2` | IPC to NACE mapping |
+
+**Consequences**:
+- Self-healing: New jurisdictions automatically appear
+- Single source of truth: PATSTAT is authoritative
+- No maintenance: No code changes needed when data changes
 
 ---
 

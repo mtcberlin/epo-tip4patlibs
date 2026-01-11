@@ -28,12 +28,14 @@ import pandas as pd
 import plotly.express as px
 import ipywidgets as widgets
 
-# PATSTAT connection
+# PATSTAT connection and models
 from epo.tipdata.patstat import PatstatClient
+from epo.tipdata.patstat.database.models import TLS201_APPLN, TLS801_COUNTRY, TLS901_TECHN_FIELD_IPC
 
 # Module exports - controls what `from tip4patlibs_core import *` exposes
 __all__ = [
     'AnalysisState',
+    'ReferenceData',
     'PatstatQueries',
     'WidgetFactory',
     'ChartBuilder',
@@ -42,6 +44,7 @@ __all__ = [
     'get_db',
     'patstat_client',
     'db',
+    'reference_data',
 ]
 
 # =============================================================================
@@ -51,6 +54,9 @@ __all__ = [
 # Module-level connection (initialized by init_patstat())
 patstat_client: Optional[PatstatClient] = None
 db: Optional[Any] = None  # SQLAlchemy Session
+
+# Module-level reference data (initialized after PATSTAT connection)
+reference_data: Optional['ReferenceData'] = None
 
 
 def init_patstat() -> Tuple[PatstatClient, Any]:
@@ -97,6 +103,111 @@ def get_db() -> Any:
     if db is None:
         raise RuntimeError("PATSTAT not initialized. Run init_patstat() first.")
     return db
+
+
+# =============================================================================
+# Reference Data Management
+# =============================================================================
+
+# ADR-009: No hardcoded reference data - query tls801_country for names
+
+
+@dataclass
+class ReferenceData:
+    """
+    Cached reference data for dropdown options.
+
+    Pre-loaded at startup to ensure instant response when users
+    interact with filter controls. Follows ADR-003 (Prevention by Design).
+
+    Attributes:
+        jurisdictions: List of (display_name, code) tuples for patent offices
+                       ADR-008: Uses appln_auth from TLS201, not person_ctry_code
+        tech_fields: List of (display_name, field_nr) tuples for WIPO 35 fields
+        sectors: List of sector names for grouping technology fields
+    """
+    jurisdictions: List[Tuple[str, str]]  # (display_name, code) - patent offices
+    tech_fields: List[Tuple[str, int]]    # (display_name, field_nr)
+    sectors: List[str]                     # Sector names for grouping
+
+    @classmethod
+    def load(cls, session) -> 'ReferenceData':
+        """
+        Load all reference data from PATSTAT.
+
+        Queries distinct values from PATSTAT tables:
+        - tls201_appln.appln_auth for filing jurisdictions (ADR-008)
+        - tls901_techn_field_ipc for technology fields and sectors
+
+        Args:
+            session: SQLAlchemy session from PatstatClient.orm()
+
+        Returns:
+            ReferenceData: Populated instance with all dropdown options
+
+        Raises:
+            ValueError: If sanity checks fail (< 20 jurisdictions, != 35 tech fields)
+        """
+        # ADR-009: Load country/jurisdiction names from tls801_country (no hardcoded data)
+        country_names_rows = session.query(
+            TLS801_COUNTRY.ctry_code,
+            TLS801_COUNTRY.st3_name
+        ).all()
+        country_name_lookup = {row[0]: row[1] for row in country_names_rows if row[0]}
+
+        # Load jurisdictions from tls201_appln (ADR-008: filing jurisdiction, not applicant country)
+        jurisdiction_codes = session.query(
+            TLS201_APPLN.appln_auth
+        ).distinct().all()
+
+        jurisdictions = []
+        for (code,) in jurisdiction_codes:
+            if code and code.strip():  # Skip empty/null codes
+                code_clean = code.strip()
+                # Use tls801_country name, fall back to code if not found
+                display_name = country_name_lookup.get(code_clean, code_clean)
+                jurisdictions.append((display_name, code_clean))
+
+        # Sort alphabetically by display name
+        jurisdictions.sort(key=lambda x: x[0])
+
+        # Sanity check: at least 20 jurisdictions (major patent offices)
+        if len(jurisdictions) < 20:
+            raise ValueError(f"Expected >= 20 jurisdictions, got {len(jurisdictions)}")
+
+        # Load technology fields from tls901_techn_field_ipc
+        tech_rows = session.query(
+            TLS901_TECHN_FIELD_IPC.techn_field_nr,
+            TLS901_TECHN_FIELD_IPC.techn_field,
+            TLS901_TECHN_FIELD_IPC.techn_sector
+        ).distinct().all()
+
+        # Build tech fields list: "13 - Medical technology"
+        tech_fields_dict = {}
+        sectors_set = set()
+
+        for field_nr, field_name, sector in tech_rows:
+            if field_nr is not None and field_name:
+                display_name = f"{field_nr} - {field_name}"
+                tech_fields_dict[field_nr] = display_name
+            if sector:
+                sectors_set.add(sector)
+
+        # Convert to sorted list of tuples
+        tech_fields = [(name, nr) for nr, name in sorted(tech_fields_dict.items())]
+
+        # Sanity check: exactly 35 technology fields
+        if len(tech_fields) != 35:
+            raise ValueError(f"Expected 35 tech fields, got {len(tech_fields)}")
+
+        # Sectors as sorted list
+        sectors = sorted(sectors_set)
+
+        # Sanity check: exactly 5 sectors
+        if len(sectors) != 5:
+            raise ValueError(f"Expected 5 sectors, got {len(sectors)}")
+
+        return cls(jurisdictions=jurisdictions, tech_fields=tech_fields, sectors=sectors)
 
 
 @dataclass
