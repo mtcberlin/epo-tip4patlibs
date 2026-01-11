@@ -30,7 +30,7 @@ import ipywidgets as widgets
 
 # PATSTAT connection and models
 from epo.tipdata.patstat import PatstatClient
-from epo.tipdata.patstat.database.models import TLS201_APPLN, TLS801_COUNTRY, TLS901_TECHN_FIELD_IPC
+from epo.tipdata.patstat.database.models import TLS201_APPLN, TLS801_COUNTRY, TLS901_TECHN_FIELD_IPC, TLS904_NUTS
 
 # Module exports - controls what `from tip4patlibs_core import *` exposes
 __all__ = [
@@ -42,6 +42,7 @@ __all__ = [
     'Exporter',
     'init_patstat',
     'get_db',
+    'load_regions_for_jurisdiction',
     'patstat_client',
     'db',
     'reference_data',
@@ -216,6 +217,40 @@ class ReferenceData:
         return cls(jurisdictions=jurisdictions, tech_fields=tech_fields, sectors=sectors)
 
 
+def load_regions_for_jurisdiction(session, jurisdiction_code: str) -> List[Tuple[str, str]]:
+    """
+    Load NUTS regions for a jurisdiction.
+
+    Queries tls904_nuts table for regions within the given jurisdiction.
+    Returns regions at NUTS level 1 only (federal states/large regions).
+
+    Args:
+        session: SQLAlchemy session from PatstatClient.orm()
+        jurisdiction_code: Two-letter jurisdiction code (e.g., "DE", "FR")
+
+    Returns:
+        List of (display_name, nuts_code) tuples sorted by display name.
+        Returns empty list if no NUTS data for jurisdiction.
+
+    Example:
+        >>> regions = load_regions_for_jurisdiction(db, "DE")
+        >>> print(regions[:3])
+        [('Baden-Württemberg', 'DE1'), ('Bavaria', 'DE2'), ...]
+    """
+    if not jurisdiction_code:
+        return []
+
+    rows = session.query(
+        TLS904_NUTS.nuts_label,
+        TLS904_NUTS.nuts
+    ).filter(
+        TLS904_NUTS.nuts.like(f"{jurisdiction_code}%"),
+        TLS904_NUTS.nuts_level == 1  # Level 1 only (federal states/large regions)
+    ).distinct().order_by(TLS904_NUTS.nuts_label).all()
+
+    return [(label, code) for label, code in rows if label and code]
+
+
 @dataclass
 class AnalysisState:
     """
@@ -343,6 +378,7 @@ class WidgetFactory:
         self.ref = reference_data
         self.state = state
         self._region_dropdown = None  # For cascade refresh (Story 2.2)
+        self._region_helper = None    # Helper text for NUTS availability
 
     def jurisdiction_dropdown(self) -> widgets.Dropdown:
         """
@@ -375,6 +411,51 @@ class WidgetFactory:
 
         return dropdown
 
+    def region_dropdown(self) -> widgets.Dropdown:
+        """
+        Create region selection dropdown.
+
+        Returns a dropdown for NUTS region selection. Initially shows
+        "All regions" only. Populated dynamically when jurisdiction changes.
+
+        Returns:
+            widgets.Dropdown: Configured dropdown with observe callback
+
+        Example:
+            >>> factory = WidgetFactory(reference_data, state)
+            >>> dropdown = factory.region_dropdown()
+            >>> display(dropdown)
+        """
+        dropdown = widgets.Dropdown(
+            options=[('All regions', None)],
+            value=None,
+            description='Region:',
+            style={'description_width': '100px'},
+            layout=widgets.Layout(width='350px'),
+            disabled=True  # Disabled until jurisdiction selected
+        )
+
+        # Store reference for cascade refresh
+        self._region_dropdown = dropdown
+
+        # Register callback to update state on selection change
+        dropdown.observe(self._on_region_change, names='value')
+
+        return dropdown
+
+    def region_helper_text(self) -> widgets.HTML:
+        """
+        Create helper text widget for region availability.
+
+        Shows message when jurisdiction has no NUTS data.
+
+        Returns:
+            widgets.HTML: Helper text widget
+        """
+        helper = widgets.HTML(value='')
+        self._region_helper = helper
+        return helper
+
     def _on_jurisdiction_change(self, change):
         """
         Callback when jurisdiction selection changes.
@@ -385,19 +466,65 @@ class WidgetFactory:
             change: ipywidgets change dict with 'new' value
         """
         self.state.country = change['new']
-        # Trigger region dropdown refresh (Story 2.2)
+        # Trigger region dropdown refresh
         if self._region_dropdown is not None:
             self._refresh_region_dropdown()
+
+    def _on_region_change(self, change):
+        """
+        Callback when region selection changes.
+
+        Updates state.region with selected NUTS code.
+
+        Args:
+            change: ipywidgets change dict with 'new' value
+        """
+        self.state.region = change['new']
 
     def _refresh_region_dropdown(self):
         """
         Refresh region dropdown based on selected jurisdiction.
 
-        Placeholder for Story 2.2 implementation.
-        Will query NUTS regions for the selected jurisdiction.
+        Queries NUTS regions for the selected jurisdiction and updates
+        the dropdown options. Shows helper text if no NUTS data available.
         """
-        # TODO: Implement in Story 2.2
-        pass
+        if self._region_dropdown is None:
+            return
+
+        jurisdiction = self.state.country
+
+        if not jurisdiction:
+            # No jurisdiction selected - disable region dropdown
+            self._region_dropdown.options = [('All regions', None)]
+            self._region_dropdown.value = None
+            self._region_dropdown.disabled = True
+            if self._region_helper:
+                self._region_helper.value = ''
+            return
+
+        # Query NUTS regions for this jurisdiction
+        try:
+            regions = load_regions_for_jurisdiction(get_db(), jurisdiction)
+        except Exception:
+            regions = []
+
+        if regions:
+            # Has NUTS data - enable and populate dropdown
+            self._region_dropdown.options = [('All regions', None)] + regions
+            self._region_dropdown.value = None
+            self._region_dropdown.disabled = False
+            if self._region_helper:
+                self._region_helper.value = ''
+        else:
+            # No NUTS data - show only "All regions" with helper text
+            self._region_dropdown.options = [('All regions', None)]
+            self._region_dropdown.value = None
+            self._region_dropdown.disabled = True
+            if self._region_helper:
+                self._region_helper.value = '<i style="color: #666;">Regional data not available for this jurisdiction</i>'
+
+        # Reset state.region on jurisdiction change
+        self.state.region = None
 
 
 class ChartBuilder:
