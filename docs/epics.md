@@ -287,17 +287,34 @@ class ReferenceData:
 - Region dropdown enables (Story 2.2)
 - Selection persists within session (FR8)
 
-**And** dropdown uses ipywidgets.Dropdown with:
-- `style={'description_width': '100px'}`
-- `layout={'width': '300px'}`
+**And** dropdown uses chosen UI framework (see Spike subtask)
 
 **Prerequisites:** Story 1.3 (reference data), Story 1.4 (state)
+
+**Subtasks:**
+
+- [ ] **Spike: UI Framework Evaluation** (Do first!)
+  - Build comparison prototype: ipywidgets vs ipyvuetify
+  - Create country dropdown with ~50 countries
+  - Cascade to region dropdown on selection
+  - Evaluate against criteria:
+    - Visual polish (professional look out of the box)
+    - Code complexity (lines of code, readability)
+    - Responsiveness (cascade feel snappy?)
+    - Layout control (easy to arrange widgets?)
+    - Edge cases (empty states, long lists, error display)
+  - Document findings and recommendation
+  - Team decision: Update ADR-007 with chosen framework
+- [ ] Implement country dropdown with chosen framework
+- [ ] Wire up state.country update on selection
+- [ ] Implement cascading region dropdown trigger
 
 **Technical Notes:**
 - Countries from ReferenceData.countries
 - observe() callback updates state
 - Cascading: region dropdown re-populates on country change
 - Consider ~50-100 countries in list
+- **UI Framework:** Pending ADR-007 decision (ipywidgets vs ipyvuetify spike)
 
 ---
 
