@@ -21,12 +21,15 @@ Version: 0.1.0
 """
 
 from dataclasses import dataclass, field
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Any
 
 # Heavy imports - kept in module, not notebook
 import pandas as pd
 import plotly.express as px
 import ipywidgets as widgets
+
+# PATSTAT connection
+from epo.tipdata.patstat import PatstatClient
 
 # Module exports - controls what `from tip4patlibs_core import *` exposes
 __all__ = [
@@ -35,7 +38,65 @@ __all__ = [
     'WidgetFactory',
     'ChartBuilder',
     'Exporter',
+    'init_patstat',
+    'get_db',
+    'patstat_client',
+    'db',
 ]
+
+# =============================================================================
+# PATSTAT Connection Management
+# =============================================================================
+
+# Module-level connection (initialized by init_patstat())
+patstat_client: Optional[PatstatClient] = None
+db: Optional[Any] = None  # SQLAlchemy Session
+
+
+def init_patstat() -> Tuple[PatstatClient, Any]:
+    """
+    Initialize PATSTAT connection.
+
+    Establishes connection to PATSTAT database via EPO's PatstatClient.
+    Stores the client and ORM session in module-level variables for
+    access by subsequent notebook cells.
+
+    Returns:
+        tuple: (PatstatClient, SQLAlchemy session) on success
+
+    Raises:
+        ConnectionError: If PATSTAT is unavailable
+
+    Example:
+        >>> init_patstat()
+        >>> print(db)  # Access the session
+    """
+    global patstat_client, db
+    try:
+        patstat_client = PatstatClient(env='PROD')
+        db = patstat_client.orm()
+        return patstat_client, db
+    except Exception as e:
+        raise ConnectionError(f"Could not connect to PATSTAT: {e}") from e
+
+
+def get_db() -> Any:
+    """
+    Get the active database session.
+
+    Returns:
+        SQLAlchemy Session: The active PATSTAT database session
+
+    Raises:
+        RuntimeError: If PATSTAT has not been initialized
+
+    Example:
+        >>> session = get_db()
+        >>> result = session.query(TLS201_APPLN).limit(1).first()
+    """
+    if db is None:
+        raise RuntimeError("PATSTAT not initialized. Run init_patstat() first.")
+    return db
 
 
 @dataclass
