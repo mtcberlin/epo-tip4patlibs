@@ -1,0 +1,340 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>4</storyId>
+    <title>Custom IPC/CPC Entry (Dual Mode)</title>
+    <status>drafted</status>
+    <generatedAt>2026-01-11</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-4-custom-ipc-cpc-entry-dual-mode.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>power user</asA>
+    <iWant>to enter specific IPC/CPC codes instead of predefined fields</iWant>
+    <soThat>I can do targeted analysis</soThat>
+    <tasks>
+      <task id="1" ac="1,2">
+        <title>Add mode toggle widget</title>
+        <subtasks>
+          <subtask id="1.1">Create tech_mode_toggle() method in WidgetFactory</subtask>
+          <subtask id="1.2">Use widgets.RadioButtons with options ["Tech Field", "Custom IPC/CPC"]</subtask>
+          <subtask id="1.3">Add observe callback _on_tech_mode_change</subtask>
+          <subtask id="1.4">Default selection is "Tech Field"</subtask>
+        </subtasks>
+      </task>
+      <task id="2" ac="3">
+        <title>Add IPC text input widget</title>
+        <subtasks>
+          <subtask id="2.1">Create ipc_input() method in WidgetFactory</subtask>
+          <subtask id="2.2">Use widgets.Text with placeholder "A61B, H01L, ..."</subtask>
+          <subtask id="2.3">Add helper text HTML widget below input</subtask>
+          <subtask id="2.4">Add observe callback _on_ipc_input_change</subtask>
+        </subtasks>
+      </task>
+      <task id="3" ac="4,5,6">
+        <title>Implement IPC validation</title>
+        <subtasks>
+          <subtask id="3.1">Create _validate_ipc_codes(input_text) method</subtask>
+          <subtask id="3.2">Implement regex pattern: ^[A-H]\d{2}[A-Z]?$</subtask>
+          <subtask id="3.3">Parse comma-separated input, strip whitespace</subtask>
+          <subtask id="3.4">Validate each code individually</subtask>
+          <subtask id="3.5">Enforce max 5 codes limit</subtask>
+          <subtask id="3.6">Return (valid_codes: List[str], is_valid: bool, message: str)</subtask>
+        </subtasks>
+      </task>
+      <task id="4" ac="4,5">
+        <title>Add validation feedback widget</title>
+        <subtasks>
+          <subtask id="4.1">Create ipc_validation_feedback() HTML widget</subtask>
+          <subtask id="4.2">Update on input change with checkmark Valid or X Invalid format</subtask>
+          <subtask id="4.3">Style feedback (green for valid, red for invalid)</subtask>
+        </subtasks>
+      </task>
+      <task id="5" ac="2,7">
+        <title>Implement mode switching logic</title>
+        <subtasks>
+          <subtask id="5.1">In _on_tech_mode_change: toggle visibility of dropdown vs input</subtask>
+          <subtask id="5.2">Clear state.ipc_codes when switching to "field" mode</subtask>
+          <subtask id="5.3">Clear state.tech_field when switching to "ipc" mode</subtask>
+          <subtask id="5.4">Update state.tech_mode appropriately</subtask>
+        </subtasks>
+      </task>
+      <task id="6" ac="1-7">
+        <title>Update notebook Cell 2</title>
+        <subtasks>
+          <subtask id="6.1">Add mode toggle above technology dropdown</subtask>
+          <subtask id="6.2">Add IPC input section (initially hidden)</subtask>
+          <subtask id="6.3">Add validation feedback display</subtask>
+          <subtask id="6.4">Wire up visibility toggling based on mode</subtask>
+          <subtask id="6.5">Remove placeholder note from Story 2.3</subtask>
+        </subtasks>
+      </task>
+      <task id="7" ac="1-7">
+        <title>Validation</title>
+        <subtasks>
+          <subtask id="7.1">Test mode toggle switches between modes</subtask>
+          <subtask id="7.2">Test valid IPC codes ("A61B, H01L") accepted</subtask>
+          <subtask id="7.3">Test invalid codes ("ZZZ", "123") rejected</subtask>
+          <subtask id="7.4">Test max 5 codes enforcement</subtask>
+          <subtask id="7.5">Test state updates correctly in both modes</subtask>
+          <subtask id="7.6">Test state.is_valid() works with ipc_codes</subtask>
+        </subtasks>
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="AC1" title="Mode Toggle Display">
+      <given>Cell 2 Technology section is displayed</given>
+      <when>user views the technology area</when>
+      <then>
+        <item>they see a RadioButtons toggle: "Tech Field" | "Custom IPC/CPC"</item>
+        <item>"Tech Field" is selected by default</item>
+      </then>
+    </criterion>
+    <criterion id="AC2" title="Mode Switch Behavior">
+      <given>user switches to "Custom IPC/CPC" mode</given>
+      <when>the toggle changes</when>
+      <then>
+        <item>the tech field dropdown is hidden/disabled</item>
+        <item>the IPC text input is shown</item>
+        <item>state.tech_mode updates to "ipc"</item>
+      </then>
+    </criterion>
+    <criterion id="AC3" title="IPC Text Input Display">
+      <given>"Custom IPC/CPC" mode is active</given>
+      <then>
+        <item>Text input field for IPC codes</item>
+        <item>Helper text: "Enter up to 5 IPC main groups (e.g., A61B, H01L)"</item>
+        <item>Placeholder: "A61B, H01L, ..."</item>
+      </then>
+    </criterion>
+    <criterion id="AC4" title="IPC Validation - Valid Input">
+      <given>user enters IPC codes</given>
+      <when>input matches pattern [A-H]\d{2}[A-Z]?</when>
+      <then>
+        <item>validation feedback shows: checkmark Valid</item>
+        <item>state.ipc_codes updates with parsed list</item>
+        <item>state.tech_mode = "ipc"</item>
+      </then>
+    </criterion>
+    <criterion id="AC5" title="IPC Validation - Invalid Input">
+      <given>user enters invalid IPC codes</given>
+      <when>input doesn't match pattern</when>
+      <then>
+        <item>validation feedback shows: X Invalid format</item>
+        <item>state.ipc_codes remains empty</item>
+        <item>Run Analysis button stays disabled</item>
+      </then>
+    </criterion>
+    <criterion id="AC6" title="Maximum 5 Codes Enforced">
+      <given>user enters more than 5 IPC codes</given>
+      <when>validation runs</when>
+      <then>
+        <item>only first 5 codes are accepted</item>
+        <item>helper text updates: "Maximum 5 codes (showing first 5)"</item>
+      </then>
+    </criterion>
+    <criterion id="AC7" title="Switch Back to Tech Field Mode">
+      <given>user is in "Custom IPC/CPC" mode</given>
+      <when>user switches back to "Tech Field"</when>
+      <then>
+        <item>IPC input is hidden</item>
+        <item>tech field dropdown is shown</item>
+        <item>state.tech_mode = "field"</item>
+        <item>state.ipc_codes is cleared</item>
+      </then>
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic Technical Specification: Selection Interface</title>
+        <section>AC4: Custom IPC/CPC Mode</section>
+        <snippet>Mode toggle: RadioButtons "Tech Field" | "Custom IPC/CPC". Text input for comma-separated IPC codes. Validation: Pattern A-H + 2 digits. Maximum 5 codes enforced. Valid input updates state.ipc_codes, sets state.tech_mode = "ipc".</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture: TIP for PATLIBs</title>
+        <section>ADR-004: Tech Field Dual Mode</section>
+        <snippet>Support two modes for technology selection: WIPO fields (primary) and custom IPC codes (advanced). Custom mode queries tls209_appln_ipc instead of tls230_appln_techn_field.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture: TIP for PATLIBs</title>
+        <section>ADR-003: Prevention by Design</section>
+        <snippet>Pre-load valid options. Validation constrains input to valid formats. No free-text where structured data exists.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>TIP for PATLIBs - Epic Breakdown</title>
+        <section>Story 2.4: Custom IPC/CPC Entry (Dual Mode)</section>
+        <snippet>Technical Notes: Architecture ADR-004: Dual mode design. Custom mode queries tls209_appln_ipc instead of tls230. Consider autocomplete (future enhancement). Regex validation in widget callback.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/2-3-technology-field-selection-wipo-35.md</path>
+        <title>Previous Story: Technology Field Selection</title>
+        <section>Dev Notes and Review</section>
+        <snippet>Pattern to reuse: observe() callback for state updates. Sector headers with value=-1 ignored in callbacks. Deferred: AC5 IPC mapping tooltip. Placeholder to remove: "Mode toggle coming in Story 2.4".</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>tip4patlibs_core.py</path>
+        <kind>existing-widget-factory</kind>
+        <symbol>WidgetFactory class</symbol>
+        <lines>419-594</lines>
+        <reason>Add new methods: tech_mode_toggle(), ipc_input(), ipc_validation_feedback(). Add callbacks: _on_tech_mode_change(), _on_ipc_input_change(), _validate_ipc_codes(). Place after tech_field_dropdown at line 594.</reason>
+      </file>
+      <file>
+        <path>tip4patlibs_core.py</path>
+        <kind>existing-pattern</kind>
+        <symbol>tech_field_dropdown and _on_tech_field_change</symbol>
+        <lines>529-594</lines>
+        <reason>Reference implementation pattern: observe() callback, state update, placeholder handling. Follow same pattern for IPC widgets.</reason>
+      </file>
+      <file>
+        <path>tip4patlibs_core.py</path>
+        <kind>existing-class</kind>
+        <symbol>AnalysisState dataclass</symbol>
+        <lines>331-417</lines>
+        <reason>Already has tech_mode, tech_field, ipc_codes attributes. is_valid() checks: (tech_mode=="field" and tech_field) or (tech_mode=="ipc" and ipc_codes). No changes needed to class.</reason>
+      </file>
+      <file>
+        <path>TIP_for_PATLIBs.ipynb</path>
+        <kind>existing-cell</kind>
+        <symbol>Cell 2 (selection-placeholder)</symbol>
+        <lines>N/A</lines>
+        <reason>Update technology section: add mode toggle above dropdown, add IPC input (hidden initially), add validation feedback, wire up visibility toggle. Remove placeholder note from Story 2.3.</reason>
+      </file>
+    </code>
+    <dependencies>
+      <platform>EPO Technology Intelligence Platform (TIP)</platform>
+      <python>
+        <package name="re" version="stdlib">For IPC regex validation pattern</package>
+        <package name="ipywidgets" version="TIP-provided">RadioButtons for toggle, Text for input, HTML for feedback</package>
+      </python>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint source="architecture" type="pattern">
+      ADR-004: Dual mode - Tech Field is primary mode, Custom IPC is secondary. Only one mode active at a time.
+    </constraint>
+    <constraint source="architecture" type="validation">
+      ADR-003: Constrain input via validation. IPC pattern: ^[A-H]\d{2}[A-Z]?$ - Section (A-H), Class (2 digits), optional Subclass (letter).
+    </constraint>
+    <constraint source="story" type="scope">
+      IN SCOPE: Mode toggle, IPC input, validation, state updates. OUT OF SCOPE: IPC autocomplete (future), Query execution (Epic 3).
+    </constraint>
+    <constraint source="tech-spec" type="limit">
+      Maximum 5 IPC codes per query. Enforce in validation, show feedback.
+    </constraint>
+    <constraint source="previous-story" type="existing-code">
+      This story MODIFIES existing files. Follow patterns from Story 2.3. Reuse observe() callback pattern.
+    </constraint>
+    <constraint source="previous-story" type="cleanup">
+      Remove placeholder note: "Mode toggle coming in Story 2.4" from notebook Cell 2.
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>tech_mode_toggle</name>
+      <kind>widget-factory-method</kind>
+      <signature>
+def tech_mode_toggle(self) -> widgets.RadioButtons:
+    """Toggle between Tech Field and Custom IPC/CPC modes"""
+    toggle = widgets.RadioButtons(
+        options=['Tech Field', 'Custom IPC/CPC'],
+        value='Tech Field',
+        description='Mode:',
+        disabled=False
+    )
+    toggle.observe(self._on_tech_mode_change, names='value')
+    return toggle
+      </signature>
+      <path>tip4patlibs_core.py</path>
+    </interface>
+    <interface>
+      <name>ipc_input</name>
+      <kind>widget-factory-method</kind>
+      <signature>
+def ipc_input(self) -> widgets.Text:
+    """Text input for comma-separated IPC codes"""
+    text = widgets.Text(
+        placeholder='A61B, H01L, ...',
+        description='IPC Codes:',
+        disabled=False,
+        layout=widgets.Layout(width='400px')
+    )
+    text.observe(self._on_ipc_input_change, names='value')
+    return text
+      </signature>
+      <path>tip4patlibs_core.py</path>
+    </interface>
+    <interface>
+      <name>_validate_ipc_codes</name>
+      <kind>internal-method</kind>
+      <signature>
+def _validate_ipc_codes(self, input_text: str) -> Tuple[List[str], bool, str]:
+    """Validate IPC codes and return (valid_codes, is_valid, message)"""
+    import re
+    pattern = re.compile(r'^[A-H]\d{2}[A-Z]?$')
+    codes = [c.strip().upper() for c in input_text.split(',') if c.strip()]
+    valid_codes = [c for c in codes if pattern.match(c)][:5]  # Max 5
+    ...
+      </signature>
+      <path>tip4patlibs_core.py</path>
+    </interface>
+    <interface>
+      <name>_on_tech_mode_change</name>
+      <kind>callback</kind>
+      <signature>
+def _on_tech_mode_change(self, change):
+    """Toggle visibility between tech field dropdown and IPC input"""
+    if change['new'] == 'Custom IPC/CPC':
+        self._tech_dropdown.layout.display = 'none'
+        self._ipc_input.layout.display = ''
+        self.state.tech_mode = 'ipc'
+        self.state.tech_field = None
+    else:
+        self._tech_dropdown.layout.display = ''
+        self._ipc_input.layout.display = 'none'
+        self.state.tech_mode = 'field'
+        self.state.ipc_codes = []
+      </signature>
+      <path>tip4patlibs_core.py</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Manual validation on TIP platform. No automated test framework for MVP. Follow testing approach from previous stories.
+    </standards>
+    <locations>
+      <location>Manual: TIP JupyterLab environment</location>
+      <location>Notebook Cell 2: technology selection area</location>
+      <location>Ad-hoc cells: state inspection</location>
+    </locations>
+    <ideas>
+      <idea ac="AC1">Verify RadioButtons shows "Tech Field" | "Custom IPC/CPC"</idea>
+      <idea ac="AC1">Verify default selection is "Tech Field"</idea>
+      <idea ac="AC2">Toggle to IPC mode, verify dropdown hidden, input shown</idea>
+      <idea ac="AC2">Verify state.tech_mode == "ipc" after toggle</idea>
+      <idea ac="AC3">Verify helper text shows "Enter up to 5 IPC main groups"</idea>
+      <idea ac="AC4">Enter "A61B, H01L" - verify checkmark Valid feedback</idea>
+      <idea ac="AC4">Verify state.ipc_codes == ["A61B", "H01L"]</idea>
+      <idea ac="AC5">Enter "ZZZ" - verify X Invalid format feedback</idea>
+      <idea ac="AC5">Enter "123" - verify X Invalid format feedback</idea>
+      <idea ac="AC6">Enter 6 codes - verify only first 5 accepted</idea>
+      <idea ac="AC6">Verify feedback shows "Maximum 5 codes"</idea>
+      <idea ac="AC7">Toggle back to Tech Field, verify IPC input hidden</idea>
+      <idea ac="AC7">Verify state.ipc_codes == [] after toggle back</idea>
+      <idea ac="AC7">Verify state.tech_mode == "field" after toggle back</idea>
+    </ideas>
+  </tests>
+</story-context>

@@ -289,18 +289,18 @@ class AnalysisState:
             str: Formatted multi-line summary of all selections
         """
         lines = [
-            f"Country: {self.country or 'Not selected'}",
-            f"Region: {self.region or 'All regions'}",
+            f"📍 Country: {self.country or 'Not selected'}",
+            f"🗺️ Region: {self.region or 'All regions'}",
         ]
         if self.tech_mode == "field":
             tech_display = f"Field {self.tech_field}" if self.tech_field else "Not selected"
-            lines.append(f"Technology: {tech_display}")
+            lines.append(f"🔬 Technology: {tech_display}")
         else:
             codes = ', '.join(self.ipc_codes) if self.ipc_codes else 'None entered'
-            lines.append(f"IPC/CPC: {codes}")
-        lines.append(f"Period: {self.year_start}-{self.year_end}")
+            lines.append(f"🔬 IPC/CPC: {codes}")
+        lines.append(f"📅 Period: {self.year_start}-{self.year_end}")
         if self.sme_filter:
-            lines.append("SME Focus: Yes (<100 applications)")
+            lines.append("🏢 SME Focus: Yes (<100 applications)")
         return "\n".join(lines)
 
     def is_valid(self) -> Tuple[bool, str]:
@@ -406,6 +406,9 @@ class WidgetFactory:
             layout=widgets.Layout(width='350px')
         )
 
+        # Store reference for reset functionality (Story 2.6)
+        self._jurisdiction_dropdown_widget = dropdown
+
         # Register callback to update state on selection change
         dropdown.observe(self._on_jurisdiction_change, names='value')
 
@@ -469,6 +472,9 @@ class WidgetFactory:
         # Trigger region dropdown refresh
         if self._region_dropdown is not None:
             self._refresh_region_dropdown()
+        # Update review panel (Story 2.6)
+        self._update_summary_panel()
+        self._update_run_button_state()
 
     def _on_region_change(self, change):
         """
@@ -480,6 +486,9 @@ class WidgetFactory:
             change: ipywidgets change dict with 'new' value
         """
         self.state.region = change['new']
+        # Update review panel (Story 2.6)
+        self._update_summary_panel()
+        self._update_run_button_state()
 
     def _refresh_region_dropdown(self):
         """
@@ -525,6 +534,741 @@ class WidgetFactory:
 
         # Reset state.region on jurisdiction change
         self.state.region = None
+
+    def tech_field_dropdown(self) -> widgets.Dropdown:
+        """
+        Create technology field selection dropdown.
+
+        Returns a dropdown populated with all 35 WIPO technology fields
+        grouped by sector (Electrical, Instruments, Chemistry, Mechanical, Other).
+
+        Returns:
+            widgets.Dropdown: Configured dropdown with observe callback
+
+        Example:
+            >>> factory = WidgetFactory(reference_data, state)
+            >>> dropdown = factory.tech_field_dropdown()
+            >>> display(dropdown)
+        """
+        # Build grouped options with sector headers
+        options = [('Select technology field...', None)]
+
+        # Sector definitions: (sector_name, field_number_range)
+        sectors = [
+            ('Electrical engineering', range(1, 9)),
+            ('Instruments', range(9, 14)),
+            ('Chemistry', range(14, 24)),
+            ('Mechanical engineering', range(24, 33)),
+            ('Other fields', range(33, 36)),
+        ]
+
+        # Create lookup dict from tech_fields: {field_nr: display_name}
+        field_lookup = {nr: name for name, nr in self.ref.tech_fields}
+
+        for sector_name, field_range in sectors:
+            # Add sector header as disabled separator
+            options.append((f'── {sector_name} ──', -1))
+            # Add fields in this sector
+            for nr in field_range:
+                if nr in field_lookup:
+                    options.append((field_lookup[nr], nr))
+
+        dropdown = widgets.Dropdown(
+            options=options,
+            value=None,
+            description='Technology:',
+            style={'description_width': '100px'},
+            layout=widgets.Layout(width='400px')
+        )
+
+        # Register callback to update state on selection change
+        dropdown.observe(self._on_tech_field_change, names='value')
+
+        return dropdown
+
+    def _on_tech_field_change(self, change):
+        """
+        Callback when technology field selection changes.
+
+        Updates state.tech_field and sets state.tech_mode to "field".
+        Ignores sector header selections (value == -1).
+
+        Args:
+            change: ipywidgets change dict with 'new' value
+        """
+        new_value = change['new']
+        # Ignore sector headers (value == -1) and placeholder (value == None)
+        if new_value is not None and new_value != -1:
+            self.state.tech_field = new_value
+            self.state.tech_mode = "field"
+            # Update review panel (Story 2.6)
+            self._update_summary_panel()
+            self._update_run_button_state()
+
+    # ========== Story 2.4: Custom IPC/CPC Entry (Dual Mode) ==========
+
+    def tech_mode_toggle(self) -> widgets.RadioButtons:
+        """
+        Create mode toggle between Tech Field and Custom IPC/CPC modes.
+
+        Returns a RadioButtons widget that allows users to switch between
+        selecting from predefined WIPO technology fields or entering
+        custom IPC/CPC codes.
+
+        Returns:
+            widgets.RadioButtons: Configured toggle with observe callback
+
+        Example:
+            >>> factory = WidgetFactory(reference_data, state)
+            >>> toggle = factory.tech_mode_toggle()
+            >>> display(toggle)
+        """
+        toggle = widgets.RadioButtons(
+            options=['Tech Field', 'Custom IPC/CPC'],
+            value='Tech Field',
+            description='Mode:',
+            style={'description_width': '100px'},
+            layout=widgets.Layout(width='300px')
+        )
+        toggle.observe(self._on_tech_mode_change, names='value')
+        return toggle
+
+    def ipc_input(self) -> widgets.Text:
+        """
+        Create text input for custom IPC/CPC codes.
+
+        Returns a text input widget for entering comma-separated IPC codes.
+        Valid format: A-H section + 2 digit class + optional subclass letter
+        (e.g., A61B, H01L, G06F).
+
+        Returns:
+            widgets.Text: Configured text input with observe callback
+
+        Example:
+            >>> factory = WidgetFactory(reference_data, state)
+            >>> ipc = factory.ipc_input()
+            >>> display(ipc)
+        """
+        text = widgets.Text(
+            placeholder='A61B, H01L, ...',
+            description='IPC Codes:',
+            style={'description_width': '100px'},
+            layout=widgets.Layout(width='400px')
+        )
+        text.observe(self._on_ipc_input_change, names='value')
+        return text
+
+    def ipc_helper_text(self) -> widgets.HTML:
+        """
+        Create helper text widget for IPC input.
+
+        Returns:
+            widgets.HTML: Helper text with IPC format guidance
+        """
+        return widgets.HTML(
+            value='<i style="color: #666;">Enter up to 5 IPC main groups (e.g., A61B, H01L)</i>'
+        )
+
+    def ipc_validation_feedback(self) -> widgets.HTML:
+        """
+        Create validation feedback widget for IPC input.
+
+        Initially empty, updated by _on_ipc_input_change callback.
+
+        Returns:
+            widgets.HTML: Validation feedback display
+        """
+        return widgets.HTML(value='')
+
+    def _validate_ipc_codes(self, input_text: str) -> tuple:
+        """
+        Validate IPC codes from user input.
+
+        Parses comma-separated IPC codes and validates each against
+        the pattern: Section (A-H) + Class (2 digits) + optional Subclass (letter).
+
+        Args:
+            input_text: Comma-separated IPC codes string
+
+        Returns:
+            tuple: (valid_codes: List[str], is_valid: bool, message: str)
+                - valid_codes: List of validated IPC codes (max 5)
+                - is_valid: True if at least one valid code found
+                - message: Validation feedback message
+        """
+        import re
+
+        if not input_text or not input_text.strip():
+            return ([], False, '')
+
+        # IPC pattern: Section (A-H) + Class (2 digits) + optional Subclass (A-Z)
+        pattern = re.compile(r'^[A-H]\d{2}[A-Z]?$')
+
+        # Parse and normalize codes
+        codes = [c.strip().upper() for c in input_text.split(',') if c.strip()]
+
+        # Validate each code
+        valid_codes = [c for c in codes if pattern.match(c)]
+        invalid_codes = [c for c in codes if not pattern.match(c)]
+
+        # Enforce max 5 codes
+        truncated = len(valid_codes) > 5
+        valid_codes = valid_codes[:5]
+
+        # Build message
+        if not codes:
+            return ([], False, '')
+        elif invalid_codes and not valid_codes:
+            return ([], False, '<span style="color: red;">✗ Invalid format</span>')
+        elif invalid_codes:
+            return (valid_codes, True,
+                    f'<span style="color: orange;">⚠ {len(valid_codes)} valid, {len(invalid_codes)} invalid</span>')
+        elif truncated:
+            return (valid_codes, True,
+                    '<span style="color: orange;">⚠ Maximum 5 codes (showing first 5)</span>')
+        else:
+            return (valid_codes, True,
+                    f'<span style="color: green;">✓ Valid ({len(valid_codes)} code{"s" if len(valid_codes) > 1 else ""})</span>')
+
+    def _on_ipc_input_change(self, change):
+        """
+        Callback when IPC input text changes.
+
+        Validates input and updates state.ipc_codes with valid codes.
+        Updates validation feedback widget if registered.
+
+        Args:
+            change: ipywidgets change dict with 'new' value
+        """
+        input_text = change['new']
+        valid_codes, is_valid, message = self._validate_ipc_codes(input_text)
+
+        if is_valid:
+            self.state.ipc_codes = valid_codes
+            self.state.tech_mode = "ipc"
+        else:
+            self.state.ipc_codes = []
+
+        # Update feedback widget if registered
+        if hasattr(self, '_ipc_feedback_widget') and self._ipc_feedback_widget:
+            self._ipc_feedback_widget.value = message
+
+        # Update review panel (Story 2.6)
+        self._update_summary_panel()
+        self._update_run_button_state()
+
+    def _on_tech_mode_change(self, change):
+        """
+        Callback when tech mode toggle changes.
+
+        Toggles visibility between tech field dropdown and IPC input.
+        Clears the inactive mode's state to prevent conflicts.
+
+        Args:
+            change: ipywidgets change dict with 'new' value
+        """
+        new_mode = change['new']
+
+        if new_mode == 'Custom IPC/CPC':
+            # Show IPC input, hide dropdown
+            if hasattr(self, '_tech_dropdown_widget') and self._tech_dropdown_widget:
+                self._tech_dropdown_widget.layout.display = 'none'
+            if hasattr(self, '_ipc_input_widget') and self._ipc_input_widget:
+                self._ipc_input_widget.layout.display = ''
+            if hasattr(self, '_ipc_helper_widget') and self._ipc_helper_widget:
+                self._ipc_helper_widget.layout.display = ''
+            if hasattr(self, '_ipc_feedback_widget') and self._ipc_feedback_widget:
+                self._ipc_feedback_widget.layout.display = ''
+
+            self.state.tech_mode = 'ipc'
+            self.state.tech_field = None  # Clear field selection
+        else:
+            # Show dropdown, hide IPC input
+            if hasattr(self, '_tech_dropdown_widget') and self._tech_dropdown_widget:
+                self._tech_dropdown_widget.layout.display = ''
+            if hasattr(self, '_ipc_input_widget') and self._ipc_input_widget:
+                self._ipc_input_widget.layout.display = 'none'
+            if hasattr(self, '_ipc_helper_widget') and self._ipc_helper_widget:
+                self._ipc_helper_widget.layout.display = 'none'
+            if hasattr(self, '_ipc_feedback_widget') and self._ipc_feedback_widget:
+                self._ipc_feedback_widget.layout.display = 'none'
+
+            self.state.tech_mode = 'field'
+            self.state.ipc_codes = []  # Clear IPC codes
+
+        # Update review panel (Story 2.6)
+        self._update_summary_panel()
+        self._update_run_button_state()
+
+    def create_technology_section(self) -> widgets.VBox:
+        """
+        Create complete technology selection section with mode toggle.
+
+        Creates and registers all widgets needed for dual-mode technology
+        selection (Tech Field dropdown or Custom IPC/CPC input).
+
+        Returns:
+            widgets.VBox: Complete technology section layout
+
+        Example:
+            >>> factory = WidgetFactory(reference_data, state)
+            >>> tech_section = factory.create_technology_section()
+            >>> display(tech_section)
+        """
+        # Create widgets and store references for callbacks
+        self._tech_mode_toggle_widget = self.tech_mode_toggle()
+
+        self._tech_dropdown_widget = self.tech_field_dropdown()
+        self._ipc_input_widget = self.ipc_input()
+        self._ipc_helper_widget = self.ipc_helper_text()
+        self._ipc_feedback_widget = self.ipc_validation_feedback()
+
+        # Initially hide IPC widgets (Tech Field is default)
+        self._ipc_input_widget.layout.display = 'none'
+        self._ipc_helper_widget.layout.display = 'none'
+        self._ipc_feedback_widget.layout.display = 'none'
+
+        # Build layout
+        return widgets.VBox([
+            widgets.HTML('<b>Technology</b>'),
+            self._tech_mode_toggle_widget,
+            self._tech_dropdown_widget,
+            self._ipc_input_widget,
+            self._ipc_helper_widget,
+            self._ipc_feedback_widget
+        ])
+
+    # ========== Story 2.5: Date Range Selection ==========
+
+    def year_range_slider(self) -> widgets.IntRangeSlider:
+        """
+        Create year range slider for date filtering.
+
+        Returns an IntRangeSlider widget with range 2000-2024 and
+        default value [2019, 2023]. Updates state.year_start and
+        state.year_end on change.
+
+        Returns:
+            widgets.IntRangeSlider: Configured slider with observe callback
+
+        Example:
+            >>> factory = WidgetFactory(reference_data, state)
+            >>> slider = factory.year_range_slider()
+            >>> display(slider)
+        """
+        slider = widgets.IntRangeSlider(
+            value=[self.state.year_start, self.state.year_end],
+            min=2000,
+            max=2024,
+            step=1,
+            description='Years:',
+            style={'description_width': '100px'},
+            layout=widgets.Layout(width='400px'),
+            continuous_update=False  # Update only on release for better performance
+        )
+        slider.observe(self._on_year_range_change, names='value')
+        return slider
+
+    def performance_tip(self) -> widgets.HTML:
+        """
+        Create performance tip widget for date range.
+
+        Displays dynamic performance estimate based on year span:
+        - ≤5 years: "Fast query (~10 sec)"
+        - 6-10 years: "Medium query (~30 sec)"
+        - >10 years: "Large query (~2 min)"
+
+        Returns:
+            widgets.HTML: Performance tip display widget
+
+        Example:
+            >>> factory = WidgetFactory(reference_data, state)
+            >>> tip = factory.performance_tip()
+            >>> display(tip)
+        """
+        # Calculate initial span from state defaults
+        year_span = self.state.year_end - self.state.year_start + 1
+        initial_tip = self._get_performance_tip_text(year_span)
+        return widgets.HTML(value=initial_tip)
+
+    def _get_performance_tip_text(self, year_span: int) -> str:
+        """
+        Get performance tip text based on year span.
+
+        Args:
+            year_span: Number of years in the selected range
+
+        Returns:
+            str: Formatted HTML tip text with emoji
+        """
+        if year_span <= 5:
+            return '<span style="color: #28a745;">⚡ Fast query (~10 sec)</span>'
+        elif year_span <= 10:
+            return '<span style="color: #ffc107;">⏱️ Medium query (~30 sec)</span>'
+        else:
+            return '<span style="color: #dc3545;">🐢 Large query (~2 min)</span>'
+
+    def _update_performance_tip(self, year_span: int):
+        """
+        Update performance tip widget with new span value.
+
+        Called by _on_year_range_change when slider value changes.
+
+        Args:
+            year_span: Number of years in the selected range
+        """
+        if hasattr(self, '_performance_tip_widget') and self._performance_tip_widget:
+            self._performance_tip_widget.value = self._get_performance_tip_text(year_span)
+
+    def _on_year_range_change(self, change):
+        """
+        Callback when year range slider changes.
+
+        Updates state.year_start and state.year_end, then refreshes
+        the performance tip display.
+
+        Args:
+            change: ipywidgets change dict with 'new' value tuple
+        """
+        new_range = change['new']
+        self.state.year_start = new_range[0]
+        self.state.year_end = new_range[1]
+
+        # Calculate span and update performance tip
+        year_span = new_range[1] - new_range[0] + 1
+        self._update_performance_tip(year_span)
+
+        # Update review panel (Story 2.6)
+        self._update_summary_panel()
+        self._update_run_button_state()
+
+    def create_date_range_section(self) -> widgets.VBox:
+        """
+        Create complete date range selection section.
+
+        Creates and registers all widgets needed for date range
+        selection including IntRangeSlider and performance tip.
+
+        Returns:
+            widgets.VBox: Complete date range section layout
+
+        Example:
+            >>> factory = WidgetFactory(reference_data, state)
+            >>> date_section = factory.create_date_range_section()
+            >>> display(date_section)
+        """
+        # Create widgets and store references for callbacks
+        self._year_range_slider_widget = self.year_range_slider()
+        self._performance_tip_widget = self.performance_tip()
+
+        # Build layout
+        return widgets.VBox([
+            widgets.HTML('<b>Date Range</b>'),
+            self._year_range_slider_widget,
+            self._performance_tip_widget
+        ])
+
+    # ========== Story 2.6: Options & Review Panel ==========
+
+    def summary_panel(self) -> widgets.HTML:
+        """
+        Create summary panel displaying current selections.
+
+        Returns an HTML widget showing state.summary() with emoji
+        formatting. Updates dynamically via _update_summary_panel().
+
+        Returns:
+            widgets.HTML: Summary display widget
+
+        Example:
+            >>> factory = WidgetFactory(reference_data, state)
+            >>> panel = factory.summary_panel()
+            >>> display(panel)
+        """
+        summary_text = self.state.summary().replace('\n', '<br>')
+        return widgets.HTML(
+            value=f'<div style="background: #f8f9fa; padding: 10px; border-radius: 5px; border-left: 3px solid #007bff;">{summary_text}</div>'
+        )
+
+    def _update_summary_panel(self):
+        """
+        Update summary panel with current state.
+
+        Called by all selection callbacks to refresh the display
+        whenever user makes a selection change.
+        """
+        if hasattr(self, '_summary_panel_widget') and self._summary_panel_widget:
+            summary_text = self.state.summary().replace('\n', '<br>')
+            self._summary_panel_widget.value = f'<div style="background: #f8f9fa; padding: 10px; border-radius: 5px; border-left: 3px solid #007bff;">{summary_text}</div>'
+
+    def sme_checkbox(self) -> widgets.Checkbox:
+        """
+        Create SME filter checkbox.
+
+        Returns a checkbox for filtering to SME applicants (those with
+        fewer than 100 total applications). Updates state.sme_filter.
+
+        Returns:
+            widgets.Checkbox: SME filter checkbox widget
+
+        Example:
+            >>> factory = WidgetFactory(reference_data, state)
+            >>> checkbox = factory.sme_checkbox()
+            >>> display(checkbox)
+        """
+        checkbox = widgets.Checkbox(
+            value=False,
+            description='Focus on SMEs (<100 applications)',
+            indent=False,
+            layout=widgets.Layout(width='300px')
+        )
+        checkbox.observe(self._on_sme_change, names='value')
+        return checkbox
+
+    def _on_sme_change(self, change):
+        """
+        Callback when SME checkbox changes.
+
+        Updates state.sme_filter and refreshes summary panel.
+
+        Args:
+            change: ipywidgets change dict with 'new' value
+        """
+        self.state.sme_filter = change['new']
+        self._update_summary_panel()
+        self._update_run_button_state()
+
+    def reset_button(self) -> widgets.Button:
+        """
+        Create Reset button to clear all selections.
+
+        Returns a button styled as secondary (default gray) that
+        resets all selections to defaults when clicked.
+
+        Returns:
+            widgets.Button: Reset button widget
+
+        Example:
+            >>> factory = WidgetFactory(reference_data, state)
+            >>> button = factory.reset_button()
+            >>> display(button)
+        """
+        button = widgets.Button(
+            description='Reset',
+            button_style='',  # Default gray style
+            icon='refresh',
+            layout=widgets.Layout(width='100px')
+        )
+        button.on_click(self._on_reset_click)
+        return button
+
+    def _on_reset_click(self, button):
+        """
+        Callback when Reset button is clicked.
+
+        Re-initializes AnalysisState and resets all widgets to defaults.
+
+        Args:
+            button: The clicked button widget (unused)
+        """
+        # Re-initialize state to defaults
+        self.state.country = None
+        self.state.region = None
+        self.state.tech_mode = "field"
+        self.state.tech_field = None
+        self.state.ipc_codes = []
+        self.state.year_start = 2019
+        self.state.year_end = 2023
+        self.state.sme_filter = False
+
+        # Reset jurisdiction dropdown
+        if hasattr(self, '_jurisdiction_dropdown_widget') and self._jurisdiction_dropdown_widget:
+            self._jurisdiction_dropdown_widget.value = None
+
+        # Reset region dropdown
+        if self._region_dropdown is not None:
+            self._region_dropdown.options = [('All regions', None)]
+            self._region_dropdown.value = None
+            self._region_dropdown.disabled = True
+            if self._region_helper:
+                self._region_helper.value = ''
+
+        # Reset tech dropdown
+        if hasattr(self, '_tech_dropdown_widget') and self._tech_dropdown_widget:
+            self._tech_dropdown_widget.value = None
+            self._tech_dropdown_widget.layout.display = ''
+
+        # Reset IPC input
+        if hasattr(self, '_ipc_input_widget') and self._ipc_input_widget:
+            self._ipc_input_widget.value = ''
+            self._ipc_input_widget.layout.display = 'none'
+        if hasattr(self, '_ipc_helper_widget') and self._ipc_helper_widget:
+            self._ipc_helper_widget.layout.display = 'none'
+        if hasattr(self, '_ipc_feedback_widget') and self._ipc_feedback_widget:
+            self._ipc_feedback_widget.value = ''
+            self._ipc_feedback_widget.layout.display = 'none'
+
+        # Reset tech mode toggle
+        if hasattr(self, '_tech_mode_toggle_widget') and self._tech_mode_toggle_widget:
+            self._tech_mode_toggle_widget.value = 'Tech Field'
+
+        # Reset year range slider
+        if hasattr(self, '_year_range_slider_widget') and self._year_range_slider_widget:
+            self._year_range_slider_widget.value = [2019, 2023]
+
+        # Reset SME checkbox
+        if hasattr(self, '_sme_checkbox_widget') and self._sme_checkbox_widget:
+            self._sme_checkbox_widget.value = False
+
+        # Update performance tip
+        self._update_performance_tip(5)  # 5 year span for default [2019, 2023]
+
+        # Update review panel
+        self._update_summary_panel()
+        self._update_run_button_state()
+
+    def run_button(self) -> widgets.Button:
+        """
+        Create Run Analysis button.
+
+        Returns a prominently styled green button for triggering query
+        execution. Disabled until state.is_valid() returns True.
+
+        Returns:
+            widgets.Button: Run Analysis button widget
+
+        Example:
+            >>> factory = WidgetFactory(reference_data, state)
+            >>> button = factory.run_button()
+            >>> display(button)
+        """
+        button = widgets.Button(
+            description='Run Analysis',
+            button_style='success',  # Green style
+            icon='play',
+            layout=widgets.Layout(width='150px')
+        )
+        button.on_click(self._on_run_click)
+        return button
+
+    def _on_run_click(self, button):
+        """
+        Callback when Run Analysis button is clicked.
+
+        Triggers query execution (placeholder for Epic 3).
+        Shows loading state during execution.
+
+        Args:
+            button: The clicked button widget
+        """
+        # Show loading state
+        button.description = 'Running...'
+        button.disabled = True
+        button.icon = 'spinner'
+
+        # Update status message
+        if hasattr(self, '_validation_message_widget') and self._validation_message_widget:
+            self._validation_message_widget.value = '<span style="color: #17a2b8;">⏳ Querying PATSTAT...</span>'
+
+        # Placeholder for Epic 3 query execution
+        # For now, just show a message after a brief delay
+        import time
+        time.sleep(0.5)  # Brief delay for UX
+
+        # Reset button and show placeholder message
+        button.description = 'Run Analysis'
+        button.disabled = False
+        button.icon = 'play'
+
+        if hasattr(self, '_validation_message_widget') and self._validation_message_widget:
+            self._validation_message_widget.value = '<span style="color: #6c757d;">📋 Query execution coming in Epic 3</span>'
+
+    def _update_run_button_state(self):
+        """
+        Update Run button enabled/disabled state based on validation.
+
+        Checks state.is_valid() and updates button disabled property
+        and validation message display.
+        """
+        if not hasattr(self, '_run_button_widget') or not self._run_button_widget:
+            return
+
+        is_valid, message = self.state.is_valid()
+
+        if is_valid:
+            self._run_button_widget.disabled = False
+            if hasattr(self, '_validation_message_widget') and self._validation_message_widget:
+                self._validation_message_widget.value = ''
+        else:
+            self._run_button_widget.disabled = True
+            if hasattr(self, '_validation_message_widget') and self._validation_message_widget:
+                self._validation_message_widget.value = f'<span style="color: #dc3545;">⚠️ {message}</span>'
+
+    def validation_message(self) -> widgets.HTML:
+        """
+        Create validation message widget.
+
+        Displays validation errors when state.is_valid() returns False.
+        Hidden when state is valid.
+
+        Returns:
+            widgets.HTML: Validation message widget
+
+        Example:
+            >>> factory = WidgetFactory(reference_data, state)
+            >>> msg = factory.validation_message()
+            >>> display(msg)
+        """
+        # Initialize with current validation state
+        is_valid, message = self.state.is_valid()
+        if is_valid:
+            initial_value = ''
+        else:
+            initial_value = f'<span style="color: #dc3545;">⚠️ {message}</span>'
+
+        return widgets.HTML(value=initial_value)
+
+    def create_review_section(self) -> widgets.VBox:
+        """
+        Create complete review and run section.
+
+        Creates and registers all widgets needed for the Options & Review
+        panel: summary panel, SME checkbox, Reset button, Run button,
+        and validation message.
+
+        Returns:
+            widgets.VBox: Complete review section layout
+
+        Example:
+            >>> factory = WidgetFactory(reference_data, state)
+            >>> review_section = factory.create_review_section()
+            >>> display(review_section)
+        """
+        # Create widgets and store references for callbacks
+        self._summary_panel_widget = self.summary_panel()
+        self._sme_checkbox_widget = self.sme_checkbox()
+        self._reset_button_widget = self.reset_button()
+        self._run_button_widget = self.run_button()
+        self._validation_message_widget = self.validation_message()
+
+        # Update initial run button state
+        self._update_run_button_state()
+
+        # Button row: Reset | Run Analysis
+        button_row = widgets.HBox([
+            self._reset_button_widget,
+            widgets.HTML(value='&nbsp;&nbsp;'),  # Spacer
+            self._run_button_widget
+        ])
+
+        # Build layout
+        return widgets.VBox([
+            widgets.HTML('<b>Review & Run</b>'),
+            self._summary_panel_widget,
+            self._sme_checkbox_widget,
+            button_row,
+            self._validation_message_widget
+        ])
 
 
 class ChartBuilder:

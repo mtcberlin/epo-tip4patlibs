@@ -47,10 +47,10 @@ development_status:
   epic-2: contexted  # tech-spec created 2026-01-11
   2-1-country-selection-widget: done  # 2026-01-11 - APPROVED
   2-2-region-selection-widget-nuts: done  # 2026-01-11 - APPROVED
-  2-3-technology-field-selection-wipo-35: backlog
-  2-4-custom-ipc-cpc-entry-dual-mode: backlog
-  2-5-date-range-selection: backlog
-  2-6-options-review-panel: backlog
+  2-3-technology-field-selection-wipo-35: done  # 2026-01-11 - APPROVED
+  2-4-custom-ipc-cpc-entry-dual-mode: done  # 2026-01-11 - APPROVED
+  2-5-date-range-selection: done  # 2026-01-11 - APPROVED
+  2-6-options-review-panel: done  # 2026-01-11 - APPROVED
   epic-2-retrospective: optional
 
   # Epic 3: Query Engine
