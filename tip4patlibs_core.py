@@ -247,13 +247,13 @@ class AnalysisState:
         Returns:
             str: Formatted multi-line summary of all selections
         """
-        # Placeholder implementation - will be enhanced in Story 1.4
         lines = [
             f"Country: {self.country or 'Not selected'}",
             f"Region: {self.region or 'All regions'}",
         ]
         if self.tech_mode == "field":
-            lines.append(f"Technology: Field {self.tech_field or 'Not selected'}")
+            tech_display = f"Field {self.tech_field}" if self.tech_field else "Not selected"
+            lines.append(f"Technology: {tech_display}")
         else:
             codes = ', '.join(self.ipc_codes) if self.ipc_codes else 'None entered'
             lines.append(f"IPC/CPC: {codes}")
@@ -275,8 +275,19 @@ class AnalysisState:
                 - (True, "Ready") if all required fields are set
                 - (False, "error message") describing what's missing
         """
-        # Placeholder implementation - will be enhanced in Story 1.4
-        return (False, "Not implemented")
+        # Check country is selected
+        if self.country is None:
+            return (False, "Please select a country")
+
+        # Check technology selection based on mode
+        if self.tech_mode == "field":
+            if self.tech_field is None:
+                return (False, "Please select a technology field")
+        else:  # ipc mode
+            if not self.ipc_codes:
+                return (False, "Please enter at least one IPC/CPC code")
+
+        return (True, "Ready")
 
 
 class PatstatQueries:
