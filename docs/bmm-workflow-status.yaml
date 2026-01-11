@@ -34,7 +34,7 @@ workflow_status:
   create-architecture: docs/architecture.md  # agent: architect - completed 2026-01-12
   test-design: recommended  # agent: tea
   validate-architecture: optional  # agent: architect
-  solutioning-gate-check: required  # agent: architect
+  solutioning-gate-check: docs/implementation-readiness-report-2026-01-12.md  # agent: architect - completed 2026-01-12
 
   # Phase 3: Implementation
-  sprint-planning: required  # agent: sm
+  sprint-planning: docs/sprint-artifacts/sprint-status.yaml  # agent: sm - completed 2026-01-12
