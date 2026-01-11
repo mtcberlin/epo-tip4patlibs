@@ -1,0 +1,185 @@
+<story-context id="bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>3</epicId>
+    <storyId>3</storyId>
+    <title>Top Applicants Query</title>
+    <status>drafted</status>
+    <generatedAt>2026-01-12</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/3-3-top-applicants-query.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>PATLIB user</asA>
+    <iWant>to see who files the most patents in my selection</iWant>
+    <soThat>I can identify key players in the technology field</soThat>
+    <tasks>
+      <task id="1" status="pending">Implement get_top_applicants() method (AC: 1, 2, 3)
+        <subtask id="1.1">Replace stub with full implementation in PatstatQueries</subtask>
+        <subtask id="1.2">Build raw SQL query with proper joins</subtask>
+        <subtask id="1.3">Add parameterized query for SQL injection prevention</subtask>
+        <subtask id="1.4">Convert results to DataFrame with correct schema</subtask>
+      </task>
+      <task id="2" status="pending">Implement query filters (AC: 5, 6, 7, 8)
+        <subtask id="2.1">Add tech field mode filter (tls230 join)</subtask>
+        <subtask id="2.2">Add IPC mode filter (tls209 join)</subtask>
+        <subtask id="2.3">Add region filter (NUTS LIKE pattern)</subtask>
+        <subtask id="2.4">Add SME filter (subquery for less than 100 applications)</subtask>
+      </task>
+      <task id="3" status="pending">Implement limit and ordering (AC: 4)
+        <subtask id="3.1">Add ORDER BY application_count DESC</subtask>
+        <subtask id="3.2">Add LIMIT clause with parameter</subtask>
+        <subtask id="3.3">Test with limit=10 and limit=25</subtask>
+      </task>
+      <task id="4" status="pending">Handle name quality (AC: 9)
+        <subtask id="4.1">Use psn_name for grouping</subtask>
+        <subtask id="4.2">Filter out NULL or empty names</subtask>
+        <subtask id="4.3">Test with various applicant types</subtask>
+      </task>
+      <task id="5" status="pending">Add error handling (AC: 10)
+        <subtask id="5.1">Wrap execution in try/except</subtask>
+        <subtask id="5.2">Return empty DataFrame on error</subtask>
+        <subtask id="5.3">Log error details for debugging</subtask>
+      </task>
+      <task id="6" status="pending">Integration with UI (AC: 1-10)
+        <subtask id="6.1">Update _on_run_click() to call get_top_applicants()</subtask>
+        <subtask id="6.2">Store results in analysis_results['applicants']</subtask>
+        <subtask id="6.3">Add progress message during execution</subtask>
+      </task>
+      <task id="7" status="pending">Validation (AC: 1-10)
+        <subtask id="7.1">Test with DE + Field 13 + 2019-2023</subtask>
+        <subtask id="7.2">Verify top applicants list is reasonable</subtask>
+        <subtask id="7.3">Compare with known German patent leaders</subtask>
+        <subtask id="7.4">Test IPC mode with A61B</subtask>
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="AC1" title="Method Implementation">
+      get_top_applicants(state, limit) returns DataFrame with applicant rankings
+    </criterion>
+    <criterion id="AC2" title="DataFrame Schema">
+      Columns: applicant_name, application_count, invention_count, country. Ordered by application_count DESC.
+    </criterion>
+    <criterion id="AC3" title="SQL Escape Hatch Pattern">
+      Uses raw SQL for complex aggregation (ADR-002)
+    </criterion>
+    <criterion id="AC4" title="Limit Parameter">
+      Returns at most limit rows. Default 10. Options 10 or 25.
+    </criterion>
+    <criterion id="AC5" title="Tech Field Mode Support">
+      Joins tls230_appln_techn_field for tech field filtering
+    </criterion>
+    <criterion id="AC6" title="IPC Mode Support">
+      Joins tls209_appln_ipc with LIKE pattern for IPC codes
+    </criterion>
+    <criterion id="AC7" title="Region Filter Support">
+      Filters applicants by NUTS region
+    </criterion>
+    <criterion id="AC8" title="SME Filter Support">
+      Excludes applicants with 100+ total applications
+    </criterion>
+    <criterion id="AC9" title="Name Quality Handling">
+      Uses psn_name for grouping. Handles NULL names.
+    </criterion>
+    <criterion id="AC10" title="Error Handling">
+      Returns empty DataFrame on error. Logs error message.
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-3.md</path>
+        <title>Epic 3 Technical Specification</title>
+        <section>AC3: Top Applicants Query</section>
+        <snippet>Uses SQL escape hatch for complex GROUP BY. Returns applicant_name, application_count, invention_count, country.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 3.3: Top Applicants Query</section>
+        <snippet>SQL escape hatch for complex aggregation. psn_name for standardized names.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>ADR-002: ORM vs SQL</section>
+        <snippet>ORM primary with SQL escape hatch for complex aggregations.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>tip4patlibs_core.py</path>
+        <kind>method</kind>
+        <symbol>PatstatQueries.get_top_applicants</symbol>
+        <lines>555-571</lines>
+        <reason>Stub method to replace with full implementation.</reason>
+      </file>
+      <file>
+        <path>tip4patlibs_core.py</path>
+        <kind>method</kind>
+        <symbol>PatstatQueries._empty_applicants_df</symbol>
+        <lines>395-397</lines>
+        <reason>Helper for empty DataFrame return on error.</reason>
+      </file>
+      <file>
+        <path>tip4patlibs_core.py</path>
+        <kind>callback</kind>
+        <symbol>WidgetFactory._on_run_click</symbol>
+        <lines>1385-1444</lines>
+        <reason>Integration point for calling get_top_applicants().</reason>
+      </file>
+    </code>
+    <dependencies>
+      <python>
+        <package name="pandas" used="true">DataFrame for query results</package>
+        <package name="sqlalchemy" used="true">text() for raw SQL, parameterized queries</package>
+        <package name="epo.tipdata.patstat" used="true">Database session and models</package>
+      </python>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint source="ADR-002">SQL escape hatch for complex GROUP BY aggregations</constraint>
+    <constraint source="ADR-008">Use appln_auth for filing jurisdiction filtering</constraint>
+    <constraint source="Architecture">Use psn_name (standardized name) for applicant grouping</constraint>
+    <constraint source="Architecture">Filter applt_seq_nr greater than 0 for applicants only</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>PatstatQueries.get_top_applicants</name>
+      <kind>method</kind>
+      <signature>def get_top_applicants(self, state: AnalysisState, limit: int = 10) -> pd.DataFrame</signature>
+      <path>tip4patlibs_core.py:555</path>
+    </interface>
+    <interface>
+      <name>analysis_results dict</name>
+      <kind>module variable</kind>
+      <signature>analysis_results: Dict[str, pd.DataFrame]</signature>
+      <path>tip4patlibs_core.py:74-76</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>Manual validation on TIP platform. Compare results against known patent leaders.</standards>
+    <locations>
+      <location>TIP JupyterLab environment</location>
+      <location>Validation notebook cell</location>
+    </locations>
+    <ideas>
+      <idea ac="AC1">Call get_top_applicants(state, 10), verify DataFrame returned</idea>
+      <idea ac="AC2">Check columns match schema specification</idea>
+      <idea ac="AC3">Inspect SQL query with debug mode or logging</idea>
+      <idea ac="AC4">Test with limit=10 and limit=25, verify row counts</idea>
+      <idea ac="AC5">Test tech field mode, verify expected applicants</idea>
+      <idea ac="AC6">Test IPC mode with A61B, verify medical device companies</idea>
+      <idea ac="AC7">Add region filter, verify regional applicants only</idea>
+      <idea ac="AC8">Enable SME filter, verify large companies excluded</idea>
+      <idea ac="AC9">Verify no NULL applicant names in results</idea>
+      <idea ac="AC10">Simulate error, verify empty DataFrame returned</idea>
+    </ideas>
+  </tests>
+</story-context>

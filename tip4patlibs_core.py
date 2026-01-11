@@ -30,7 +30,13 @@ import ipywidgets as widgets
 
 # PATSTAT connection and models
 from epo.tipdata.patstat import PatstatClient
-from epo.tipdata.patstat.database.models import TLS201_APPLN, TLS801_COUNTRY, TLS901_TECHN_FIELD_IPC, TLS904_NUTS
+from epo.tipdata.patstat.database.models import (
+    TLS201_APPLN, TLS206_PERSON, TLS207_PERS_APPLN,
+    TLS209_APPLN_IPC, TLS230_APPLN_TECHN_FIELD,
+    TLS801_COUNTRY, TLS901_TECHN_FIELD_IPC, TLS904_NUTS
+)
+from sqlalchemy import func, and_, or_
+from sqlalchemy.orm import Session
 
 # Module exports - controls what `from tip4patlibs_core import *` exposes
 __all__ = [
@@ -48,6 +54,7 @@ __all__ = [
     'reference_data',
     'state',
     'widget_factory',
+    'analysis_results',
 ]
 
 # =============================================================================
@@ -64,6 +71,10 @@ reference_data: Optional['ReferenceData'] = None
 # Module-level state and widget factory (initialized in notebook after reference data load)
 state: Optional['AnalysisState'] = None
 widget_factory: Optional['WidgetFactory'] = None
+
+# Module-level analysis results (populated by PatstatQueries, consumed by ChartBuilder)
+# Keys: 'trend', 'applicants', 'tech_breakdown', 'regional'
+analysis_results: dict = {}
 
 
 def init_patstat() -> Tuple[PatstatClient, Any]:
@@ -338,10 +349,37 @@ class PatstatQueries:
     Provides methods to build and execute queries against PATSTAT
     using the EPO patstat library and SQLAlchemy ORM.
 
-    Placeholder - full implementation in Epic 3.
+    Architecture: ADR-002 ORM primary with SQL escape hatch
+    - get_trend_data: ORM (straightforward aggregation)
+    - get_top_applicants: SQL escape hatch (complex GROUP BY) - Story 3.3
+
+    Attributes:
+        db: SQLAlchemy session from PatstatClient.orm()
+
+    Example:
+        >>> queries = PatstatQueries(get_db())
+        >>> trend_df = queries.get_trend_data(state)
     """
 
-    def __init__(self, db):
+    # Empty DataFrame schemas for error returns (AC8)
+    TREND_SCHEMA = {'year': pd.Series(dtype='int64'),
+                    'application_count': pd.Series(dtype='int64'),
+                    'invention_count': pd.Series(dtype='int64')}
+
+    APPLICANTS_SCHEMA = {'applicant_name': pd.Series(dtype='str'),
+                         'application_count': pd.Series(dtype='int64'),
+                         'invention_count': pd.Series(dtype='int64'),
+                         'country': pd.Series(dtype='str')}
+
+    TECH_BREAKDOWN_SCHEMA = {'ipc_class': pd.Series(dtype='str'),
+                             'ipc_label': pd.Series(dtype='str'),
+                             'count': pd.Series(dtype='int64')}
+
+    REGIONAL_SCHEMA = {'region': pd.Series(dtype='str'),
+                       'region_label': pd.Series(dtype='str'),
+                       'count': pd.Series(dtype='int64')}
+
+    def __init__(self, db: Session) -> None:
         """
         Initialize with PATSTAT database connection.
 
@@ -349,6 +387,220 @@ class PatstatQueries:
             db: SQLAlchemy session from PatstatClient.orm()
         """
         self.db = db
+
+    def _empty_trend_df(self) -> pd.DataFrame:
+        """Return empty DataFrame with trend schema."""
+        return pd.DataFrame(self.TREND_SCHEMA)
+
+    def _empty_applicants_df(self) -> pd.DataFrame:
+        """Return empty DataFrame with applicants schema."""
+        return pd.DataFrame(self.APPLICANTS_SCHEMA)
+
+    def _empty_tech_breakdown_df(self) -> pd.DataFrame:
+        """Return empty DataFrame with tech breakdown schema."""
+        return pd.DataFrame(self.TECH_BREAKDOWN_SCHEMA)
+
+    def _empty_regional_df(self) -> pd.DataFrame:
+        """Return empty DataFrame with regional schema."""
+        return pd.DataFrame(self.REGIONAL_SCHEMA)
+
+    def get_trend_data(self, state: 'AnalysisState', debug: bool = False) -> pd.DataFrame:
+        """
+        Get yearly application and invention counts.
+
+        Implements AC3, AC4, AC5, AC6, AC7.
+
+        Args:
+            state: AnalysisState with filter parameters
+            debug: If True, prints the compiled SQL query for transparency
+
+        Returns:
+            DataFrame with columns: year, application_count, invention_count
+            Grouped by appln_filing_year, ordered ascending.
+
+        Architecture:
+            - Uses ORM query (ADR-002)
+            - Filters by appln_auth (ADR-008)
+            - Respects tech_mode, region, sme_filter
+
+        Example:
+            >>> queries = PatstatQueries(get_db())
+            >>> df = queries.get_trend_data(state, debug=True)  # Shows SQL
+        """
+        try:
+            # Build base query with aggregations
+            if state.tech_mode == 'field' and state.tech_field is not None:
+                # Tech Field mode - use tls230_appln_techn_field (AC4)
+                query = self.db.query(
+                    TLS201_APPLN.appln_filing_year.label('year'),
+                    func.count(TLS201_APPLN.appln_id).label('application_count'),
+                    func.count(func.distinct(TLS201_APPLN.docdb_family_id)).label('invention_count')
+                ).join(
+                    TLS230_APPLN_TECHN_FIELD,
+                    TLS201_APPLN.appln_id == TLS230_APPLN_TECHN_FIELD.appln_id
+                ).join(
+                    TLS207_PERS_APPLN,
+                    TLS201_APPLN.appln_id == TLS207_PERS_APPLN.appln_id
+                )
+
+                # Build filter conditions
+                filters = [
+                    TLS201_APPLN.appln_auth == state.country,
+                    TLS230_APPLN_TECHN_FIELD.techn_field_nr == state.tech_field,
+                    TLS201_APPLN.appln_filing_year.between(state.year_start, state.year_end),
+                    TLS207_PERS_APPLN.applt_seq_nr > 0  # Applicants only
+                ]
+
+                # Add region filter if set (AC6)
+                if state.region is not None:
+                    query = query.join(
+                        TLS206_PERSON,
+                        TLS207_PERS_APPLN.person_id == TLS206_PERSON.person_id
+                    )
+                    filters.append(TLS206_PERSON.nuts.like(f"{state.region}%"))
+
+                # Add SME filter if set (AC7)
+                if state.sme_filter:
+                    # Subquery for applicants with <100 total applications
+                    sme_subquery = self.db.query(
+                        TLS207_PERS_APPLN.person_id
+                    ).group_by(
+                        TLS207_PERS_APPLN.person_id
+                    ).having(
+                        func.count(TLS207_PERS_APPLN.appln_id) < 100
+                    ).subquery()
+
+                    query = query.filter(TLS207_PERS_APPLN.person_id.in_(sme_subquery))
+
+                query = query.filter(and_(*filters))
+
+            else:
+                # IPC mode - use tls209_appln_ipc (AC5)
+                query = self.db.query(
+                    TLS201_APPLN.appln_filing_year.label('year'),
+                    func.count(TLS201_APPLN.appln_id).label('application_count'),
+                    func.count(func.distinct(TLS201_APPLN.docdb_family_id)).label('invention_count')
+                ).join(
+                    TLS209_APPLN_IPC,
+                    TLS201_APPLN.appln_id == TLS209_APPLN_IPC.appln_id
+                ).join(
+                    TLS207_PERS_APPLN,
+                    TLS201_APPLN.appln_id == TLS207_PERS_APPLN.appln_id
+                )
+
+                # Build IPC LIKE conditions
+                ipc_conditions = [TLS209_APPLN_IPC.ipc_class_symbol.like(f"{code}%")
+                                  for code in state.ipc_codes]
+
+                filters = [
+                    TLS201_APPLN.appln_auth == state.country,
+                    or_(*ipc_conditions),  # Match any of the IPC codes
+                    TLS201_APPLN.appln_filing_year.between(state.year_start, state.year_end),
+                    TLS207_PERS_APPLN.applt_seq_nr > 0
+                ]
+
+                # Add region filter if set (AC6)
+                if state.region is not None:
+                    query = query.join(
+                        TLS206_PERSON,
+                        TLS207_PERS_APPLN.person_id == TLS206_PERSON.person_id
+                    )
+                    filters.append(TLS206_PERSON.nuts.like(f"{state.region}%"))
+
+                # Add SME filter if set (AC7)
+                if state.sme_filter:
+                    sme_subquery = self.db.query(
+                        TLS207_PERS_APPLN.person_id
+                    ).group_by(
+                        TLS207_PERS_APPLN.person_id
+                    ).having(
+                        func.count(TLS207_PERS_APPLN.appln_id) < 100
+                    ).subquery()
+
+                    query = query.filter(TLS207_PERS_APPLN.person_id.in_(sme_subquery))
+
+                query = query.filter(and_(*filters))
+
+            # Apply grouping and ordering
+            query = query.group_by(
+                TLS201_APPLN.appln_filing_year
+            ).order_by(
+                TLS201_APPLN.appln_filing_year
+            )
+
+            # Debug mode - print compiled SQL for transparency (recommended by Architect)
+            if debug:
+                try:
+                    compiled = query.statement.compile(
+                        dialect=self.db.bind.dialect,
+                        compile_kwargs={"literal_binds": True}
+                    )
+                    print("=" * 60)
+                    print("DEBUG: Compiled SQL Query")
+                    print("=" * 60)
+                    print(str(compiled))
+                    print("=" * 60)
+                except Exception as debug_err:
+                    print(f"DEBUG: Could not compile SQL with literal binds: {debug_err}")
+                    print(f"DEBUG: Query statement: {query.statement}")
+
+            # Execute and convert to DataFrame
+            df = pd.read_sql(query.statement, self.db.bind)
+            return df
+
+        except Exception as e:
+            print(f"Error executing trend query: {e}")
+            return self._empty_trend_df()
+
+    def get_top_applicants(self, state: 'AnalysisState', limit: int = 10) -> pd.DataFrame:
+        """
+        Get top N applicants by application count.
+
+        Full implementation in Story 3.3.
+
+        Args:
+            state: AnalysisState with filter parameters
+            limit: Maximum number of applicants to return (default 10)
+
+        Returns:
+            DataFrame with columns: applicant_name, application_count,
+                                    invention_count, country
+            Ordered by application_count DESC.
+        """
+        # Stub - full implementation in Story 3.3
+        return self._empty_applicants_df()
+
+    def get_tech_breakdown(self, state: 'AnalysisState') -> pd.DataFrame:
+        """
+        Get IPC class distribution for technology treemap.
+
+        Full implementation in Story 3.3.
+
+        Args:
+            state: AnalysisState with filter parameters
+
+        Returns:
+            DataFrame with columns: ipc_class, ipc_label, count
+            Limited to top 20 IPC classes by count.
+        """
+        # Stub - full implementation in Story 3.3
+        return self._empty_tech_breakdown_df()
+
+    def get_regional_distribution(self, state: 'AnalysisState') -> pd.DataFrame:
+        """
+        Get patent counts by NUTS region.
+
+        Full implementation in Story 3.3.
+
+        Args:
+            state: AnalysisState with filter parameters
+
+        Returns:
+            DataFrame with columns: region, region_label, count
+            Only for applicants with NUTS codes matching country.
+        """
+        # Stub - full implementation in Story 3.3
+        return self._empty_regional_df()
 
 
 class WidgetFactory:
@@ -1155,12 +1407,14 @@ class WidgetFactory:
         """
         Callback when Run Analysis button is clicked.
 
-        Triggers query execution (placeholder for Epic 3).
+        Executes PATSTAT queries and stores results in analysis_results.
         Shows loading state during execution.
 
         Args:
             button: The clicked button widget
         """
+        global analysis_results
+
         # Show loading state
         button.description = 'Running...'
         button.disabled = True
@@ -1170,18 +1424,45 @@ class WidgetFactory:
         if hasattr(self, '_validation_message_widget') and self._validation_message_widget:
             self._validation_message_widget.value = '<span style="color: #17a2b8;">⏳ Querying PATSTAT...</span>'
 
-        # Placeholder for Epic 3 query execution
-        # For now, just show a message after a brief delay
-        import time
-        time.sleep(0.5)  # Brief delay for UX
+        try:
+            # Initialize PatstatQueries with database connection
+            queries = PatstatQueries(get_db())
 
-        # Reset button and show placeholder message
+            # Execute trend query (Story 3.1)
+            if hasattr(self, '_validation_message_widget') and self._validation_message_widget:
+                self._validation_message_widget.value = '<span style="color: #17a2b8;">⏳ Loading trend data...</span>'
+
+            trend_df = queries.get_trend_data(self.state)
+            analysis_results['trend'] = trend_df
+
+            # Execute other queries (stubs for now - Story 3.3)
+            if hasattr(self, '_validation_message_widget') and self._validation_message_widget:
+                self._validation_message_widget.value = '<span style="color: #17a2b8;">⏳ Loading applicant data...</span>'
+
+            analysis_results['applicants'] = queries.get_top_applicants(self.state)
+            analysis_results['tech_breakdown'] = queries.get_tech_breakdown(self.state)
+            analysis_results['regional'] = queries.get_regional_distribution(self.state)
+
+            # Show success message
+            result_count = len(trend_df) if not trend_df.empty else 0
+            if result_count > 0:
+                total_apps = trend_df['application_count'].sum() if 'application_count' in trend_df.columns else 0
+                if hasattr(self, '_validation_message_widget') and self._validation_message_widget:
+                    self._validation_message_widget.value = f'<span style="color: #28a745;">✅ Analysis complete: {result_count} years, {total_apps:,} applications</span>'
+            else:
+                if hasattr(self, '_validation_message_widget') and self._validation_message_widget:
+                    self._validation_message_widget.value = '<span style="color: #ffc107;">⚠️ No patents found for this selection. Try expanding date range or changing filters.</span>'
+
+        except Exception as e:
+            # Show error message
+            if hasattr(self, '_validation_message_widget') and self._validation_message_widget:
+                self._validation_message_widget.value = f'<span style="color: #dc3545;">❌ Query error: {str(e)}</span>'
+            print(f"Query execution error: {e}")
+
+        # Reset button state
         button.description = 'Run Analysis'
         button.disabled = False
         button.icon = 'play'
-
-        if hasattr(self, '_validation_message_widget') and self._validation_message_widget:
-            self._validation_message_widget.value = '<span style="color: #6c757d;">📋 Query execution coming in Epic 3</span>'
 
     def _update_run_button_state(self):
         """
