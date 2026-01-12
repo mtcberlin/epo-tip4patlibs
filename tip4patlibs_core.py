@@ -1570,7 +1570,7 @@ class WidgetFactory:
         # Query 2: Top applicants (AC3)
         update_progress("⏳ Loading top applicants...")
         try:
-            analysis_results['applicants'] = queries.get_top_applicants(self.state)
+            analysis_results['applicants'] = queries.get_top_applicants(self.state, limit=25)
         except Exception as e:
             print(f"Could not load applicants: {e}")
             query_errors.append("applicants")
