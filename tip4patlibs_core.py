@@ -26,6 +26,7 @@ from typing import List, Optional, Tuple, Any
 # Heavy imports - kept in module, not notebook
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 import ipywidgets as widgets
 
 # PATSTAT connection and models
@@ -55,6 +56,11 @@ __all__ = [
     'state',
     'widget_factory',
     'analysis_results',
+    'display_results',
+    'EPO_COLORS',
+    'EPO_PALETTE',
+    'EPO_LAYOUT',
+    'truncate_name',
 ]
 
 # =============================================================================
@@ -1508,62 +1514,129 @@ class WidgetFactory:
         """
         Callback when Run Analysis button is clicked.
 
-        Executes PATSTAT queries and stores results in analysis_results.
-        Shows loading state during execution.
+        Executes PATSTAT queries sequentially and stores results in analysis_results.
+        Shows loading state and progress messages during execution.
+        Handles individual query failures gracefully (partial results).
+        Displays total execution time on completion.
 
         Args:
             button: The clicked button widget
+
+        Story 3.4: Query Execution & Progress
+        - AC1: Loading indicator (button disabled, spinner)
+        - AC2: Progress messages per query
+        - AC3: Sequential query execution
+        - AC4: Completion message with timing
+        - AC5: Per-query error handling
+        - AC6: Zero results handling
+        - AC7: Results storage in analysis_results
+        - AC8: Query timing
         """
+        import time
         global analysis_results
 
-        # Show loading state
+        # Show loading state (AC1)
         button.description = 'Running...'
         button.disabled = True
         button.icon = 'spinner'
 
-        # Update status message
-        if hasattr(self, '_validation_message_widget') and self._validation_message_widget:
-            self._validation_message_widget.value = '<span style="color: #17a2b8;">⏳ Querying PATSTAT...</span>'
+        # Track execution time (AC8)
+        total_start = time.time()
+        query_errors = []
 
-        try:
-            # Initialize PatstatQueries with database connection
-            queries = PatstatQueries(get_db())
-
-            # Execute trend query (Story 3.1)
+        # Helper to update progress message
+        def update_progress(message, style="info"):
             if hasattr(self, '_validation_message_widget') and self._validation_message_widget:
-                self._validation_message_widget.value = '<span style="color: #17a2b8;">⏳ Loading trend data...</span>'
+                colors = {"info": "#17a2b8", "success": "#28a745", "warning": "#ffc107", "error": "#dc3545"}
+                color = colors.get(style, "#17a2b8")
+                self._validation_message_widget.value = f'<span style="color: {color};">{message}</span>'
 
+        # Update initial status message (AC2)
+        update_progress("⏳ Querying PATSTAT...")
+
+        # Initialize PatstatQueries with database connection
+        queries = PatstatQueries(get_db())
+
+        # Query 1: Trend data (AC3 - sequential execution)
+        update_progress("⏳ Loading trend data...")
+        try:
             trend_df = queries.get_trend_data(self.state)
             analysis_results['trend'] = trend_df
+        except Exception as e:
+            print(f"Could not load trend data: {e}")
+            query_errors.append("trend data")
+            analysis_results['trend'] = queries._empty_trend_df()
 
-            # Execute other queries (stubs for now - Story 3.3)
-            if hasattr(self, '_validation_message_widget') and self._validation_message_widget:
-                self._validation_message_widget.value = '<span style="color: #17a2b8;">⏳ Loading applicant data...</span>'
-
+        # Query 2: Top applicants (AC3)
+        update_progress("⏳ Loading top applicants...")
+        try:
             analysis_results['applicants'] = queries.get_top_applicants(self.state)
+        except Exception as e:
+            print(f"Could not load applicants: {e}")
+            query_errors.append("applicants")
+            analysis_results['applicants'] = queries._empty_applicants_df()
+
+        # Query 3: Tech breakdown (AC3)
+        update_progress("⏳ Loading technology breakdown...")
+        try:
             analysis_results['tech_breakdown'] = queries.get_tech_breakdown(self.state)
+        except Exception as e:
+            print(f"Could not load tech breakdown: {e}")
+            query_errors.append("tech breakdown")
+            analysis_results['tech_breakdown'] = queries._empty_tech_breakdown_df()
+
+        # Query 4: Regional distribution - only if region set (AC3)
+        if self.state.region is not None:
+            update_progress("⏳ Loading regional data...")
+            try:
+                analysis_results['regional'] = queries.get_regional_distribution(self.state)
+            except Exception as e:
+                print(f"Could not load regional data: {e}")
+                query_errors.append("regional data")
+                analysis_results['regional'] = queries._empty_regional_df()
+        else:
+            # No region selected - get empty regional data
             analysis_results['regional'] = queries.get_regional_distribution(self.state)
 
-            # Show success message
-            result_count = len(trend_df) if not trend_df.empty else 0
+        # Calculate total execution time (AC8)
+        total_time = time.time() - total_start
+
+        # Determine completion message (AC4, AC5, AC6)
+        trend_df = analysis_results.get('trend', pd.DataFrame())
+        result_count = len(trend_df) if not trend_df.empty else 0
+
+        if query_errors:
+            # AC5: Partial results with error indication
+            error_list = ", ".join(query_errors)
             if result_count > 0:
                 total_apps = trend_df['application_count'].sum() if 'application_count' in trend_df.columns else 0
-                if hasattr(self, '_validation_message_widget') and self._validation_message_widget:
-                    self._validation_message_widget.value = f'<span style="color: #28a745;">✅ Analysis complete: {result_count} years, {total_apps:,} applications</span>'
+                update_progress(
+                    f"⚠️ Analysis complete with errors ({total_time:.1f}s): {result_count} years, {total_apps:,} apps. Could not load: {error_list}",
+                    "warning"
+                )
             else:
-                if hasattr(self, '_validation_message_widget') and self._validation_message_widget:
-                    self._validation_message_widget.value = '<span style="color: #ffc107;">⚠️ No patents found for this selection. Try expanding date range or changing filters.</span>'
+                update_progress(f"⚠️ Partial results ({total_time:.1f}s). Could not load: {error_list}", "warning")
+        elif result_count > 0:
+            # AC4: Full success
+            total_apps = trend_df['application_count'].sum() if 'application_count' in trend_df.columns else 0
+            update_progress(f"✅ Analysis complete ({total_time:.1f}s): {result_count} years, {total_apps:,} applications", "success")
+        else:
+            # AC6: Zero results
+            update_progress(
+                f"⚠️ No patents found ({total_time:.1f}s). Try expanding date range or changing filters.",
+                "warning"
+            )
 
-        except Exception as e:
-            # Show error message
-            if hasattr(self, '_validation_message_widget') and self._validation_message_widget:
-                self._validation_message_widget.value = f'<span style="color: #dc3545;">❌ Query error: {str(e)}</span>'
-            print(f"Query execution error: {e}")
-
-        # Reset button state
+        # Reset button state (AC4)
         button.description = 'Run Analysis'
         button.disabled = False
         button.icon = 'play'
+
+        # Display charts (Story 4.1: Trend Line Chart)
+        if result_count > 0 or not query_errors:
+            # Use output widget if registered, otherwise create inline
+            output_widget = getattr(self, '_chart_output_widget', None)
+            display_results(analysis_results, self.state, output_widget)
 
     def _update_run_button_state(self):
         """
@@ -1652,20 +1725,544 @@ class WidgetFactory:
             self._validation_message_widget
         ])
 
+    def chart_output(self) -> widgets.Output:
+        """
+        Create Output widget for chart display.
+
+        Returns an Output widget that will be used by display_results()
+        to render charts after query execution.
+
+        Returns:
+            widgets.Output: Output widget for charts
+
+        Example:
+            >>> factory = WidgetFactory(reference_data, state)
+            >>> chart_area = factory.chart_output()
+            >>> display(chart_area)
+        """
+        output = widgets.Output()
+        self._chart_output_widget = output
+        return output
+
+
+# =============================================================================
+# EPO Brand Constants (Story 4.1)
+# =============================================================================
+
+EPO_COLORS = {
+    'primary': '#C8102E',      # EPO Red
+    'secondary': '#6D6E71',    # EPO Gray
+    'light': '#F5F5F5',        # Light background
+    'dark': '#1D1D1B',         # Dark text
+}
+
+EPO_PALETTE = ['#C8102E', '#6D6E71', '#A6093D', '#8B8D8E', '#D4495B', '#B0B1B3']
+
+EPO_LAYOUT = {
+    'font_family': 'Arial',
+    'title_font_size': 16,
+    'paper_bgcolor': 'white',
+    'plot_bgcolor': 'white',
+}
+
+
+def truncate_name(name: str, max_length: int = 30) -> str:
+    """
+    Truncate long names for chart display.
+
+    Args:
+        name: Original name string
+        max_length: Maximum length before truncation (default 30)
+
+    Returns:
+        str: Truncated name with "..." if over max_length, otherwise original
+
+    Example:
+        >>> truncate_name("SIEMENS HEALTHCARE DIAGNOSTICS GMBH")
+        "SIEMENS HEALTHCARE DIAGNOS..."
+    """
+    if name and len(name) > max_length:
+        return name[:max_length - 3] + "..."
+    return name or ""
+
 
 class ChartBuilder:
     """
     Builder for Plotly visualizations with EPO styling.
 
     Creates interactive charts for patent analysis results:
-    - Trend line charts
-    - Top applicants bar charts
-    - Technology breakdown treemaps
-    - Regional distribution charts
+    - Trend line charts (trend_line)
+    - Top applicants bar charts (top_applicants_bar) - Story 4.2
+    - Regional distribution charts (regional_bar) - Story 4.3
+    - Technology breakdown treemaps (tech_treemap) - Story 4.4
 
-    Placeholder - full implementation in Epic 4.
+    All methods are static and return go.Figure objects configured with
+    EPO brand styling (colors, fonts) and interactivity (hover, zoom/pan).
     """
-    pass
+
+    @staticmethod
+    def _get_tech_field_name(tech_field: Optional[int]) -> str:
+        """
+        Get human-readable technology field name from field number.
+
+        Args:
+            tech_field: WIPO technology field number (1-35)
+
+        Returns:
+            str: Field name (e.g., "Medical technology") or "Custom IPC" if None
+        """
+        if tech_field is None:
+            return "Custom IPC"
+
+        # Look up from reference_data if available
+        if reference_data is not None:
+            for display_name, field_nr in reference_data.tech_fields:
+                if field_nr == tech_field:
+                    # Extract just the name part (remove "13 - " prefix)
+                    parts = display_name.split(' - ', 1)
+                    return parts[1] if len(parts) > 1 else display_name
+        return f"Field {tech_field}"
+
+    @staticmethod
+    def trend_line(df: pd.DataFrame, state: 'AnalysisState') -> go.Figure:
+        """
+        Create line chart for patent applications over time.
+
+        Implements AC1-AC8 of Story 4.1:
+        - AC1: Line chart with X=years, Y=application count
+        - AC2: Dual lines (applications solid, inventions dashed)
+        - AC3: EPO brand styling
+        - AC4: Dynamic title from state
+        - AC5: Interactive hover with year and counts
+        - AC6: Zoom/pan enabled
+        - AC7: Empty data handling (returns None, caller shows message)
+        - AC8: Single year shows point with marker
+
+        Args:
+            df: DataFrame with columns [year, application_count, invention_count]
+            state: AnalysisState for title generation
+
+        Returns:
+            go.Figure: Configured Plotly figure, or None if df is empty
+        """
+        # AC7: Handle empty DataFrame
+        if df is None or df.empty:
+            return None
+
+        # Get tech field name for title (AC4)
+        tech_name = ChartBuilder._get_tech_field_name(state.tech_field)
+
+        # Build dynamic title (AC4)
+        title = f"Patent Applications: {state.country} - {tech_name} ({state.year_start}-{state.year_end})"
+
+        # Create figure with dual traces (AC1, AC2)
+        fig = go.Figure()
+
+        # AC8: Determine if single point (show marker)
+        show_markers = len(df) == 1
+
+        # Applications line - solid, EPO Red (AC2, AC3)
+        fig.add_trace(go.Scatter(
+            x=df['year'],
+            y=df['application_count'],
+            name='Applications',
+            mode='lines+markers' if show_markers else 'lines',
+            line=dict(color=EPO_COLORS['primary'], width=2),
+            marker=dict(size=8) if show_markers else None,
+            hovertemplate='<b>%{x}</b><br>Applications: %{y:,}<extra></extra>'
+        ))
+
+        # Inventions line - dashed, EPO Gray (AC2)
+        fig.add_trace(go.Scatter(
+            x=df['year'],
+            y=df['invention_count'],
+            name='Inventions (families)',
+            mode='lines+markers' if show_markers else 'lines',
+            line=dict(color=EPO_COLORS['secondary'], width=2, dash='dash'),
+            marker=dict(size=8) if show_markers else None,
+            hovertemplate='<b>%{x}</b><br>Inventions: %{y:,}<extra></extra>'
+        ))
+
+        # Apply EPO layout styling (AC3)
+        fig.update_layout(
+            title=dict(
+                text=title,
+                font=dict(family=EPO_LAYOUT['font_family'], size=EPO_LAYOUT['title_font_size'])
+            ),
+            font=dict(family=EPO_LAYOUT['font_family']),
+            paper_bgcolor=EPO_LAYOUT['paper_bgcolor'],
+            plot_bgcolor=EPO_LAYOUT['plot_bgcolor'],
+            xaxis=dict(
+                title='Year',
+                tickmode='linear',
+                dtick=1,
+                gridcolor='#E5E5E5',
+                linecolor='#E5E5E5'
+            ),
+            yaxis=dict(
+                title='Count',
+                gridcolor='#E5E5E5',
+                linecolor='#E5E5E5'
+            ),
+            legend=dict(
+                orientation='h',
+                yanchor='bottom',
+                y=1.02,
+                xanchor='right',
+                x=1
+            ),
+            hovermode='x unified',
+            margin=dict(l=60, r=30, t=80, b=60)
+        )
+
+        # AC6: Enable zoom/pan (default behavior, ensure modebar visible)
+        fig.update_layout(
+            modebar=dict(
+                orientation='v',
+                bgcolor='rgba(255,255,255,0.7)'
+            )
+        )
+
+        return fig
+
+    @staticmethod
+    def top_applicants_bar(df: pd.DataFrame, state: 'AnalysisState', limit: int = 10) -> go.Figure:
+        """
+        Create horizontal bar chart for top applicants.
+
+        Implements AC1-AC8 of Story 4.2:
+        - AC1: Horizontal bar chart with Y=applicant names, X=application count
+        - AC2: Bars ordered with largest at top
+        - AC3: Names truncated to 30 chars, full name in hover
+        - AC4: Dynamic title from state and limit
+        - AC5: Hover shows full name, counts, country
+        - AC7: EPO Red bar color, Arial font
+        - AC8: Empty data handling (returns None)
+
+        Args:
+            df: DataFrame with columns [applicant_name, application_count, invention_count, country]
+            state: AnalysisState for title generation
+            limit: Number of applicants to show (default 10, supports 10 or 25)
+
+        Returns:
+            go.Figure: Configured Plotly figure, or None if df is empty
+        """
+        # AC8: Handle empty DataFrame
+        if df is None or df.empty:
+            return None
+
+        # Get top N applicants (DataFrame should already be sorted DESC)
+        df_top = df.head(limit).copy()
+
+        # AC3: Truncate names for display, keep full names for hover
+        df_top['display_name'] = df_top['applicant_name'].apply(truncate_name)
+
+        # Get tech field name for title (AC4)
+        tech_name = ChartBuilder._get_tech_field_name(state.tech_field)
+
+        # Build dynamic title (AC4)
+        title = f"Top {limit} Applicants: {state.country} - {tech_name}"
+
+        # Create horizontal bar chart (AC1)
+        fig = go.Figure()
+
+        fig.add_trace(go.Bar(
+            x=df_top['application_count'],
+            y=df_top['display_name'],
+            orientation='h',
+            marker_color=EPO_COLORS['primary'],
+            # AC5: Hover data with full details
+            customdata=df_top[['applicant_name', 'invention_count', 'country']].values,
+            hovertemplate=(
+                '<b>%{customdata[0]}</b><br>'
+                'Applications: %{x:,}<br>'
+                'Inventions: %{customdata[1]:,}<br>'
+                'Country: %{customdata[2]}'
+                '<extra></extra>'
+            )
+        ))
+
+        # AC2: Order with largest at top (reverse order since bar chart draws bottom-up)
+        fig.update_layout(
+            yaxis=dict(
+                categoryorder='total ascending',  # Largest at top
+                title='',
+                tickfont=dict(size=11)
+            )
+        )
+
+        # Apply EPO layout styling (AC7)
+        fig.update_layout(
+            title=dict(
+                text=title,
+                font=dict(family=EPO_LAYOUT['font_family'], size=EPO_LAYOUT['title_font_size'])
+            ),
+            font=dict(family=EPO_LAYOUT['font_family']),
+            paper_bgcolor=EPO_LAYOUT['paper_bgcolor'],
+            plot_bgcolor=EPO_LAYOUT['plot_bgcolor'],
+            xaxis=dict(
+                title='Applications',
+                gridcolor='#E5E5E5',
+                linecolor='#E5E5E5'
+            ),
+            margin=dict(l=200, r=30, t=80, b=60),  # Extra left margin for names
+            height=max(400, limit * 25 + 150)  # Dynamic height based on limit
+        )
+
+        return fig
+
+    @staticmethod
+    def regional_bar(df: pd.DataFrame, state: 'AnalysisState') -> go.Figure:
+        """
+        Create vertical bar chart for regional distribution.
+
+        Implements AC1-AC8 of Story 4.3:
+        - AC1: Vertical bar chart with X=region labels, Y=application count
+        - AC2: Bars ordered by count descending (highest on left)
+        - AC3: Limited to top 10 regions
+        - AC4: Dynamic title from state
+        - AC5: Hover shows region label, NUTS code, count
+        - AC6: EPO Red bar color, Arial font
+        - AC7/AC8: Empty data handling (returns None)
+
+        Args:
+            df: DataFrame with columns [region, region_label, count]
+            state: AnalysisState for title generation
+
+        Returns:
+            go.Figure: Configured Plotly figure, or None if df is empty or has <=1 regions
+        """
+        # AC7/AC8: Handle empty or single-region DataFrame
+        if df is None or df.empty or len(df) <= 1:
+            return None
+
+        # AC3: Limit to top 10 regions, sorted by count descending (AC2)
+        df_top = df.nlargest(10, 'count').copy()
+
+        # Get tech field name for title (AC4)
+        tech_name = ChartBuilder._get_tech_field_name(state.tech_field)
+
+        # Build dynamic title (AC4)
+        title = f"Regional Distribution: {state.country} - {tech_name}"
+
+        # Create vertical bar chart (AC1)
+        fig = go.Figure()
+
+        fig.add_trace(go.Bar(
+            x=df_top['region_label'],
+            y=df_top['count'],
+            marker_color=EPO_COLORS['primary'],
+            # AC5: Hover data with NUTS code and count
+            customdata=df_top[['region']].values,
+            hovertemplate=(
+                '<b>%{x}</b><br>'
+                'NUTS Code: %{customdata[0]}<br>'
+                'Applications: %{y:,}'
+                '<extra></extra>'
+            )
+        ))
+
+        # Apply EPO layout styling (AC6)
+        fig.update_layout(
+            title=dict(
+                text=title,
+                font=dict(family=EPO_LAYOUT['font_family'], size=EPO_LAYOUT['title_font_size'])
+            ),
+            font=dict(family=EPO_LAYOUT['font_family']),
+            paper_bgcolor=EPO_LAYOUT['paper_bgcolor'],
+            plot_bgcolor=EPO_LAYOUT['plot_bgcolor'],
+            xaxis=dict(
+                title='Region',
+                tickangle=-45,
+                gridcolor='#E5E5E5',
+                linecolor='#E5E5E5'
+            ),
+            yaxis=dict(
+                title='Applications',
+                gridcolor='#E5E5E5',
+                linecolor='#E5E5E5'
+            ),
+            margin=dict(l=60, r=30, t=80, b=120)  # Extra bottom margin for rotated labels
+        )
+
+        return fig
+
+    @staticmethod
+    def tech_treemap(df: pd.DataFrame, state: 'AnalysisState') -> go.Figure:
+        """
+        Create treemap for technology (IPC class) breakdown.
+
+        Implements AC1-AC8 of Story 4.4:
+        - AC1: Treemap with boxes sized by count
+        - AC2: Proportional box sizing
+        - AC3: Labels show IPC class and count
+        - AC4: Dynamic title from state
+        - AC5: Hover shows IPC class, label, count, percentage
+        - AC6: EPO color palette for visual distinction
+        - AC7: Limited to top 20 IPC classes
+        - AC8: Empty data handling (returns None)
+
+        Args:
+            df: DataFrame with columns [ipc_class, ipc_label, count]
+            state: AnalysisState for title generation
+
+        Returns:
+            go.Figure: Configured Plotly figure, or None if df is empty
+        """
+        # AC8: Handle empty DataFrame
+        if df is None or df.empty:
+            return None
+
+        # AC7: Limit to top 20 IPC classes
+        df_top = df.nlargest(20, 'count').copy()
+
+        # Calculate percentage for hover (AC5)
+        total = df_top['count'].sum()
+        df_top['percentage'] = (df_top['count'] / total * 100).round(1)
+
+        # Build dynamic title (AC4)
+        title = f"Technology Breakdown: {state.country} ({state.year_start}-{state.year_end})"
+
+        # Create treemap (AC1, AC2)
+        fig = px.treemap(
+            df_top,
+            path=['ipc_class'],
+            values='count',
+            color_discrete_sequence=EPO_PALETTE,
+            custom_data=['ipc_label', 'percentage']
+        )
+
+        # AC3: Configure text labels and AC5: hover template
+        fig.update_traces(
+            textinfo='label+value',
+            texttemplate='<b>%{label}</b><br>%{value:,}',
+            hovertemplate=(
+                '<b>%{label}</b><br>'
+                '%{customdata[0]}<br>'
+                'Count: %{value:,}<br>'
+                'Share: %{customdata[1]:.1f}%'
+                '<extra></extra>'
+            )
+        )
+
+        # Apply EPO layout styling (AC6)
+        fig.update_layout(
+            title=dict(
+                text=title,
+                font=dict(family=EPO_LAYOUT['font_family'], size=EPO_LAYOUT['title_font_size'])
+            ),
+            font=dict(family=EPO_LAYOUT['font_family']),
+            paper_bgcolor=EPO_LAYOUT['paper_bgcolor'],
+            margin=dict(l=20, r=20, t=60, b=20)
+        )
+
+        return fig
+
+
+def display_results(results: dict, state: 'AnalysisState', output_widget: Optional[widgets.Output] = None) -> None:
+    """
+    Render charts in output area based on analysis results.
+
+    Implements empty data handling for all chart types.
+    Called by _on_run_click() after queries complete.
+
+    Args:
+        results: Dict with keys 'trend', 'applicants', 'tech_breakdown', 'regional'
+                 Each value is a DataFrame (may be empty)
+        state: AnalysisState for chart configuration
+        output_widget: Optional Output widget to render into (creates new if None)
+
+    Story 4.1: Trend line chart
+    Story 4.2: Top applicants bar chart with toggle
+    Stories 4.3-4.4: Regional and technology charts
+    """
+    from IPython.display import display, clear_output
+
+    # Use provided output widget or create new one
+    if output_widget is None:
+        output_widget = widgets.Output()
+        display(output_widget)
+
+    with output_widget:
+        clear_output(wait=True)
+
+        # Track if any charts were rendered
+        charts_rendered = 0
+
+        # Trend line chart (Story 4.1)
+        trend_df = results.get('trend')
+        if trend_df is not None and not trend_df.empty:
+            fig = ChartBuilder.trend_line(trend_df, state)
+            if fig is not None:
+                fig.show()
+                charts_rendered += 1
+        else:
+            print("📊 No trend data available for this selection")
+
+        # Top Applicants bar chart (Story 4.2)
+        applicants_df = results.get('applicants')
+        if applicants_df is not None and not applicants_df.empty:
+            # Create output widget for applicants chart (allows re-render on toggle)
+            applicants_output = widgets.Output()
+
+            # AC6: Create Top 10/25 toggle dropdown
+            limit_dropdown = widgets.Dropdown(
+                options=[('Top 10', 10), ('Top 25', 25)],
+                value=10,
+                description='Show:',
+                style={'description_width': '50px'},
+                layout=widgets.Layout(width='150px')
+            )
+
+            def render_applicants_chart(limit):
+                """Render applicants chart with given limit."""
+                with applicants_output:
+                    clear_output(wait=True)
+                    fig = ChartBuilder.top_applicants_bar(applicants_df, state, limit=limit)
+                    if fig is not None:
+                        fig.show()
+
+            def on_limit_change(change):
+                """Callback when limit toggle changes."""
+                render_applicants_chart(change['new'])
+
+            limit_dropdown.observe(on_limit_change, names='value')
+
+            # Display toggle and chart
+            print("")  # Spacer
+            display(limit_dropdown)
+            display(applicants_output)
+
+            # Initial render
+            render_applicants_chart(10)
+            charts_rendered += 1
+        else:
+            print("📊 No applicant data available for this selection")
+
+        # Regional Distribution chart (Story 4.3)
+        regional_df = results.get('regional')
+        if regional_df is not None and not regional_df.empty and len(regional_df) > 1:
+            fig = ChartBuilder.regional_bar(regional_df, state)
+            if fig is not None:
+                print("")  # Spacer
+                fig.show()
+                charts_rendered += 1
+        else:
+            print("📊 Regional breakdown not available for this selection")
+
+        # Technology Breakdown treemap (Story 4.4)
+        tech_df = results.get('tech_breakdown')
+        if tech_df is not None and not tech_df.empty:
+            fig = ChartBuilder.tech_treemap(tech_df, state)
+            if fig is not None:
+                print("")  # Spacer
+                fig.show()
+                charts_rendered += 1
+        else:
+            print("📊 No technology breakdown available for this selection")
+
+        if charts_rendered == 0:
+            print("\n⚠️ No charts could be rendered. Try adjusting your filters.")
 
 
 class Exporter:
