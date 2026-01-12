@@ -56,8 +56,8 @@ development_status:
   # Epic 3: Query Engine
   epic-3: contexted  # tech-spec created 2026-01-11
   3-1-patstatqueries-class-base-query: done  # 2026-01-12 - APPROVED by Senior Developer Review
-  3-2-trend-query-applications-over-time: review  # 2026-01-12 - validation complete
-  3-3-top-applicants-query: ready-for-dev  # 2026-01-12 - SQL escape hatch pattern
+  3-2-trend-query-applications-over-time: done  # 2026-01-12 - APPROVED by Senior Developer Review
+  3-3-top-applicants-query: review  # 2026-01-12 - implementation complete, ready for review
   3-4-query-execution-progress: ready-for-dev  # 2026-01-12 - progress UI and orchestration
   epic-3-retrospective: optional
 

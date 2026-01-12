@@ -552,23 +552,124 @@ class PatstatQueries:
             print(f"Error executing trend query: {e}")
             return self._empty_trend_df()
 
-    def get_top_applicants(self, state: 'AnalysisState', limit: int = 10) -> pd.DataFrame:
+    def get_top_applicants(self, state: 'AnalysisState', limit: int = 10, debug: bool = False) -> pd.DataFrame:
         """
         Get top N applicants by application count.
 
-        Full implementation in Story 3.3.
+        Uses SQL escape hatch pattern (ADR-002) for complex aggregation.
 
         Args:
             state: AnalysisState with filter parameters
-            limit: Maximum number of applicants to return (default 10)
+            limit: Maximum number of applicants to return (default 10, supports 10 or 25)
+            debug: If True, prints the SQL query for transparency
 
         Returns:
             DataFrame with columns: applicant_name, application_count,
                                     invention_count, country
             Ordered by application_count DESC.
+
+        Architecture:
+            - Uses raw SQL (ADR-002) for complex GROUP BY
+            - Filters by appln_auth (ADR-008)
+            - Uses psn_name for standardized name grouping
+            - Filters applt_seq_nr > 0 for applicants only
         """
-        # Stub - full implementation in Story 3.3
-        return self._empty_applicants_df()
+        from sqlalchemy import text
+
+        try:
+            # Build base query parts
+            # Tech field mode: join tls230_appln_techn_field
+            # IPC mode: join tls209_appln_ipc
+            if state.tech_mode == 'field' and state.tech_field is not None:
+                tech_join = "JOIN tls230_appln_techn_field tf ON a.appln_id = tf.appln_id"
+                tech_filter = "AND tf.techn_field_nr = :tech_field"
+                params = {
+                    'country': state.country,
+                    'tech_field': state.tech_field,
+                    'year_start': state.year_start,
+                    'year_end': state.year_end,
+                    'limit': limit
+                }
+            else:
+                # IPC mode - build LIKE conditions for each code
+                tech_join = "JOIN tls209_appln_ipc ipc ON a.appln_id = ipc.appln_id"
+                # Build OR condition for multiple IPC codes
+                ipc_conditions = " OR ".join([f"ipc.ipc_class_symbol LIKE :ipc_{i}" for i in range(len(state.ipc_codes))])
+                tech_filter = f"AND ({ipc_conditions})" if ipc_conditions else ""
+                params = {
+                    'country': state.country,
+                    'year_start': state.year_start,
+                    'year_end': state.year_end,
+                    'limit': limit
+                }
+                # Add IPC parameters
+                for i, code in enumerate(state.ipc_codes):
+                    params[f'ipc_{i}'] = f"{code}%"
+
+            # Region filter (AC7)
+            region_join = ""
+            region_filter = ""
+            if state.region is not None:
+                # Need to filter by applicant's NUTS region
+                region_filter = "AND p.nuts LIKE :region"
+                params['region'] = f"{state.region}%"
+
+            # SME filter (AC8) - subquery for applicants with <100 total applications
+            sme_filter = ""
+            if state.sme_filter:
+                sme_filter = """
+                AND pa.person_id IN (
+                    SELECT person_id
+                    FROM tls207_pers_appln
+                    GROUP BY person_id
+                    HAVING COUNT(appln_id) < 100
+                )"""
+
+            # Build the complete SQL query
+            sql = f"""
+                SELECT
+                    p.psn_name as applicant_name,
+                    p.person_ctry_code as country,
+                    COUNT(DISTINCT a.appln_id) as application_count,
+                    COUNT(DISTINCT a.docdb_family_id) as invention_count
+                FROM tls201_appln a
+                JOIN tls207_pers_appln pa ON a.appln_id = pa.appln_id
+                JOIN tls206_person p ON pa.person_id = p.person_id
+                {tech_join}
+                WHERE a.appln_auth = :country
+                  AND a.appln_filing_year BETWEEN :year_start AND :year_end
+                  AND pa.applt_seq_nr > 0
+                  AND p.psn_name IS NOT NULL
+                  AND p.psn_name != ''
+                  {tech_filter}
+                  {region_filter}
+                  {sme_filter}
+                GROUP BY p.psn_name, p.person_ctry_code
+                ORDER BY application_count DESC
+                LIMIT :limit
+            """
+
+            # Debug mode - print SQL for transparency
+            if debug:
+                print("=" * 60)
+                print("DEBUG: Top Applicants SQL Query")
+                print("=" * 60)
+                print(sql)
+                print("Parameters:", params)
+                print("=" * 60)
+
+            # Execute query and convert to DataFrame
+            result = self.db.execute(text(sql), params)
+            df = pd.DataFrame(result.fetchall(), columns=['applicant_name', 'country', 'application_count', 'invention_count'])
+
+            # Reorder columns to match schema spec (AC2)
+            df = df[['applicant_name', 'application_count', 'invention_count', 'country']]
+
+            return df
+
+        except Exception as e:
+            print(f"Error executing top applicants query: {e}")
+            return self._empty_applicants_df()
 
     def get_tech_breakdown(self, state: 'AnalysisState') -> pd.DataFrame:
         """

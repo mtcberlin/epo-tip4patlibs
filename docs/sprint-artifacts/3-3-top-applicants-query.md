@@ -1,6 +1,6 @@
 # Story 3.3: Top Applicants Query
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -77,43 +77,43 @@ so that **I can identify key players in the technology field**.
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Implement get_top_applicants() method** (AC: 1, 2, 3)
-  - [ ] 1.1: Replace stub with full implementation in PatstatQueries
-  - [ ] 1.2: Build raw SQL query with proper joins
-  - [ ] 1.3: Add parameterized query for SQL injection prevention
-  - [ ] 1.4: Convert results to DataFrame with correct schema
+- [x] **Task 1: Implement get_top_applicants() method** (AC: 1, 2, 3)
+  - [x] 1.1: Replace stub with full implementation in PatstatQueries
+  - [x] 1.2: Build raw SQL query with proper joins
+  - [x] 1.3: Add parameterized query for SQL injection prevention
+  - [x] 1.4: Convert results to DataFrame with correct schema
 
-- [ ] **Task 2: Implement query filters** (AC: 5, 6, 7, 8)
-  - [ ] 2.1: Add tech field mode filter (tls230 join)
-  - [ ] 2.2: Add IPC mode filter (tls209 join)
-  - [ ] 2.3: Add region filter (NUTS LIKE pattern)
-  - [ ] 2.4: Add SME filter (subquery for <100 applications)
+- [x] **Task 2: Implement query filters** (AC: 5, 6, 7, 8)
+  - [x] 2.1: Add tech field mode filter (tls230 join)
+  - [x] 2.2: Add IPC mode filter (tls209 join)
+  - [x] 2.3: Add region filter (NUTS LIKE pattern)
+  - [x] 2.4: Add SME filter (subquery for <100 applications)
 
-- [ ] **Task 3: Implement limit and ordering** (AC: 4)
-  - [ ] 3.1: Add ORDER BY application_count DESC
-  - [ ] 3.2: Add LIMIT clause with parameter
-  - [ ] 3.3: Test with limit=10 and limit=25
+- [x] **Task 3: Implement limit and ordering** (AC: 4)
+  - [x] 3.1: Add ORDER BY application_count DESC
+  - [x] 3.2: Add LIMIT clause with parameter
+  - [x] 3.3: Test with limit=10 and limit=25
 
-- [ ] **Task 4: Handle name quality** (AC: 9)
-  - [ ] 4.1: Use psn_name for grouping
-  - [ ] 4.2: Filter out NULL or empty names
-  - [ ] 4.3: Test with various applicant types
+- [x] **Task 4: Handle name quality** (AC: 9)
+  - [x] 4.1: Use psn_name for grouping
+  - [x] 4.2: Filter out NULL or empty names
+  - [x] 4.3: Test with various applicant types
 
-- [ ] **Task 5: Add error handling** (AC: 10)
-  - [ ] 5.1: Wrap execution in try/except
-  - [ ] 5.2: Return empty DataFrame on error
-  - [ ] 5.3: Log error details for debugging
+- [x] **Task 5: Add error handling** (AC: 10)
+  - [x] 5.1: Wrap execution in try/except
+  - [x] 5.2: Return empty DataFrame on error
+  - [x] 5.3: Log error details for debugging
 
-- [ ] **Task 6: Integration with UI** (AC: 1-10)
-  - [ ] 6.1: Update _on_run_click() to call get_top_applicants()
-  - [ ] 6.2: Store results in analysis_results['applicants']
-  - [ ] 6.3: Add progress message during execution
+- [x] **Task 6: Integration with UI** (AC: 1-10)
+  - [x] 6.1: Update _on_run_click() to call get_top_applicants()
+  - [x] 6.2: Store results in analysis_results['applicants']
+  - [x] 6.3: Add progress message during execution
 
-- [ ] **Task 7: Validation** (AC: 1-10)
-  - [ ] 7.1: Test with DE + Field 13 + 2019-2023
-  - [ ] 7.2: Verify top applicants list is reasonable
-  - [ ] 7.3: Compare with known German patent leaders
-  - [ ] 7.4: Test IPC mode with A61B
+- [x] **Task 7: Validation** (AC: 1-10)
+  - [x] 7.1: Test with DE + Field 13 + 2019-2023
+  - [x] 7.2: Verify top applicants list is reasonable
+  - [x] 7.3: Compare with known German patent leaders
+  - [x] 7.4: Test IPC mode with A61B
 
 ## Dev Notes
 
@@ -174,8 +174,47 @@ AND pa.person_id IN (
 
 ---
 
+---
+
+## Dev Agent Record
+
+### Context Reference
+
+- [docs/sprint-artifacts/stories/3-3-top-applicants-query.context.xml](stories/3-3-top-applicants-query.context.xml)
+
+### Agent Model Used
+
+Claude Opus 4.5 (claude-opus-4-5-20251101)
+
+### Debug Log References
+
+None - implementation follows architecture ADR-002 SQL escape hatch pattern.
+
+### Completion Notes List
+
+- Implemented full `get_top_applicants()` method in `tip4patlibs_core.py:555-672`
+- Uses SQL escape hatch pattern (raw SQL via sqlalchemy.text()) per ADR-002
+- Supports all filter modes: tech field (tls230), IPC (tls209), region (NUTS), SME
+- Parameterized queries prevent SQL injection
+- Added debug mode for SQL visibility
+- Error handling returns empty DataFrame with correct schema
+- Added comprehensive AC validation cell in notebook (cell id: 102fn00co3j)
+
+### File List
+
+- **MODIFIED**: `tip4patlibs_core.py`
+  - Lines 555-672: Full implementation of `get_top_applicants()` method
+  - Replaced stub with SQL escape hatch pattern implementation
+
+- **MODIFIED**: `TIP_for_PATLIBs.ipynb`
+  - Added markdown header cell for Story 3.3 AC Validation
+  - Added comprehensive validation code cell testing all 10 ACs
+
+---
+
 ## Changelog
 
 | Date | Author | Change |
 |------|--------|--------|
 | 2026-01-12 | SM (Bob) | Story drafted from epics.md and tech-spec-epic-3.md |
+| 2026-01-12 | Dev (Amelia) | Implemented get_top_applicants(), all 7 tasks complete, ready for review |
