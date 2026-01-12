@@ -1,0 +1,104 @@
+<story-context id="5-2-png-export" v="1.0">
+  <metadata>
+    <epicId>5</epicId>
+    <storyId>5.2</storyId>
+    <title>PNG Export</title>
+    <status>ready-for-dev</status>
+    <generatedAt>2026-01-12</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/stories/5-2-png-export.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>PATLIB user</asA>
+    <iWant>to export my charts as PNG images</iWant>
+    <soThat>I can include them in presentations and reports</soThat>
+    <tasks>
+      <task id="1">Implement Exporter.to_png() with fig.write_image() at 2x scale</task>
+      <task id="2">Add kaleido availability check with graceful fallback</task>
+      <task id="3">Implement export_all_charts() to export all visible figures</task>
+      <task id="4">Create PNG export button in create_export_buttons()</task>
+      <task id="5">Handle fallback message if kaleido not available</task>
+      <task id="6">Validation: export PNGs, verify quality for presentations</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <ac id="1">Export Charts (PNG) button appears next to CSV button after analysis</ac>
+    <ac id="2">PNGs are 2x scale, clean white background, suitable for presentations</ac>
+    <ac id="3">Each filename includes chart name (e.g., _trend.png, _applicants.png)</ac>
+    <ac id="4">All visible charts (3-4) exported as separate PNG files</ac>
+    <ac id="5">Success message lists all exported chart filenames</ac>
+    <ac id="6">If kaleido unavailable, shows helpful message with screenshot alternative</ac>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc path="docs/sprint-artifacts/tech-spec-epic-5.md" title="Epic 5 Tech Spec" section="Story 5-2: PNG Export">
+        Defines Exporter.to_png() with scale=2 for high DPI. Graceful fallback if kaleido not installed.
+      </doc>
+      <doc path="docs/architecture.md" title="Architecture" section="Export Pattern">
+        Contains Exporter.to_png() example using fig.write_image(filename, scale=2).
+      </doc>
+      <doc path="docs/PRD.md" title="PRD" section="FR44-46">
+        FR44: Export charts as PNG. FR45: Descriptive filenames. FR46: Download links/buttons.
+      </doc>
+    </docs>
+
+    <code>
+      <file path="tip4patlibs_core.py" kind="class" symbol="Exporter" lines="1732-1743" reason="Add to_png() method after to_csv() from Story 5.1">
+        Exporter class with generate_filename() and to_csv() (from Story 5.1). Add to_png() method.
+      </file>
+      <file path="tip4patlibs_core.py" kind="class" symbol="ChartBuilder" lines="1717-1729" reason="Source of Plotly Figures to export">
+        Epic 4 implementation creates go.Figure objects. These are passed to Exporter.to_png().
+      </file>
+      <file path="tip4patlibs_core.py" kind="function" symbol="create_export_buttons" reason="Add PNG button alongside CSV button (from Story 5.1)">
+        Created in Story 5.1. Add second button for PNG export with click handler.
+      </file>
+    </code>
+
+    <dependencies>
+      <python>
+        <package name="plotly" version="TIP-provided">Figure.write_image() for static export</package>
+        <package name="kaleido" version="TIP-provided (may not be available)">Static image export engine - check availability</package>
+        <package name="ipywidgets" version="TIP-provided">Button widget, HTML for messages</package>
+      </python>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint source="ADR-001">All code in tip4patlibs_core.py module (single file pattern)</constraint>
+    <constraint source="NFR7">Export functionality works consistently - graceful fallback if dependencies missing</constraint>
+    <constraint source="Tech Spec">PNG scale=2 for high DPI (presentation quality, ~1200px wide)</constraint>
+    <constraint source="Tech Spec">Check kaleido availability before attempting export</constraint>
+    <constraint source="UX">Fallback message must be helpful, not just an error</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface name="Exporter.to_png" kind="static method">
+      <signature>def to_png(fig: go.Figure, state: AnalysisState, chart_name: str) -> str</signature>
+      <path>tip4patlibs_core.py:Exporter</path>
+    </interface>
+    <interface name="export_all_charts" kind="function">
+      <signature>def export_all_charts(figures: Dict[str, go.Figure], state: AnalysisState) -> List[str]</signature>
+      <path>tip4patlibs_core.py (new function)</path>
+    </interface>
+    <interface name="_check_kaleido_available" kind="helper function">
+      <signature>def _check_kaleido_available() -> bool</signature>
+      <path>tip4patlibs_core.py (new helper)</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>Manual testing on TIP platform. Verify PNG quality suitable for presentations.</standards>
+    <locations>Manual validation in TIP_for_PATLIBs.ipynb Cell 6</locations>
+    <ideas>
+      <idea ac="1">Run analysis, verify Export Charts button appears next to CSV button</idea>
+      <idea ac="2">Open exported PNG, verify high resolution (2x scale)</idea>
+      <idea ac="3">Check filenames include chart names: _trend.png, _applicants.png, etc.</idea>
+      <idea ac="4">Verify all 4 chart types export (or 3 if no regional data)</idea>
+      <idea ac="5">Click export, verify success message lists all exported files</idea>
+      <idea ac="6">If kaleido missing, verify helpful fallback message appears</idea>
+    </ideas>
+  </tests>
+</story-context>

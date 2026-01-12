@@ -1,0 +1,257 @@
+# Story 5.3: Zero Results & Data Quality Handling
+
+Status: drafted
+
+## Story
+
+As a **PATLIB user**,
+I want **to receive helpful guidance when my search returns no results and understand data limitations**,
+so that **I can adjust my filters effectively and interpret results correctly**.
+
+## Acceptance Criteria
+
+1. **AC1: Zero Results Detection**
+   - Given query returns empty DataFrames
+   - When display_results() processes results
+   - Then zero-results state is detected
+   - And export buttons are hidden (nothing to export)
+
+2. **AC2: Zero Results Message**
+   - Given zero results detected
+   - When message is displayed
+   - Then clear heading: "No patents found for this selection"
+   - And shows current filter summary
+   - And is styled as info/warning (not error)
+
+3. **AC3: Actionable Suggestions - Date Range**
+   - Given zero results with narrow date range (3 years or less)
+   - When suggestions are generated
+   - Then includes: "Try expanding the date range (currently {n} years)"
+
+4. **AC4: Actionable Suggestions - SME Filter**
+   - Given zero results with SME filter enabled
+   - When suggestions are generated
+   - Then includes: "Try disabling the SME filter"
+
+5. **AC5: Actionable Suggestions - Region**
+   - Given zero results with region selected
+   - When suggestions are generated
+   - Then includes: "Try selecting 'All regions'"
+
+6. **AC6: Actionable Suggestions - IPC Mode**
+   - Given zero results with custom IPC codes
+   - When suggestions are generated
+   - Then includes: "Try using a WIPO Technology Field instead of custom IPC codes"
+
+7. **AC7: Data Quality Warning Display**
+   - Given any analysis completes with results (non-empty)
+   - When results are displayed
+   - Then data quality warning section appears below export buttons
+
+8. **AC8: Warning Content (FR54)**
+   - Given data quality warning is displayed
+   - When user reads the content
+   - Then it explains:
+     - "Applicant names may appear multiple times with variations"
+     - "Regional data coverage varies by country"
+     - "Older patents may have incomplete classification data"
+
+9. **AC9: Warning Collapsible**
+   - Given data quality warning is displayed
+   - When user first views results
+   - Then warning section is collapsed by default
+   - And has "Data Quality Notes" header to expand
+
+10. **AC10: Warning Non-Intrusive**
+    - Given data quality warning is displayed
+    - When user views results
+    - Then warning is:
+      - Visually subtle (muted colors, small icon)
+      - Does not obstruct charts
+      - Easy to dismiss/ignore
+
+## Tasks / Subtasks
+
+- [ ] **Task 1: Implement handle_zero_results()** (AC: 1, 2)
+  - [ ] 1.1: Create handle_zero_results(state) function
+  - [ ] 1.2: Build message header with emoji
+  - [ ] 1.3: Include state.summary() as current filter display
+  - [ ] 1.4: Style as warning box (yellow/amber background)
+  - [ ] 1.5: Return widgets.VBox with message
+
+- [ ] **Task 2: Implement suggestion generator** (AC: 3, 4, 5, 6)
+  - [ ] 2.1: Create _generate_suggestions(state) helper
+  - [ ] 2.2: Check year span (year_end - year_start + 1)
+  - [ ] 2.3: Check sme_filter flag
+  - [ ] 2.4: Check if region is selected
+  - [ ] 2.5: Check if tech_mode is 'ipc'
+  - [ ] 2.6: Build bullet list of applicable suggestions
+
+- [ ] **Task 3: Integrate zero results handling** (AC: 1)
+  - [ ] 3.1: Add check at start of display_results()
+  - [ ] 3.2: If all DataFrames empty, call handle_zero_results()
+  - [ ] 3.3: Skip chart rendering and export buttons
+  - [ ] 3.4: Return early after displaying message
+
+- [ ] **Task 4: Implement data_quality_warning()** (AC: 7, 8)
+  - [ ] 4.1: Create data_quality_warning() function
+  - [ ] 4.2: Build HTML content with 3 limitation points
+  - [ ] 4.3: Use info icon and muted styling
+  - [ ] 4.4: Return widgets.Accordion for collapsible behavior
+
+- [ ] **Task 5: Make warning collapsible** (AC: 9)
+  - [ ] 5.1: Wrap content in widgets.Accordion
+  - [ ] 5.2: Set selected_index=None for collapsed default
+  - [ ] 5.3: Title: "Data Quality Notes"
+
+- [ ] **Task 6: Style warning non-intrusively** (AC: 10)
+  - [ ] 6.1: Use light gray or info-blue background
+  - [ ] 6.2: Small font size
+  - [ ] 6.3: Info icon (not warning/error icon)
+  - [ ] 6.4: Minimal padding
+
+- [ ] **Task 7: Integrate into display_results()** (AC: 7)
+  - [ ] 7.1: Add data_quality_warning() call after export buttons
+  - [ ] 7.2: Only show if results are non-empty
+
+- [ ] **Task 8: Validation** (AC: 1-10)
+  - [ ] 8.1: Test with combination that returns zero results
+  - [ ] 8.2: Verify suggestions match filter state
+  - [ ] 8.3: Verify data quality warning appears with results
+  - [ ] 8.4: Verify warning is collapsed by default
+  - [ ] 8.5: Verify warning can be expanded
+
+## Dev Notes
+
+### Learnings from Previous Stories
+
+**From Story 5-1 and 5-2**
+
+- **display_results()**: Entry point for all result rendering
+- **Widget layout**: Use VBox for vertical stacking
+- **Message styling**: Use HTML widget with inline styles
+- **Conditional display**: Check DataFrame.empty before rendering
+
+### Zero Results Detection
+
+Check if ALL DataFrames are empty:
+```python
+def _is_zero_results(results: dict) -> bool:
+    trend_empty = results.get('trend', pd.DataFrame()).empty
+    applicants_empty = results.get('applicants', pd.DataFrame()).empty
+    # If both primary results are empty, treat as zero results
+    return trend_empty and applicants_empty
+```
+
+### Suggestion Logic
+
+```python
+def _generate_suggestions(state: AnalysisState) -> List[str]:
+    suggestions = []
+
+    # Check date range
+    year_span = state.year_end - state.year_start + 1
+    if year_span <= 3:
+        suggestions.append(f"Try expanding the date range (currently {year_span} years)")
+
+    # Check SME filter
+    if state.sme_filter:
+        suggestions.append("Try disabling the SME filter")
+
+    # Check region
+    if state.region is not None:
+        suggestions.append("Try selecting 'All regions'")
+
+    # Check IPC mode
+    if state.tech_mode == 'ipc':
+        suggestions.append("Try using a WIPO Technology Field instead of custom IPC codes")
+
+    return suggestions
+```
+
+### Data Quality Warning Content
+
+From PRD FR54:
+- Document applicant name normalization issues (same company appears multiple times)
+- Document regional data coverage variations
+- Document classification coverage for older patents
+
+```html
+<div style="background: #f8f9fa; padding: 10px; font-size: 0.9em; color: #666;">
+  <b>Data Quality Notes</b>
+  <ul>
+    <li><b>Applicant names:</b> The same organization may appear multiple times
+        under different name variations (e.g., "SIEMENS AG" vs "SIEMENS AKTIENGESELLSCHAFT")</li>
+    <li><b>Regional data:</b> NUTS region data coverage varies by country.
+        Some countries may have limited or no regional attribution.</li>
+    <li><b>Classifications:</b> Older patents (pre-2000) may have incomplete
+        IPC/CPC classification data.</li>
+  </ul>
+</div>
+```
+
+### Collapsible Widget Pattern
+
+```python
+from ipywidgets import Accordion, HTML
+
+def data_quality_warning():
+    content = HTML(value='''
+        <ul style="margin: 0; padding-left: 20px; color: #666;">
+            <li>...</li>
+        </ul>
+    ''')
+
+    accordion = Accordion(children=[content], titles=['Data Quality Notes'])
+    accordion.selected_index = None  # Collapsed by default
+    return accordion
+```
+
+### Integration Point
+
+```python
+def display_results(results, state):
+    # Check for zero results FIRST
+    if _is_zero_results(results):
+        display(handle_zero_results(state))
+        return  # Don't render charts or export buttons
+
+    # ... render charts ...
+
+    # Add export buttons
+    display(create_export_buttons(results, figures, state))
+
+    # Add data quality warning (collapsed)
+    display(data_quality_warning())
+```
+
+### References
+
+- [Source: docs/sprint-artifacts/tech-spec-epic-5.md#AC12-AC16]
+- [Source: docs/PRD.md#FR52-55]
+
+---
+
+## Changelog
+
+| Date | Author | Change |
+|------|--------|--------|
+| 2026-01-12 | SM (Bob) | Story drafted from tech-spec-epic-5.md |
+
+---
+
+## Dev Agent Record
+
+### Context Reference
+
+Pending story context generation
+
+### Agent Model Used
+
+Pending implementation
+
+### Debug Log References
+
+### Completion Notes List
+
+### File List

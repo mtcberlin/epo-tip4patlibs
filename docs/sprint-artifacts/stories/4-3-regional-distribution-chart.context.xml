@@ -1,0 +1,106 @@
+<story-context id="4-3-regional-distribution-chart" v="1.0">
+  <metadata>
+    <epicId>4</epicId>
+    <storyId>4.3</storyId>
+    <title>Regional Distribution Chart</title>
+    <status>ready-for-dev</status>
+    <generatedAt>2026-01-12</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/stories/4-3-regional-distribution-chart.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>PATLIB user</asA>
+    <iWant>to see how patents are distributed across regions</iWant>
+    <soThat>I can identify innovation hotspots within a country</soThat>
+    <tasks>
+      <task id="1">Implement regional_bar() method with vertical bars</task>
+      <task id="2">Handle region limiting (top 10 if more exist)</task>
+      <task id="3">Add EPO styling and dynamic title</task>
+      <task id="4">Configure hover template with region label, NUTS code, count</task>
+      <task id="5">Add conditional display to display_results() - show message if empty or single region</task>
+      <task id="6">Validation with DE + Field 13</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <ac id="1">Vertical bar chart with X-axis region labels, Y-axis application count</ac>
+    <ac id="2">Bars ordered by count descending (highest on left)</ac>
+    <ac id="3">Top 10 regions shown if more than 10 exist</ac>
+    <ac id="4">Dynamic title: "Regional Distribution: {country} - {tech_field_name}"</ac>
+    <ac id="5">Hover shows region label, NUTS code, application count</ac>
+    <ac id="6">EPO Red (#C8102E) bar color, Arial font</ac>
+    <ac id="7">Empty or single-region DataFrame shows "Regional breakdown not available" message</ac>
+    <ac id="8">Chart only displayed when 2+ regions have data</ac>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc path="docs/sprint-artifacts/tech-spec-epic-4.md" title="Epic 4 Tech Spec" section="AC4-AC5: Regional Distribution">
+        Defines vertical bar chart with conditional display and top 10 limiting.
+      </doc>
+      <doc path="docs/architecture.md" title="Architecture" section="Visualization Pattern">
+        Regional chart simpler than choropleth map (no GeoJSON needed).
+      </doc>
+      <doc path="docs/epics.md" title="Epics" section="Story 4.3: Regional Distribution Chart">
+        Story definition: regional bar chart, NUTS regions, conditional display.
+      </doc>
+      <doc path="docs/PRD.md" title="PRD" section="FR36-38">
+        FR36: Regional distribution when data available. FR37: Relative activity visualization. FR38: Compare regions.
+      </doc>
+    </docs>
+
+    <code>
+      <file path="tip4patlibs_core.py" kind="module" symbol="ChartBuilder" lines="1717-1729" reason="Add regional_bar() method">
+        Stories 4.1 and 4.2 add foundation and other chart methods. This adds regional_bar().
+      </file>
+      <file path="tip4patlibs_core.py" kind="module" symbol="analysis_results['regional']" lines="77" reason="DataFrame with region, region_label, count">
+        Populated by PatstatQueries.get_regional_distribution(). May be empty for some countries.
+      </file>
+      <file path="tip4patlibs_core.py" kind="class" symbol="PatstatQueries.get_regional_distribution" lines="706" reason="Returns regional DataFrame - stub implementation">
+        Needs verification of actual implementation status. Returns NUTS region counts.
+      </file>
+      <file path="tip4patlibs_core.py" kind="function" symbol="display_results" reason="Add conditional regional chart section">
+        Check if regional_df.empty or len(regional_df) less than or equal to 1 before rendering.
+      </file>
+    </code>
+
+    <dependencies>
+      <python>
+        <package name="plotly" version="TIP-provided">px.bar for vertical bars</package>
+        <package name="ipywidgets" version="TIP-provided">Output widget for conditional display</package>
+      </python>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint source="Tech Spec">Only show chart if 2+ regions have data</constraint>
+    <constraint source="Tech Spec">Limit to top 10 regions for readability</constraint>
+    <constraint source="Architecture">NUTS data from tls904_nuts via query layer</constraint>
+    <constraint source="ADR-001">All code in tip4patlibs_core.py module</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface name="ChartBuilder.regional_bar" kind="static method">
+      <signature>def regional_bar(df: pd.DataFrame, state: AnalysisState) -> go.Figure</signature>
+      <path>tip4patlibs_core.py:ChartBuilder</path>
+    </interface>
+    <interface name="conditional display logic" kind="pattern">
+      <signature>if regional_df.empty or len(regional_df) less than or equal to 1: show message else: show chart</signature>
+      <path>display_results() function</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>Manual testing on TIP platform. Test with countries with/without NUTS data.</standards>
+    <locations>Manual validation in TIP_for_PATLIBs.ipynb Cell 6</locations>
+    <ideas>
+      <idea ac="1,2">Test with DE + Field 13, verify vertical bars with highest on left</idea>
+      <idea ac="3">Test with country having 20+ regions, verify only top 10 shown</idea>
+      <idea ac="4">Verify title shows "Regional Distribution: DE - Medical technology"</idea>
+      <idea ac="5">Hover over bar, verify NUTS code and count shown</idea>
+      <idea ac="6">Visual inspection of EPO Red bar color</idea>
+      <idea ac="7,8">Test with country without NUTS data (e.g., small jurisdiction), verify message shown</idea>
+    </ideas>
+  </tests>
+</story-context>

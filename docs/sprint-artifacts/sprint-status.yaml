@@ -57,21 +57,21 @@ development_status:
   epic-3: contexted  # tech-spec created 2026-01-11
   3-1-patstatqueries-class-base-query: done  # 2026-01-12 - APPROVED by Senior Developer Review
   3-2-trend-query-applications-over-time: done  # 2026-01-12 - APPROVED by Senior Developer Review
-  3-3-top-applicants-query: review  # 2026-01-12 - implementation complete, ready for review
-  3-4-query-execution-progress: ready-for-dev  # 2026-01-12 - progress UI and orchestration
+  3-3-top-applicants-query: done  # 2026-01-12 - APPROVED by Senior Developer Review
+  3-4-query-execution-progress: done  # 2026-01-12 - APPROVED by Senior Developer Review
   epic-3-retrospective: optional
 
   # Epic 4: Visualizations
-  epic-4: backlog
-  4-1-trend-line-chart: backlog
-  4-2-top-applicants-bar-chart: backlog
-  4-3-regional-distribution-chart: backlog
-  4-4-technology-breakdown-treemap: backlog
+  epic-4: contexted  # tech-spec created 2026-01-12
+  4-1-trend-line-chart: review  # 2026-01-12 - Implementation complete, ready for review
+  4-2-top-applicants-bar-chart: review  # 2026-01-12 - Implementation complete, ready for review
+  4-3-regional-distribution-chart: review  # 2026-01-12 - Implementation complete, ready for review
+  4-4-technology-breakdown-treemap: review  # 2026-01-12 - Implementation complete, ready for review
   epic-4-retrospective: optional
 
   # Epic 5: Export & Polish
-  epic-5: backlog
-  5-1-csv-export: backlog
-  5-2-png-export: backlog
-  5-3-zero-results-data-quality-handling: backlog
+  epic-5: contexted  # tech-spec created 2026-01-12 by SM
+  5-1-csv-export: ready-for-dev  # 2026-01-12 - Story context generated
+  5-2-png-export: ready-for-dev  # 2026-01-12 - Story context generated
+  5-3-zero-results-data-quality-handling: ready-for-dev  # 2026-01-12 - Story context generated
   epic-5-retrospective: optional
