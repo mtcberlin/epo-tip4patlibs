@@ -61,6 +61,8 @@ __all__ = [
     'EPO_PALETTE',
     'EPO_LAYOUT',
     'truncate_name',
+    'create_export_buttons',
+    'export_all_charts',
 ]
 
 # =============================================================================
@@ -2186,8 +2188,15 @@ def display_results(results: dict, state: 'AnalysisState', output_widget: Option
     with output_widget:
         clear_output(wait=True)
 
-        # Track if any charts were rendered
+        # Check for zero results first (Story 5.3)
+        if _is_zero_results(results):
+            zero_msg = handle_zero_results(state)
+            display(zero_msg)
+            return  # Don't render charts or export buttons
+
+        # Track if any charts were rendered and collect figures for PNG export
         charts_rendered = 0
+        figures = {}  # Collect figures for PNG export
 
         # Trend line chart (Story 4.1)
         trend_df = results.get('trend')
@@ -2195,6 +2204,7 @@ def display_results(results: dict, state: 'AnalysisState', output_widget: Option
             fig = ChartBuilder.trend_line(trend_df, state)
             if fig is not None:
                 fig.show()
+                figures['trend'] = fig
                 charts_rendered += 1
         else:
             print("📊 No trend data available for this selection")
@@ -2214,6 +2224,9 @@ def display_results(results: dict, state: 'AnalysisState', output_widget: Option
                 layout=widgets.Layout(width='150px')
             )
 
+            # Store current figure for PNG export (updated on toggle)
+            current_applicants_fig = [None]  # Use list to allow mutation in closure
+
             def render_applicants_chart(limit):
                 """Render applicants chart with given limit."""
                 with applicants_output:
@@ -2221,6 +2234,7 @@ def display_results(results: dict, state: 'AnalysisState', output_widget: Option
                     fig = ChartBuilder.top_applicants_bar(applicants_df, state, limit=limit)
                     if fig is not None:
                         fig.show()
+                        current_applicants_fig[0] = fig
 
             def on_limit_change(change):
                 """Callback when limit toggle changes."""
@@ -2235,6 +2249,7 @@ def display_results(results: dict, state: 'AnalysisState', output_widget: Option
 
             # Initial render
             render_applicants_chart(10)
+            figures['applicants'] = current_applicants_fig[0]
             charts_rendered += 1
         else:
             print("📊 No applicant data available for this selection")
@@ -2246,6 +2261,7 @@ def display_results(results: dict, state: 'AnalysisState', output_widget: Option
             if fig is not None:
                 print("")  # Spacer
                 fig.show()
+                figures['regional'] = fig
                 charts_rendered += 1
         else:
             print("📊 Regional breakdown not available for this selection")
@@ -2257,12 +2273,27 @@ def display_results(results: dict, state: 'AnalysisState', output_widget: Option
             if fig is not None:
                 print("")  # Spacer
                 fig.show()
+                figures['tech_breakdown'] = fig
                 charts_rendered += 1
         else:
             print("📊 No technology breakdown available for this selection")
 
         if charts_rendered == 0:
             print("\n⚠️ No charts could be rendered. Try adjusting your filters.")
+
+        # Export buttons (Story 5.1, 5.2)
+        # Only show if we have any data to export
+        has_data = any([
+            results.get('trend') is not None and not results.get('trend').empty,
+            results.get('applicants') is not None and not results.get('applicants').empty
+        ])
+        if has_data:
+            export_ui = create_export_buttons(results, state, figures)
+            display(export_ui)
+
+            # Data quality warning (Story 5.3) - collapsed by default
+            warning = data_quality_warning()
+            display(warning)
 
 
 class Exporter:
@@ -2271,9 +2302,397 @@ class Exporter:
 
     Handles:
     - CSV export with European formatting (semicolon delimiter, UTF-8 BOM)
-    - PNG export for Plotly charts
+    - PNG export for Plotly charts (Story 5.2)
     - Descriptive filename generation
 
-    Placeholder - full implementation in Epic 5.
+    All methods are static. Files are written to current working directory.
     """
-    pass
+
+    @staticmethod
+    def generate_filename(state: 'AnalysisState', extension: str, chart_name: str = None) -> str:
+        """
+        Generate descriptive filename based on analysis parameters.
+
+        Args:
+            state: AnalysisState with country, tech_field/ipc_codes, year range
+            extension: File extension ('csv' or 'png')
+            chart_name: Optional chart identifier for PNG exports
+
+        Returns:
+            Filename string (not full path)
+
+        Example:
+            >>> Exporter.generate_filename(state, 'csv')
+            'tip4patlibs_DE_field13_2019-2023_20260112_1430.csv'
+        """
+        from datetime import datetime
+
+        # Country code
+        country = state.country or 'XX'
+
+        # Tech component: field{nr} or ipc
+        if state.tech_mode == 'field' and state.tech_field:
+            tech = f"field{state.tech_field}"
+        elif state.tech_mode == 'ipc':
+            tech = "ipc"
+        else:
+            tech = "all"
+
+        # Year range
+        year_start = state.year_start or 2019
+        year_end = state.year_end or 2023
+        years = f"{year_start}-{year_end}"
+
+        # Timestamp
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M")
+
+        # Build filename
+        parts = ['tip4patlibs', country, tech, years, timestamp]
+        if chart_name:
+            parts.append(chart_name)
+
+        return '_'.join(parts) + f'.{extension}'
+
+    @staticmethod
+    def to_csv(results: dict, state: 'AnalysisState') -> str:
+        """
+        Export analysis results to CSV with European formatting.
+
+        Combines trend and applicants DataFrames into a single CSV file
+        with section headers for clarity.
+
+        Args:
+            results: Dict with 'trend' and 'applicants' DataFrames
+            state: AnalysisState for filename generation
+
+        Returns:
+            Full path to exported file
+
+        Format:
+            - Separator: semicolon (;)
+            - Encoding: UTF-8 with BOM (utf-8-sig)
+            - No index column
+
+        Raises:
+            Exception: If export fails (caught by caller for user message)
+        """
+        from pathlib import Path
+        import io
+
+        filename = Exporter.generate_filename(state, 'csv')
+        filepath = Path.cwd() / filename
+
+        # Build combined CSV content
+        lines = []
+
+        # Section 1: Trend data
+        trend_df = results.get('trend')
+        if trend_df is not None and not trend_df.empty:
+            lines.append("# Trend Data (Applications over Time)")
+            # Get CSV string from DataFrame
+            csv_content = trend_df.to_csv(index=False, sep=';', encoding='utf-8')
+            lines.append(csv_content.strip())
+            lines.append("")  # Blank line separator
+
+        # Section 2: Top Applicants
+        applicants_df = results.get('applicants')
+        if applicants_df is not None and not applicants_df.empty:
+            lines.append("# Top Applicants")
+            csv_content = applicants_df.to_csv(index=False, sep=';', encoding='utf-8')
+            lines.append(csv_content.strip())
+
+        # Write with UTF-8 BOM for Excel compatibility
+        content = '\n'.join(lines)
+        with open(filepath, 'w', encoding='utf-8-sig') as f:
+            f.write(content)
+
+        return str(filepath)
+
+    @staticmethod
+    def to_png(fig: 'go.Figure', state: 'AnalysisState', chart_name: str) -> str:
+        """
+        Export Plotly figure to PNG with high resolution.
+
+        Args:
+            fig: Plotly Figure object
+            state: AnalysisState for filename generation
+            chart_name: Chart identifier ('trend', 'applicants', etc.)
+
+        Returns:
+            Full path to exported file
+
+        Raises:
+            Exception: If kaleido not available or export fails
+        """
+        from pathlib import Path
+
+        filename = Exporter.generate_filename(state, 'png', chart_name)
+        filepath = Path.cwd() / filename
+
+        # Export at 2x scale for high DPI
+        fig.write_image(str(filepath), scale=2, format='png')
+
+        return str(filepath)
+
+
+def _is_zero_results(results: dict) -> bool:
+    """
+    Check if all primary DataFrames are empty (zero results).
+
+    Args:
+        results: Dict with 'trend' and 'applicants' DataFrames
+
+    Returns:
+        bool: True if both trend and applicants are empty
+    """
+    trend_empty = results.get('trend') is None or results.get('trend').empty
+    applicants_empty = results.get('applicants') is None or results.get('applicants').empty
+    return trend_empty and applicants_empty
+
+
+def _generate_suggestions(state: 'AnalysisState') -> list:
+    """
+    Generate actionable suggestions based on current filter state.
+
+    Args:
+        state: AnalysisState with current filter settings
+
+    Returns:
+        List of suggestion strings
+    """
+    suggestions = []
+
+    # Check date range (AC3)
+    if state.year_start and state.year_end:
+        year_span = state.year_end - state.year_start + 1
+        if year_span <= 3:
+            suggestions.append(f"Try expanding the date range (currently {year_span} years)")
+
+    # Check SME filter (AC4)
+    if state.sme_filter:
+        suggestions.append("Try disabling the SME filter")
+
+    # Check region (AC5)
+    if state.region is not None:
+        suggestions.append("Try selecting 'All regions'")
+
+    # Check IPC mode (AC6)
+    if state.tech_mode == 'ipc':
+        suggestions.append("Try using a WIPO Technology Field instead of custom IPC codes")
+
+    return suggestions
+
+
+def handle_zero_results(state: 'AnalysisState') -> widgets.VBox:
+    """
+    Create a helpful message when query returns no results.
+
+    Implements AC1-AC6 of Story 5.3:
+    - Clear message about no results
+    - Shows current filter summary
+    - Provides actionable suggestions
+
+    Args:
+        state: AnalysisState with current filter settings
+
+    Returns:
+        widgets.VBox with message and suggestions
+    """
+    # Generate suggestions based on state
+    suggestions = _generate_suggestions(state)
+
+    # Build suggestion list HTML
+    suggestions_html = ""
+    if suggestions:
+        suggestions_html = "<ul style='margin: 10px 0; padding-left: 20px;'>"
+        for suggestion in suggestions:
+            suggestions_html += f"<li>{suggestion}</li>"
+        suggestions_html += "</ul>"
+
+    # Build filter summary
+    summary_parts = []
+    if state.country:
+        summary_parts.append(f"Country: {state.country}")
+    if state.tech_mode == 'field' and state.tech_field:
+        summary_parts.append(f"Technology Field: {state.tech_field}")
+    elif state.tech_mode == 'ipc' and state.ipc_codes:
+        summary_parts.append(f"IPC Codes: {', '.join(state.ipc_codes[:3])}...")
+    if state.year_start and state.year_end:
+        summary_parts.append(f"Years: {state.year_start}-{state.year_end}")
+    if state.region:
+        summary_parts.append(f"Region: {state.region}")
+    if state.sme_filter:
+        summary_parts.append("SME Filter: Enabled")
+
+    filter_summary = " | ".join(summary_parts) if summary_parts else "No filters selected"
+
+    # Build the message widget
+    message_html = f'''
+    <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 5px; padding: 15px; margin: 10px 0;">
+        <h4 style="margin: 0 0 10px 0; color: #856404;">
+            📭 No patents found for this selection
+        </h4>
+        <p style="margin: 5px 0; color: #856404; font-size: 0.9em;">
+            <b>Current filters:</b> {filter_summary}
+        </p>
+        {f'<p style="margin: 10px 0 5px 0; color: #856404;"><b>Suggestions to try:</b></p>{suggestions_html}' if suggestions else ''}
+    </div>
+    '''
+
+    return widgets.VBox([widgets.HTML(value=message_html)])
+
+
+def data_quality_warning() -> widgets.Accordion:
+    """
+    Create a collapsible data quality warning section.
+
+    Implements AC7-AC10 of Story 5.3:
+    - Explains PATSTAT data limitations
+    - Collapsed by default
+    - Non-intrusive styling
+
+    Returns:
+        widgets.Accordion with data quality notes (collapsed)
+    """
+    content_html = '''
+    <div style="font-size: 0.9em; color: #666; padding: 10px;">
+        <ul style="margin: 0; padding-left: 20px;">
+            <li><b>Applicant names:</b> The same organization may appear multiple times
+                under different name variations (e.g., "SIEMENS AG" vs "SIEMENS AKTIENGESELLSCHAFT")</li>
+            <li><b>Regional data:</b> NUTS region data coverage varies by country.
+                Some countries may have limited or no regional attribution.</li>
+            <li><b>Classifications:</b> Older patents (pre-2000) may have incomplete
+                IPC/CPC classification data.</li>
+        </ul>
+    </div>
+    '''
+
+    content = widgets.HTML(value=content_html)
+
+    accordion = widgets.Accordion(children=[content])
+    accordion.set_title(0, 'ℹ️ Data Quality Notes')
+    accordion.selected_index = None  # Collapsed by default
+
+    return accordion
+
+
+def _check_kaleido_available() -> bool:
+    """
+    Check if kaleido package is available for PNG export.
+
+    Returns:
+        bool: True if kaleido is installed and importable
+    """
+    try:
+        import kaleido
+        return True
+    except ImportError:
+        return False
+
+
+def export_all_charts(figures: dict, state: 'AnalysisState') -> list:
+    """
+    Export all available charts as PNG files.
+
+    Args:
+        figures: Dict of chart_name -> go.Figure
+        state: AnalysisState for filename generation
+
+    Returns:
+        List of exported filepaths
+
+    Raises:
+        Exception: If kaleido not available or export fails
+    """
+    if not _check_kaleido_available():
+        raise ImportError("PNG export requires the kaleido package")
+
+    exported_files = []
+    for chart_name, fig in figures.items():
+        if fig is not None:
+            filepath = Exporter.to_png(fig, state, chart_name)
+            exported_files.append(filepath)
+
+    return exported_files
+
+
+def create_export_buttons(results: dict, state: 'AnalysisState', figures: dict = None) -> widgets.VBox:
+    """
+    Create export buttons for CSV and PNG downloads.
+
+    Args:
+        results: Dict of DataFrames from analysis
+        state: AnalysisState for filename generation
+        figures: Dict of chart_name -> go.Figure for PNG export (optional)
+
+    Returns:
+        VBox containing export buttons and status message area
+    """
+    from IPython.display import display, clear_output
+
+    # Status message area
+    status_output = widgets.Output()
+
+    # CSV Export button
+    csv_button = widgets.Button(
+        description='Export CSV',
+        icon='download',
+        button_style='info',
+        tooltip='Export data as CSV (semicolon delimiter for Excel)'
+    )
+
+    def on_csv_export(b):
+        """Handle CSV export button click."""
+        with status_output:
+            clear_output(wait=True)
+            try:
+                filepath = Exporter.to_csv(results, state)
+                print(f"✅ Exported to: {filepath}")
+            except Exception as e:
+                print(f"❌ Export failed: {str(e)}")
+
+    csv_button.on_click(on_csv_export)
+
+    # PNG Export button
+    png_button = widgets.Button(
+        description='Export Charts (PNG)',
+        icon='image',
+        button_style='info',
+        tooltip='Export charts as high-resolution PNG images'
+    )
+
+    def on_png_export(b):
+        """Handle PNG export button click."""
+        with status_output:
+            clear_output(wait=True)
+            if figures is None or len(figures) == 0:
+                print("⚠️ No charts available to export")
+                return
+
+            if not _check_kaleido_available():
+                print("⚠️ PNG export requires the kaleido package")
+                print("")
+                print("Alternative: Use your browser's screenshot function")
+                print("  • Mac: Cmd+Shift+4")
+                print("  • Windows: Win+Shift+S")
+                return
+
+            try:
+                exported = export_all_charts(figures, state)
+                print(f"✅ Exported {len(exported)} charts:")
+                for filepath in exported:
+                    print(f"   • {filepath}")
+            except Exception as e:
+                print(f"❌ PNG export failed: {str(e)}")
+
+    png_button.on_click(on_png_export)
+
+    # Layout: buttons in a row, status below
+    button_row = widgets.HBox([csv_button, png_button], layout=widgets.Layout(gap='10px'))
+
+    return widgets.VBox([
+        widgets.HTML('<hr style="margin: 20px 0 10px 0;">'),
+        widgets.HTML('<b>Export Options</b>'),
+        button_row,
+        status_output
+    ])

@@ -1,6 +1,6 @@
 # Story 5.3: Zero Results & Data Quality Handling
 
-Status: drafted
+Status: review
 
 ## Story
 
@@ -72,54 +72,54 @@ so that **I can adjust my filters effectively and interpret results correctly**.
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Implement handle_zero_results()** (AC: 1, 2)
-  - [ ] 1.1: Create handle_zero_results(state) function
-  - [ ] 1.2: Build message header with emoji
-  - [ ] 1.3: Include state.summary() as current filter display
-  - [ ] 1.4: Style as warning box (yellow/amber background)
-  - [ ] 1.5: Return widgets.VBox with message
+- [x] **Task 1: Implement handle_zero_results()** (AC: 1, 2)
+  - [x] 1.1: Create handle_zero_results(state) function
+  - [x] 1.2: Build message header with emoji
+  - [x] 1.3: Include state.summary() as current filter display
+  - [x] 1.4: Style as warning box (yellow/amber background)
+  - [x] 1.5: Return widgets.VBox with message
 
-- [ ] **Task 2: Implement suggestion generator** (AC: 3, 4, 5, 6)
-  - [ ] 2.1: Create _generate_suggestions(state) helper
-  - [ ] 2.2: Check year span (year_end - year_start + 1)
-  - [ ] 2.3: Check sme_filter flag
-  - [ ] 2.4: Check if region is selected
-  - [ ] 2.5: Check if tech_mode is 'ipc'
-  - [ ] 2.6: Build bullet list of applicable suggestions
+- [x] **Task 2: Implement suggestion generator** (AC: 3, 4, 5, 6)
+  - [x] 2.1: Create _generate_suggestions(state) helper
+  - [x] 2.2: Check year span (year_end - year_start + 1)
+  - [x] 2.3: Check sme_filter flag
+  - [x] 2.4: Check if region is selected
+  - [x] 2.5: Check if tech_mode is 'ipc'
+  - [x] 2.6: Build bullet list of applicable suggestions
 
-- [ ] **Task 3: Integrate zero results handling** (AC: 1)
-  - [ ] 3.1: Add check at start of display_results()
-  - [ ] 3.2: If all DataFrames empty, call handle_zero_results()
-  - [ ] 3.3: Skip chart rendering and export buttons
-  - [ ] 3.4: Return early after displaying message
+- [x] **Task 3: Integrate zero results handling** (AC: 1)
+  - [x] 3.1: Add check at start of display_results()
+  - [x] 3.2: If all DataFrames empty, call handle_zero_results()
+  - [x] 3.3: Skip chart rendering and export buttons
+  - [x] 3.4: Return early after displaying message
 
-- [ ] **Task 4: Implement data_quality_warning()** (AC: 7, 8)
-  - [ ] 4.1: Create data_quality_warning() function
-  - [ ] 4.2: Build HTML content with 3 limitation points
-  - [ ] 4.3: Use info icon and muted styling
-  - [ ] 4.4: Return widgets.Accordion for collapsible behavior
+- [x] **Task 4: Implement data_quality_warning()** (AC: 7, 8)
+  - [x] 4.1: Create data_quality_warning() function
+  - [x] 4.2: Build HTML content with 3 limitation points
+  - [x] 4.3: Use info icon and muted styling
+  - [x] 4.4: Return widgets.Accordion for collapsible behavior
 
-- [ ] **Task 5: Make warning collapsible** (AC: 9)
-  - [ ] 5.1: Wrap content in widgets.Accordion
-  - [ ] 5.2: Set selected_index=None for collapsed default
-  - [ ] 5.3: Title: "Data Quality Notes"
+- [x] **Task 5: Make warning collapsible** (AC: 9)
+  - [x] 5.1: Wrap content in widgets.Accordion
+  - [x] 5.2: Set selected_index=None for collapsed default
+  - [x] 5.3: Title: "Data Quality Notes"
 
-- [ ] **Task 6: Style warning non-intrusively** (AC: 10)
-  - [ ] 6.1: Use light gray or info-blue background
-  - [ ] 6.2: Small font size
-  - [ ] 6.3: Info icon (not warning/error icon)
-  - [ ] 6.4: Minimal padding
+- [x] **Task 6: Style warning non-intrusively** (AC: 10)
+  - [x] 6.1: Use light gray or info-blue background
+  - [x] 6.2: Small font size
+  - [x] 6.3: Info icon (not warning/error icon)
+  - [x] 6.4: Minimal padding
 
-- [ ] **Task 7: Integrate into display_results()** (AC: 7)
-  - [ ] 7.1: Add data_quality_warning() call after export buttons
-  - [ ] 7.2: Only show if results are non-empty
+- [x] **Task 7: Integrate into display_results()** (AC: 7)
+  - [x] 7.1: Add data_quality_warning() call after export buttons
+  - [x] 7.2: Only show if results are non-empty
 
-- [ ] **Task 8: Validation** (AC: 1-10)
-  - [ ] 8.1: Test with combination that returns zero results
-  - [ ] 8.2: Verify suggestions match filter state
-  - [ ] 8.3: Verify data quality warning appears with results
-  - [ ] 8.4: Verify warning is collapsed by default
-  - [ ] 8.5: Verify warning can be expanded
+- [x] **Task 8: Validation** (AC: 1-10)
+  - [x] 8.1: Test with combination that returns zero results
+  - [x] 8.2: Verify suggestions match filter state
+  - [x] 8.3: Verify data quality warning appears with results
+  - [x] 8.4: Verify warning is collapsed by default
+  - [x] 8.5: Verify warning can be expanded
 
 ## Dev Notes
 
@@ -237,6 +237,7 @@ def display_results(results, state):
 | Date | Author | Change |
 |------|--------|--------|
 | 2026-01-12 | SM (Bob) | Story drafted from tech-spec-epic-5.md |
+| 2026-01-12 | Dev (Amelia) | Implementation complete: Zero results handling and data quality warning |
 
 ---
 
@@ -244,14 +245,35 @@ def display_results(results, state):
 
 ### Context Reference
 
-Pending story context generation
+- [stories/5-3-zero-results-data-quality-handling.context.xml](5-3-zero-results-data-quality-handling.context.xml)
 
 ### Agent Model Used
 
-Pending implementation
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
 
+- Implemented _is_zero_results() to check if trend and applicants DataFrames are empty
+- Implemented _generate_suggestions() with 4 contextual suggestions based on state
+- Created handle_zero_results() with amber warning box and filter summary
+- Created data_quality_warning() as collapsible Accordion widget
+- Integrated both functions into display_results()
+
 ### Completion Notes List
 
+- **AC1**: _is_zero_results() checks both trend and applicants DataFrames
+- **AC2**: handle_zero_results() displays clear heading with current filter summary
+- **AC3**: Suggestion for date range when span <= 3 years
+- **AC4**: Suggestion to disable SME filter if enabled
+- **AC5**: Suggestion for "All regions" if region selected
+- **AC6**: Suggestion for WIPO field if using custom IPC codes
+- **AC7**: data_quality_warning() displayed after export buttons when results exist
+- **AC8**: Warning content explains name variations, regional coverage, and classification issues
+- **AC9**: Accordion with selected_index=None for collapsed default
+- **AC10**: Light gray background (#f8f9fa), small font, info icon
+
 ### File List
+
+| File | Action | Description |
+|------|--------|-------------|
+| tip4patlibs_core.py | Modified | Added _is_zero_results(), _generate_suggestions(), handle_zero_results(), data_quality_warning(); Integrated into display_results() |

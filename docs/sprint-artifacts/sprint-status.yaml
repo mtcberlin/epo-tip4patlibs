@@ -71,7 +71,7 @@ development_status:
 
   # Epic 5: Export & Polish
   epic-5: contexted  # tech-spec created 2026-01-12 by SM
-  5-1-csv-export: ready-for-dev  # 2026-01-12 - Story context generated
-  5-2-png-export: ready-for-dev  # 2026-01-12 - Story context generated
-  5-3-zero-results-data-quality-handling: ready-for-dev  # 2026-01-12 - Story context generated
+  5-1-csv-export: review  # 2026-01-12 - Implementation complete
+  5-2-png-export: review  # 2026-01-12 - Implementation complete
+  5-3-zero-results-data-quality-handling: review  # 2026-01-12 - Implementation complete
   epic-5-retrospective: optional

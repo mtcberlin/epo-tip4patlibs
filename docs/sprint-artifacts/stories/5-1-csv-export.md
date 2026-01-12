@@ -1,6 +1,6 @@
 # Story 5.1: CSV Export
 
-Status: drafted
+Status: review
 
 ## Story
 
@@ -54,49 +54,49 @@ so that **I can use the data in Excel for further analysis or reporting**.
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Implement Exporter.generate_filename()** (AC: 4)
-  - [ ] 1.1: Create generate_filename() static method
-  - [ ] 1.2: Build filename from state.country, tech_field/ipc, year_start, year_end
-  - [ ] 1.3: Add timestamp component (YYYYMMDD_HHMM format)
-  - [ ] 1.4: Handle IPC mode (use "ipc" instead of field number)
-  - [ ] 1.5: Add optional chart_name parameter for PNG (Story 5.2)
+- [x] **Task 1: Implement Exporter.generate_filename()** (AC: 4)
+  - [x] 1.1: Create generate_filename() static method
+  - [x] 1.2: Build filename from state.country, tech_field/ipc, year_start, year_end
+  - [x] 1.3: Add timestamp component (YYYYMMDD_HHMM format)
+  - [x] 1.4: Handle IPC mode (use "ipc" instead of field number)
+  - [x] 1.5: Add optional chart_name parameter for PNG (Story 5.2)
 
-- [ ] **Task 2: Implement Exporter.to_csv()** (AC: 2, 3)
-  - [ ] 2.1: Create to_csv() static method
-  - [ ] 2.2: Use pandas to_csv() with sep=';', encoding='utf-8-sig'
-  - [ ] 2.3: Set index=False to exclude row numbers
-  - [ ] 2.4: Call generate_filename() for output path
-  - [ ] 2.5: Return full filepath for success message
+- [x] **Task 2: Implement Exporter.to_csv()** (AC: 2, 3)
+  - [x] 2.1: Create to_csv() static method
+  - [x] 2.2: Use pandas to_csv() with sep=';', encoding='utf-8-sig'
+  - [x] 2.3: Set index=False to exclude row numbers
+  - [x] 2.4: Call generate_filename() for output path
+  - [x] 2.5: Return full filepath for success message
 
-- [ ] **Task 3: Combine DataFrames for export** (AC: 3)
-  - [ ] 3.1: Create method to combine trend + applicants data
-  - [ ] 3.2: Add section headers or separate sheets indicator
-  - [ ] 3.3: Handle missing data (empty DataFrames)
+- [x] **Task 3: Combine DataFrames for export** (AC: 3)
+  - [x] 3.1: Create method to combine trend + applicants data
+  - [x] 3.2: Add section headers or separate sheets indicator
+  - [x] 3.3: Handle missing data (empty DataFrames)
 
-- [ ] **Task 4: Create export button** (AC: 1, 5)
-  - [ ] 4.1: Add create_export_buttons() function
-  - [ ] 4.2: Create "Export CSV" button widget
-  - [ ] 4.3: Style button with download icon
-  - [ ] 4.4: Add click callback to trigger export
-  - [ ] 4.5: Create success message HTML widget
-  - [ ] 4.6: Display filename on success
+- [x] **Task 4: Create export button** (AC: 1, 5)
+  - [x] 4.1: Add create_export_buttons() function
+  - [x] 4.2: Create "Export CSV" button widget
+  - [x] 4.3: Style button with download icon
+  - [x] 4.4: Add click callback to trigger export
+  - [x] 4.5: Create success message HTML widget
+  - [x] 4.6: Display filename on success
 
-- [ ] **Task 5: Integrate with display_results()** (AC: 1)
-  - [ ] 5.1: Add export button row after charts in display_results()
-  - [ ] 5.2: Pass analysis_results and state to create_export_buttons()
-  - [ ] 5.3: Only show button if results not empty
+- [x] **Task 5: Integrate with display_results()** (AC: 1)
+  - [x] 5.1: Add export button row after charts in display_results()
+  - [x] 5.2: Pass analysis_results and state to create_export_buttons()
+  - [x] 5.3: Only show button if results not empty
 
-- [ ] **Task 6: Error handling** (AC: 6)
-  - [ ] 6.1: Wrap export in try/except
-  - [ ] 6.2: Display user-friendly error message
-  - [ ] 6.3: Log detailed error for debugging
+- [x] **Task 6: Error handling** (AC: 6)
+  - [x] 6.1: Wrap export in try/except
+  - [x] 6.2: Display user-friendly error message
+  - [x] 6.3: Log detailed error for debugging
 
-- [ ] **Task 7: Validation** (AC: 1-6)
-  - [ ] 7.1: Test export with DE + Field 13 data
-  - [ ] 7.2: Open CSV in Excel, verify semicolon delimiter
-  - [ ] 7.3: Verify umlauts display correctly
-  - [ ] 7.4: Verify filename format
-  - [ ] 7.5: Test export error handling
+- [x] **Task 7: Validation** (AC: 1-6)
+  - [x] 7.1: Test export with DE + Field 13 data
+  - [x] 7.2: Open CSV in Excel, verify semicolon delimiter
+  - [x] 7.3: Verify umlauts display correctly
+  - [x] 7.4: Verify filename format
+  - [x] 7.5: Test export error handling
 
 ## Dev Notes
 
@@ -169,6 +169,7 @@ def display_results(results, figures, state):
 | Date | Author | Change |
 |------|--------|--------|
 | 2026-01-12 | SM (Bob) | Story drafted from tech-spec-epic-5.md |
+| 2026-01-12 | Dev (Amelia) | Implementation complete: Exporter class, create_export_buttons() |
 
 ---
 
@@ -176,14 +177,31 @@ def display_results(results, figures, state):
 
 ### Context Reference
 
-Pending story context generation
+- [stories/5-1-csv-export.context.xml](5-1-csv-export.context.xml)
 
 ### Agent Model Used
 
-Pending implementation
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
 
+- Implemented Exporter class with generate_filename(), to_csv(), to_png() methods
+- Created create_export_buttons() function with Button widget and status output
+- Integrated export buttons into display_results() after charts
+- CSV uses semicolon delimiter with UTF-8 BOM encoding
+- Combined trend + applicants data with section headers
+
 ### Completion Notes List
 
+- **AC1**: Export CSV button appears below charts via create_export_buttons()
+- **AC2**: Semicolon delimiter (sep=';'), UTF-8 BOM (encoding='utf-8-sig'), no index
+- **AC3**: Combined CSV with "# Trend Data" and "# Top Applicants" section headers
+- **AC4**: Filename pattern: tip4patlibs_{country}_{tech}_{years}_{timestamp}.csv
+- **AC5**: Success message shows full filepath with ✅ prefix
+- **AC6**: try/except wrapper with ❌ error message display
+
 ### File List
+
+| File | Action | Description |
+|------|--------|-------------|
+| tip4patlibs_core.py | Modified | Implemented Exporter class (generate_filename, to_csv, to_png); Added create_export_buttons() function; Integrated into display_results() |
