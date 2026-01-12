@@ -1,6 +1,6 @@
 # Story 4.2: Top Applicants Bar Chart
 
-Status: review
+Status: done
 
 ## Story
 

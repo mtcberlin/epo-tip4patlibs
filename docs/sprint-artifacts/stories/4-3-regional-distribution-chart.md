@@ -1,6 +1,6 @@
 # Story 4.3: Regional Distribution Chart
 
-Status: review
+Status: done
 
 ## Story
 

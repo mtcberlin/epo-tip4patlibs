@@ -1,6 +1,6 @@
 # Story 4.1: Trend Line Chart
 
-Status: review
+Status: done
 
 ## Story
 
