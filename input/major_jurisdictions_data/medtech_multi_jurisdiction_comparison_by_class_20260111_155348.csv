@@ -1,0 +1,49 @@
+jurisdiction;ipc_class;application_count;ipc_class_description;jurisdiction_description
+CN;A61B;301413;Diagnosis, Surgery, Identification;China (CNIPA)
+CN;A61C;32721;Dentistry, Oral Hygiene;China (CNIPA)
+CN;A61F;113383;Filters, Protheses, Orthotics;China (CNIPA)
+CN;A61G;102410;Transport, Personal Conveyances;China (CNIPA)
+CN;A61H;99386;Physical Therapy Apparatus;China (CNIPA)
+CN;A61J;38047;Containers for Medicines;China (CNIPA)
+CN;A61K40;5320;Medicinal Preparations (Drug Delivery);China (CNIPA)
+CN;A61L;133961;Sterilisation, Disinfection;China (CNIPA)
+CN;A61M;199528;Devices for Introducing Media;China (CNIPA)
+CN;A61N;42144;Electrotherapy, Magnetotherapy;China (CNIPA)
+CN;G16H;48673;Healthcare Informatics;China (CNIPA)
+CN;H05G;798;X-ray Technique;China (CNIPA)
+DE;A61B;5215;Diagnosis, Surgery, Identification;Germany (DPMA)
+DE;A61C;538;Dentistry, Oral Hygiene;Germany (DPMA)
+DE;A61F;1889;Filters, Protheses, Orthotics;Germany (DPMA)
+DE;A61G;658;Transport, Personal Conveyances;Germany (DPMA)
+DE;A61H;651;Physical Therapy Apparatus;Germany (DPMA)
+DE;A61J;269;Containers for Medicines;Germany (DPMA)
+DE;A61K40;59;Medicinal Preparations (Drug Delivery);Germany (DPMA)
+DE;A61L;1639;Sterilisation, Disinfection;Germany (DPMA)
+DE;A61M;1765;Devices for Introducing Media;Germany (DPMA)
+DE;A61N;519;Electrotherapy, Magnetotherapy;Germany (DPMA)
+DE;G16H;967;Healthcare Informatics;Germany (DPMA)
+DE;H05G;236;X-ray Technique;Germany (DPMA)
+EP;A61B;29498;Diagnosis, Surgery, Identification;European Patent Office
+EP;A61C;2457;Dentistry, Oral Hygiene;European Patent Office
+EP;A61F;9265;Filters, Protheses, Orthotics;European Patent Office
+EP;A61G;1231;Transport, Personal Conveyances;European Patent Office
+EP;A61H;1271;Physical Therapy Apparatus;European Patent Office
+EP;A61J;1277;Containers for Medicines;European Patent Office
+EP;A61K40;2613;Medicinal Preparations (Drug Delivery);European Patent Office
+EP;A61L;5630;Sterilisation, Disinfection;European Patent Office
+EP;A61M;12296;Devices for Introducing Media;European Patent Office
+EP;A61N;5066;Electrotherapy, Magnetotherapy;European Patent Office
+EP;G16H;7662;Healthcare Informatics;European Patent Office
+EP;H05G;259;X-ray Technique;European Patent Office
+US;A61B;73802;Diagnosis, Surgery, Identification;United States (USPTO)
+US;A61C;4908;Dentistry, Oral Hygiene;United States (USPTO)
+US;A61F;22653;Filters, Protheses, Orthotics;United States (USPTO)
+US;A61G;3478;Transport, Personal Conveyances;United States (USPTO)
+US;A61H;4262;Physical Therapy Apparatus;United States (USPTO)
+US;A61J;3128;Containers for Medicines;United States (USPTO)
+US;A61K40;4942;Medicinal Preparations (Drug Delivery);United States (USPTO)
+US;A61L;12870;Sterilisation, Disinfection;United States (USPTO)
+US;A61M;27654;Devices for Introducing Media;United States (USPTO)
+US;A61N;12934;Electrotherapy, Magnetotherapy;United States (USPTO)
+US;G16H;26034;Healthcare Informatics;United States (USPTO)
+US;H05G;553;X-ray Technique;United States (USPTO)
