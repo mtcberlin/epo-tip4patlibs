@@ -740,7 +740,333 @@ python -c "from epo.tipdata.patstat import PatstatClient; print('OK')"
 
 ---
 
+# PHASE 2 ARCHITECTURE EXTENSION (Added 2026-01-21)
+
+## Phase 2 Overview
+
+Phase 2 introduces two features that build on Round 1's foundation:
+
+| Feature | Architecture Impact | Status |
+|---------|---------------------|--------|
+| **Query Library** | New module for parameterized query execution | Phase 2 MVP |
+| **MCP Server** | Future standalone service, requires context package | Deferred |
+
+**Design Principle**: Phase 2 is additive - no modifications to Round 1 architecture.
+
+---
+
+## Query Library Architecture
+
+### Component Overview
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                     Query Library Architecture                       │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                      │
+│  ┌────────────────┐    ┌─────────────────┐    ┌─────────────────┐   │
+│  │  queries.yaml  │───▶│  QueryRegistry  │───▶│  ParameterForm  │   │
+│  │  (metadata)    │    │  (loader)       │    │  (ipywidgets)   │   │
+│  └────────────────┘    └─────────────────┘    └─────────────────┘   │
+│                                                        │             │
+│                                                        ▼             │
+│  ┌────────────────┐    ┌─────────────────┐    ┌─────────────────┐   │
+│  │  SQL Template  │◀───│  QueryBuilder   │◀───│  User Input     │   │
+│  │  ({{params}})  │    │  (substitution) │    │  (validated)    │   │
+│  └────────────────┘    └─────────────────┘    └─────────────────┘   │
+│           │                                                          │
+│           ▼                                                          │
+│  ┌─────────────────────────────────────────────────────────────┐    │
+│  │                    PatstatClient                             │    │
+│  │         patstat.sql_query(query, use_legacy_sql=False)      │    │
+│  └─────────────────────────────────────────────────────────────┘    │
+│           │                                                          │
+│           ▼                                                          │
+│  ┌────────────────┐    ┌─────────────────┐    ┌─────────────────┐   │
+│  │   DataFrame    │───▶│  Results View   │───▶│  Export (CSV/   │   │
+│  │   (results)    │    │  (display)      │    │  Excel)         │   │
+│  └────────────────┘    └─────────────────┘    └─────────────────┘   │
+│                                                                      │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### File Structure
+
+```
+tip4patlibs/
+├── TIP_for_PATLIBs.ipynb              # Round 1 notebook (unchanged)
+├── tip4patlibs_core.py                # Round 1 module (unchanged)
+├── QueryLib_for_PATLIBs.ipynb         # Query Library notebook (Phase 2)
+├── query_library/
+│   ├── __init__.py                    # Package init
+│   ├── registry.py                    # QueryRegistry class
+│   ├── builder.py                     # QueryBuilder (param substitution)
+│   ├── forms.py                       # Dynamic ipywidgets form generator
+│   ├── executor.py                    # PatstatClient wrapper
+│   └── exporter.py                    # CSV/Excel export
+├── queries/
+│   ├── queries.yaml                   # Master query registry
+│   ├── Q01_country_activity.sql       # SQL templates
+│   ├── Q02_tech_fields.sql
+│   ├── Q03_top_applicants.sql
+│   └── ...
+└── parameters/
+    ├── countries.yaml                 # Dropdown options (static)
+    ├── offices.yaml                   # Patent offices
+    └── tech_sectors.yaml              # Technology sectors
+```
+
+### Query Metadata Schema
+
+```yaml
+# queries/queries.yaml
+queries:
+  - id: "Q01"
+    title: "Country Patent Activity & Grant Rates"
+    description: "Identifies leading innovation hubs and their success rates in obtaining patents."
+    category: "country_analysis"
+    validation_status: "validated"
+    template_file: "Q01_country_activity.sql"
+
+    parameters:
+      - name: "year_from"
+        type: "year"
+        label: "Start Year"
+        default: 2015
+        min: 1990
+        max: 2025
+        required: true
+
+      - name: "min_patents"
+        type: "numeric"
+        label: "Minimum Patents"
+        default: 100
+        min: 1
+        max: 10000
+        required: false
+        help: "Filter out countries with fewer patents than this threshold"
+
+    output:
+      columns:
+        - name: "person_ctry_code"
+          label: "Country"
+        - name: "patent_count"
+          label: "Applications"
+        - name: "granted_count"
+          label: "Granted"
+        - name: "grant_rate"
+          label: "Grant Rate %"
+      default_limit: 20
+```
+
+### Parameter Types
+
+| Type | Widget | Validation |
+|------|--------|------------|
+| `year` | IntSlider | min/max bounds, ≤ current year |
+| `year_range` | IntRangeSlider | start < end |
+| `numeric` | IntText | min/max bounds |
+| `single_select` | Dropdown | Options from YAML or PATSTAT |
+| `multi_select` | SelectMultiple | Max selections configurable |
+| `text_input` | Text | Max length, optional regex |
+| `ipc_class` | Text | IPC format validation (A61B%) |
+
+### Query Builder Implementation
+
+```python
+import re
+from typing import Dict, Any
+
+class QueryBuilder:
+    """Builds parameterized SQL from template and user inputs.
+
+    Note: No SQL injection protection needed - TIP is a closed environment
+    with authenticated users only. Simple string substitution is sufficient.
+    """
+
+    def __init__(self, template: str):
+        self.template = template
+
+    def build(self, params: Dict[str, Any]) -> str:
+        """Substitute {{param}} placeholders with values."""
+        query = self.template
+
+        for name, value in params.items():
+            placeholder = f"{{{{{name}}}}}"
+
+            # Type-specific formatting
+            if isinstance(value, str):
+                # Quote strings
+                formatted = f"'{value}'"
+            elif isinstance(value, (list, tuple)):
+                # Format arrays for IN clause
+                formatted = ", ".join(f"'{v}'" if isinstance(v, str) else str(v) for v in value)
+            else:
+                formatted = str(value)
+
+            query = query.replace(placeholder, formatted)
+
+        return query
+
+    def validate_all_params_substituted(self, query: str) -> bool:
+        """Check no {{placeholders}} remain."""
+        return not re.search(r'\{\{[^}]+\}\}', query)
+```
+
+### Integration with Round 1
+
+| Round 1 Component | Phase 2 Reuse |
+|-------------------|---------------|
+| `PatstatClient` | Direct reuse via `executor.py` |
+| ipywidgets patterns | Extended in `forms.py` |
+| `Exporter` class | Extended for Excel support |
+| EPO color scheme | Reused if visualization added |
+
+---
+
+## Performance Architecture (Phase 2)
+
+### BigQuery Session Caching
+
+**Observation**: First query execution in a session is slower (~10-30s). Subsequent queries are ~10x faster due to BigQuery's internal caching and connection pooling.
+
+**Design Decision**: Accept slower first execution. No application-level caching needed.
+
+| Query | First Execution | Subsequent |
+|-------|-----------------|------------|
+| Q01 Country Activity | ~15s | ~1.5s |
+| Q02 Tech Fields | ~30s | ~3s |
+| Q03 Top Applicants | ~20s | ~2s |
+
+**User Communication**: Display note in UI:
+> "First query may take longer while connection initializes. Subsequent queries will be faster."
+
+---
+
+## MCP Server Architecture (Deferred)
+
+### Context Package Design
+
+When MCP development begins, the following assets are required:
+
+```
+mcp_context/
+├── patstat_context.json       # Business descriptions (28 tables)
+│                              # Action: Remove 'public.' prefix for BigQuery
+├── patstat_schema_summary.md  # Condensed schema (~10k tokens)
+│                              # Action: Summarize from 54k token original
+├── table_relations.md         # FK diagram, common JOINs
+│                              # Action: Create from PATSTAT documentation
+├── query_examples.json        # Validated queries as few-shot examples
+│                              # Action: Extract from QueryLib
+└── bigquery_notes.md          # BigQuery-specific syntax
+                               # Action: Document dialect differences
+```
+
+### MCP Integration Pattern (Future)
+
+```
+┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+│   Business   │────▶│  MCP Server  │────▶│  Generated   │
+│   Question   │     │  (LLM +      │     │  Query +     │
+│              │     │   Context)   │     │  Description │
+└──────────────┘     └──────────────┘     └──────────────┘
+                                                 │
+                                                 ▼
+                                          ┌──────────────┐
+                                          │   Manual     │
+                                          │  Validation  │
+                                          │  in TIP      │
+                                          └──────────────┘
+                                                 │
+                                                 ▼
+                                          ┌──────────────┐
+                                          │ Query Library│
+                                          │ (new entry)  │
+                                          └──────────────┘
+```
+
+---
+
+## Phase 2 Technical Decisions
+
+| Decision | Choice | Rationale |
+|----------|--------|-----------|
+| Query metadata format | YAML | Human-readable, version-controllable |
+| Parameter substitution | Simple string replacement | TIP is closed environment, no injection risk |
+| Caching strategy | None (rely on BigQuery) | Database updates every 6 months |
+| SQL storage | Separate .sql files | Syntax highlighting, easier editing |
+| UI framework | ipywidgets (same as R1) | Proven, consistent UX |
+
+---
+
+## ADR-010: SQL Parameter Substitution Without Injection Protection
+
+**Context**: Query Library templates use `{{param}}` placeholders that are substituted with user input before execution.
+
+**Decision**: Use simple string substitution without SQL injection protection.
+
+**Rationale**:
+1. TIP is a closed, authenticated environment (EPO internal)
+2. All users are trusted PATLIB professionals
+3. PATSTAT is read-only - worst case is a failed query
+4. Adding parameterized query complexity provides no practical security benefit
+5. PatstatClient's `sql_query()` doesn't support bind parameters anyway
+
+**Consequences**:
+- Simple, maintainable code
+- No security risk in this context
+- If Query Library is ever exposed externally, this decision must be revisited
+
+---
+
+## ADR-011: Rely on BigQuery Session Caching
+
+**Context**: Query performance varies between first and subsequent executions in a session.
+
+**Decision**: Accept first-query latency; rely on BigQuery's internal caching for subsequent performance.
+
+**Rationale**:
+1. PATSTAT database updates only every ~6 months
+2. BigQuery caches query results at session level
+3. First execution: ~10-30s; subsequent: ~1-3s (10x improvement)
+4. Application-level caching adds complexity with minimal benefit
+5. Session-based caching is automatic and free
+
+**Consequences**:
+- No cache invalidation logic needed
+- User informed via UI that first query is slower
+- Predictable performance after warm-up
+
+---
+
+## ADR-012: Separate SQL Template Files
+
+**Context**: SQL queries can be embedded in YAML or stored as separate files.
+
+**Decision**: Store SQL templates as separate `.sql` files, referenced from `queries.yaml`.
+
+**Rationale**:
+1. Syntax highlighting in editors
+2. Easier to read and modify complex queries
+3. Can use SQL-specific tooling (formatters, linters)
+4. Cleaner separation of concerns (metadata vs. query logic)
+5. Multi-line SQL is awkward in YAML
+
+**Consequences**:
+- Two files per query (metadata + SQL)
+- File path references must be maintained
+- Worth the trade-off for developer experience
+
+---
+
+_Phase 2 Architecture Extension added: 2026-01-21_
+_Architect: Winston_
+_For: BMad_
+
+---
+
 _Generated by BMAD Architecture Workflow_
-_Date: 2026-01-12_
+_Date: 2026-01-12 (Round 1), 2026-01-21 (Phase 2)_
 _Architect: Winston_
 _For: BMad_

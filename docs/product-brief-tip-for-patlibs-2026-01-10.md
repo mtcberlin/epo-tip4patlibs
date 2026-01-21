@@ -317,3 +317,264 @@ _This Product Brief captures the vision and requirements for TIP for PATLIBs._
 _It was created through collaborative discovery and reflects the unique needs of this enterprise/institutional project._
 
 _Next: PRD workflow will transform this brief into detailed product requirements with epics and user stories._
+
+---
+
+## EXTENSION: Phase 2 Features (Added 2026-01-21)
+
+### Context
+
+Based on stakeholder discussions and analysis of the existing `QueryLib_for_PATLIBs.ipynb` notebook (containing 11+ validated BigQuery queries), two major features have been identified for Phase 2 development:
+
+1. **Query Library** - End-user product for PATLIBs
+2. **MCP Server** - Developer/marketing tool for query generation
+
+These features build upon the Round 1 MVP and represent the evolution from "demonstration notebooks" to "production-ready tools."
+
+---
+
+## Feature 1: Query Library (Phase 2 MVP)
+
+### Vision
+
+A curated library of validated PATSTAT queries with a parameter-based UI, enabling PATLIBs, patent attorneys, and IP managers to execute sophisticated patent analyses without writing SQL.
+
+### Problem Statement
+
+The existing 11+ validated queries in `QueryLib_for_PATLIBs.ipynb` demonstrate powerful analyses, but:
+
+1. Users must understand and modify SQL to change parameters
+2. No systematic parameter validation or guidance
+3. Queries are embedded in notebook cells, not reusable
+4. No documentation of what parameters are configurable
+
+### Proposed Solution
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                        QUERY LIBRARY UI                             │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                      │
+│  Step 1: SELECT QUERY                                               │
+│  ┌─────────────────────────────────────────────────────────────┐    │
+│  │ [Dropdown: Select Business Question]                         │    │
+│  │  • Country Patent Activity & Grant Rates                     │    │
+│  │  • Technology Fields by Citations                            │    │
+│  │  • Top Patent Applicants                                     │    │
+│  │  • German Federal States (A61B)                              │    │
+│  │  • Competitor Filing Strategy                                │    │
+│  │  • ... (11+ queries)                                         │    │
+│  └─────────────────────────────────────────────────────────────┘    │
+│                                                                      │
+│  Step 2: CONFIGURE PARAMETERS                                       │
+│  ┌─────────────────────────────────────────────────────────────┐    │
+│  │ [Dynamic form based on selected query]                       │    │
+│  │  • Time Period: [2015] to [2024]                             │    │
+│  │  • IPC Class: [A61B______]                                   │    │
+│  │  • Country: [DE, US, CN, ...]                                │    │
+│  │  • Region: [NUTS Level 1]                                    │    │
+│  │  • Applicant Filter: [Optional text]                         │    │
+│  └─────────────────────────────────────────────────────────────┘    │
+│                                                                      │
+│  Step 3: EXECUTE & DISPLAY                                          │
+│  ┌─────────────────────────────────────────────────────────────┐    │
+│  │ [Execute Query]  [Export CSV]  [Export PNG]                  │    │
+│  │                                                               │    │
+│  │ Results: DataFrame display                                   │    │
+│  │ Visualization: Plotly chart (later phase)                    │    │
+│  └─────────────────────────────────────────────────────────────┘    │
+│                                                                      │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### Validated Queries (Existing Assets)
+
+Based on analysis of `QueryLib_for_PATLIBs.ipynb`:
+
+| # | Business Question | Status | Key Parameters |
+|---|-------------------|--------|----------------|
+| 1 | Country Patent Activity & Grant Rates | Validated | year_from, min_patents |
+| 2 | Technology Fields by Citations | Validated | year_from, year_to, weight_threshold |
+| 3 | Top Patent Applicants | Validated | year_from, min_applications |
+| 4 | Citation Network Analysis | Validated | citing_year |
+| 5 | Green Tech Evolution by Country | Validated | year_from, year_to, countries[] |
+| 6 | German Federal States (A61B) | Validated | year_from, year_to, ipc_class |
+| 7 | Competitor Geographic Filing Strategy | Validated | competitor_names[], tech_sector |
+| 8 | Diagnostic Imaging Grant Rates | Validated | year_from, year_to, offices[] |
+| 9 | AI-based ERP Patent Landscape | Validated | year_from |
+| 10 | Patents per Mio Inhabitants (DE) | Validated | year_from, ipc_class |
+| 11 | Fastest-growing G06Q Subclasses | Validated | base_year, comparison_year |
+| 12 | AI-assisted Diagnostics Companies | Review needed | - |
+| 13 | Regional Tech Sector Comparison | Review needed | regions[], year_from |
+
+### Target Users
+
+| User Type | Role | Value |
+|-----------|------|-------|
+| PATLIB Staff | Primary | Quick access to validated analyses for customer work |
+| Patent Attorneys | Secondary | Competitive landscape analysis |
+| IP Managers (SME) | Secondary | Portfolio benchmarking |
+
+### Technical Implementation
+
+- **Database:** BigQuery exclusively (no Postgres)
+- **Client:** `PatstatClient` from `epo.tipdata.patstat`
+- **UI Framework:** ipywidgets for Jupyter integration
+- **Query Storage:** Parameterized SQL templates with metadata
+- **Visualization:** Plotly (later phase), Pygwalker (exploration)
+
+### Success Metrics
+
+| Metric | Target |
+|--------|--------|
+| Queries in library | 15+ validated |
+| Parameter coverage | All common use cases |
+| User adoption | 10+ active PATLIBs |
+
+---
+
+## Feature 2: MCP Server (Future/Marketing)
+
+### Vision
+
+An AI-powered query generation service that converts natural language business questions into validated PATSTAT BigQuery queries, enabling rapid expansion of the Query Library.
+
+### Strategic Purpose
+
+1. **Internal:** Enable Query Library managers to rapidly add new queries
+2. **External:** Demonstrate AI capability as marketing differentiator
+3. **Future:** Standalone service offering outside TIP environment
+
+### Proposed Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                        QUERY LIBRARY ECOSYSTEM                       │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                      │
+│  ┌──────────────────────┐         ┌──────────────────────────────┐  │
+│  │   MCP SERVER         │         │      QUERY LIBRARY           │  │
+│  │   (Query Factory)    │         │      (End User Product)      │  │
+│  │                      │         │                              │  │
+│  │  Business Question   │ ──────▶ │  Validated Queries           │  │
+│  │        ↓             │  TEST   │  with Parameter UI           │  │
+│  │  Generated Query     │ ──────▶ │        ↓                     │  │
+│  │        ↓             │ VALIDATE│  Execute & Display           │  │
+│  │  Query Description   │         │        ↓                     │  │
+│  │                      │         │  Visualization               │  │
+│  │  Users: Developers,  │         │                              │  │
+│  │  Query Lib Managers  │         │  Users: PATLIBs, IP Mgrs,    │  │
+│  │                      │         │  Patent Attorneys            │  │
+│  └──────────────────────┘         └──────────────────────────────┘  │
+│                                                                      │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### MCP Context Package (Required Assets)
+
+| Asset | Status | Purpose |
+|-------|--------|---------|
+| `patstat-2026-01-19-context.json` | Exists | Business descriptions of 28 tables/columns |
+| `patstat_global_schema.json` | Exists (54k tokens) | Technical schema (needs summarization) |
+| `patstat_table_relations.md` | To create | FK/JOIN documentation |
+| `query_examples.json` | To extract | 11+ validated queries as few-shot examples |
+| `bigquery_syntax_notes.md` | To create | BigQuery-specific syntax guidance |
+
+### Dream Workflow
+
+1. IP Manager submits new business question
+2. MCP generates query + description
+3. Developer/Manager tests query in TIP environment
+4. Validated query added to Query Library
+5. End users can immediately use new query with parameters
+
+### Technical Notes
+
+- Context JSON currently uses `public.tls201_appln` format (Postgres)
+- BigQuery uses `tls201_appln` format (no schema prefix)
+- Schema cleanup task required before MCP implementation
+
+### Phase
+
+**Future/Marketing** - Not in current Round 1 or immediate Phase 2 scope. To be developed after Query Library MVP is stable.
+
+---
+
+## Updated Technical Findings
+
+### Database Clarification
+
+| Aspect | Decision |
+|--------|----------|
+| Primary Database | BigQuery exclusively |
+| Postgres References | Legacy, to be ignored |
+| Schema Documentation | `patstat-2026-01-19-context.json` (28 tables, business descriptions) |
+| Raw Schema | `patstat_global_schema.json` (54k tokens, needs summarization for MCP) |
+
+### Existing Assets Inventory
+
+| Asset | Location | Status |
+|-------|----------|--------|
+| Validated Queries | `context/QueryLib_for_PATLIBs.ipynb` | 11 validated, 2 need review |
+| Business Context | `context/patstat-2026-01-19-context.json` | Ready for MCP use |
+| Technical Schema | `context/patstat_global_schema.json` | Too large, needs processing |
+| Sample Queries | `context/patstat-2026-01-19-sample.json` | 5 example queries |
+
+### Implementation Notes
+
+- PatstatClient wrapper: `from epo.tipdata.patstat import PatstatClient`
+- Query execution: `patstat.sql_query(query, use_legacy_sql=False)`
+- All queries must use BigQuery syntax (not Postgres)
+
+---
+
+## Updated Phasing
+
+### Round 1 (Current - 10k EUR)
+- Core MVP as originally defined
+- Working prototype by mid-February 2026
+- Conference demo in May 2026
+
+### Phase 2 (Post-Conference)
+**Query Library MVP:**
+- Epic 6: Query Library Core
+  - Extract and parameterize existing 11+ queries
+  - Build parameter UI components
+  - Create query metadata schema
+  - Implement query execution wrapper
+- Epic 7: Query Library Polish
+  - Documentation of configurable parameters
+  - Error handling and validation
+  - Export capabilities (CSV, PNG)
+
+### Future Phase (Marketing/Service)
+**MCP Server:**
+- Schema cleanup (remove public. prefix)
+- Context package assembly
+- MCP implementation
+- Query validation workflow
+- Standalone service packaging
+
+---
+
+## Risk Update
+
+### New Risk: Scope Expansion
+
+| Risk | Likelihood | Impact | Mitigation |
+|------|------------|--------|------------|
+| Phase 2 scope delays Round 1 | Low | High | Keep phases strictly separate |
+| Query Library complexity underestimated | Medium | Medium | Start with 5 core queries, expand incrementally |
+| MCP distracts from user-facing features | Medium | Medium | Defer MCP until Query Library stable |
+
+### Assumption Update
+
+- Phase 2 features (Query Library, MCP) are **additive** and do not modify Round 1 deliverables
+- Existing validated queries in notebook are production-quality
+- BigQuery is the only target database
+
+---
+
+_Extension added: 2026-01-21_
+_Context: Party Mode discussion with full BMAD agent team_
+_Next: Extend PRD with Epic 6+ for Phase 2 features_
