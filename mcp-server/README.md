@@ -1,23 +1,41 @@
 # Query MCP Server
 
-MCP server for AI-powered SQL query generation from natural language.
+MCP server providing PATSTAT database schema discovery tools for AI-powered BigQuery SQL generation.
 
-## Quick Start (Docker - Recommended)
+## Tools
+
+The server exposes 4 tools for agentic schema discovery:
+
+| Tool | Description |
+|------|-------------|
+| `list_tables` | List all 28 available tables with descriptions |
+| `get_table_schema` | Get column details (name, type, description) for a specific table |
+| `search_tables` | Search for tables/columns by keyword |
+| `get_table_samples` | Get sample data rows for a specific table |
+
+**Agentic Workflow:**
+1. `list_tables()` → overview of all tables
+2. Identify relevant tables for the query
+3. `get_table_schema(table_name)` → column details with BigQuery types
+4. `get_table_samples(table_name)` → understand actual data values
+5. Generate SQL using ONLY MCP-provided context
+
+## Quick Start (Docker)
 
 The server **must be running** before Claude Code can use its tools.
 
 ```bash
 cd mcp-server
-devcontainer up --workspace-folder .
+# Open in VS Code and "Reopen in Container"
+# Then in container terminal:
+query-mcp --sse --port 8080
 ```
 
-This starts the server on port 8080 with SSE transport. The container runs in the background.
-
-To stop: `docker stop <container-id>` (find ID with `docker ps`)
+Or use VS Code task: `Start MCP Server (SSE)`
 
 ## Claude Code Configuration
 
-Add to your project's `.mcp.json` file (create in project root if needed):
+Copy `.mcp.json.example` to your project root as `.mcp.json`:
 
 ```json
 {
@@ -31,18 +49,52 @@ Add to your project's `.mcp.json` file (create in project root if needed):
 ```
 
 **Verify the setup:**
-1. Ensure the Docker container is running (`docker ps` should show the mcp-server)
-2. Restart Claude Code to pick up the MCP configuration
-3. The `generate_query` tool should now be available
+1. Ensure the server is running
+2. Restart Claude Code or run `/mcp` to reconnect
+3. The 4 schema discovery tools should now be available
 
-## Local Installation (Alternative)
+## Data Structure
+
+```
+data/
+├── tables/          # 28 per-table schema files (extensible)
+│   ├── tls201_appln.json
+│   ├── tls206_person.json
+│   └── ...
+└── samples/         # 28 per-table sample data files (10 rows each)
+    ├── tls201_appln.json
+    ├── tls206_person.json
+    └── ...
+```
+
+**Extensible:** Add new tables by dropping JSON files - no code changes required.
+
+**Table JSON format:**
+```json
+{
+  "table_name": "tls201_appln",
+  "description": "Core patent application table...",
+  "columns": [
+    {"name": "appln_id", "type": "INT64", "description": "Unique identifier..."},
+    {"name": "appln_filing_year", "type": "INT64", "description": "Year of filing..."}
+  ]
+}
+```
+
+**Sample JSON format:**
+```json
+{
+  "table_name": "tls201_appln",
+  "columns": ["appln_id", "appln_filing_year", ...],
+  "rows": [{"appln_id": "123", "appln_filing_year": "2021", ...}],
+  "row_count": 10
+}
+```
+
+## Local Installation
 
 ```bash
-# Install
 pip install -e .
-
-# Or with dev dependencies
-pip install -e '.[dev]'
 
 # Run with SSE transport
 query-mcp --sse --port 8080
@@ -54,32 +106,14 @@ Create `query-mcp.json` in working directory:
 
 ```json
 {
-  "context_dir": "../context",
-  "prompt_file": null,
+  "context_dir": "data",
   "log_level": "INFO"
 }
 ```
 
-Or use env var `QUERY_MCP_CONFIG=/path/to/config.json`
-
-Fallback: individual env vars (`CONTEXT_DIR`, `PROMPT_FILE`, `LOG_LEVEL`)
+Or use env vars: `CONTEXT_DIR`, `LOG_LEVEL`
 
 ## Endpoints
 
 - `GET /sse` - SSE connection endpoint (for Claude Code)
 - `POST /messages` - Message endpoint
-
-## Custom Prompts
-
-Create a text file with `{tables}` placeholder:
-
-```text
-You are a SQL expert.
-
-TABLES:
-{tables}
-
-Generate BigQuery SQL.
-```
-
-Set `PROMPT_FILE=/path/to/prompt.txt`

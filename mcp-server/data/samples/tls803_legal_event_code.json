@@ -1,0 +1,105 @@
+{
+  "table_name": "tls803_legal_event_code",
+  "columns": [
+    "event_auth",
+    "event_code",
+    "event_impact",
+    "event_descr",
+    "event_descr_orig",
+    "event_category_code",
+    "event_category_title"
+  ],
+  "rows": [
+    {
+      "event_auth": "GR",
+      "event_code": "MH4A",
+      "event_impact": null,
+      "event_descr": "RENUNCIATION",
+      "event_descr_orig": "DILOSI PARAITISIS",
+      "event_category_code": " ",
+      "event_category_title": ""
+    },
+    {
+      "event_auth": "MC",
+      "event_code": "NN",
+      "event_impact": null,
+      "event_descr": "ANNULMENT",
+      "event_descr_orig": "ANNULE",
+      "event_category_code": " ",
+      "event_category_title": ""
+    },
+    {
+      "event_auth": "CS",
+      "event_code": "MK1K",
+      "event_impact": null,
+      "event_descr": "UTILITY MODEL EXPIRED",
+      "event_descr_orig": "ZANIK UZITNEHO VZORU UPLYNUTIM DOBY PLATNOSTI",
+      "event_category_code": " ",
+      "event_category_title": ""
+    },
+    {
+      "event_auth": "MC",
+      "event_code": "BN",
+      "event_impact": null,
+      "event_descr": "ABANDONED",
+      "event_descr_orig": "ABANDON",
+      "event_category_code": " ",
+      "event_category_title": ""
+    },
+    {
+      "event_auth": "MC",
+      "event_code": "YP",
+      "event_impact": null,
+      "event_descr": "ANNUAL FEE PAID",
+      "event_descr_orig": "TAXE D'ANNUITE PAYEE",
+      "event_category_code": " ",
+      "event_category_title": ""
+    },
+    {
+      "event_auth": "MC",
+      "event_code": "PED",
+      "event_impact": null,
+      "event_descr": "NOT YET GRANTED",
+      "event_descr_orig": "PAS ENCORE DELIVRE",
+      "event_category_code": " ",
+      "event_category_title": ""
+    },
+    {
+      "event_auth": "AR",
+      "event_code": "FB",
+      "event_impact": null,
+      "event_descr": "SUSPENSION OF GRANTING PROCEDURE",
+      "event_descr_orig": "SUSPENSION DEL PROCESO DE CONCESION",
+      "event_category_code": "T",
+      "event_category_title": "ADMINISTRATIVE PROCEDURE ADJUSTMENT"
+    },
+    {
+      "event_auth": "CR",
+      "event_code": "FC90",
+      "event_impact": null,
+      "event_descr": "APPLICATION SUSPENDED",
+      "event_descr_orig": "SOLICITUD RECHAZADA",
+      "event_category_code": "T",
+      "event_category_title": "ADMINISTRATIVE PROCEDURE ADJUSTMENT"
+    },
+    {
+      "event_auth": "AR",
+      "event_code": "FD",
+      "event_impact": null,
+      "event_descr": "APPLICATION DECLARED VOID OR LAPSED, E.G., DUE TO NON-PAYMENT OF FEE",
+      "event_descr_orig": "SOLICITUD DECLARADA NULA O CADUCADA, POR EJEMPLO, POR IMPAGO DE LAS TASAS",
+      "event_category_code": "B",
+      "event_category_title": "APPLICATION DISCONTINUATION"
+    },
+    {
+      "event_auth": "AR",
+      "event_code": "FC",
+      "event_impact": null,
+      "event_descr": "REFUSAL",
+      "event_descr_orig": "DENEGACION",
+      "event_category_code": "B",
+      "event_category_title": "APPLICATION DISCONTINUATION"
+    }
+  ],
+  "row_count": 10
+}

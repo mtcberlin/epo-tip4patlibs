@@ -7,18 +7,73 @@ import os
 
 from mcp.server import Server
 from mcp.server.stdio import stdio_server
-from mcp.types import TextContent
+from mcp.types import TextContent, Prompt, PromptMessage, GetPromptResult
 
 from .config import Config
 from .context import ContextStore
-from .tools import get_tools, handle_generate_query
+from .tools import (
+    get_tools,
+    handle_list_tables,
+    handle_get_table_schema,
+    handle_search_tables,
+    handle_get_table_samples,
+)
 
 logger = logging.getLogger(__name__)
 
 # Global state
 server = Server("query-mcp")
-ctx = ContextStore()
+ctx: ContextStore
 cfg: Config
+
+
+USAGE_PROMPT = """PATSTAT Patent Database Query Helper
+
+I provide schema information for the EPO PATSTAT database to help you generate BigQuery SQL queries.
+
+**Workflow:**
+1. Call `list_tables` to see all available tables (28 tables)
+2. Identify relevant tables for your query
+3. Call `get_table_schema(table_name)` to get column names and types
+4. Generate BigQuery SQL using the schema information
+
+**Tips:**
+- Use `search_tables(keyword)` to find tables/columns by keyword
+- Pay attention to column types (INT64, STRING, DATE) for correct comparisons
+- For applicants: use `tls207_pers_appln.applt_seq_nr > 0`
+- For inventors: use `tls207_pers_appln.invt_seq_nr > 0`
+- Country codes are 2-letter ISO codes (e.g., 'AT' for Austria, 'GB' for UK)
+
+**Common tables:**
+- `tls201_appln` - Patent applications (appln_id, appln_filing_year, granted)
+- `tls206_person` - Applicants/inventors (person_id, person_name, person_ctry_code)
+- `tls207_pers_appln` - Links persons to applications (appln_id, person_id, applt_seq_nr)
+"""
+
+
+@server.list_prompts()
+async def list_prompts():
+    return [
+        Prompt(
+            name="usage",
+            description="How to use this MCP server to generate PATSTAT BigQuery queries"
+        )
+    ]
+
+
+@server.get_prompt()
+async def get_prompt(name: str) -> GetPromptResult:
+    if name == "usage":
+        return GetPromptResult(
+            description="PATSTAT query generation guide",
+            messages=[
+                PromptMessage(
+                    role="user",
+                    content=TextContent(type="text", text=USAGE_PROMPT)
+                )
+            ]
+        )
+    raise ValueError(f"Unknown prompt: {name}")
 
 
 @server.list_tools()
@@ -28,8 +83,14 @@ async def list_tools():
 
 @server.call_tool()
 async def call_tool(name: str, arguments: dict) -> list[TextContent]:
-    if name == "generate_query":
-        return handle_generate_query(arguments.get("question", ""), ctx, cfg.prompt_file)
+    if name == "list_tables":
+        return handle_list_tables(ctx)
+    elif name == "get_table_schema":
+        return handle_get_table_schema(arguments.get("table_name", ""), ctx)
+    elif name == "search_tables":
+        return handle_search_tables(arguments.get("keyword", ""), ctx)
+    elif name == "get_table_samples":
+        return handle_get_table_samples(arguments.get("table_name", ""), ctx)
     return [TextContent(type="text", text=f"Unknown tool: {name}")]
 
 
@@ -67,9 +128,13 @@ def run_sse(host: str, port: int) -> None:
     uvicorn.run(app, host=host, port=port)
 
 
+# TODO: Add Streamable HTTP transport for Claude.ai web support
+# The transport logic is decoupled - just add run_streamable_http() when ready
+
+
 def main() -> None:
     """Entry point."""
-    global cfg
+    global cfg, ctx
 
     parser = argparse.ArgumentParser(description="Query MCP Server")
     parser.add_argument("--sse", action="store_true", help="Run with SSE/HTTP transport")
@@ -79,8 +144,13 @@ def main() -> None:
 
     cfg = Config.load()
     logging.basicConfig(level=cfg.log_level)
-    logger.info(f"Loading context from: {cfg.context_dir}")
-    ctx.load(cfg.context_dir)
+
+    # Initialize context store with tables and samples directories
+    tables_dir = cfg.context_dir / "tables"
+    samples_dir = cfg.context_dir / "samples"
+    logger.info(f"Loading tables from: {tables_dir}")
+    logger.info(f"Loading samples from: {samples_dir}")
+    ctx = ContextStore(tables_dir, samples_dir)
 
     if args.sse:
         run_sse(args.host, args.port)

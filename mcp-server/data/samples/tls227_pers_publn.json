@@ -1,0 +1,72 @@
+{
+  "table_name": "tls227_pers_publn",
+  "columns": [
+    "person_id",
+    "pat_publn_id",
+    "applt_seq_nr",
+    "invt_seq_nr"
+  ],
+  "rows": [
+    {
+      "person_id": "5291701",
+      "pat_publn_id": "326113994",
+      "applt_seq_nr": "1",
+      "invt_seq_nr": "0"
+    },
+    {
+      "person_id": "908122",
+      "pat_publn_id": "290718418",
+      "applt_seq_nr": "0",
+      "invt_seq_nr": "1"
+    },
+    {
+      "person_id": "46788017",
+      "pat_publn_id": "410906844",
+      "applt_seq_nr": "1",
+      "invt_seq_nr": "0"
+    },
+    {
+      "person_id": "65474933",
+      "pat_publn_id": "539311644",
+      "applt_seq_nr": "0",
+      "invt_seq_nr": "1"
+    },
+    {
+      "person_id": "8708163",
+      "pat_publn_id": "307757279",
+      "applt_seq_nr": "1",
+      "invt_seq_nr": "0"
+    },
+    {
+      "person_id": "19886177",
+      "pat_publn_id": "378465161",
+      "applt_seq_nr": "0",
+      "invt_seq_nr": "4"
+    },
+    {
+      "person_id": "23308468",
+      "pat_publn_id": "319668968",
+      "applt_seq_nr": "1",
+      "invt_seq_nr": "0"
+    },
+    {
+      "person_id": "16832837",
+      "pat_publn_id": "417649571",
+      "applt_seq_nr": "0",
+      "invt_seq_nr": "2"
+    },
+    {
+      "person_id": "54719114",
+      "pat_publn_id": "475641136",
+      "applt_seq_nr": "1",
+      "invt_seq_nr": "0"
+    },
+    {
+      "person_id": "67230685",
+      "pat_publn_id": "552696039",
+      "applt_seq_nr": "0",
+      "invt_seq_nr": "1"
+    }
+  ],
+  "row_count": 10
+}

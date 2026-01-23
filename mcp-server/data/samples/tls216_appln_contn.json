@@ -1,0 +1,61 @@
+{
+  "table_name": "tls216_appln_contn",
+  "columns": [
+    "appln_id",
+    "parent_appln_id",
+    "contn_type"
+  ],
+  "rows": [
+    {
+      "appln_id": "48074066",
+      "parent_appln_id": "50565702",
+      "contn_type": "CIP"
+    },
+    {
+      "appln_id": "577867338",
+      "parent_appln_id": "517801295",
+      "contn_type": "CON"
+    },
+    {
+      "appln_id": "583981630",
+      "parent_appln_id": "909217838",
+      "contn_type": "CON"
+    },
+    {
+      "appln_id": "547021106",
+      "parent_appln_id": "409422414",
+      "contn_type": "DIV"
+    },
+    {
+      "appln_id": "611069187",
+      "parent_appln_id": "363736800",
+      "contn_type": "DIV"
+    },
+    {
+      "appln_id": "501886246",
+      "parent_appln_id": "480730619",
+      "contn_type": "DIV"
+    },
+    {
+      "appln_id": "47164271",
+      "parent_appln_id": "52324688",
+      "contn_type": "CON"
+    },
+    {
+      "appln_id": "523329968",
+      "parent_appln_id": "909260402",
+      "contn_type": "CON"
+    },
+    {
+      "appln_id": "405074281",
+      "parent_appln_id": "49825574",
+      "contn_type": "CIP"
+    },
+    {
+      "appln_id": "15132597",
+      "parent_appln_id": "15019655",
+      "contn_type": "INN"
+    }
+  ],
+  "row_count": 10
+}

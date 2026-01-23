@@ -1,0 +1,36 @@
+{
+  "table_name": "tls902_ipc_nace2",
+  "description": "Concordance table mapping IPC patent classification codes to NACE Rev. 2 industry classification codes with conditional logic.",
+  "columns": [
+    {
+      "name": "unless_with_ipc",
+      "type": "STRING",
+      "description": "IPC codes that must be present for this mapping to apply (positive condition)."
+    },
+    {
+      "name": "ipc",
+      "type": "STRING",
+      "description": "IPC classification code being mapped to industry codes."
+    },
+    {
+      "name": "nace2_code",
+      "type": "STRING",
+      "description": "NACE Rev. 2 industry classification code assigned through this mapping."
+    },
+    {
+      "name": "nace2_weight",
+      "type": "INT64",
+      "description": "Weight indicating the strength or confidence of this IPC-to-NACE mapping."
+    },
+    {
+      "name": "not_with_ipc",
+      "type": "STRING",
+      "description": "IPC codes that, if present, exclude this mapping (negative condition)."
+    },
+    {
+      "name": "nace2_descr",
+      "type": "STRING",
+      "description": "Description of the NACE Rev. 2 industry category."
+    }
+  ]
+}

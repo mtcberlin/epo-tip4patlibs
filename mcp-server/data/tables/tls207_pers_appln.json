@@ -1,0 +1,26 @@
+{
+  "table_name": "tls207_pers_appln",
+  "description": "Links persons (applicants and inventors) to patent applications, specifying their roles and sequence numbers.",
+  "columns": [
+    {
+      "name": "appln_id",
+      "type": "INT64",
+      "description": "Foreign key referencing the patent application."
+    },
+    {
+      "name": "person_id",
+      "type": "INT64",
+      "description": "Foreign key referencing the person involved in the patent application."
+    },
+    {
+      "name": "invt_seq_nr",
+      "type": "INT64",
+      "description": "Sequence number indicating the person's position in the list of inventors (0 if not an inventor)."
+    },
+    {
+      "name": "applt_seq_nr",
+      "type": "INT64",
+      "description": "Sequence number indicating the person's position in the list of applicants (0 if not an applicant)."
+    }
+  ]
+}

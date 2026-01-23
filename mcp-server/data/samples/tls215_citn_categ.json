@@ -1,0 +1,83 @@
+{
+  "table_name": "tls215_citn_categ",
+  "columns": [
+    "pat_publn_id",
+    "citn_replenished",
+    "citn_id",
+    "citn_categ",
+    "relevant_claim"
+  ],
+  "rows": [
+    {
+      "pat_publn_id": "336847320",
+      "citn_replenished": "0",
+      "citn_id": "12",
+      "citn_categ": "A",
+      "relevant_claim": "17"
+    },
+    {
+      "pat_publn_id": "336410997",
+      "citn_replenished": "0",
+      "citn_id": "1",
+      "citn_categ": "YD",
+      "relevant_claim": "4"
+    },
+    {
+      "pat_publn_id": "551942348",
+      "citn_replenished": "0",
+      "citn_id": "8",
+      "citn_categ": "A",
+      "relevant_claim": "8"
+    },
+    {
+      "pat_publn_id": "317851252",
+      "citn_replenished": "0",
+      "citn_id": "7",
+      "citn_categ": "T",
+      "relevant_claim": "7"
+    },
+    {
+      "pat_publn_id": "501107776",
+      "citn_replenished": "0",
+      "citn_id": "4",
+      "citn_categ": "A",
+      "relevant_claim": "6"
+    },
+    {
+      "pat_publn_id": "611757280",
+      "citn_replenished": "610317788",
+      "citn_id": "12",
+      "citn_categ": "A",
+      "relevant_claim": "6"
+    },
+    {
+      "pat_publn_id": "419465601",
+      "citn_replenished": "0",
+      "citn_id": "9",
+      "citn_categ": "XP",
+      "relevant_claim": "21"
+    },
+    {
+      "pat_publn_id": "316839708",
+      "citn_replenished": "0",
+      "citn_id": "6",
+      "citn_categ": "X",
+      "relevant_claim": "4"
+    },
+    {
+      "pat_publn_id": "353582730",
+      "citn_replenished": "0",
+      "citn_id": "1",
+      "citn_categ": "A",
+      "relevant_claim": "33"
+    },
+    {
+      "pat_publn_id": "521069366",
+      "citn_replenished": "0",
+      "citn_id": "3",
+      "citn_categ": "A",
+      "relevant_claim": "6"
+    }
+  ],
+  "row_count": 10
+}

@@ -1,0 +1,50 @@
+{
+  "table_name": "tls205_tech_rel",
+  "columns": [
+    "appln_id",
+    "tech_rel_appln_id"
+  ],
+  "rows": [
+    {
+      "appln_id": "907850031",
+      "tech_rel_appln_id": "21659802"
+    },
+    {
+      "appln_id": "875663",
+      "tech_rel_appln_id": "908257190"
+    },
+    {
+      "appln_id": "12046504",
+      "tech_rel_appln_id": "47716484"
+    },
+    {
+      "appln_id": "908353577",
+      "tech_rel_appln_id": "18777219"
+    },
+    {
+      "appln_id": "20702917",
+      "tech_rel_appln_id": "908677759"
+    },
+    {
+      "appln_id": "1368658",
+      "tech_rel_appln_id": "13745496"
+    },
+    {
+      "appln_id": "12325556",
+      "tech_rel_appln_id": "908386230"
+    },
+    {
+      "appln_id": "908204465",
+      "tech_rel_appln_id": "19378162"
+    },
+    {
+      "appln_id": "4127973",
+      "tech_rel_appln_id": "54791872"
+    },
+    {
+      "appln_id": "908743996",
+      "tech_rel_appln_id": "23386836"
+    }
+  ],
+  "row_count": 10
+}

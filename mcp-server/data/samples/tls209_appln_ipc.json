@@ -1,0 +1,105 @@
+{
+  "table_name": "tls209_appln_ipc",
+  "columns": [
+    "appln_id",
+    "ipc_class_symbol",
+    "ipc_class_level",
+    "ipc_version",
+    "ipc_value",
+    "ipc_position",
+    "ipc_gener_auth"
+  ],
+  "rows": [
+    {
+      "appln_id": "8668048",
+      "ipc_class_symbol": "A23L   7/117",
+      "ipc_class_level": "A",
+      "ipc_version": "2016-01-01",
+      "ipc_value": "I",
+      "ipc_position": " ",
+      "ipc_gener_auth": "CN"
+    },
+    {
+      "appln_id": "27217731",
+      "ipc_class_symbol": "G03G  15/05",
+      "ipc_class_level": "A",
+      "ipc_version": "2006-01-01",
+      "ipc_value": "I",
+      "ipc_position": "L",
+      "ipc_gener_auth": "JP"
+    },
+    {
+      "appln_id": "51904915",
+      "ipc_class_symbol": "H04M   1/66",
+      "ipc_class_level": "A",
+      "ipc_version": "2006-01-01",
+      "ipc_value": "I",
+      "ipc_position": "F",
+      "ipc_gener_auth": "US"
+    },
+    {
+      "appln_id": "37294355",
+      "ipc_class_symbol": "G01S  17/93",
+      "ipc_class_level": "A",
+      "ipc_version": "2006-01-01",
+      "ipc_value": "I",
+      "ipc_position": "L",
+      "ipc_gener_auth": "JP"
+    },
+    {
+      "appln_id": "17929635",
+      "ipc_class_symbol": "A47C   4/06",
+      "ipc_class_level": "A",
+      "ipc_version": "2006-01-01",
+      "ipc_value": "I",
+      "ipc_position": " ",
+      "ipc_gener_auth": "EP"
+    },
+    {
+      "appln_id": "32704097",
+      "ipc_class_symbol": "A61K   8/20",
+      "ipc_class_level": "A",
+      "ipc_version": "2006-01-01",
+      "ipc_value": "I",
+      "ipc_position": "L",
+      "ipc_gener_auth": "JP"
+    },
+    {
+      "appln_id": "571003837",
+      "ipc_class_symbol": "H10K  99/00",
+      "ipc_class_level": "A",
+      "ipc_version": "2023-01-01",
+      "ipc_value": "I",
+      "ipc_position": "F",
+      "ipc_gener_auth": "US"
+    },
+    {
+      "appln_id": "550461487",
+      "ipc_class_symbol": "B62B   5/00",
+      "ipc_class_level": "A",
+      "ipc_version": "2006-01-01",
+      "ipc_value": "I",
+      "ipc_position": "L",
+      "ipc_gener_auth": "CN"
+    },
+    {
+      "appln_id": "56564305",
+      "ipc_class_symbol": "H04S   1/00",
+      "ipc_class_level": "A",
+      "ipc_version": "2006-01-01",
+      "ipc_value": "I",
+      "ipc_position": "F",
+      "ipc_gener_auth": "JP"
+    },
+    {
+      "appln_id": "21366936",
+      "ipc_class_symbol": "A61P  31/04",
+      "ipc_class_level": "A",
+      "ipc_version": "2006-01-01",
+      "ipc_value": "I",
+      "ipc_position": "L",
+      "ipc_gener_auth": "JP"
+    }
+  ],
+  "row_count": 10
+}
