@@ -1,0 +1,38 @@
+{
+  "name": "Query MCP Server",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    }
+  },
+
+  "postCreateCommand": "pip install -e '.[dev]'",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "charliermarsh.ruff"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python"
+      }
+    }
+  },
+
+  "mounts": [
+    "source=${localWorkspaceFolder}/../context,target=/workspaces/context,type=bind"
+  ],
+
+  "remoteEnv": {
+    "CONTEXT_DIR": "/workspaces/context",
+    "MCP_PORT": "8080"
+  },
+
+  "forwardPorts": [8080],
+
+  "remoteUser": "vscode"
+}

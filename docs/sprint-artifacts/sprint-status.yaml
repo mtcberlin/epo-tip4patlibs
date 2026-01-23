@@ -94,7 +94,7 @@ development_status:
   # Epic 8: MCP Server Preparation
   # Approach: Build → Discover → Refine (top-down, discovery-driven)
   epic-8: contexted  # tech-spec created 2026-01-23
-  8-1-mcp-server-scaffold: in-progress           # 2026-01-23 - Development started
+  8-1-mcp-server-scaffold: review                 # 2026-01-23 - Ready for review
   8-2-raw-context-testing: backlog                # Load existing context, test query generation, discover gaps
   8-3-querylib-integration: backlog               # Extract QueryLib examples in LLM-useful format
   8-4-context-refinement-config: backlog          # Refine context structure, make configurable for additions

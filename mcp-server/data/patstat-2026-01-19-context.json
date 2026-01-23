@@ -1,0 +1,1108 @@
+[
+  {
+    "table_name": "public.tls230_appln_techn_field",
+    "table_description": "Assigns patent applications to broad technical fields based on IPC codes, enabling high-level technology analysis.",
+    "columns": [
+      {
+        "column_name": "weight",
+        "column_description": "Weight indicating the relative importance of this technical field for the application."
+      },
+      {
+        "column_name": "appln_id",
+        "column_description": "Foreign key referencing the patent application."
+      },
+      {
+        "column_name": "techn_field_nr",
+        "column_description": "Numeric code representing the technical field category."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls205_tech_rel",
+    "table_description": "Links patent applications to technologically related applications, identifying technical relationships beyond simple citations.",
+    "columns": [
+      {
+        "column_name": "appln_id",
+        "column_description": "Foreign key referencing the source patent application."
+      },
+      {
+        "column_name": "tech_rel_appln_id",
+        "column_description": "Foreign key referencing the technologically related patent application."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls902_ipc_nace2",
+    "table_description": "Concordance table mapping IPC patent classification codes to NACE Rev. 2 industry classification codes with conditional logic.",
+    "columns": [
+      {
+        "column_name": "unless_with_ipc",
+        "column_description": "IPC codes that must be present for this mapping to apply (positive condition)."
+      },
+      {
+        "column_name": "ipc",
+        "column_description": "IPC classification code being mapped to industry codes."
+      },
+      {
+        "column_name": "nace2_code",
+        "column_description": "NACE Rev. 2 industry classification code assigned through this mapping."
+      },
+      {
+        "column_name": "nace2_weight",
+        "column_description": "Weight indicating the strength or confidence of this IPC-to-NACE mapping."
+      },
+      {
+        "column_name": "not_with_ipc",
+        "column_description": "IPC codes that, if present, exclude this mapping (negative condition)."
+      },
+      {
+        "column_name": "nace2_descr",
+        "column_description": "Description of the NACE Rev. 2 industry category."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls231_inpadoc_legal_event",
+    "table_description": "Contains legal status events throughout a patent's lifecycle, including grants, lapses, transfers, and fee payments from INPADOC legal status data.",
+    "columns": [
+      {
+        "column_name": "event_seq_nr",
+        "column_description": "Sequential number ordering events for the same application."
+      },
+      {
+        "column_name": "event_id",
+        "column_description": "Unique identifier for the legal event record."
+      },
+      {
+        "column_name": "event_type",
+        "column_description": "Type of legal event (e.g., grant, lapse, transfer, fee payment)."
+      },
+      {
+        "column_name": "event_code",
+        "column_description": "Authority-specific code identifying the type of legal event."
+      },
+      {
+        "column_name": "event_filing_date",
+        "column_description": "Date when the event-related document was filed."
+      },
+      {
+        "column_name": "event_effective_date",
+        "column_description": "Date when the legal event became effective."
+      },
+      {
+        "column_name": "event_text",
+        "column_description": "Descriptive text providing details about the legal event."
+      },
+      {
+        "column_name": "ref_doc_auth",
+        "column_description": "Authority of the referenced document related to the event."
+      },
+      {
+        "column_name": "ref_doc_nr",
+        "column_description": "Number of the referenced document related to the event."
+      },
+      {
+        "column_name": "ref_doc_kind",
+        "column_description": "Kind code of the referenced document."
+      },
+      {
+        "column_name": "ref_doc_text",
+        "column_description": "Additional text information about the referenced document."
+      },
+      {
+        "column_name": "party_seq_nr",
+        "column_description": "Sequential number for multiple parties involved in the same event."
+      },
+      {
+        "column_name": "party_new",
+        "column_description": "Name of the new party after an ownership or rights transfer."
+      },
+      {
+        "column_name": "party_old",
+        "column_description": "Name of the previous party before an ownership or rights transfer."
+      },
+      {
+        "column_name": "spc_filing_date",
+        "column_description": "Filing date of the Supplementary Protection Certificate."
+      },
+      {
+        "column_name": "spc_patent_expiry_date",
+        "column_description": "Original expiry date of the basic patent before SPC extension."
+      },
+      {
+        "column_name": "spc_text",
+        "column_description": "Additional text information about the Supplementary Protection Certificate."
+      },
+      {
+        "column_name": "designated_states",
+        "column_description": "List of countries/states designated for patent protection (relevant for PCT/EP applications)."
+      },
+      {
+        "column_name": "fee_country",
+        "column_description": "Country for which the maintenance fee was paid."
+      },
+      {
+        "column_name": "fee_payment_date",
+        "column_description": "Date when the maintenance or renewal fee was paid."
+      },
+      {
+        "column_name": "fee_text",
+        "column_description": "Additional text information about the fee payment."
+      },
+      {
+        "column_name": "lapse_country",
+        "column_description": "Country where the patent rights lapsed."
+      },
+      {
+        "column_name": "lapse_date",
+        "column_description": "Date when the patent rights lapsed or expired."
+      },
+      {
+        "column_name": "lapse_text",
+        "column_description": "Additional text information about the lapse event."
+      },
+      {
+        "column_name": "reinstate_date",
+        "column_description": "Date when the patent rights were reinstated after lapse."
+      },
+      {
+        "column_name": "reinstate_text",
+        "column_description": "Additional text information about the reinstatement event."
+      },
+      {
+        "column_name": "class_symbol",
+        "column_description": "Classification code symbol referenced in the legal event."
+      },
+      {
+        "column_name": "appln_id",
+        "column_description": "Foreign key referencing the patent application."
+      },
+      {
+        "column_name": "event_auth",
+        "column_description": "Patent authority reporting the legal event."
+      },
+      {
+        "column_name": "event_publn_date",
+        "column_description": "Date when the legal event was published."
+      },
+      {
+        "column_name": "ref_doc_date",
+        "column_description": "Date of the referenced document."
+      },
+      {
+        "column_name": "party_type",
+        "column_description": "Type of party involved in the event (e.g., applicant, owner, licensee)."
+      },
+      {
+        "column_name": "spc_nr",
+        "column_description": "Supplementary Protection Certificate (SPC) number for pharmaceutical/plant protection patents."
+      },
+      {
+        "column_name": "spc_extension_date",
+        "column_description": "Extended expiry date after granting the Supplementary Protection Certificate."
+      },
+      {
+        "column_name": "extension_states",
+        "column_description": "List of extension states for European patent applications."
+      },
+      {
+        "column_name": "fee_renewal_year",
+        "column_description": "Year of patent protection for which the renewal fee applies."
+      },
+      {
+        "column_name": "reinstate_country",
+        "column_description": "Country where the patent rights were reinstated."
+      },
+      {
+        "column_name": "class_scheme",
+        "column_description": "Classification scheme referenced in the legal event (e.g., IPC, CPC)."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls803_legal_event_code",
+    "table_description": "Reference table mapping authority-specific legal event codes to standardized descriptions and categories.",
+    "columns": [
+      {
+        "column_name": "event_descr",
+        "column_description": "Standardized English description of the legal event."
+      },
+      {
+        "column_name": "event_auth",
+        "column_description": "Patent authority that uses this event code."
+      },
+      {
+        "column_name": "event_descr_orig",
+        "column_description": "Original description of the legal event in the authority's language."
+      },
+      {
+        "column_name": "event_category_title",
+        "column_description": "Title describing the standardized event category."
+      },
+      {
+        "column_name": "event_code",
+        "column_description": "Authority-specific code for the legal event."
+      },
+      {
+        "column_name": "event_category_code",
+        "column_description": "Standardized category code grouping similar types of legal events."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls227_pers_publn",
+    "table_description": "Links persons (applicants and inventors) to patent publications, specifying their sequence numbers and roles for each publication.",
+    "columns": [
+      {
+        "column_name": "pat_publn_id",
+        "column_description": "Foreign key referencing the patent publication document."
+      },
+      {
+        "column_name": "applt_seq_nr",
+        "column_description": "Sequence number indicating the person's position in the list of applicants (0 if not an applicant)."
+      },
+      {
+        "column_name": "person_id",
+        "column_description": "Foreign key referencing the person involved in the patent publication."
+      },
+      {
+        "column_name": "invt_seq_nr",
+        "column_description": "Sequence number indicating the person's position in the list of inventors (0 if not an inventor)."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls202_appln_title",
+    "table_description": "Contains patent application titles in various languages, providing the invention name as it appears in the application.",
+    "columns": [
+      {
+        "column_name": "appln_id",
+        "column_description": "Foreign key referencing the patent application."
+      },
+      {
+        "column_name": "appln_title_lg",
+        "column_description": "Two-letter language code indicating the language of the title."
+      },
+      {
+        "column_name": "appln_title",
+        "column_description": "Full text of the patent application title describing the invention."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls212_citation",
+    "table_description": "Contains all patent and non-patent literature citations made in patent publications, indicating prior art and technological relationships.",
+    "columns": [
+      {
+        "column_name": "citn_id",
+        "column_description": "Sequential identifier for citations within a patent publication."
+      },
+      {
+        "column_name": "pat_publn_id",
+        "column_description": "Foreign key referencing the citing patent publication."
+      },
+      {
+        "column_name": "cited_pat_publn_id",
+        "column_description": "Foreign key referencing the cited patent publication (null if citing non-patent literature)."
+      },
+      {
+        "column_name": "cited_appln_id",
+        "column_description": "Foreign key referencing the cited patent application (null if citing non-patent literature)."
+      },
+      {
+        "column_name": "npl_citn_seq_nr",
+        "column_description": "Sequential number for non-patent literature citations within the publication."
+      },
+      {
+        "column_name": "citn_gener_auth",
+        "column_description": "Patent authority that generated or provided the citation."
+      },
+      {
+        "column_name": "citn_replenished",
+        "column_description": "Flag indicating if citation data was enhanced from additional sources beyond the original publication."
+      },
+      {
+        "column_name": "citn_origin",
+        "column_description": "Origin of the citation (e.g., examiner-added, applicant-provided, search report)."
+      },
+      {
+        "column_name": "pat_citn_seq_nr",
+        "column_description": "Sequential number for patent citations within the publication."
+      },
+      {
+        "column_name": "cited_npl_publn_id",
+        "column_description": "Foreign key referencing the cited non-patent literature (null if citing a patent)."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls901_techn_field_ipc",
+    "table_description": "Reference table mapping IPC classification codes to broader technical fields and sectors for technology analysis.",
+    "columns": [
+      {
+        "column_name": "techn_field_nr",
+        "column_description": "Numeric code identifying the technical field."
+      },
+      {
+        "column_name": "ipc_maingroup_symbol",
+        "column_description": "IPC main group classification code."
+      },
+      {
+        "column_name": "techn_field",
+        "column_description": "Name of the specific technical field within the sector."
+      },
+      {
+        "column_name": "techn_sector",
+        "column_description": "Name of the broad technology sector (e.g., Electrical Engineering, Chemistry)."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls206_person",
+    "table_description": "Harmonized person data table containing standardized and consolidated information about applicants and inventors across all patent applications.",
+    "columns": [
+      {
+        "column_name": "person_address",
+        "column_description": "Standardized full address of the person or organization."
+      },
+      {
+        "column_name": "person_ctry_code",
+        "column_description": "Two-letter country code of the person's location."
+      },
+      {
+        "column_name": "person_id",
+        "column_description": "Unique identifier for each harmonized person record."
+      },
+      {
+        "column_name": "person_name",
+        "column_description": "Standardized full name of the person or organization after harmonization."
+      },
+      {
+        "column_name": "person_name_orig_lg",
+        "column_description": "Original name in the native language before standardization."
+      },
+      {
+        "column_name": "nuts",
+        "column_description": "NUTS regional code for geographic location within Europe."
+      },
+      {
+        "column_name": "nuts_level",
+        "column_description": "Level of NUTS classification (0=country, 1=major region, 2=region, 3=small region)."
+      },
+      {
+        "column_name": "doc_std_name_id",
+        "column_description": "Identifier linking to the standardized name in the name harmonization system."
+      },
+      {
+        "column_name": "doc_std_name",
+        "column_description": "Standardized name using document-level harmonization rules."
+      },
+      {
+        "column_name": "psn_id",
+        "column_description": "Person sector identifier grouping entities by economic sector."
+      },
+      {
+        "column_name": "psn_name",
+        "column_description": "Name associated with the person sector classification."
+      },
+      {
+        "column_name": "psn_level",
+        "column_description": "Hierarchical level in the person sector classification system."
+      },
+      {
+        "column_name": "psn_sector",
+        "column_description": "Economic sector classification (e.g., COMPANY, UNIVERSITY, GOVERNMENT, INDIVIDUAL)."
+      },
+      {
+        "column_name": "han_id",
+        "column_description": "Harmonized entity identifier grouping records belonging to the same real-world entity."
+      },
+      {
+        "column_name": "han_name",
+        "column_description": "Harmonized name representing the consolidated entity across all variations."
+      },
+      {
+        "column_name": "han_harmonized",
+        "column_description": "Flag indicating the level or quality of harmonization applied to the record."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls215_citn_categ",
+    "table_description": "Provides categorization of patent citations, indicating their relevance and importance in the examination process.",
+    "columns": [
+      {
+        "column_name": "citn_id",
+        "column_description": "Sequential identifier for citations within a patent publication."
+      },
+      {
+        "column_name": "pat_publn_id",
+        "column_description": "Foreign key referencing the citing patent publication."
+      },
+      {
+        "column_name": "relevant_claim",
+        "column_description": "Specific claim number(s) to which the citation is relevant."
+      },
+      {
+        "column_name": "citn_replenished",
+        "column_description": "Flag indicating if citation data was replenished or enhanced from additional sources."
+      },
+      {
+        "column_name": "citn_categ",
+        "column_description": "Category code indicating the citation's relevance (e.g., X=particularly relevant, Y=relevant in combination)."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls201_appln",
+    "table_description": "Core table containing patent application records with filing details, family information, and key metrics like grant status and citation counts.",
+    "columns": [
+      {
+        "column_name": "appln_filing_year",
+        "column_description": "Year extracted from the filing date for easier temporal analysis."
+      },
+      {
+        "column_name": "appln_id",
+        "column_description": "Unique identifier for each patent application in the database."
+      },
+      {
+        "column_name": "appln_auth",
+        "column_description": "Two-letter code of the patent authority where the application was filed."
+      },
+      {
+        "column_name": "appln_nr",
+        "column_description": "Application number assigned by the patent authority in a standardized format."
+      },
+      {
+        "column_name": "appln_kind",
+        "column_description": "Single-letter code indicating the type of application (e.g., patent, utility model)."
+      },
+      {
+        "column_name": "appln_filing_date",
+        "column_description": "Date when the patent application was officially filed with the patent authority."
+      },
+      {
+        "column_name": "appln_nr_epodoc",
+        "column_description": "Application number in EPODOC format, a standardized European Patent Office format."
+      },
+      {
+        "column_name": "appln_nr_original",
+        "column_description": "Original application number as assigned by the filing authority before standardization."
+      },
+      {
+        "column_name": "receiving_office",
+        "column_description": "Patent office that received the international application (relevant for PCT applications)."
+      },
+      {
+        "column_name": "int_phase",
+        "column_description": "Indicator of whether the application is in the international phase of the PCT process."
+      },
+      {
+        "column_name": "nat_phase",
+        "column_description": "Indicator of whether the application has entered the national phase from PCT."
+      },
+      {
+        "column_name": "earliest_filing_date",
+        "column_description": "Filing date of the earliest priority application in the patent family."
+      },
+      {
+        "column_name": "earliest_filing_id",
+        "column_description": "Application ID of the earliest priority application in the family."
+      },
+      {
+        "column_name": "earliest_publn_date",
+        "column_description": "Date of the first publication anywhere in the patent family."
+      },
+      {
+        "column_name": "earliest_pat_publn_id",
+        "column_description": "Publication ID of the earliest publication in the patent family."
+      },
+      {
+        "column_name": "granted",
+        "column_description": "Flag indicating whether the patent application was granted (Y) or not (N)."
+      },
+      {
+        "column_name": "inpadoc_family_id",
+        "column_description": "Identifier grouping related patent applications into an extended INPADOC family."
+      },
+      {
+        "column_name": "nb_citing_docdb_fam",
+        "column_description": "Count of distinct DOCDB families that cite this application, indicating technological impact."
+      },
+      {
+        "column_name": "nb_applicants",
+        "column_description": "Number of applicants listed on the patent application."
+      },
+      {
+        "column_name": "nb_inventors",
+        "column_description": "Number of inventors listed on the patent application."
+      },
+      {
+        "column_name": "ipr_type",
+        "column_description": "Type of intellectual property right (e.g., patent, utility model, plant patent)."
+      },
+      {
+        "column_name": "internat_appln_id",
+        "column_description": "Application ID of the corresponding international (PCT) application if applicable."
+      },
+      {
+        "column_name": "reg_phase",
+        "column_description": "Indicator of whether the application is in the regional phase (e.g., European phase)."
+      },
+      {
+        "column_name": "earliest_filing_year",
+        "column_description": "Year of the earliest filing date for temporal analysis."
+      },
+      {
+        "column_name": "earliest_publn_year",
+        "column_description": "Year of the earliest publication date for temporal analysis."
+      },
+      {
+        "column_name": "docdb_family_id",
+        "column_description": "Identifier grouping patent applications claiming the same priority into a DOCDB family."
+      },
+      {
+        "column_name": "docdb_family_size",
+        "column_description": "Number of patent applications in the DOCDB family, indicating geographic breadth."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls207_pers_appln",
+    "table_description": "Links persons (applicants and inventors) to patent applications, specifying their roles and sequence numbers.",
+    "columns": [
+      {
+        "column_name": "appln_id",
+        "column_description": "Foreign key referencing the patent application."
+      },
+      {
+        "column_name": "person_id",
+        "column_description": "Foreign key referencing the person involved in the patent application."
+      },
+      {
+        "column_name": "invt_seq_nr",
+        "column_description": "Sequence number indicating the person's position in the list of inventors (0 if not an inventor)."
+      },
+      {
+        "column_name": "applt_seq_nr",
+        "column_description": "Sequence number indicating the person's position in the list of applicants (0 if not an applicant)."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls904_nuts",
+    "table_description": "Reference table containing NUTS (Nomenclature of Territorial Units for Statistics) regional codes and names for European geographic analysis.",
+    "columns": [
+      {
+        "column_name": "nuts_level",
+        "column_description": "Hierarchical level of the NUTS region (0=country, 1=major region, 2=region, 3=small region)."
+      },
+      {
+        "column_name": "nuts",
+        "column_description": "NUTS regional code identifier."
+      },
+      {
+        "column_name": "nuts_label",
+        "column_description": "Full name or label of the NUTS region."
+      }
+    ]
+  },
+  {
+    "table_name": "public.nuts_zip",
+    "table_description": "Mapping table linking postal ZIP codes to NUTS3 (Nomenclature of Territorial Units for Statistics) regions for geographic analysis.",
+    "columns": [
+      {
+        "column_name": "nuts3",
+        "column_description": "NUTS level 3 regional code representing a small region for socio-economic analysis."
+      },
+      {
+        "column_name": "zip_code",
+        "column_description": "Postal code or ZIP code associated with the NUTS3 region."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls229_appln_nace2",
+    "table_description": "Links patent applications to NACE Rev. 2 industry classification codes, indicating relevant economic sectors and industries.",
+    "columns": [
+      {
+        "column_name": "weight",
+        "column_description": "Weight indicating the relative importance or relevance of this NACE code to the application."
+      },
+      {
+        "column_name": "appln_id",
+        "column_description": "Foreign key referencing the patent application."
+      },
+      {
+        "column_name": "nace2_code",
+        "column_description": "NACE Rev. 2 industry classification code assigned to the application."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls228_docdb_fam_citn",
+    "table_description": "Contains citations between DOCDB patent families, aggregating citations at the family level rather than individual publications.",
+    "columns": [
+      {
+        "column_name": "cited_docdb_family_id",
+        "column_description": "Foreign key referencing the cited DOCDB patent family."
+      },
+      {
+        "column_name": "docdb_family_id",
+        "column_description": "Foreign key referencing the citing DOCDB patent family."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls209_appln_ipc",
+    "table_description": "Contains International Patent Classification (IPC) codes assigned to patent applications, categorizing inventions by technical field.",
+    "columns": [
+      {
+        "column_name": "appln_id",
+        "column_description": "Foreign key referencing the patent application."
+      },
+      {
+        "column_name": "ipc_class_level",
+        "column_description": "Hierarchical level of the IPC code (e.g., section, class, subclass, group)."
+      },
+      {
+        "column_name": "ipc_version",
+        "column_description": "Date indicating which version of the IPC classification system was used."
+      },
+      {
+        "column_name": "ipc_position",
+        "column_description": "Position or rank of this IPC code relative to other codes assigned to the application."
+      },
+      {
+        "column_name": "ipc_class_symbol",
+        "column_description": "IPC classification code indicating the technical field of the invention."
+      },
+      {
+        "column_name": "ipc_value",
+        "column_description": "Indicator of whether this is the main IPC code (I=inventive) or additional (A=additional)."
+      },
+      {
+        "column_name": "ipc_gener_auth",
+        "column_description": "Authority that generated or assigned the IPC classification code."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls203_appln_abstr",
+    "table_description": "Contains patent application abstracts in various languages, providing technical summaries of the inventions.",
+    "columns": [
+      {
+        "column_name": "appln_id",
+        "column_description": "Foreign key referencing the patent application."
+      },
+      {
+        "column_name": "appln_abstract_lg",
+        "column_description": "Two-letter language code indicating the language of the abstract."
+      },
+      {
+        "column_name": "appln_abstract",
+        "column_description": "Full text of the patent abstract describing the invention's technical summary."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls226_person_orig",
+    "table_description": "Stores original person data (applicants and inventors) as submitted to patent offices, including unharmonized names and addresses before standardization processing.",
+    "columns": [
+      {
+        "column_name": "person_id",
+        "column_description": "Foreign key linking to the harmonized person record in the tls206_person table."
+      },
+      {
+        "column_name": "source_version",
+        "column_description": "Version identifier of the data source from which the person information was extracted."
+      },
+      {
+        "column_name": "person_name_orig_lg",
+        "column_description": "Language code indicating the original language of the person's name."
+      },
+      {
+        "column_name": "last_name",
+        "column_description": "Family name or surname extracted from the original person record."
+      },
+      {
+        "column_name": "first_name",
+        "column_description": "Given name or first name extracted from the original person record."
+      },
+      {
+        "column_name": "address_freeform",
+        "column_description": "Complete unstructured address as originally provided, without parsing into separate address components."
+      },
+      {
+        "column_name": "address_2",
+        "column_description": "Second line of parsed address, typically containing additional location details."
+      },
+      {
+        "column_name": "address_3",
+        "column_description": "Third line of parsed address, containing supplementary address information."
+      },
+      {
+        "column_name": "address_5",
+        "column_description": "Fifth line of parsed address, containing further address information."
+      },
+      {
+        "column_name": "street",
+        "column_description": "Street name and number extracted from the address."
+      },
+      {
+        "column_name": "zip_code",
+        "column_description": "Postal code or ZIP code extracted from the address."
+      },
+      {
+        "column_name": "state",
+        "column_description": "State, province, or region code extracted from the address."
+      },
+      {
+        "column_name": "residence_ctry_code",
+        "column_description": "Two-letter country code representing the person's country of residence."
+      },
+      {
+        "column_name": "role",
+        "column_description": "Role of the person in relation to the patent (e.g., applicant, inventor, representative)."
+      },
+      {
+        "column_name": "person_orig_id",
+        "column_description": "Unique identifier for the original person record as submitted to the patent office."
+      },
+      {
+        "column_name": "source",
+        "column_description": "Patent office or authority that provided the original person data."
+      },
+      {
+        "column_name": "name_freeform",
+        "column_description": "Unstructured full name as originally provided, without parsing into separate name components."
+      },
+      {
+        "column_name": "middle_name",
+        "column_description": "Middle name or initial extracted from the original person record."
+      },
+      {
+        "column_name": "address_1",
+        "column_description": "First line of parsed address, typically containing street address or building information."
+      },
+      {
+        "column_name": "address_4",
+        "column_description": "Fourth line of parsed address, containing additional address details."
+      },
+      {
+        "column_name": "city",
+        "column_description": "City or municipality name extracted from the address."
+      },
+      {
+        "column_name": "person_ctry_code",
+        "column_description": "Two-letter country code representing the person's country as stated in the patent document."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls216_appln_contn",
+    "table_description": "Tracks continuation relationships between patent applications, including divisional, continuation, and continuation-in-part applications.",
+    "columns": [
+      {
+        "column_name": "parent_appln_id",
+        "column_description": "Foreign key referencing the parent patent application."
+      },
+      {
+        "column_name": "appln_id",
+        "column_description": "Foreign key referencing the child/continuing patent application."
+      },
+      {
+        "column_name": "contn_type",
+        "column_description": "Type of continuation relationship (e.g., divisional, continuation, continuation-in-part)."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls222_appln_jp_class",
+    "table_description": "Contains Japanese patent classification codes (FI and F-terms) assigned to patent applications filed in Japan.",
+    "columns": [
+      {
+        "column_name": "appln_id",
+        "column_description": "Foreign key referencing the patent application."
+      },
+      {
+        "column_name": "jp_class_scheme",
+        "column_description": "Japanese classification scheme used (e.g., FI, F-term)."
+      },
+      {
+        "column_name": "jp_class_symbol",
+        "column_description": "Japanese classification code assigned to the application."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls801_country",
+    "table_description": "Reference table containing country codes and names with organizational membership information (EU, EPO, OECD).",
+    "columns": [
+      {
+        "column_name": "iso_alpha3",
+        "column_description": "Three-letter ISO country code."
+      },
+      {
+        "column_name": "st3_name",
+        "column_description": "Full country name in English."
+      },
+      {
+        "column_name": "continent",
+        "column_description": "Continent where the country is located."
+      },
+      {
+        "column_name": "eu_member",
+        "column_description": "Flag or date indicating European Union membership status."
+      },
+      {
+        "column_name": "oecd_member",
+        "column_description": "Flag or date indicating OECD membership status."
+      },
+      {
+        "column_name": "discontinued",
+        "column_description": "Flag or date indicating if the country code is no longer in use (e.g., historical countries)."
+      },
+      {
+        "column_name": "ctry_code",
+        "column_description": "Two-letter ISO country code."
+      },
+      {
+        "column_name": "organisation_flag",
+        "column_description": "Flag indicating if the code represents an international organization rather than a country."
+      },
+      {
+        "column_name": "epo_member",
+        "column_description": "Flag or date indicating European Patent Office membership status."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls211_pat_publn",
+    "table_description": "Contains patent publication records representing published versions of patent applications, including publication dates and document details.",
+    "columns": [
+      {
+        "column_name": "publn_auth",
+        "column_description": "Two-letter code of the authority that published the patent document."
+      },
+      {
+        "column_name": "publn_nr",
+        "column_description": "Publication number in a standardized format."
+      },
+      {
+        "column_name": "publn_kind",
+        "column_description": "Kind code indicating the type of publication (e.g., A1=first publication, B1=granted patent)."
+      },
+      {
+        "column_name": "appln_id",
+        "column_description": "Foreign key linking to the underlying patent application."
+      },
+      {
+        "column_name": "publn_date",
+        "column_description": "Date when the patent document was officially published."
+      },
+      {
+        "column_name": "publn_first_grant",
+        "column_description": "Flag indicating if this publication represents the first grant of the patent."
+      },
+      {
+        "column_name": "publn_claims",
+        "column_description": "Number of claims in the published patent document."
+      },
+      {
+        "column_name": "pat_publn_id",
+        "column_description": "Unique identifier for each patent publication document."
+      },
+      {
+        "column_name": "publn_nr_original",
+        "column_description": "Original publication number as assigned by the publishing authority."
+      },
+      {
+        "column_name": "publn_lg",
+        "column_description": "Two-letter language code of the publication."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls214_npl_publn",
+    "table_description": "Contains non-patent literature (NPL) citations such as scientific articles, books, and technical documents referenced in patent applications.",
+    "columns": [
+      {
+        "column_name": "xp_nr",
+        "column_description": "Cross-reference number assigned by the patent office to the NPL citation."
+      },
+      {
+        "column_name": "npl_type",
+        "column_description": "Type of non-patent literature (e.g., journal article, book, conference paper)."
+      },
+      {
+        "column_name": "npl_author",
+        "column_description": "Author(s) of the non-patent literature publication."
+      },
+      {
+        "column_name": "npl_title1",
+        "column_description": "Primary title of the non-patent literature publication."
+      },
+      {
+        "column_name": "npl_editor",
+        "column_description": "Editor(s) of the publication (relevant for books and proceedings)."
+      },
+      {
+        "column_name": "npl_volume",
+        "column_description": "Volume number of the journal or book series."
+      },
+      {
+        "column_name": "npl_publn_date",
+        "column_description": "Publication date of the non-patent literature."
+      },
+      {
+        "column_name": "npl_publn_end_date",
+        "column_description": "End date for publications spanning multiple dates (e.g., conferences)."
+      },
+      {
+        "column_name": "npl_publisher",
+        "column_description": "Publisher of the non-patent literature."
+      },
+      {
+        "column_name": "npl_page_last",
+        "column_description": "Last page number of the article or chapter."
+      },
+      {
+        "column_name": "npl_abstract_nr",
+        "column_description": "Abstract number if the publication is from an abstract database."
+      },
+      {
+        "column_name": "npl_isbn",
+        "column_description": "International Standard Book Number for book publications."
+      },
+      {
+        "column_name": "npl_issn",
+        "column_description": "International Standard Serial Number for periodical publications."
+      },
+      {
+        "column_name": "online_availability",
+        "column_description": "Information about online availability and access to the publication."
+      },
+      {
+        "column_name": "online_search_date",
+        "column_description": "Date when the online resource was searched or accessed."
+      },
+      {
+        "column_name": "npl_publn_id",
+        "column_description": "Unique identifier for the non-patent literature publication."
+      },
+      {
+        "column_name": "npl_biblio",
+        "column_description": "Complete bibliographic citation text as it appears in the patent document."
+      },
+      {
+        "column_name": "npl_title2",
+        "column_description": "Secondary title or subtitle of the publication."
+      },
+      {
+        "column_name": "npl_issue",
+        "column_description": "Issue number of the journal or periodical."
+      },
+      {
+        "column_name": "npl_page_first",
+        "column_description": "First page number of the article or chapter."
+      },
+      {
+        "column_name": "npl_doi",
+        "column_description": "Digital Object Identifier (DOI) for electronic access to the publication."
+      },
+      {
+        "column_name": "online_classification",
+        "column_description": "Classification or categorization of the online resource."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls225_docdb_fam_cpc",
+    "table_description": "Contains CPC classification codes assigned at the DOCDB patent family level, with versioning and status information.",
+    "columns": [
+      {
+        "column_name": "cpc_gener_auth",
+        "column_description": "Authority that generated or assigned the CPC classification."
+      },
+      {
+        "column_name": "cpc_version",
+        "column_description": "Date indicating the version of the CPC scheme used."
+      },
+      {
+        "column_name": "cpc_position",
+        "column_description": "Position indicating whether this is the first or additional CPC code."
+      },
+      {
+        "column_name": "cpc_action_date",
+        "column_description": "Date when the CPC classification was added or modified."
+      },
+      {
+        "column_name": "cpc_status",
+        "column_description": "Status of the CPC code (e.g., active, deleted, transferred)."
+      },
+      {
+        "column_name": "cpc_data_source",
+        "column_description": "Source of the CPC classification data."
+      },
+      {
+        "column_name": "docdb_family_id",
+        "column_description": "Foreign key referencing the DOCDB patent family."
+      },
+      {
+        "column_name": "cpc_class_symbol",
+        "column_description": "CPC classification code assigned to the patent family."
+      },
+      {
+        "column_name": "cpc_value",
+        "column_description": "Value indicating whether this is an inventive (I) or additional (A) classification."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls224_appln_cpc",
+    "table_description": "Contains Cooperative Patent Classification (CPC) codes assigned to patent applications, providing detailed technical categorization.",
+    "columns": [
+      {
+        "column_name": "cpc_class_symbol",
+        "column_description": "CPC classification code indicating the technical field and subfield of the invention."
+      },
+      {
+        "column_name": "appln_id",
+        "column_description": "Foreign key referencing the patent application."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls204_appln_prior",
+    "table_description": "Links patent applications to their priority applications, establishing priority claims and patent family relationships.",
+    "columns": [
+      {
+        "column_name": "prior_appln_id",
+        "column_description": "Foreign key referencing the earlier priority application being claimed."
+      },
+      {
+        "column_name": "appln_id",
+        "column_description": "Foreign key referencing the subsequent patent application claiming priority."
+      },
+      {
+        "column_name": "prior_appln_seq_nr",
+        "column_description": "Sequential number ordering multiple priority claims for the same application."
+      }
+    ]
+  },
+  {
+    "table_name": "public.tls210_appln_n_cls",
+    "table_description": "Contains national classification codes assigned to patent applications by various patent offices using country-specific classification systems.",
+    "columns": [
+      {
+        "column_name": "nat_class_symbol",
+        "column_description": "National classification code assigned by the patent office's classification system."
+      },
+      {
+        "column_name": "appln_id",
+        "column_description": "Foreign key referencing the patent application."
+      }
+    ]
+  }
+]
