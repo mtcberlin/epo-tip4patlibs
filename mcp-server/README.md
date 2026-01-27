@@ -125,6 +125,18 @@ data/
 }
 ```
 
+## Docker
+
+Run from the **host** (not inside the dev container):
+
+```bash
+cd mcp-server
+docker build -t query-mcp .
+docker run -p 8080:8080 query-mcp
+```
+
+The image runs `--http` by default (both SSE + Streamable HTTP).
+
 ## Local Installation
 
 ```bash

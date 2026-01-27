@@ -134,7 +134,6 @@ def run_streamable_http(host: str, port: int) -> None:
     from collections.abc import AsyncIterator
     from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
     from starlette.applications import Starlette
-    from starlette.routing import Mount
     import uvicorn
 
     session_manager = StreamableHTTPSessionManager(
@@ -150,13 +149,19 @@ def run_streamable_http(host: str, port: int) -> None:
     async def handle_request(scope, receive, send):
         await session_manager.handle_request(scope, receive, send)
 
-    app = Starlette(
-        routes=[Mount("/mcp", app=handle_request)],
-        lifespan=lifespan,
-    )
+    app = Starlette(lifespan=lifespan)
+
+    async def routing_app(scope, receive, send):
+        if scope["type"] == "lifespan":
+            await app(scope, receive, send)
+        elif scope["type"] == "http" and scope["path"] in ("/mcp", "/mcp/"):
+            await handle_request(scope, receive, send)
+        else:
+            await send({"type": "http.response.start", "status": 404, "headers": []})
+            await send({"type": "http.response.body", "body": b"Not Found"})
 
     logger.info(f"Starting Streamable HTTP server on http://{host}:{port}/mcp")
-    uvicorn.run(app, host=host, port=port)
+    uvicorn.run(routing_app, host=host, port=port)
 
 
 def run_http(host: str, port: int) -> None:
@@ -170,30 +175,10 @@ def run_http(host: str, port: int) -> None:
     from mcp.server.sse import SseServerTransport
     from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
     from starlette.applications import Starlette
-    from starlette.routing import Mount
-    from starlette.responses import Response
     import uvicorn
 
-    # SSE transport (raw ASGI — SSE manages its own response)
+    # SSE transport
     sse = SseServerTransport("/messages")
-
-    async def handle_sse_connect(scope, receive, send):
-        async with sse.connect_sse(scope, receive, send) as streams:
-            await server.run(streams[0], streams[1], server.create_initialization_options())
-
-    async def handle_sse_messages(scope, receive, send):
-        await sse.handle_post_message(scope, receive, send)
-
-    async def sse_app(scope, receive, send):
-        if scope["type"] == "http":
-            path = scope["path"]
-            if path == "/sse":
-                await handle_sse_connect(scope, receive, send)
-            elif path == "/messages" and scope["method"] == "POST":
-                await handle_sse_messages(scope, receive, send)
-            else:
-                response = Response("Not Found", status_code=404)
-                await response(scope, receive, send)
 
     # Streamable HTTP transport
     session_manager = StreamableHTTPSessionManager(
@@ -209,21 +194,23 @@ def run_http(host: str, port: int) -> None:
         async with session_manager.run():
             yield
 
-    app = Starlette(
-        routes=[
-            Mount("/mcp", app=handle_streamable),
-        ],
-        lifespan=lifespan,
-    )
-
-    # Wrap to handle SSE paths before Starlette routing
-    starlette_app = app
+    app = Starlette(lifespan=lifespan)
 
     async def combined_app(scope, receive, send):
-        if scope["type"] == "http" and scope["path"] in ("/sse", "/messages"):
-            await sse_app(scope, receive, send)
+        if scope["type"] == "lifespan":
+            await app(scope, receive, send)
+        elif scope["type"] != "http":
+            return
+        elif scope["path"] == "/sse":
+            async with sse.connect_sse(scope, receive, send) as streams:
+                await server.run(streams[0], streams[1], server.create_initialization_options())
+        elif scope["path"] == "/messages" and scope["method"] == "POST":
+            await sse.handle_post_message(scope, receive, send)
+        elif scope["path"] in ("/mcp", "/mcp/"):
+            await handle_streamable(scope, receive, send)
         else:
-            await starlette_app(scope, receive, send)
+            await send({"type": "http.response.start", "status": 404, "headers": []})
+            await send({"type": "http.response.body", "body": b"Not Found"})
 
     logger.info(f"Starting HTTP server on http://{host}:{port}")
     logger.info(f"  SSE transport:             /sse + /messages")
