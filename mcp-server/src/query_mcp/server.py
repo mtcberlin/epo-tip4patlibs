@@ -103,7 +103,7 @@ def run_stdio() -> None:
 
 
 def run_sse(host: str, port: int) -> None:
-    """Run server with SSE transport over HTTP."""
+    """Run server with SSE transport over HTTP (Claude Code CLI)."""
     from mcp.server.sse import SseServerTransport
     import uvicorn
 
@@ -128,8 +128,107 @@ def run_sse(host: str, port: int) -> None:
     uvicorn.run(app, host=host, port=port)
 
 
-# TODO: Add Streamable HTTP transport for Claude.ai web support
-# The transport logic is decoupled - just add run_streamable_http() when ready
+def run_streamable_http(host: str, port: int) -> None:
+    """Run server with Streamable HTTP transport (Claude Code CLI + Claude.ai web)."""
+    import contextlib
+    from collections.abc import AsyncIterator
+    from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
+    from starlette.applications import Starlette
+    from starlette.routing import Mount
+    import uvicorn
+
+    session_manager = StreamableHTTPSessionManager(
+        app=server,
+        json_response=True,
+    )
+
+    @contextlib.asynccontextmanager
+    async def lifespan(app: Starlette) -> AsyncIterator[None]:
+        async with session_manager.run():
+            yield
+
+    async def handle_request(scope, receive, send):
+        await session_manager.handle_request(scope, receive, send)
+
+    app = Starlette(
+        routes=[Mount("/mcp", app=handle_request)],
+        lifespan=lifespan,
+    )
+
+    logger.info(f"Starting Streamable HTTP server on http://{host}:{port}/mcp")
+    uvicorn.run(app, host=host, port=port)
+
+
+def run_http(host: str, port: int) -> None:
+    """Run server with both SSE and Streamable HTTP on one port.
+
+    - /sse + /messages  -> SSE transport (Claude Code CLI with type:sse)
+    - /mcp              -> Streamable HTTP transport (Claude Code CLI with type:http, Claude.ai web)
+    """
+    import contextlib
+    from collections.abc import AsyncIterator
+    from mcp.server.sse import SseServerTransport
+    from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
+    from starlette.applications import Starlette
+    from starlette.routing import Mount
+    from starlette.responses import Response
+    import uvicorn
+
+    # SSE transport (raw ASGI — SSE manages its own response)
+    sse = SseServerTransport("/messages")
+
+    async def handle_sse_connect(scope, receive, send):
+        async with sse.connect_sse(scope, receive, send) as streams:
+            await server.run(streams[0], streams[1], server.create_initialization_options())
+
+    async def handle_sse_messages(scope, receive, send):
+        await sse.handle_post_message(scope, receive, send)
+
+    async def sse_app(scope, receive, send):
+        if scope["type"] == "http":
+            path = scope["path"]
+            if path == "/sse":
+                await handle_sse_connect(scope, receive, send)
+            elif path == "/messages" and scope["method"] == "POST":
+                await handle_sse_messages(scope, receive, send)
+            else:
+                response = Response("Not Found", status_code=404)
+                await response(scope, receive, send)
+
+    # Streamable HTTP transport
+    session_manager = StreamableHTTPSessionManager(
+        app=server,
+        json_response=True,
+    )
+
+    async def handle_streamable(scope, receive, send):
+        await session_manager.handle_request(scope, receive, send)
+
+    @contextlib.asynccontextmanager
+    async def lifespan(app: Starlette) -> AsyncIterator[None]:
+        async with session_manager.run():
+            yield
+
+    app = Starlette(
+        routes=[
+            Mount("/mcp", app=handle_streamable),
+        ],
+        lifespan=lifespan,
+    )
+
+    # Wrap to handle SSE paths before Starlette routing
+    starlette_app = app
+
+    async def combined_app(scope, receive, send):
+        if scope["type"] == "http" and scope["path"] in ("/sse", "/messages"):
+            await sse_app(scope, receive, send)
+        else:
+            await starlette_app(scope, receive, send)
+
+    logger.info(f"Starting HTTP server on http://{host}:{port}")
+    logger.info(f"  SSE transport:             /sse + /messages")
+    logger.info(f"  Streamable HTTP transport:  /mcp")
+    uvicorn.run(combined_app, host=host, port=port)
 
 
 def main() -> None:
@@ -137,9 +236,12 @@ def main() -> None:
     global cfg, ctx
 
     parser = argparse.ArgumentParser(description="Query MCP Server")
-    parser.add_argument("--sse", action="store_true", help="Run with SSE/HTTP transport")
+    transport = parser.add_mutually_exclusive_group()
+    transport.add_argument("--sse", action="store_true", help="Run with SSE-only transport")
+    transport.add_argument("--streamable-http", action="store_true", help="Run with Streamable HTTP-only transport")
+    transport.add_argument("--http", action="store_true", help="Run with both SSE + Streamable HTTP transports")
     parser.add_argument("--host", default="0.0.0.0", help="Host to bind (default: 0.0.0.0)")
-    parser.add_argument("--port", type=int, default=int(os.getenv("MCP_PORT", "8080")), help="Port for SSE server (default: 8080)")
+    parser.add_argument("--port", type=int, default=int(os.getenv("MCP_PORT", "8080")), help="Port for HTTP server (default: 8080)")
     args = parser.parse_args()
 
     cfg = Config.load()
@@ -154,6 +256,10 @@ def main() -> None:
 
     if args.sse:
         run_sse(args.host, args.port)
+    elif args.streamable_http:
+        run_streamable_http(args.host, args.port)
+    elif args.http:
+        run_http(args.host, args.port)
     else:
         run_stdio()
 

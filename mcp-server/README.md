@@ -22,18 +22,29 @@ The server exposes 4 tools for agentic schema discovery:
 
 ## Quick Start (Docker)
 
-The server **must be running** before Claude Code can use its tools.
+The server **must be running** before Claude Code or Claude.ai can use its tools.
 
 ```bash
 cd mcp-server
 # Open in VS Code and "Reopen in Container"
 # Then in container terminal:
-query-mcp --sse --port 8080
+query-mcp --sse --port 8080            # SSE only (Claude Code CLI)
+query-mcp --streamable-http --port 8080 # Streamable HTTP only (Claude Code CLI + Claude.ai web)
+query-mcp --http --port 8080            # Both SSE + Streamable HTTP on one port
 ```
 
-Or use VS Code task: `Start MCP Server (SSE)`
+Or use VS Code tasks: `Start MCP Server (SSE only)` / `Start MCP Server (Streamable HTTP only)` / `Start MCP Server (SSE + Streamable HTTP)`
 
-## Claude Code Configuration
+## Transport Options
+
+| Transport | Flag | Endpoints | Use with |
+|-----------|------|-----------|----------|
+| stdio | _(default)_ | — | Direct pipe (e.g. subprocess) |
+| SSE | `--sse` | `/sse` + `/messages` | Claude Code CLI (`"type": "sse"`) |
+| Streamable HTTP | `--streamable-http` | `/mcp` | Claude Code CLI (`"type": "http"`) + Claude.ai web |
+| Combined | `--http` | `/sse` + `/messages` + `/mcp` | All clients on one port |
+
+## Claude Code CLI Configuration
 
 Copy `.mcp.json.example` to your project root as `.mcp.json`:
 
@@ -48,10 +59,33 @@ Copy `.mcp.json.example` to your project root as `.mcp.json`:
 }
 ```
 
+Or with Streamable HTTP:
+
+```json
+{
+  "mcpServers": {
+    "query-mcp": {
+      "type": "http",
+      "url": "http://localhost:8080/mcp"
+    }
+  }
+}
+```
+
+## Claude.ai Web Configuration
+
+Claude.ai requires a publicly accessible HTTPS URL, so you need a tunnel (e.g. ngrok):
+
+1. Start the server with `--streamable-http` or `--http` inside the dev container
+2. Run `ngrok http 8080` on your **host machine** (not in the container)
+3. In Claude.ai: **Settings > Connectors > Add custom connector**
+4. Enter the ngrok URL with `/mcp` path, e.g. `https://abc123.ngrok-free.app/mcp`
+
 **Verify the setup:**
 1. Ensure the server is running
-2. Restart Claude Code or run `/mcp` to reconnect
-3. The 4 schema discovery tools should now be available
+2. For Claude Code CLI: restart or run `/mcp` to reconnect
+3. For Claude.ai: check the connector status in Settings
+4. The 4 schema discovery tools should now be available
 
 ## Data Structure
 
@@ -98,6 +132,12 @@ pip install -e .
 
 # Run with SSE transport
 query-mcp --sse --port 8080
+
+# Run with Streamable HTTP transport
+query-mcp --streamable-http --port 8080
+
+# Run with both SSE + Streamable HTTP
+query-mcp --http --port 8080
 ```
 
 ## Configuration
@@ -115,5 +155,12 @@ Or use env vars: `CONTEXT_DIR`, `LOG_LEVEL`
 
 ## Endpoints
 
-- `GET /sse` - SSE connection endpoint (for Claude Code)
+**SSE mode** (`--sse`):
+- `GET /sse` - SSE connection endpoint
 - `POST /messages` - Message endpoint
+
+**Streamable HTTP mode** (`--streamable-http`):
+- `POST /mcp` - Streamable HTTP endpoint (session-managed)
+
+**Combined mode** (`--http`):
+- All of the above on a single port
