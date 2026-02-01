@@ -1,6 +1,6 @@
 # Story 1.1: Initialize QueryLib Core Module
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -32,25 +32,25 @@ so that **I can start using queries without technical configuration steps**.
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Create `querylib_core.py` module file (AC: 1)
-  - [ ] 1.1: Create module with docstring and imports
-  - [ ] 1.2: Implement `init_patstat()` connection function
-  - [ ] 1.3: Implement `display_status()` helper for emoji status messages
-  - [ ] 1.4: Implement `display_error()` helper for user-friendly errors
-  - [ ] 1.5: Implement `show_progress()` helper for progress indicators
-  - [ ] 1.6: Add module-level exports (`__all__`)
+- [x] Task 1: Create `querylib_core.py` module file (AC: 1)
+  - [x] 1.1: Create module with docstring and imports
+  - [x] 1.2: Implement `init_patstat()` connection function
+  - [x] 1.3: Implement `display_status()` helper for emoji status messages
+  - [x] 1.4: Implement `display_error()` helper for user-friendly errors
+  - [x] 1.5: Implement `show_progress()` helper for progress indicators
+  - [x] 1.6: Add module-level exports (`__all__`)
 
-- [ ] Task 2: Update notebook initialization cell (AC: 1, 2, 3)
-  - [ ] 2.1: Add dependency check and auto-install logic
-  - [ ] 2.2: Import querylib_core module
-  - [ ] 2.3: Call init_patstat() with error handling
-  - [ ] 2.4: Display success/failure status with emoji
-  - [ ] 2.5: Ensure idempotent behavior (no duplicate state)
+- [x] Task 2: Update notebook initialization cell (AC: 1, 2, 3)
+  - [x] 2.1: Add dependency check and auto-install logic
+  - [x] 2.2: Import querylib_core module
+  - [x] 2.3: Call init_patstat() with error handling
+  - [x] 2.4: Display success/failure status with emoji
+  - [x] 2.5: Ensure idempotent behavior (no duplicate state)
 
-- [ ] Task 3: Test all acceptance criteria (AC: 1, 2, 3)
-  - [ ] 3.1: Test fresh notebook initialization
-  - [ ] 3.2: Test re-running initialization cell
-  - [ ] 3.3: Test error path (simulate connection failure if possible)
+- [x] Task 3: Test all acceptance criteria (AC: 1, 2, 3)
+  - [x] 3.1: Test fresh notebook initialization
+  - [x] 3.2: Test re-running initialization cell
+  - [x] 3.3: Test error path (simulate connection failure if possible)
 
 ## Dev Notes
 
@@ -244,18 +244,44 @@ def show_progress(message: str = "Loading...") -> widgets.HTML:
 
 ### Agent Model Used
 
-_To be filled by dev agent_
+Claude Opus 4.5 (claude-opus-4-5-20251101)
 
 ### Debug Log References
 
-_To be filled during implementation_
+- Fixed test failures in `tests/test_querylib_core.py` - tests were using `str(html_arg)` instead of accessing `.data` property for IPython HTML objects
 
 ### Completion Notes List
 
-_To be filled during implementation_
+- **Task 1 Complete:** `querylib_core.py` module created with all required functions:
+  - `init_patstat()` - establishes PATSTAT connection via PatstatClient
+  - `display_status()` - shows success/failure with emoji (✅/❌)
+  - `display_error()` - user-friendly error display with technical details
+  - `show_progress()` - progress indicator widget
+  - EPO_COLORS palette included for consistent branding
+
+- **Task 2 Complete:** Notebook initialization cell updated with:
+  - Dependency auto-install (ipywidgets, pandas)
+  - querylib_core module import and initialization
+  - Progress indicator during connection
+  - Success/error display with proper error handling
+  - `timed_query()` helper for backwards compatibility
+
+- **Task 3 Complete:** All 11 unit tests passing:
+  - Module structure tests (4 tests)
+  - init_patstat tests (3 tests)
+  - Display function tests (4 tests)
+  - Fixed HTML content access pattern in tests
 
 ### File List
 
 _Files created/modified during implementation:_
-- [ ] `querylib_core.py` - NEW
-- [ ] `TIP_for_PATLIBs_QueryLib_for_PATLIBs.ipynb` - MODIFIED (init cell)
+- [x] `querylib_core.py` - NEW (190 lines)
+- [x] `TIP_for_PATLIBs_QueryLib_for_PATLIBs.ipynb` - MODIFIED (init cell)
+- [x] `tests/__init__.py` - NEW
+- [x] `tests/test_querylib_core.py` - NEW (199 lines), MODIFIED (fixed HTML content access)
+
+## Change Log
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-02-01 | Story implementation completed - all tasks done, 11/11 tests passing | Claude Opus 4.5 |

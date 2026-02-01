@@ -137,9 +137,10 @@ class TestDisplayFunctions(unittest.TestCase):
         display_status("Test message", success=True)
 
         mock_display.assert_called_once()
-        # Check HTML contains success emoji
+        # Check HTML contains success emoji (access .data for HTML content)
         html_arg = mock_display.call_args[0][0]
-        self.assertIn('✅', str(html_arg))
+        html_content = html_arg.data if hasattr(html_arg, 'data') else str(html_arg)
+        self.assertIn('✅', html_content)
 
     @patch('querylib_core.display')
     def test_display_status_failure(self, mock_display):
@@ -149,9 +150,10 @@ class TestDisplayFunctions(unittest.TestCase):
         display_status("Test message", success=False)
 
         mock_display.assert_called_once()
-        # Check HTML contains failure emoji
+        # Check HTML contains failure emoji (access .data for HTML content)
         html_arg = mock_display.call_args[0][0]
-        self.assertIn('❌', str(html_arg))
+        html_content = html_arg.data if hasattr(html_arg, 'data') else str(html_arg)
+        self.assertIn('❌', html_content)
 
     @patch('querylib_core.display')
     @patch('builtins.print')
@@ -165,11 +167,12 @@ class TestDisplayFunctions(unittest.TestCase):
             details="TimeoutError: connection timed out"
         )
 
-        # Should display HTML with title and message
+        # Should display HTML with title and message (access .data for HTML content)
         mock_display.assert_called_once()
         html_arg = mock_display.call_args[0][0]
-        self.assertIn("Connection Error", str(html_arg))
-        self.assertIn("Please check your network", str(html_arg))
+        html_content = html_arg.data if hasattr(html_arg, 'data') else str(html_arg)
+        self.assertIn("Connection Error", html_content)
+        self.assertIn("Please check your network", html_content)
 
         # Technical details should be printed separately
         mock_print.assert_called_once()
