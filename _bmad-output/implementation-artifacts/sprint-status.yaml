@@ -1,0 +1,88 @@
+# generated: 2026-02-01
+# project: epo-tip4patlibs-bmad
+# project_key: NOKEY
+# tracking_system: file-system
+# story_location: _bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog → in-progress: Automatically when first story is created (via create-story)
+#   - in-progress → done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - SM typically creates next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+
+generated: 2026-02-01
+project: epo-tip4patlibs-bmad
+project_key: NOKEY
+tracking_system: file-system
+story_location: _bmad-output/implementation-artifacts
+
+development_status:
+  # Epic 1: Query Library
+  epic-1: in-progress
+  1-1-initialize-querylib-core-module: ready-for-dev
+  1-2-query-registry-and-categorization: backlog
+  1-3-query-browser-widget: backlog
+  1-4-parameter-configuration-ui: backlog
+  1-5-query-execution-with-progress: backlog
+  1-6-results-display-and-export: backlog
+  epic-1-retrospective: optional
+
+  # Epic 2: Interactive Demo
+  epic-2: backlog
+  2-1-demo-notebook-structure-and-navigation: backlog
+  2-2-guided-query-execution-cells: backlog
+  2-3-inline-visualizations-with-explanations: backlog
+  2-4-self-paced-completion-mode: backlog
+  epic-2-retrospective: optional
+
+  # Epic 3: AI Query Builder
+  epic-3: backlog
+  3-1-ai-query-builder-notebook-setup: backlog
+  3-2-natural-language-query-input: backlog
+  3-3-sql-generation-and-explanation: backlog
+  3-4-sql-validation-and-editing: backlog
+  3-5-query-execution-and-results: backlog
+  3-6-save-successful-queries: backlog
+  epic-3-retrospective: optional
+
+  # Epic 4: University Analysis
+  epic-4: backlog
+  4-1-university-analysis-notebook-setup: backlog
+  4-2-university-selection-and-metadata: backlog
+  4-3-patent-application-trends: backlog
+  4-4-top-inventors-analysis: backlog
+  4-5-industry-collaboration-patterns: backlog
+  4-6-technology-field-distribution: backlog
+  4-7-multi-university-comparison: backlog
+  epic-4-retrospective: optional
+
+  # Epic 5: Educational Materials
+  epic-5: backlog
+  5-1-tip-for-patlibs-handbook: backlog
+  5-2-quick-reference-guides: backlog
+  5-3-trainer-presentation-materials: backlog
+  5-4-step-by-step-tutorials: backlog
+  epic-5-retrospective: optional
