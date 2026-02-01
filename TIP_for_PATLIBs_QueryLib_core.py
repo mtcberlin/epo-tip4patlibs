@@ -434,35 +434,30 @@ QUERY_CATEGORIES: Dict[str, Dict[str, str]] = {
 
 
 # =============================================================================
-# Import queries from single source of truth: context/queries_bq.py
+# Import queries from single source of truth: TIP_for_PATLIBs_QueryLib_queries.py
 # =============================================================================
 
 import sys
 import os
 
-# Add context directory to path to import queries_bq
-_context_path = os.path.join(os.path.dirname(__file__), 'context')
-if _context_path not in sys.path:
-    sys.path.insert(0, _context_path)
-
 try:
-    from queries_bq import QUERIES as _RAW_QUERIES, STAKEHOLDERS
+    from TIP_for_PATLIBs_QueryLib_queries import QUERIES as _RAW_QUERIES, STAKEHOLDERS
 except ImportError:
-    # Fallback: empty dict if queries_bq.py not found
+    # Fallback: empty dict if queries file not found
     _RAW_QUERIES = {}
     STAKEHOLDERS = {}
 
 
 # =============================================================================
 # Query Registry (Story 1.2 - FR1, FR2, FR3)
-# Loads queries from context/queries_bq.py (single source of truth)
+# Loads queries from TIP_for_PATLIBs_QueryLib_queries.py (single source of truth)
 # =============================================================================
 
 class QueryRegistry:
     """
     Registry of all available PATSTAT queries.
 
-    Loads queries from context/queries_bq.py which contains 42 queries
+    Loads queries from TIP_for_PATLIBs_QueryLib_queries.py which contains 42 queries
     with full metadata (title, description, parameters, sql_template, etc.).
 
     Provides methods to browse, search, and retrieve queries
@@ -476,7 +471,7 @@ class QueryRegistry:
     """
 
     def __init__(self):
-        """Initialize the query registry by loading from queries_bq.py."""
+        """Initialize the query registry by loading from TIP_for_PATLIBs_QueryLib_queries.py."""
         self._queries: Dict[str, QueryMetadata] = {}
         self._load_queries_from_source()
 
@@ -506,7 +501,7 @@ class QueryRegistry:
         )
 
     def _load_queries_from_source(self) -> None:
-        """Load all queries from context/queries_bq.py into the registry."""
+        """Load all queries from TIP_for_PATLIBs_QueryLib_queries.py into the registry."""
         for query_id, query_data in _RAW_QUERIES.items():
             # Convert parameters
             params_raw = query_data.get("parameters", {})

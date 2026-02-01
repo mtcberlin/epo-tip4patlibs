@@ -30,7 +30,7 @@ class TestFormatNumber(unittest.TestCase):
 
     def test_format_integer_with_thousands(self):
         """Large integers should have thousand separators."""
-        from querylib_core import format_number
+        from TIP_for_PATLIBs_QueryLib_core import format_number
 
         self.assertEqual(format_number(1234567), "1,234,567")
         self.assertEqual(format_number(1000), "1,000")
@@ -38,14 +38,14 @@ class TestFormatNumber(unittest.TestCase):
 
     def test_format_float_with_thousands_and_decimals(self):
         """Floats should have thousand separators and 2 decimal places."""
-        from querylib_core import format_number
+        from TIP_for_PATLIBs_QueryLib_core import format_number
 
         self.assertEqual(format_number(1234567.89), "1,234,567.89")
         self.assertEqual(format_number(1000.5), "1,000.50")
 
     def test_format_small_numbers(self):
         """Small numbers should still format correctly."""
-        from querylib_core import format_number
+        from TIP_for_PATLIBs_QueryLib_core import format_number
 
         self.assertEqual(format_number(0), "0")
         self.assertEqual(format_number(1), "1")
@@ -53,14 +53,14 @@ class TestFormatNumber(unittest.TestCase):
 
     def test_format_non_numeric_passthrough(self):
         """Non-numeric values should pass through unchanged."""
-        from querylib_core import format_number
+        from TIP_for_PATLIBs_QueryLib_core import format_number
 
         self.assertEqual(format_number("text"), "text")
         self.assertEqual(format_number(None), None)
 
     def test_format_nan_passthrough(self):
         """NaN values should pass through unchanged."""
-        from querylib_core import format_number
+        from TIP_for_PATLIBs_QueryLib_core import format_number
         import math
 
         self.assertTrue(math.isnan(format_number(float('nan'))))
@@ -71,20 +71,20 @@ class TestResultsDisplay(unittest.TestCase):
 
     def test_results_display_class_exists(self):
         """ResultsDisplay class should be importable."""
-        from querylib_core import ResultsDisplay
+        from TIP_for_PATLIBs_QueryLib_core import ResultsDisplay
         self.assertIsNotNone(ResultsDisplay)
 
     def test_results_display_has_widget(self):
         """ResultsDisplay should have a widget property."""
-        from querylib_core import ResultsDisplay
+        from TIP_for_PATLIBs_QueryLib_core import ResultsDisplay
 
         rd = ResultsDisplay()
         self.assertTrue(hasattr(rd, 'widget'))
 
-    @patch('querylib_core.display')
+    @patch('TIP_for_PATLIBs_QueryLib_core.display')
     def test_results_display_shows_row_count(self, mock_display):
         """ResultsDisplay should show row count above table (AC1)."""
-        from querylib_core import ResultsDisplay
+        from TIP_for_PATLIBs_QueryLib_core import ResultsDisplay
 
         # Create sample DataFrame
         df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
@@ -95,10 +95,10 @@ class TestResultsDisplay(unittest.TestCase):
         # Verify display was called
         self.assertTrue(mock_display.called)
 
-    @patch('querylib_core.display')
+    @patch('TIP_for_PATLIBs_QueryLib_core.display')
     def test_results_display_limits_to_100_rows(self, mock_display):
         """ResultsDisplay should show first 100 rows with message for larger datasets (AC1)."""
-        from querylib_core import ResultsDisplay
+        from TIP_for_PATLIBs_QueryLib_core import ResultsDisplay
 
         # Create large DataFrame
         df = pd.DataFrame({'A': range(150), 'B': range(150)})
@@ -113,10 +113,10 @@ class TestResultsDisplay(unittest.TestCase):
 class TestZeroResultsHandler(unittest.TestCase):
     """Test zero results handling (AC4)."""
 
-    @patch('querylib_core.display')
+    @patch('TIP_for_PATLIBs_QueryLib_core.display')
     def test_display_zero_results_shows_message(self, mock_display):
         """Empty DataFrame should show helpful message (AC4)."""
-        from querylib_core import display_zero_results
+        from TIP_for_PATLIBs_QueryLib_core import display_zero_results
 
         display_zero_results()
 
@@ -129,10 +129,10 @@ class TestZeroResultsHandler(unittest.TestCase):
         self.assertIn("no results found", html_content.lower())
         self.assertIn("try", html_content.lower())  # Suggestion present
 
-    @patch('querylib_core.display')
+    @patch('TIP_for_PATLIBs_QueryLib_core.display')
     def test_zero_results_shows_suggestions(self, mock_display):
         """Zero results should show suggestions for broadening search (AC4)."""
-        from querylib_core import display_zero_results
+        from TIP_for_PATLIBs_QueryLib_core import display_zero_results
 
         display_zero_results()
 
@@ -159,12 +159,12 @@ class TestCSVExporter(unittest.TestCase):
 
     def test_export_to_csv_function_exists(self):
         """export_to_csv function should be importable."""
-        from querylib_core import export_to_csv
+        from TIP_for_PATLIBs_QueryLib_core import export_to_csv
         self.assertIsNotNone(export_to_csv)
 
     def test_export_to_csv_creates_file(self):
         """export_to_csv should create a file (AC2)."""
-        from querylib_core import export_to_csv
+        from TIP_for_PATLIBs_QueryLib_core import export_to_csv
 
         df = pd.DataFrame({'A': [1, 2, 3], 'B': ['x', 'y', 'z']})
         filepath = export_to_csv(df, "Test Query")
@@ -173,7 +173,7 @@ class TestCSVExporter(unittest.TestCase):
 
     def test_export_to_csv_uses_semicolon_delimiter(self):
         """CSV should use semicolon delimiter per architecture spec (AC2)."""
-        from querylib_core import export_to_csv
+        from TIP_for_PATLIBs_QueryLib_core import export_to_csv
 
         df = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})
         filepath = export_to_csv(df, "Test Query")
@@ -187,7 +187,7 @@ class TestCSVExporter(unittest.TestCase):
 
     def test_export_to_csv_uses_utf8_bom(self):
         """CSV should use UTF-8 with BOM per architecture spec (AC2)."""
-        from querylib_core import export_to_csv
+        from TIP_for_PATLIBs_QueryLib_core import export_to_csv
 
         df = pd.DataFrame({'A': [1, 2], 'B': ['äöü', 'ñ']})
         filepath = export_to_csv(df, "Test Query")
@@ -200,7 +200,7 @@ class TestCSVExporter(unittest.TestCase):
 
     def test_export_to_csv_filename_includes_query_title(self):
         """Filename should include sanitized query title (AC2)."""
-        from querylib_core import export_to_csv
+        from TIP_for_PATLIBs_QueryLib_core import export_to_csv
 
         df = pd.DataFrame({'A': [1, 2]})
         filepath = export_to_csv(df, "Country Patent Activity")
@@ -210,7 +210,7 @@ class TestCSVExporter(unittest.TestCase):
 
     def test_export_to_csv_filename_includes_timestamp(self):
         """Filename should include timestamp (AC2)."""
-        from querylib_core import export_to_csv
+        from TIP_for_PATLIBs_QueryLib_core import export_to_csv
 
         df = pd.DataFrame({'A': [1, 2]})
         filepath = export_to_csv(df, "Test Query")
@@ -226,7 +226,7 @@ class TestPNGExporter(unittest.TestCase):
 
     def test_export_to_png_function_exists(self):
         """export_to_png function should be importable."""
-        from querylib_core import export_to_png
+        from TIP_for_PATLIBs_QueryLib_core import export_to_png
         self.assertIsNotNone(export_to_png)
 
 
@@ -235,14 +235,14 @@ class TestCopySQLButton(unittest.TestCase):
 
     def test_copy_sql_to_clipboard_function_exists(self):
         """copy_sql_to_clipboard function should be importable."""
-        from querylib_core import copy_sql_to_clipboard
+        from TIP_for_PATLIBs_QueryLib_core import copy_sql_to_clipboard
         self.assertIsNotNone(copy_sql_to_clipboard)
 
-    @patch('querylib_core.display')
-    @patch('querylib_core.Javascript')
+    @patch('TIP_for_PATLIBs_QueryLib_core.display')
+    @patch('TIP_for_PATLIBs_QueryLib_core.Javascript')
     def test_copy_sql_calls_javascript(self, mock_js, mock_display):
         """copy_sql_to_clipboard should use JavaScript clipboard API (AC5)."""
-        from querylib_core import copy_sql_to_clipboard
+        from TIP_for_PATLIBs_QueryLib_core import copy_sql_to_clipboard
 
         copy_sql_to_clipboard("SELECT * FROM test")
 
@@ -257,19 +257,19 @@ class TestResultsPanel(unittest.TestCase):
 
     def test_results_panel_class_exists(self):
         """ResultsPanel class should be importable."""
-        from querylib_core import ResultsPanel
+        from TIP_for_PATLIBs_QueryLib_core import ResultsPanel
         self.assertIsNotNone(ResultsPanel)
 
     def test_results_panel_has_widget(self):
         """ResultsPanel should have a widget property."""
-        from querylib_core import ResultsPanel
+        from TIP_for_PATLIBs_QueryLib_core import ResultsPanel
 
         panel = ResultsPanel()
         self.assertTrue(hasattr(panel, 'widget'))
 
     def test_results_panel_has_export_buttons(self):
         """ResultsPanel should have export buttons (AC2, AC3)."""
-        from querylib_core import ResultsPanel
+        from TIP_for_PATLIBs_QueryLib_core import ResultsPanel
 
         panel = ResultsPanel()
         # Should have access to export CSV button
@@ -279,7 +279,7 @@ class TestResultsPanel(unittest.TestCase):
 
     def test_results_panel_has_copy_sql_button(self):
         """ResultsPanel should have copy SQL button (AC5)."""
-        from querylib_core import ResultsPanel
+        from TIP_for_PATLIBs_QueryLib_core import ResultsPanel
 
         panel = ResultsPanel()
         self.assertTrue(hasattr(panel, '_copy_sql_btn'))
@@ -290,7 +290,7 @@ class TestModuleExports(unittest.TestCase):
 
     def test_results_display_in_exports(self):
         """ResultsDisplay should be in __all__."""
-        import querylib_core
+        import TIP_for_PATLIBs_QueryLib_core
 
         expected_exports = [
             'ResultsDisplay',
@@ -303,7 +303,7 @@ class TestModuleExports(unittest.TestCase):
         ]
 
         for export in expected_exports:
-            self.assertIn(export, querylib_core.__all__,
+            self.assertIn(export, TIP_for_PATLIBs_QueryLib_core.__all__,
                           f"'{export}' should be in __all__")
 
 

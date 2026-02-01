@@ -1,5 +1,5 @@
 """
-Tests for querylib_core module.
+Tests for TIP_for_PATLIBs_QueryLib_core module.
 
 Tests Story 1.1 acceptance criteria:
 - AC1: Successful initialization
@@ -24,12 +24,12 @@ class TestQueryLibCoreModuleStructure(unittest.TestCase):
 
     def test_module_imports(self):
         """Module should import without errors."""
-        import querylib_core
-        self.assertIsNotNone(querylib_core)
+        import TIP_for_PATLIBs_QueryLib_core
+        self.assertIsNotNone(TIP_for_PATLIBs_QueryLib_core)
 
     def test_module_exports(self):
         """Module should export all required functions."""
-        import querylib_core
+        import TIP_for_PATLIBs_QueryLib_core
         required_exports = [
             'init_patstat',
             'display_status',
@@ -40,14 +40,14 @@ class TestQueryLibCoreModuleStructure(unittest.TestCase):
             'EPO_COLORS',
         ]
         for export in required_exports:
-            self.assertIn(export, querylib_core.__all__,
+            self.assertIn(export, TIP_for_PATLIBs_QueryLib_core.__all__,
                           f"'{export}' should be in __all__")
-            self.assertTrue(hasattr(querylib_core, export),
+            self.assertTrue(hasattr(TIP_for_PATLIBs_QueryLib_core, export),
                             f"'{export}' should be accessible from module")
 
     def test_epo_colors_defined(self):
         """EPO_COLORS should contain required brand colors."""
-        from querylib_core import EPO_COLORS
+        from TIP_for_PATLIBs_QueryLib_core import EPO_COLORS
         required_colors = ['primary_blue', 'green', 'red', 'light_gray']
         for color in required_colors:
             self.assertIn(color, EPO_COLORS,
@@ -57,23 +57,23 @@ class TestQueryLibCoreModuleStructure(unittest.TestCase):
         """Module-level state should start as None (idempotent)."""
         # Reload module to test initial state
         import importlib
-        import querylib_core
-        importlib.reload(querylib_core)
+        import TIP_for_PATLIBs_QueryLib_core
+        importlib.reload(TIP_for_PATLIBs_QueryLib_core)
 
         # After reload, should be None (not connected)
-        self.assertIsNone(querylib_core.patstat_client,
+        self.assertIsNone(TIP_for_PATLIBs_QueryLib_core.patstat_client,
                           "patstat_client should be None after module reload")
-        self.assertIsNone(querylib_core.db,
+        self.assertIsNone(TIP_for_PATLIBs_QueryLib_core.db,
                           "db should be None after module reload")
 
 
 class TestInitPatstat(unittest.TestCase):
     """Test init_patstat function (AC1, AC2, AC3)."""
 
-    @patch('querylib_core.PatstatClient')
+    @patch('TIP_for_PATLIBs_QueryLib_core.PatstatClient')
     def test_init_patstat_success(self, mock_client_class):
         """AC1: Successful initialization returns client and session."""
-        import querylib_core
+        import TIP_for_PATLIBs_QueryLib_core
 
         # Setup mock
         mock_client = MagicMock()
@@ -82,7 +82,7 @@ class TestInitPatstat(unittest.TestCase):
         mock_client_class.return_value = mock_client
 
         # Call init
-        client, session = querylib_core.init_patstat()
+        client, session = TIP_for_PATLIBs_QueryLib_core.init_patstat()
 
         # Verify
         mock_client_class.assert_called_once_with(env='PROD')
@@ -91,28 +91,28 @@ class TestInitPatstat(unittest.TestCase):
         self.assertEqual(session, mock_session)
 
         # Verify module-level state updated
-        self.assertEqual(querylib_core.patstat_client, mock_client)
-        self.assertEqual(querylib_core.db, mock_session)
+        self.assertEqual(TIP_for_PATLIBs_QueryLib_core.patstat_client, mock_client)
+        self.assertEqual(TIP_for_PATLIBs_QueryLib_core.db, mock_session)
 
-    @patch('querylib_core.PatstatClient')
+    @patch('TIP_for_PATLIBs_QueryLib_core.PatstatClient')
     def test_init_patstat_failure_raises_connection_error(self, mock_client_class):
         """AC2: Connection failure raises ConnectionError."""
-        import querylib_core
+        import TIP_for_PATLIBs_QueryLib_core
 
         # Setup mock to raise exception
         mock_client_class.side_effect = Exception("Network error")
 
         # Should raise ConnectionError
         with self.assertRaises(ConnectionError) as context:
-            querylib_core.init_patstat()
+            TIP_for_PATLIBs_QueryLib_core.init_patstat()
 
         self.assertIn("PATSTAT", str(context.exception))
         self.assertIn("Network error", str(context.exception))
 
-    @patch('querylib_core.PatstatClient')
+    @patch('TIP_for_PATLIBs_QueryLib_core.PatstatClient')
     def test_init_patstat_idempotent(self, mock_client_class):
         """AC3: Re-running init should work without errors."""
-        import querylib_core
+        import TIP_for_PATLIBs_QueryLib_core
 
         # Setup mock
         mock_client = MagicMock()
@@ -121,8 +121,8 @@ class TestInitPatstat(unittest.TestCase):
         mock_client_class.return_value = mock_client
 
         # Call twice
-        querylib_core.init_patstat()
-        querylib_core.init_patstat()
+        TIP_for_PATLIBs_QueryLib_core.init_patstat()
+        TIP_for_PATLIBs_QueryLib_core.init_patstat()
 
         # Should be called twice (fresh connection each time)
         self.assertEqual(mock_client_class.call_count, 2)
@@ -131,10 +131,10 @@ class TestInitPatstat(unittest.TestCase):
 class TestDisplayFunctions(unittest.TestCase):
     """Test display helper functions (AC1, AC2)."""
 
-    @patch('querylib_core.display')
+    @patch('TIP_for_PATLIBs_QueryLib_core.display')
     def test_display_status_success(self, mock_display):
         """AC1: display_status shows success emoji."""
-        from querylib_core import display_status
+        from TIP_for_PATLIBs_QueryLib_core import display_status
 
         display_status("Test message", success=True)
 
@@ -144,10 +144,10 @@ class TestDisplayFunctions(unittest.TestCase):
         html_content = html_arg.data if hasattr(html_arg, 'data') else str(html_arg)
         self.assertIn('✅', html_content)
 
-    @patch('querylib_core.display')
+    @patch('TIP_for_PATLIBs_QueryLib_core.display')
     def test_display_status_failure(self, mock_display):
         """AC2: display_status shows failure emoji."""
-        from querylib_core import display_status
+        from TIP_for_PATLIBs_QueryLib_core import display_status
 
         display_status("Test message", success=False)
 
@@ -157,11 +157,11 @@ class TestDisplayFunctions(unittest.TestCase):
         html_content = html_arg.data if hasattr(html_arg, 'data') else str(html_arg)
         self.assertIn('❌', html_content)
 
-    @patch('querylib_core.display')
+    @patch('TIP_for_PATLIBs_QueryLib_core.display')
     @patch('builtins.print')
     def test_display_error_shows_user_friendly_message(self, mock_print, mock_display):
         """AC2: display_error shows user-friendly message."""
-        from querylib_core import display_error
+        from TIP_for_PATLIBs_QueryLib_core import display_error
 
         display_error(
             "Connection Error",
@@ -181,11 +181,11 @@ class TestDisplayFunctions(unittest.TestCase):
         print_arg = mock_print.call_args[0][0]
         self.assertIn("TimeoutError", print_arg)
 
-    @patch('querylib_core.display')
+    @patch('TIP_for_PATLIBs_QueryLib_core.display')
     @patch('builtins.print')
     def test_display_error_without_details(self, mock_print, mock_display):
         """AC2: display_error works without optional details parameter."""
-        from querylib_core import display_error
+        from TIP_for_PATLIBs_QueryLib_core import display_error
 
         display_error("Connection Error", "Please check your network")
 
@@ -199,10 +199,10 @@ class TestDisplayFunctions(unittest.TestCase):
         # Technical details should NOT be printed when not provided
         mock_print.assert_not_called()
 
-    @patch('querylib_core.display')
+    @patch('TIP_for_PATLIBs_QueryLib_core.display')
     def test_show_progress_returns_widget(self, mock_display):
         """AC1: show_progress returns updatable widget."""
-        from querylib_core import show_progress
+        from TIP_for_PATLIBs_QueryLib_core import show_progress
         import ipywidgets as widgets
 
         progress = show_progress("Loading...")
