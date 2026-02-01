@@ -20,7 +20,7 @@ from typing import Tuple, Optional, Any
 
 # IPython and widgets for display
 import ipywidgets as widgets
-from IPython.display import display, HTML, clear_output
+from IPython.display import display, HTML
 
 # PATSTAT connection
 from epo.tipdata.patstat import PatstatClient
@@ -45,6 +45,7 @@ EPO_COLORS = {
     'red': '#C8102E',
     'gray': '#666666',
     'light_gray': '#F5F5F5',
+    'error_bg': '#FFF5F5',  # Light red background for errors
 }
 
 # =============================================================================
@@ -146,7 +147,7 @@ def display_error(title: str, message: str, details: Optional[str] = None) -> No
     """
     html_content = f"""
     <div style="color: {EPO_COLORS['red']}; padding: 15px; border: 1px solid {EPO_COLORS['red']};
-                border-radius: 4px; background-color: #FFF5F5; margin: 10px 0;">
+                border-radius: 4px; background-color: {EPO_COLORS['error_bg']}; margin: 10px 0;">
         <b style="font-size: 1.1em;">❌ {title}</b><br><br>
         {message}
     </div>

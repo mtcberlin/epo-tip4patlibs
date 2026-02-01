@@ -61,8 +61,10 @@ class TestQueryLibCoreModuleStructure(unittest.TestCase):
         importlib.reload(querylib_core)
 
         # After reload, should be None (not connected)
-        # Note: This may fail if already connected in session
-        # That's acceptable - just testing the module structure
+        self.assertIsNone(querylib_core.patstat_client,
+                          "patstat_client should be None after module reload")
+        self.assertIsNone(querylib_core.db,
+                          "db should be None after module reload")
 
 
 class TestInitPatstat(unittest.TestCase):
@@ -178,6 +180,24 @@ class TestDisplayFunctions(unittest.TestCase):
         mock_print.assert_called_once()
         print_arg = mock_print.call_args[0][0]
         self.assertIn("TimeoutError", print_arg)
+
+    @patch('querylib_core.display')
+    @patch('builtins.print')
+    def test_display_error_without_details(self, mock_print, mock_display):
+        """AC2: display_error works without optional details parameter."""
+        from querylib_core import display_error
+
+        display_error("Connection Error", "Please check your network")
+
+        # Should display HTML with title and message
+        mock_display.assert_called_once()
+        html_arg = mock_display.call_args[0][0]
+        html_content = html_arg.data if hasattr(html_arg, 'data') else str(html_arg)
+        self.assertIn("Connection Error", html_content)
+        self.assertIn("Please check your network", html_content)
+
+        # Technical details should NOT be printed when not provided
+        mock_print.assert_not_called()
 
     @patch('querylib_core.display')
     def test_show_progress_returns_widget(self, mock_display):

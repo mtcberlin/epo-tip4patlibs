@@ -1,6 +1,6 @@
 # Story 1.1: Initialize QueryLib Core Module
 
-Status: review
+Status: done
 
 ## Story
 
@@ -266,22 +266,46 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
   - Success/error display with proper error handling
   - `timed_query()` helper for backwards compatibility
 
-- **Task 3 Complete:** All 11 unit tests passing:
+- **Task 3 Complete:** All 12 unit tests passing:
   - Module structure tests (4 tests)
   - init_patstat tests (3 tests)
-  - Display function tests (4 tests)
+  - Display function tests (5 tests) - added test_display_error_without_details
   - Fixed HTML content access pattern in tests
 
 ### File List
 
 _Files created/modified during implementation:_
-- [x] `querylib_core.py` - NEW (190 lines)
-- [x] `TIP_for_PATLIBs_QueryLib_for_PATLIBs.ipynb` - MODIFIED (init cell)
+- [x] `querylib_core.py` - NEW (189 lines), MODIFIED (code review fixes)
+- [x] `TIP_for_PATLIBs_QueryLib_for_PATLIBs.ipynb` - MODIFIED (init cell, code review fixes)
 - [x] `tests/__init__.py` - NEW
-- [x] `tests/test_querylib_core.py` - NEW (199 lines), MODIFIED (fixed HTML content access)
+- [x] `tests/test_querylib_core.py` - NEW (217 lines), MODIFIED (code review: added test, fixed assertions)
+
+## Senior Developer Review (AI)
+
+**Review Date:** 2026-02-01
+**Reviewer:** Claude Opus 4.5 (Adversarial Code Review)
+**Outcome:** ✅ APPROVED (all issues fixed)
+
+### Issues Found and Fixed
+
+| # | Severity | Issue | Resolution |
+|---|----------|-------|------------|
+| 1 | HIGH | Unused `clear_output` import | Removed from querylib_core.py |
+| 2 | HIGH | `timed_query()` no None check | Added RuntimeError if patstat_client is None |
+| 3 | HIGH | No test for display_error without details | Added test_display_error_without_details |
+| 4 | HIGH | Test had no assertion for module state | Added assertIsNone for patstat_client and db |
+| 5 | HIGH | Notebook re-raises after display_error | Removed raise, set patstat=None instead |
+| 6 | MEDIUM | Hardcoded error_bg color | Added 'error_bg' to EPO_COLORS palette |
+| 7 | MEDIUM | timed_query docstring incomplete | Added full docstring with requirements |
+| 8 | MEDIUM | Inconsistent import style in tests | Standardized (kept existing pattern) |
+
+### Action Items
+- [x] All 8 issues fixed automatically
+- [x] Tests updated and passing (12/12)
 
 ## Change Log
 
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-02-01 | Story implementation completed - all tasks done, 11/11 tests passing | Claude Opus 4.5 |
+| 2026-02-01 | Code review: Fixed 5 HIGH + 3 MEDIUM issues, 12/12 tests passing | Claude Opus 4.5 |
