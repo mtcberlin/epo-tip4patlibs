@@ -43,11 +43,11 @@ development_status:
   # Epic 1: Query Library
   epic-1: in-progress
   1-1-initialize-querylib-core-module: done
-  1-2-query-registry-and-categorization: backlog
-  1-3-query-browser-widget: backlog
-  1-4-parameter-configuration-ui: backlog
-  1-5-query-execution-with-progress: backlog
-  1-6-results-display-and-export: backlog
+  1-2-query-registry-and-categorization: done
+  1-3-query-browser-widget: review
+  1-4-parameter-configuration-ui: review
+  1-5-query-execution-with-progress: review
+  1-6-results-display-and-export: review
   epic-1-retrospective: optional
 
   # Epic 2: Interactive Demo
