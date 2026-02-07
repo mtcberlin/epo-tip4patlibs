@@ -1,0 +1,222 @@
+<story-context id="bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>5</storyId>
+    <title>Date Range Selection</title>
+    <status>drafted</status>
+    <generatedAt>2026-01-11</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-5-date-range-selection.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>PATLIB user</asA>
+    <iWant>to specify the time period for analysis</iWant>
+    <soThat>I can focus on recent trends or historical patterns</soThat>
+    <tasks>
+      <task id="1" status="pending">Create year range slider widget (AC: 1, 2, 7)
+        <subtask id="1.1">Create year_range_slider() method in WidgetFactory</subtask>
+        <subtask id="1.2">Use widgets.IntRangeSlider with min=2000, max=2024</subtask>
+        <subtask id="1.3">Set default value=[2019, 2023]</subtask>
+        <subtask id="1.4">Configure description="Years:" with appropriate width</subtask>
+        <subtask id="1.5">Add observe callback _on_year_range_change</subtask>
+      </task>
+      <task id="2" status="pending">Create performance tip widget (AC: 4, 5, 6)
+        <subtask id="2.1">Create performance_tip() method returning HTML widget</subtask>
+        <subtask id="2.2">Initialize with "Fast query (~10 sec)"</subtask>
+        <subtask id="2.3">Implement _update_performance_tip(year_span) logic</subtask>
+        <subtask id="2.4">Style tip appropriately</subtask>
+      </task>
+      <task id="3" status="pending">Implement state update callback (AC: 3)
+        <subtask id="3.1">Create _on_year_range_change(change) callback method</subtask>
+        <subtask id="3.2">Extract start and end values from change['new']</subtask>
+        <subtask id="3.3">Update self.state.year_start and self.state.year_end</subtask>
+        <subtask id="3.4">Call _update_performance_tip() after state update</subtask>
+        <subtask id="3.5">Update run button state via _update_run_button_state()</subtask>
+      </task>
+      <task id="4" status="pending">Create composite date section (AC: 1-7)
+        <subtask id="4.1">Create create_date_range_section() method</subtask>
+        <subtask id="4.2">Bundle slider and performance tip in VBox</subtask>
+        <subtask id="4.3">Store widget references for callback access</subtask>
+        <subtask id="4.4">Return complete section widget</subtask>
+      </task>
+      <task id="5" status="pending">Update notebook Cell 3 (AC: 1-7)
+        <subtask id="5.1">Add date range section after technology section</subtask>
+        <subtask id="5.2">Use create_date_range_section() method</subtask>
+        <subtask id="5.3">Wire up to state feedback display</subtask>
+        <subtask id="5.4">Verify default values match state initialization</subtask>
+      </task>
+      <task id="6" status="pending">Validation (AC: 1-7)
+        <subtask id="6.1">Test slider displays with correct range (2000-2024)</subtask>
+        <subtask id="6.2">Test default is [2019, 2023]</subtask>
+        <subtask id="6.3">Test state updates on slider adjustment</subtask>
+        <subtask id="6.4">Test performance tip changes for all thresholds</subtask>
+        <subtask id="6.5">Verify state.summary() displays date range</subtask>
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="AC1" title="Date Range Slider Display">
+      IntRangeSlider with range 2000-2024, default [2019, 2023], label "Years:", both handles visible and draggable
+    </criterion>
+    <criterion id="AC2" title="Year Labels Display">
+      Labels showing currently selected years in clear format like "2019 - 2023"
+    </criterion>
+    <criterion id="AC3" title="State Updates on Selection">
+      state.year_start and state.year_end update immediately when slider handles moved
+    </criterion>
+    <criterion id="AC4" title="Performance Tip - Fast Query">
+      Span ≤5 years displays: "⚡ Fast query (~10 sec)"
+    </criterion>
+    <criterion id="AC5" title="Performance Tip - Medium Query">
+      Span 6-10 years displays: "⏱️ Medium query (~30 sec)"
+    </criterion>
+    <criterion id="AC6" title="Performance Tip - Large Query">
+      Span >10 years displays: "🐢 Large query (~2 min)"
+    </criterion>
+    <criterion id="AC7" title="Initial State Consistency">
+      On notebook load: state.year_start=2019, state.year_end=2023, slider reflects defaults, tip shows "⚡ Fast query (~10 sec)"
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic 2 Technical Specification</title>
+        <section>AC5: Date Range Selection</section>
+        <snippet>IntRangeSlider with range 2000-2024, default [2019, 2023], performance tip updates dynamically based on span.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 2.5: Date Range Selection</section>
+        <snippet>As a PATLIB user, I want to specify the time period for analysis. IntRangeSlider 2000-2024 with dynamic performance tips.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Widget Factory Pattern</section>
+        <snippet>WidgetFactory.year_range_slider() and performance_tip() patterns defined. Dynamic tip updates based on year span thresholds.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/2-4-custom-ipc-cpc-entry-dual-mode.md</path>
+        <title>Previous Story - Custom IPC/CPC Entry</title>
+        <section>Dev Agent Record</section>
+        <snippet>Pattern to reuse: observe() callback pattern, widget references as instance variables, create_technology_section() composite pattern.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>tip4patlibs_core.py</path>
+        <kind>module</kind>
+        <symbol>AnalysisState</symbol>
+        <lines>255-331</lines>
+        <reason>State class with year_start and year_end attributes (lines 277-278), summary() method displays period (line 301). Story 2.5 updates these fields.</reason>
+      </file>
+      <file>
+        <path>tip4patlibs_core.py</path>
+        <kind>factory</kind>
+        <symbol>WidgetFactory</symbol>
+        <lines>354-819</lines>
+        <reason>Factory class for UI widgets. Add year_range_slider(), performance_tip(), _on_year_range_change(), create_date_range_section() methods following existing patterns.</reason>
+      </file>
+      <file>
+        <path>tip4patlibs_core.py</path>
+        <kind>method</kind>
+        <symbol>create_technology_section</symbol>
+        <lines>783-819</lines>
+        <reason>Reference pattern for composite section builder. Story 2.5 creates similar create_date_range_section() method.</reason>
+      </file>
+      <file>
+        <path>tip4patlibs_core.py</path>
+        <kind>callback</kind>
+        <symbol>_on_tech_mode_change</symbol>
+        <lines>744-781</lines>
+        <reason>Reference callback pattern. Story 2.5 callback _on_year_range_change follows same structure.</reason>
+      </file>
+      <file>
+        <path>TIP_for_PATLIBs.ipynb</path>
+        <kind>notebook</kind>
+        <symbol>selection-placeholder cell</symbol>
+        <lines>cell-id:selection-placeholder</lines>
+        <reason>Cell 2 with current selection widgets. Story 2.5 adds date range section after technology section.</reason>
+      </file>
+    </code>
+    <dependencies>
+      <python>
+        <package name="ipywidgets" used="true">IntRangeSlider, HTML, VBox for date range UI</package>
+        <package name="tip4patlibs_core" used="true">AnalysisState, WidgetFactory classes</package>
+      </python>
+      <tip-platform>
+        <package name="epo.tipdata.patstat" used="false">Not used in Story 2.5 (Epic 3 queries)</package>
+      </tip-platform>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint source="ADR-003">Prevention by Design: IntRangeSlider constrains input to valid year range (2000-2024), no error handling needed</constraint>
+    <constraint source="ADR-007">UI Framework: Use ipywidgets (not ipyvuetify) for all widgets</constraint>
+    <constraint source="Architecture">Performance tip thresholds: ≤5 years = Fast, 6-10 years = Medium, >10 years = Large</constraint>
+    <constraint source="Architecture">Widget callbacks use observe() pattern with names='value'</constraint>
+    <constraint source="State Class">AnalysisState.year_start and year_end already defined with defaults 2019 and 2023</constraint>
+    <constraint source="Project Structure">WidgetFactory is in tip4patlibs_core.py, notebook imports from module</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>AnalysisState.year_start</name>
+      <kind>attribute</kind>
+      <signature>year_start: int = 2019</signature>
+      <path>tip4patlibs_core.py:277</path>
+    </interface>
+    <interface>
+      <name>AnalysisState.year_end</name>
+      <kind>attribute</kind>
+      <signature>year_end: int = 2023</signature>
+      <path>tip4patlibs_core.py:278</path>
+    </interface>
+    <interface>
+      <name>AnalysisState.summary()</name>
+      <kind>method</kind>
+      <signature>def summary(self) -> str</signature>
+      <path>tip4patlibs_core.py:281-304</path>
+    </interface>
+    <interface>
+      <name>WidgetFactory.__init__()</name>
+      <kind>constructor</kind>
+      <signature>def __init__(self, reference_data: ReferenceData, state: AnalysisState)</signature>
+      <path>tip4patlibs_core.py:370-381</path>
+    </interface>
+    <interface>
+      <name>widgets.IntRangeSlider</name>
+      <kind>ipywidgets class</kind>
+      <signature>IntRangeSlider(value, min, max, step, description, style, layout)</signature>
+      <path>ipywidgets library</path>
+    </interface>
+    <interface>
+      <name>widgets.HTML</name>
+      <kind>ipywidgets class</kind>
+      <signature>HTML(value: str)</signature>
+      <path>ipywidgets library</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>Manual validation on TIP platform. No automated unit tests per project scope. Validation follows pattern from Stories 2.1-2.4: visual inspection of widget behavior and state updates.</standards>
+    <locations>
+      <location>Manual testing in TIP JupyterLab environment</location>
+      <location>Notebook cell execution and observation</location>
+    </locations>
+    <ideas>
+      <idea ac="AC1">Verify IntRangeSlider displays with 2000-2024 range and [2019, 2023] default</idea>
+      <idea ac="AC2">Verify year labels show selected range clearly</idea>
+      <idea ac="AC3">Adjust slider, verify state.year_start and state.year_end update</idea>
+      <idea ac="AC4">Set 5-year span (2019-2023), verify "⚡ Fast query (~10 sec)"</idea>
+      <idea ac="AC5">Set 10-year span (2014-2023), verify "⏱️ Medium query (~30 sec)"</idea>
+      <idea ac="AC6">Set 24-year span (2000-2023), verify "🐢 Large query (~2 min)"</idea>
+      <idea ac="AC7">Fresh notebook load: verify defaults and initial tip message</idea>
+    </ideas>
+  </tests>
+</story-context>

@@ -1,0 +1,77 @@
+# generated: 2026-01-12
+# project: TIP for PATLIBs
+# project_key: tip4patlibs
+# tracking_system: file-system
+# story_location: docs/sprint-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic exists in epic file but not contexted
+#   - contexted: Next epic tech context created by *epic-tech-context (required)
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - drafted: Story file created in stories folder by *create-story
+#   - ready-for-dev: Draft approved and story context created by *story-ready
+#   - in-progress: Developer actively working on implementation by *dev-story
+#   - review: Implementation complete, ready for review by *code-review
+#   - done: Story completed by *story-done
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - completed: Retrospective has been done by *retrospective
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epics should be 'contexted' before stories can be 'drafted'
+# - SM typically drafts next story ONLY after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', dev reviews, then Dev moves to 'done'
+
+generated: 2026-01-12
+project: TIP for PATLIBs
+project_key: tip4patlibs
+tracking_system: file-system
+story_location: docs/sprint-artifacts
+
+development_status:
+  # Epic 1: Foundation & Setup
+  epic-1: contexted  # tech-spec created 2026-01-12
+  1-1-project-structure-module-setup: done  # 2026-01-11 approved
+  1-2-initialization-cell-patstat-connection: done  # 2026-01-11 approved
+  1-3-reference-data-loading: done  # 2026-01-11 - APPROVED
+  1-4-analysisstate-class-implementation: done  # 2026-01-11 - APPROVED
+  epic-1-retrospective: optional
+
+  # Epic 2: Selection Interface
+  epic-2: contexted  # tech-spec created 2026-01-11
+  2-1-country-selection-widget: done  # 2026-01-11 - APPROVED
+  2-2-region-selection-widget-nuts: done  # 2026-01-11 - APPROVED
+  2-3-technology-field-selection-wipo-35: done  # 2026-01-11 - APPROVED
+  2-4-custom-ipc-cpc-entry-dual-mode: done  # 2026-01-11 - APPROVED
+  2-5-date-range-selection: done  # 2026-01-11 - APPROVED
+  2-6-options-review-panel: done  # 2026-01-11 - APPROVED
+  epic-2-retrospective: optional
+
+  # Epic 3: Query Engine
+  epic-3: contexted  # tech-spec created 2026-01-11
+  3-1-patstatqueries-class-base-query: done  # 2026-01-12 - APPROVED by Senior Developer Review
+  3-2-trend-query-applications-over-time: done  # 2026-01-12 - APPROVED by Senior Developer Review
+  3-3-top-applicants-query: done  # 2026-01-12 - APPROVED by Senior Developer Review
+  3-4-query-execution-progress: done  # 2026-01-12 - APPROVED by Senior Developer Review
+  epic-3-retrospective: optional
+
+  # Epic 4: Visualizations
+  epic-4: contexted  # tech-spec created 2026-01-12
+  4-1-trend-line-chart: done  # 2026-01-12 - APPROVED
+  4-2-top-applicants-bar-chart: done  # 2026-01-12 - APPROVED
+  4-3-regional-distribution-chart: done  # 2026-01-12 - APPROVED
+  4-4-technology-breakdown-treemap: done  # 2026-01-12 - APPROVED
+  epic-4-retrospective: optional
+
+  # Epic 5: Export & Polish
+  epic-5: contexted  # tech-spec created 2026-01-12 by SM
+  5-1-csv-export: review  # 2026-01-12 - Implementation complete
+  5-2-png-export: review  # 2026-01-12 - Implementation complete
+  5-3-zero-results-data-quality-handling: review  # 2026-01-12 - Implementation complete
+  epic-5-retrospective: optional

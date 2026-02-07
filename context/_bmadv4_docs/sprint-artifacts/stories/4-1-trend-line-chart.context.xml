@@ -1,0 +1,117 @@
+<story-context id="4-1-trend-line-chart" v="1.0">
+  <metadata>
+    <epicId>4</epicId>
+    <storyId>4.1</storyId>
+    <title>Trend Line Chart</title>
+    <status>ready-for-dev</status>
+    <generatedAt>2026-01-12</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/stories/4-1-trend-line-chart.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>PATLIB user</asA>
+    <iWant>to see patent applications over time as a line chart</iWant>
+    <soThat>I can spot trends and patterns in innovation activity</soThat>
+    <tasks>
+      <task id="1">Create ChartBuilder class foundation with EPO_COLORS, EPO_PALETTE, EPO_LAYOUT constants</task>
+      <task id="2">Implement trend_line() method with dual lines (applications solid, inventions dashed)</task>
+      <task id="3">Add EPO styling and dynamic title generation</task>
+      <task id="4">Configure hover template and interactivity (zoom/pan)</task>
+      <task id="5">Add display_results() function foundation with empty data handling</task>
+      <task id="6">Wire up to notebook Cell 6 after run_analysis() completes</task>
+      <task id="7">Validation with EP + Field 13 + 2019-2023</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <ac id="1">Line chart renders with X-axis years, Y-axis application count</ac>
+    <ac id="2">Dual lines: applications (solid), inventions (dashed) with legend</ac>
+    <ac id="3">EPO brand styling: #C8102E primary, Arial font, clean axes, white background</ac>
+    <ac id="4">Dynamic title: "Patent Applications: {country} - {tech_field_name} ({year_start}-{year_end})"</ac>
+    <ac id="5">Interactive hover shows year, application count, invention count</ac>
+    <ac id="6">Zoom/pan enabled with modebar visible</ac>
+    <ac id="7">Empty DataFrame shows "No trend data available" message</ac>
+    <ac id="8">Single year data displays as point with marker</ac>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc path="docs/sprint-artifacts/tech-spec-epic-4.md" title="Epic 4 Tech Spec" section="AC1: Trend Line Chart Rendering">
+        Defines ChartBuilder.trend_line(df, state) returning Plotly Figure with dual lines, EPO styling, and interactive features.
+      </doc>
+      <doc path="docs/architecture.md" title="Architecture" section="Visualization Pattern">
+        Contains EPO_COLORS dict (#C8102E primary), EPO_PALETTE, and ChartBuilder class pattern with trend_line() example.
+      </doc>
+      <doc path="docs/epics.md" title="Epics" section="Story 4.1: Trend Line Chart">
+        Story definition with acceptance criteria: trend line chart with hover details, dynamic title.
+      </doc>
+      <doc path="docs/PRD.md" title="PRD" section="FR28-31">
+        FR28: Patent count over time. FR29: Year-over-year trends. FR30: Hover for exact values. FR31: Title reflects selections.
+      </doc>
+    </docs>
+
+    <code>
+      <file path="tip4patlibs_core.py" kind="module" symbol="ChartBuilder" lines="1717-1729" reason="Placeholder class to be implemented - add trend_line() method">
+        Current placeholder: `class ChartBuilder: pass`. Needs EPO constants and trend_line() implementation.
+      </file>
+      <file path="tip4patlibs_core.py" kind="module" symbol="analysis_results" lines="77" reason="Module-level dict storing query results consumed by ChartBuilder">
+        Keys: 'trend', 'applicants', 'tech_breakdown', 'regional'. Populated by _on_run_click().
+      </file>
+      <file path="tip4patlibs_core.py" kind="module" symbol="PatstatQueries.get_trend_data" lines="407-553" reason="Returns trend DataFrame with year, application_count, invention_count columns">
+        Query implementation complete. Returns empty DataFrame on error.
+      </file>
+      <file path="tip4patlibs_core.py" kind="class" symbol="WidgetFactory._on_run_click" lines="1507-1610" reason="Calls queries and stores results in analysis_results. Chart display to be added here.">
+        Completion message shows after queries. Add display_results() call after success.
+      </file>
+      <file path="tip4patlibs_core.py" kind="class" symbol="ReferenceData" lines="134-228" reason="Contains tech field lookup for dynamic titles">
+        tech_fields list has (display_name, field_nr) tuples. Need helper to get name from field number.
+      </file>
+    </code>
+
+    <dependencies>
+      <python>
+        <package name="plotly" version="TIP-provided">Chart creation - use plotly.graph_objects for fine control</package>
+        <package name="pandas" version="TIP-provided">DataFrame operations</package>
+        <package name="ipywidgets" version="TIP-provided">Output widget for chart display</package>
+      </python>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint source="ADR-001">All code in tip4patlibs_core.py module (single file pattern)</constraint>
+    <constraint source="ADR-002">Use Plotly graph_objects for fine control over dual lines</constraint>
+    <constraint source="NFR4">Charts must render within 5 seconds of data availability</constraint>
+    <constraint source="Architecture">EPO Red #C8102E as primary color, Arial font family</constraint>
+    <constraint source="Tech Spec">Return empty message on empty DataFrame, don't crash</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface name="ChartBuilder.trend_line" kind="static method">
+      <signature>def trend_line(df: pd.DataFrame, state: AnalysisState) -> go.Figure</signature>
+      <path>tip4patlibs_core.py:ChartBuilder</path>
+    </interface>
+    <interface name="display_results" kind="function">
+      <signature>def display_results(results: Dict[str, pd.DataFrame], state: AnalysisState) -> None</signature>
+      <path>tip4patlibs_core.py (new function)</path>
+    </interface>
+    <interface name="analysis_results" kind="module variable">
+      <signature>analysis_results: Dict[str, pd.DataFrame] with keys 'trend', 'applicants', 'tech_breakdown', 'regional'</signature>
+      <path>tip4patlibs_core.py:77</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>Manual testing on TIP platform per project scope. No automated unit tests. Validate DataFrame schemas and visual output.</standards>
+    <locations>Manual validation in TIP_for_PATLIBs.ipynb Cell 6</locations>
+    <ideas>
+      <idea ac="1,2">Test with EP + Field 13 + 2019-2023, verify dual lines visible</idea>
+      <idea ac="3">Visual inspection of EPO Red color and Arial font</idea>
+      <idea ac="4">Verify title shows "Patent Applications: EP - Medical technology (2019-2023)"</idea>
+      <idea ac="5">Hover over data points, verify tooltip shows year and both counts</idea>
+      <idea ac="6">Test zoom/pan with mouse drag and scroll</idea>
+      <idea ac="7">Test with obscure selection that returns empty DataFrame</idea>
+      <idea ac="8">Test with single year (2023-2023) to verify point marker</idea>
+    </ideas>
+  </tests>
+</story-context>

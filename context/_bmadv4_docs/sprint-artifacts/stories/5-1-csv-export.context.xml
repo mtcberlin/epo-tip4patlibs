@@ -1,0 +1,110 @@
+<story-context id="5-1-csv-export" v="1.0">
+  <metadata>
+    <epicId>5</epicId>
+    <storyId>5.1</storyId>
+    <title>CSV Export</title>
+    <status>ready-for-dev</status>
+    <generatedAt>2026-01-12</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/stories/5-1-csv-export.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>PATLIB user</asA>
+    <iWant>to export my analysis results as a CSV file</iWant>
+    <soThat>I can use the data in Excel for further analysis or reporting</soThat>
+    <tasks>
+      <task id="1">Implement Exporter.generate_filename() static method with state-based naming</task>
+      <task id="2">Implement Exporter.to_csv() with semicolon delimiter and UTF-8 BOM encoding</task>
+      <task id="3">Create method to combine trend + applicants DataFrames for export</task>
+      <task id="4">Create export button UI with success/error message display</task>
+      <task id="5">Integrate export buttons into display_results() after charts</task>
+      <task id="6">Add error handling with user-friendly messages</task>
+      <task id="7">Validation: test export, open in Excel, verify format</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <ac id="1">Export CSV button appears below charts after analysis completes</ac>
+    <ac id="2">CSV uses semicolon delimiter, UTF-8 BOM encoding, no index column</ac>
+    <ac id="3">CSV contains trend data and top applicants with clear column headers</ac>
+    <ac id="4">Filename follows pattern: tip4patlibs_{country}_{tech}_{years}_{timestamp}.csv</ac>
+    <ac id="5">Success message shows filename/path after export completes</ac>
+    <ac id="6">Export errors show user-friendly message, other functionality continues</ac>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc path="docs/sprint-artifacts/tech-spec-epic-5.md" title="Epic 5 Tech Spec" section="Story 5-1: CSV Export">
+        Defines Exporter class with generate_filename(), to_csv() methods. CSV format: semicolon delimiter, UTF-8 BOM.
+      </doc>
+      <doc path="docs/architecture.md" title="Architecture" section="Export Pattern">
+        Contains Exporter class pattern with to_csv() example. European format: semicolon delimiter, UTF-8 with BOM for Excel.
+      </doc>
+      <doc path="docs/PRD.md" title="PRD" section="FR42-46">
+        FR42: Export to CSV. FR43: Clear column headers. FR45: Descriptive filenames. FR46: Download links/buttons.
+      </doc>
+    </docs>
+
+    <code>
+      <file path="tip4patlibs_core.py" kind="class" symbol="Exporter" lines="1732-1743" reason="Placeholder class to be implemented - add generate_filename() and to_csv() methods">
+        Current placeholder: `class Exporter: pass`. Needs full implementation.
+      </file>
+      <file path="tip4patlibs_core.py" kind="module" symbol="analysis_results" lines="77" reason="Module-level dict with DataFrames to export">
+        Keys: 'trend', 'applicants', 'tech_breakdown', 'regional'. Source data for CSV export.
+      </file>
+      <file path="tip4patlibs_core.py" kind="class" symbol="AnalysisState" lines="266-342" reason="State object for filename generation (country, tech_field, years)">
+        Contains country, tech_mode, tech_field, ipc_codes, year_start, year_end for filename.
+      </file>
+      <file path="tip4patlibs_core.py" kind="class" symbol="ChartBuilder" lines="1717-1729" reason="Integration point - export buttons added after chart display">
+        Epic 4 implementation. Export buttons will be added in display_results() after charts.
+      </file>
+    </code>
+
+    <dependencies>
+      <python>
+        <package name="pandas" version="TIP-provided">DataFrame.to_csv() with sep=';', encoding='utf-8-sig'</package>
+        <package name="ipywidgets" version="TIP-provided">Button widget for export, HTML for success message</package>
+        <package name="datetime" version="builtin">Timestamp generation for filenames</package>
+        <package name="pathlib" version="builtin">Path handling for file operations</package>
+      </python>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint source="ADR-001">All code in tip4patlibs_core.py module (single file pattern)</constraint>
+    <constraint source="NFR11">CSVs must be compatible with Excel (proper encoding, delimiters)</constraint>
+    <constraint source="European Format">Semicolon delimiter required - comma is decimal separator in Europe</constraint>
+    <constraint source="Architecture">UTF-8 BOM encoding for Excel auto-detection</constraint>
+    <constraint source="Tech Spec">Export to current working directory (user's notebook location)</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface name="Exporter.generate_filename" kind="static method">
+      <signature>def generate_filename(state: AnalysisState, extension: str, chart_name: str = None) -> str</signature>
+      <path>tip4patlibs_core.py:Exporter</path>
+    </interface>
+    <interface name="Exporter.to_csv" kind="static method">
+      <signature>def to_csv(df: pd.DataFrame, state: AnalysisState, data_type: str = 'data') -> str</signature>
+      <path>tip4patlibs_core.py:Exporter</path>
+    </interface>
+    <interface name="create_export_buttons" kind="function">
+      <signature>def create_export_buttons(results: Dict[str, pd.DataFrame], figures: Dict[str, go.Figure], state: AnalysisState) -> widgets.HBox</signature>
+      <path>tip4patlibs_core.py (new function)</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>Manual testing on TIP platform. Validate CSV opens correctly in Excel with proper encoding.</standards>
+    <locations>Manual validation in TIP_for_PATLIBs.ipynb Cell 6</locations>
+    <ideas>
+      <idea ac="1">Run analysis, verify Export CSV button appears below charts</idea>
+      <idea ac="2">Open exported CSV in Excel, verify semicolon delimiter recognized</idea>
+      <idea ac="2">Verify German umlauts display correctly (UTF-8 BOM)</idea>
+      <idea ac="3">Check CSV contains both trend and applicants data with headers</idea>
+      <idea ac="4">Verify filename matches pattern with country, tech field, dates, timestamp</idea>
+      <idea ac="5">Click export, verify success message shows filename</idea>
+      <idea ac="6">Simulate error (e.g., readonly dir if possible), verify error message</idea>
+    </ideas>
+  </tests>
+</story-context>

@@ -1,0 +1,193 @@
+appln_filing_year;jurisdiction;ipc_class;application_count;ipc_class_description;jurisdiction_description
+2020;CN;A61B;83336;Diagnosis, Surgery, Identification;China (CNIPA)
+2020;CN;A61C;8064;Dentistry, Oral Hygiene;China (CNIPA)
+2020;CN;A61F;33435;Filters, Protheses, Orthotics;China (CNIPA)
+2020;CN;A61G;32114;Transport, Personal Conveyances;China (CNIPA)
+2020;CN;A61H;30382;Physical Therapy Apparatus;China (CNIPA)
+2020;CN;A61J;11480;Containers for Medicines;China (CNIPA)
+2020;CN;A61K40;1341;Medicinal Preparations (Drug Delivery);China (CNIPA)
+2020;CN;A61L;46332;Sterilisation, Disinfection;China (CNIPA)
+2020;CN;A61M;57950;Devices for Introducing Media;China (CNIPA)
+2020;CN;A61N;12238;Electrotherapy, Magnetotherapy;China (CNIPA)
+2020;CN;G16H;10947;Healthcare Informatics;China (CNIPA)
+2020;CN;H05G;174;X-ray Technique;China (CNIPA)
+2020;DE;A61B;1397;Diagnosis, Surgery, Identification;Germany (DPMA)
+2020;DE;A61C;153;Dentistry, Oral Hygiene;Germany (DPMA)
+2020;DE;A61F;587;Filters, Protheses, Orthotics;Germany (DPMA)
+2020;DE;A61G;183;Transport, Personal Conveyances;Germany (DPMA)
+2020;DE;A61H;157;Physical Therapy Apparatus;Germany (DPMA)
+2020;DE;A61J;60;Containers for Medicines;Germany (DPMA)
+2020;DE;A61K40;10;Medicinal Preparations (Drug Delivery);Germany (DPMA)
+2020;DE;A61L;689;Sterilisation, Disinfection;Germany (DPMA)
+2020;DE;A61M;513;Devices for Introducing Media;Germany (DPMA)
+2020;DE;A61N;131;Electrotherapy, Magnetotherapy;Germany (DPMA)
+2020;DE;G16H;254;Healthcare Informatics;Germany (DPMA)
+2020;DE;H05G;44;X-ray Technique;Germany (DPMA)
+2020;EP;A61B;8155;Diagnosis, Surgery, Identification;European Patent Office
+2020;EP;A61C;756;Dentistry, Oral Hygiene;European Patent Office
+2020;EP;A61F;2817;Filters, Protheses, Orthotics;European Patent Office
+2020;EP;A61G;347;Transport, Personal Conveyances;European Patent Office
+2020;EP;A61H;409;Physical Therapy Apparatus;European Patent Office
+2020;EP;A61J;417;Containers for Medicines;European Patent Office
+2020;EP;A61K40;634;Medicinal Preparations (Drug Delivery);European Patent Office
+2020;EP;A61L;1527;Sterilisation, Disinfection;European Patent Office
+2020;EP;A61M;3513;Devices for Introducing Media;European Patent Office
+2020;EP;A61N;1479;Electrotherapy, Magnetotherapy;European Patent Office
+2020;EP;G16H;1857;Healthcare Informatics;European Patent Office
+2020;EP;H05G;62;X-ray Technique;European Patent Office
+2020;US;A61B;20719;Diagnosis, Surgery, Identification;United States (USPTO)
+2020;US;A61C;1368;Dentistry, Oral Hygiene;United States (USPTO)
+2020;US;A61F;6426;Filters, Protheses, Orthotics;United States (USPTO)
+2020;US;A61G;1013;Transport, Personal Conveyances;United States (USPTO)
+2020;US;A61H;1250;Physical Therapy Apparatus;United States (USPTO)
+2020;US;A61J;986;Containers for Medicines;United States (USPTO)
+2020;US;A61K40;1371;Medicinal Preparations (Drug Delivery);United States (USPTO)
+2020;US;A61L;3629;Sterilisation, Disinfection;United States (USPTO)
+2020;US;A61M;7735;Devices for Introducing Media;United States (USPTO)
+2020;US;A61N;3595;Electrotherapy, Magnetotherapy;United States (USPTO)
+2020;US;G16H;6756;Healthcare Informatics;United States (USPTO)
+2020;US;H05G;168;X-ray Technique;United States (USPTO)
+2021;CN;A61B;81170;Diagnosis, Surgery, Identification;China (CNIPA)
+2021;CN;A61C;8697;Dentistry, Oral Hygiene;China (CNIPA)
+2021;CN;A61F;31248;Filters, Protheses, Orthotics;China (CNIPA)
+2021;CN;A61G;29858;Transport, Personal Conveyances;China (CNIPA)
+2021;CN;A61H;28055;Physical Therapy Apparatus;China (CNIPA)
+2021;CN;A61J;10471;Containers for Medicines;China (CNIPA)
+2021;CN;A61K40;1186;Medicinal Preparations (Drug Delivery);China (CNIPA)
+2021;CN;A61L;34991;Sterilisation, Disinfection;China (CNIPA)
+2021;CN;A61M;56212;Devices for Introducing Media;China (CNIPA)
+2021;CN;A61N;10765;Electrotherapy, Magnetotherapy;China (CNIPA)
+2021;CN;G16H;11487;Healthcare Informatics;China (CNIPA)
+2021;CN;H05G;155;X-ray Technique;China (CNIPA)
+2021;DE;A61B;1330;Diagnosis, Surgery, Identification;Germany (DPMA)
+2021;DE;A61C;122;Dentistry, Oral Hygiene;Germany (DPMA)
+2021;DE;A61F;486;Filters, Protheses, Orthotics;Germany (DPMA)
+2021;DE;A61G;152;Transport, Personal Conveyances;Germany (DPMA)
+2021;DE;A61H;200;Physical Therapy Apparatus;Germany (DPMA)
+2021;DE;A61J;62;Containers for Medicines;Germany (DPMA)
+2021;DE;A61K40;16;Medicinal Preparations (Drug Delivery);Germany (DPMA)
+2021;DE;A61L;438;Sterilisation, Disinfection;Germany (DPMA)
+2021;DE;A61M;460;Devices for Introducing Media;Germany (DPMA)
+2021;DE;A61N;147;Electrotherapy, Magnetotherapy;Germany (DPMA)
+2021;DE;G16H;226;Healthcare Informatics;Germany (DPMA)
+2021;DE;H05G;62;X-ray Technique;Germany (DPMA)
+2021;EP;A61B;8160;Diagnosis, Surgery, Identification;European Patent Office
+2021;EP;A61C;641;Dentistry, Oral Hygiene;European Patent Office
+2021;EP;A61F;2660;Filters, Protheses, Orthotics;European Patent Office
+2021;EP;A61G;352;Transport, Personal Conveyances;European Patent Office
+2021;EP;A61H;352;Physical Therapy Apparatus;European Patent Office
+2021;EP;A61J;342;Containers for Medicines;European Patent Office
+2021;EP;A61K40;758;Medicinal Preparations (Drug Delivery);European Patent Office
+2021;EP;A61L;1826;Sterilisation, Disinfection;European Patent Office
+2021;EP;A61M;3516;Devices for Introducing Media;European Patent Office
+2021;EP;A61N;1366;Electrotherapy, Magnetotherapy;European Patent Office
+2021;EP;G16H;2122;Healthcare Informatics;European Patent Office
+2021;EP;H05G;69;X-ray Technique;European Patent Office
+2021;US;A61B;20027;Diagnosis, Surgery, Identification;United States (USPTO)
+2021;US;A61C;1292;Dentistry, Oral Hygiene;United States (USPTO)
+2021;US;A61F;6115;Filters, Protheses, Orthotics;United States (USPTO)
+2021;US;A61G;955;Transport, Personal Conveyances;United States (USPTO)
+2021;US;A61H;1105;Physical Therapy Apparatus;United States (USPTO)
+2021;US;A61J;847;Containers for Medicines;United States (USPTO)
+2021;US;A61K40;1353;Medicinal Preparations (Drug Delivery);United States (USPTO)
+2021;US;A61L;4235;Sterilisation, Disinfection;United States (USPTO)
+2021;US;A61M;7471;Devices for Introducing Media;United States (USPTO)
+2021;US;A61N;3421;Electrotherapy, Magnetotherapy;United States (USPTO)
+2021;US;G16H;7268;Healthcare Informatics;United States (USPTO)
+2021;US;H05G;168;X-ray Technique;United States (USPTO)
+2022;CN;A61B;67456;Diagnosis, Surgery, Identification;China (CNIPA)
+2022;CN;A61C;8097;Dentistry, Oral Hygiene;China (CNIPA)
+2022;CN;A61F;23936;Filters, Protheses, Orthotics;China (CNIPA)
+2022;CN;A61G;19088;Transport, Personal Conveyances;China (CNIPA)
+2022;CN;A61H;20628;Physical Therapy Apparatus;China (CNIPA)
+2022;CN;A61J;7689;Containers for Medicines;China (CNIPA)
+2022;CN;A61K40;1250;Medicinal Preparations (Drug Delivery);China (CNIPA)
+2022;CN;A61L;27219;Sterilisation, Disinfection;China (CNIPA)
+2022;CN;A61M;41307;Devices for Introducing Media;China (CNIPA)
+2022;CN;A61N;9197;Electrotherapy, Magnetotherapy;China (CNIPA)
+2022;CN;G16H;11734;Healthcare Informatics;China (CNIPA)
+2022;CN;H05G;230;X-ray Technique;China (CNIPA)
+2022;DE;A61B;1262;Diagnosis, Surgery, Identification;Germany (DPMA)
+2022;DE;A61C;135;Dentistry, Oral Hygiene;Germany (DPMA)
+2022;DE;A61F;422;Filters, Protheses, Orthotics;Germany (DPMA)
+2022;DE;A61G;151;Transport, Personal Conveyances;Germany (DPMA)
+2022;DE;A61H;132;Physical Therapy Apparatus;Germany (DPMA)
+2022;DE;A61J;62;Containers for Medicines;Germany (DPMA)
+2022;DE;A61K40;12;Medicinal Preparations (Drug Delivery);Germany (DPMA)
+2022;DE;A61L;284;Sterilisation, Disinfection;Germany (DPMA)
+2022;DE;A61M;383;Devices for Introducing Media;Germany (DPMA)
+2022;DE;A61N;117;Electrotherapy, Magnetotherapy;Germany (DPMA)
+2022;DE;G16H;270;Healthcare Informatics;Germany (DPMA)
+2022;DE;H05G;54;X-ray Technique;Germany (DPMA)
+2022;EP;A61B;7692;Diagnosis, Surgery, Identification;European Patent Office
+2022;EP;A61C;599;Dentistry, Oral Hygiene;European Patent Office
+2022;EP;A61F;2175;Filters, Protheses, Orthotics;European Patent Office
+2022;EP;A61G;314;Transport, Personal Conveyances;European Patent Office
+2022;EP;A61H;287;Physical Therapy Apparatus;European Patent Office
+2022;EP;A61J;311;Containers for Medicines;European Patent Office
+2022;EP;A61K40;750;Medicinal Preparations (Drug Delivery);European Patent Office
+2022;EP;A61L;1403;Sterilisation, Disinfection;European Patent Office
+2022;EP;A61M;3123;Devices for Introducing Media;European Patent Office
+2022;EP;A61N;1312;Electrotherapy, Magnetotherapy;European Patent Office
+2022;EP;G16H;2222;Healthcare Informatics;European Patent Office
+2022;EP;H05G;80;X-ray Technique;European Patent Office
+2022;US;A61B;17999;Diagnosis, Surgery, Identification;United States (USPTO)
+2022;US;A61C;1232;Dentistry, Oral Hygiene;United States (USPTO)
+2022;US;A61F;5384;Filters, Protheses, Orthotics;United States (USPTO)
+2022;US;A61G;848;Transport, Personal Conveyances;United States (USPTO)
+2022;US;A61H;1028;Physical Therapy Apparatus;United States (USPTO)
+2022;US;A61J;707;Containers for Medicines;United States (USPTO)
+2022;US;A61K40;1255;Medicinal Preparations (Drug Delivery);United States (USPTO)
+2022;US;A61L;2981;Sterilisation, Disinfection;United States (USPTO)
+2022;US;A61M;6798;Devices for Introducing Media;United States (USPTO)
+2022;US;A61N;3191;Electrotherapy, Magnetotherapy;United States (USPTO)
+2022;US;G16H;6368;Healthcare Informatics;United States (USPTO)
+2022;US;H05G;121;X-ray Technique;United States (USPTO)
+2023;CN;A61B;69451;Diagnosis, Surgery, Identification;China (CNIPA)
+2023;CN;A61C;7863;Dentistry, Oral Hygiene;China (CNIPA)
+2023;CN;A61F;24764;Filters, Protheses, Orthotics;China (CNIPA)
+2023;CN;A61G;21350;Transport, Personal Conveyances;China (CNIPA)
+2023;CN;A61H;20321;Physical Therapy Apparatus;China (CNIPA)
+2023;CN;A61J;8407;Containers for Medicines;China (CNIPA)
+2023;CN;A61K40;1543;Medicinal Preparations (Drug Delivery);China (CNIPA)
+2023;CN;A61L;25419;Sterilisation, Disinfection;China (CNIPA)
+2023;CN;A61M;44059;Devices for Introducing Media;China (CNIPA)
+2023;CN;A61N;9944;Electrotherapy, Magnetotherapy;China (CNIPA)
+2023;CN;G16H;14505;Healthcare Informatics;China (CNIPA)
+2023;CN;H05G;239;X-ray Technique;China (CNIPA)
+2023;DE;A61B;1226;Diagnosis, Surgery, Identification;Germany (DPMA)
+2023;DE;A61C;128;Dentistry, Oral Hygiene;Germany (DPMA)
+2023;DE;A61F;394;Filters, Protheses, Orthotics;Germany (DPMA)
+2023;DE;A61G;172;Transport, Personal Conveyances;Germany (DPMA)
+2023;DE;A61H;162;Physical Therapy Apparatus;Germany (DPMA)
+2023;DE;A61J;85;Containers for Medicines;Germany (DPMA)
+2023;DE;A61K40;21;Medicinal Preparations (Drug Delivery);Germany (DPMA)
+2023;DE;A61L;228;Sterilisation, Disinfection;Germany (DPMA)
+2023;DE;A61M;409;Devices for Introducing Media;Germany (DPMA)
+2023;DE;A61N;124;Electrotherapy, Magnetotherapy;Germany (DPMA)
+2023;DE;G16H;217;Healthcare Informatics;Germany (DPMA)
+2023;DE;H05G;76;X-ray Technique;Germany (DPMA)
+2023;EP;A61B;5491;Diagnosis, Surgery, Identification;European Patent Office
+2023;EP;A61C;461;Dentistry, Oral Hygiene;European Patent Office
+2023;EP;A61F;1613;Filters, Protheses, Orthotics;European Patent Office
+2023;EP;A61G;218;Transport, Personal Conveyances;European Patent Office
+2023;EP;A61H;223;Physical Therapy Apparatus;European Patent Office
+2023;EP;A61J;207;Containers for Medicines;European Patent Office
+2023;EP;A61K40;471;Medicinal Preparations (Drug Delivery);European Patent Office
+2023;EP;A61L;874;Sterilisation, Disinfection;European Patent Office
+2023;EP;A61M;2144;Devices for Introducing Media;European Patent Office
+2023;EP;A61N;909;Electrotherapy, Magnetotherapy;European Patent Office
+2023;EP;G16H;1461;Healthcare Informatics;European Patent Office
+2023;EP;H05G;48;X-ray Technique;European Patent Office
+2023;US;A61B;15057;Diagnosis, Surgery, Identification;United States (USPTO)
+2023;US;A61C;1016;Dentistry, Oral Hygiene;United States (USPTO)
+2023;US;A61F;4728;Filters, Protheses, Orthotics;United States (USPTO)
+2023;US;A61G;662;Transport, Personal Conveyances;United States (USPTO)
+2023;US;A61H;879;Physical Therapy Apparatus;United States (USPTO)
+2023;US;A61J;588;Containers for Medicines;United States (USPTO)
+2023;US;A61K40;963;Medicinal Preparations (Drug Delivery);United States (USPTO)
+2023;US;A61L;2025;Sterilisation, Disinfection;United States (USPTO)
+2023;US;A61M;5650;Devices for Introducing Media;United States (USPTO)
+2023;US;A61N;2727;Electrotherapy, Magnetotherapy;United States (USPTO)
+2023;US;G16H;5642;Healthcare Informatics;United States (USPTO)
+2023;US;H05G;96;X-ray Technique;United States (USPTO)

@@ -1,0 +1,301 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>1</storyId>
+    <title>Project Structure &amp; Module Setup</title>
+    <status>drafted</status>
+    <generatedAt>2026-01-11</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-1-project-structure-module-setup.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>developer</asA>
+    <iWant>a well-organized project structure with notebook and supporting module</iWant>
+    <soThat>code is maintainable and the notebook stays clean</soThat>
+    <tasks>
+      <task id="1" ac="3">
+        <title>Create tip4patlibs_core.py module</title>
+        <subtasks>
+          <subtask id="1.1">Create file with module docstring and imports</subtask>
+          <subtask id="1.2">Define AnalysisState dataclass with all attributes from architecture</subtask>
+          <subtask id="1.3">Add summary() method stub (returns placeholder text)</subtask>
+          <subtask id="1.4">Add is_valid() method stub (returns (False, "Not implemented"))</subtask>
+          <subtask id="1.5">Create PatstatQueries class placeholder with __init__(self, db)</subtask>
+          <subtask id="1.6">Create WidgetFactory class placeholder</subtask>
+          <subtask id="1.7">Create ChartBuilder class placeholder</subtask>
+          <subtask id="1.8">Create Exporter class placeholder</subtask>
+          <subtask id="1.9">Add __all__ export list</subtask>
+        </subtasks>
+      </task>
+      <task id="2" ac="1,2,4">
+        <title>Create TIP_for_PATLIBs.ipynb notebook</title>
+        <subtasks>
+          <subtask id="2.1">Create new Jupyter notebook</subtask>
+          <subtask id="2.2">Add Cell 1 markdown header with emoji marker</subtask>
+          <subtask id="2.3">Add Cell 1 code with import statement</subtask>
+          <subtask id="2.4">Add placeholder cells for future sections (Setup, Selection, Results)</subtask>
+          <subtask id="2.5">Verify import works by running Cell 1</subtask>
+        </subtasks>
+      </task>
+      <task id="3" ac="1,5">
+        <title>Create README.md</title>
+        <subtasks>
+          <subtask id="3.1">Add brief project description</subtask>
+          <subtask id="3.2">Document file structure</subtask>
+          <subtask id="3.3">Add setup instructions (just "open notebook, run Cell 1")</subtask>
+          <subtask id="3.4">Note current LOC count and split threshold</subtask>
+        </subtasks>
+      </task>
+      <task id="4" ac="1-5">
+        <title>Validation</title>
+        <subtasks>
+          <subtask id="4.1">Verify all files exist in project folder</subtask>
+          <subtask id="4.2">Open notebook and run import cell</subtask>
+          <subtask id="4.3">Confirm no import errors</subtask>
+          <subtask id="4.4">Verify all classes importable</subtask>
+        </subtasks>
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="AC1" title="Project Files Exist">
+      <given>a fresh TIP JupyterLab environment</given>
+      <when>I open the project folder</when>
+      <then>
+        <item>TIP_for_PATLIBs.ipynb - main notebook exists</item>
+        <item>tip4patlibs_core.py - supporting module exists</item>
+        <item>README.md - brief setup instructions exists</item>
+      </then>
+    </criterion>
+    <criterion id="AC2" title="Module Import Works">
+      <given>the notebook and module are in the same directory</given>
+      <when>I run `from tip4patlibs_core import *` in the notebook</when>
+      <then>
+        <item>import succeeds without errors</item>
+        <item>all placeholder classes are available</item>
+      </then>
+    </criterion>
+    <criterion id="AC3" title="Placeholder Classes Defined">
+      <given>tip4patlibs_core.py is loaded</given>
+      <then>
+        <item>AnalysisState - state management dataclass exists</item>
+        <item>PatstatQueries - query builder (placeholder) exists</item>
+        <item>WidgetFactory - UI components (placeholder) exists</item>
+        <item>ChartBuilder - visualization builders (placeholder) exists</item>
+        <item>Exporter - CSV/PNG export (placeholder) exists</item>
+      </then>
+    </criterion>
+    <criterion id="AC4" title="Notebook Structure">
+      <given>the notebook is opened</given>
+      <then>
+        <item>Cell 1 exists with header markdown: "Run this cell first!"</item>
+        <item>Cell 1 contains `from tip4patlibs_core import *`</item>
+        <item>additional cells are placeholders for future functionality</item>
+      </then>
+    </criterion>
+    <criterion id="AC5" title="LOC Tracking">
+      <given>the module file</given>
+      <when>checking line count</when>
+      <then>
+        <item>total LOC is documented in README</item>
+        <item>note that split to lib/ folder occurs if >500 LOC</item>
+      </then>
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture: TIP for PATLIBs</title>
+        <section>Project Structure</section>
+        <snippet>Hybrid structure: TIP_for_PATLIBs.ipynb + tip4patlibs_core.py. Module contains AnalysisState, PatstatQueries, Widgets, Charts, Export. Split to lib/ folder if >500 LOC.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture: TIP for PATLIBs</title>
+        <section>ADR-001: Hybrid Notebook Structure</section>
+        <snippet>Decision: Start with notebook + single Python module. Split to lib/ folder if exceeding 500 LOC. Easy to share, code is testable, can grow if needed.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture: TIP for PATLIBs</title>
+        <section>State Management Pattern</section>
+        <snippet>AnalysisState dataclass with country, region, tech_mode, tech_field, ipc_codes, year_start, year_end, sme_filter. Includes summary() and is_valid() methods.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation &amp; Setup</title>
+        <section>Data Models and Contracts</section>
+        <snippet>AnalysisState dataclass: country (Optional[str]), region (Optional[str]), tech_mode (str="field"), tech_field (Optional[int]), ipc_codes (List[str]), year_start (int=2019), year_end (int=2023), sme_filter (bool=False).</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation &amp; Setup</title>
+        <section>Services and Modules</section>
+        <snippet>tip4patlibs_core.py contains AnalysisState class, ReferenceData class, and connection utilities. Notebook Cell 1 handles initialization and setup.</snippet>
+      </doc>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>TIP for PATLIBs - Product Requirements Document</title>
+        <section>FR1-FR4: Setup &amp; Initialization</section>
+        <snippet>FR1: Single initialization cell loads all dependencies. FR47: All user inputs use ipywidgets. This story sets up the project structure for all subsequent functionality.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>TIP for PATLIBs - Epic Breakdown</title>
+        <section>Story 1.1: Project Structure &amp; Module Setup</section>
+        <snippet>Technical Notes: Follow Architecture ADR-001 structure. Use Python dataclasses for AnalysisState. All ipywidgets imports in module, not notebook. Notebook cells should be mostly widget displays and function calls.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>input/example_medtech_ep_fulldataset.py</path>
+        <kind>reference-example</kind>
+        <symbol>BVMedExporter class</symbol>
+        <lines>42-270</lines>
+        <reason>Reference implementation showing PATSTAT ORM patterns, PatstatClient initialization, query building with SQLAlchemy, and DataFrame export patterns. Use as pattern reference for PatstatQueries class structure.</reason>
+      </file>
+      <file>
+        <path>input/example_medtech_ep_fulldataset.py</path>
+        <kind>reference-example</kind>
+        <symbol>PatstatClient initialization</symbol>
+        <lines>52-53</lines>
+        <reason>Shows correct pattern: `self.patstat = PatstatClient(env='PROD'); self.db = self.patstat.orm()` - use similar pattern in future Story 1.2 connection code.</reason>
+      </file>
+    </code>
+    <dependencies>
+      <platform>EPO Technology Intelligence Platform (TIP)</platform>
+      <note>All dependencies are pre-installed on TIP. No requirements.txt needed.</note>
+      <python>
+        <package name="pandas" version="TIP-provided">DataFrame operations</package>
+        <package name="plotly" version="TIP-provided">Interactive visualizations</package>
+        <package name="ipywidgets" version="TIP-provided">Standard Jupyter UI controls</package>
+        <package name="ipyvuetify" version="TIP-provided">Material Design UI components (alternative to ipywidgets, pending ADR-007 spike)</package>
+        <package name="dataclasses" version="stdlib">Built-in Python dataclasses</package>
+        <package name="typing" version="stdlib">Type hints (List, Optional)</package>
+      </python>
+      <patstat>
+        <package name="epo.tipdata.patstat" version="TIP-provided">PATSTAT ORM access (not used in this story, but imported for future)</package>
+      </patstat>
+      <note>UI Framework: Pending ADR-007 decision. Spike in Story 2.1 will compare ipywidgets vs ipyvuetify.</note>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint source="architecture" type="structure">
+      Module must stay under 500 LOC to remain in single file. If exceeded, split to lib/ folder structure.
+    </constraint>
+    <constraint source="architecture" type="pattern">
+      All heavy imports (pandas, plotly, ipywidgets) go in the module, not the notebook. Notebook should only contain widget displays and function calls.
+    </constraint>
+    <constraint source="tech-spec" type="naming">
+      Files must be named exactly: TIP_for_PATLIBs.ipynb and tip4patlibs_core.py (note underscores vs camelCase).
+    </constraint>
+    <constraint source="story" type="scope">
+      Do NOT import epo.tipdata.patstat yet - that's Story 1.2. This story only creates placeholders.
+    </constraint>
+    <constraint source="dev-notes" type="greenfield">
+      This is a greenfield project - no existing files to modify. Create all files fresh in project root directory.
+    </constraint>
+    <constraint source="architecture" type="export">
+      Use __all__ to control what `import *` exposes from the module.
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>AnalysisState dataclass</name>
+      <kind>data-structure</kind>
+      <signature>
+@dataclass
+class AnalysisState:
+    country: Optional[str] = None
+    region: Optional[str] = None
+    tech_mode: str = "field"
+    tech_field: Optional[int] = None
+    ipc_codes: List[str] = field(default_factory=list)
+    year_start: int = 2019
+    year_end: int = 2023
+    sme_filter: bool = False
+
+    def summary(self) -> str: ...
+    def is_valid(self) -> tuple[bool, str]: ...
+      </signature>
+      <path>tip4patlibs_core.py</path>
+    </interface>
+    <interface>
+      <name>PatstatQueries placeholder</name>
+      <kind>class-placeholder</kind>
+      <signature>
+class PatstatQueries:
+    def __init__(self, db): ...
+      </signature>
+      <path>tip4patlibs_core.py</path>
+    </interface>
+    <interface>
+      <name>WidgetFactory placeholder</name>
+      <kind>class-placeholder</kind>
+      <signature>
+class WidgetFactory:
+    pass
+      </signature>
+      <path>tip4patlibs_core.py</path>
+    </interface>
+    <interface>
+      <name>ChartBuilder placeholder</name>
+      <kind>class-placeholder</kind>
+      <signature>
+class ChartBuilder:
+    pass
+      </signature>
+      <path>tip4patlibs_core.py</path>
+    </interface>
+    <interface>
+      <name>Exporter placeholder</name>
+      <kind>class-placeholder</kind>
+      <signature>
+class Exporter:
+    pass
+      </signature>
+      <path>tip4patlibs_core.py</path>
+    </interface>
+    <interface>
+      <name>Module exports</name>
+      <kind>export-list</kind>
+      <signature>
+__all__ = [
+    'AnalysisState',
+    'PatstatQueries',
+    'WidgetFactory',
+    'ChartBuilder',
+    'Exporter',
+]
+      </signature>
+      <path>tip4patlibs_core.py</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Manual validation on TIP platform. No automated test framework for MVP. Tests are run by opening the notebook in JupyterLab and executing cells. Focus on import verification and class instantiation checks.
+    </standards>
+    <locations>
+      <location>Manual: TIP JupyterLab environment</location>
+      <location>Notebook Cell 1: import verification</location>
+      <location>Ad-hoc cells: class instantiation tests</location>
+    </locations>
+    <ideas>
+      <idea ac="AC1">Verify all three files exist in project folder after creation</idea>
+      <idea ac="AC2">Run `from tip4patlibs_core import *` in notebook - should succeed without errors</idea>
+      <idea ac="AC3">After import, verify each class is accessible: AnalysisState, PatstatQueries, WidgetFactory, ChartBuilder, Exporter</idea>
+      <idea ac="AC3">Create AnalysisState instance: `state = AnalysisState()` - should work with defaults</idea>
+      <idea ac="AC3">Call `state.summary()` - should return placeholder string</idea>
+      <idea ac="AC3">Call `state.is_valid()` - should return (False, "Not implemented") for stub</idea>
+      <idea ac="AC4">Verify notebook Cell 1 has "Run this cell first!" markdown header</idea>
+      <idea ac="AC5">Count lines in tip4patlibs_core.py using `wc -l` - document in README</idea>
+    </ideas>
+  </tests>
+</story-context>

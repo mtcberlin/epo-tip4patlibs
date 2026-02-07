@@ -1,0 +1,112 @@
+<story-context id="4-2-top-applicants-bar-chart" v="1.0">
+  <metadata>
+    <epicId>4</epicId>
+    <storyId>4.2</storyId>
+    <title>Top Applicants Bar Chart</title>
+    <status>ready-for-dev</status>
+    <generatedAt>2026-01-12</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/stories/4-2-top-applicants-bar-chart.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>PATLIB user</asA>
+    <iWant>to see top applicants as a horizontal bar chart</iWant>
+    <soThat>I can quickly identify leading innovators in my selection</soThat>
+    <tasks>
+      <task id="1">Implement top_applicants_bar() method with horizontal bars</task>
+      <task id="2">Handle name truncation (30 chars + "...")</task>
+      <task id="3">Add EPO styling and dynamic title</task>
+      <task id="4">Configure hover template with full name, counts, country</task>
+      <task id="5">Create Top 10/25 toggle dropdown with re-render callback</task>
+      <task id="6">Add to display_results() with empty data handling</task>
+      <task id="7">Validation with EP + Field 13</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <ac id="1">Horizontal bar chart with Y-axis applicant names, X-axis application count</ac>
+    <ac id="2">Bars ordered with largest at top (categoryorder='total ascending')</ac>
+    <ac id="3">Names truncated to 30 chars with "...", full name in hover</ac>
+    <ac id="4">Dynamic title: "Top {limit} Applicants: {country} - {tech_field_name}"</ac>
+    <ac id="5">Hover shows full name, application count, invention count, country</ac>
+    <ac id="6">Toggle dropdown allows switching between Top 10 and Top 25</ac>
+    <ac id="7">EPO Red (#C8102E) bar color, Arial font</ac>
+    <ac id="8">Empty DataFrame shows "No applicant data available" message</ac>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc path="docs/sprint-artifacts/tech-spec-epic-4.md" title="Epic 4 Tech Spec" section="AC2-AC3: Top Applicants">
+        Defines horizontal bar chart with name truncation, toggle widget, and hover template.
+      </doc>
+      <doc path="docs/architecture.md" title="Architecture" section="Visualization Pattern">
+        Contains top_applicants_bar() example with orientation='h' and categoryorder configuration.
+      </doc>
+      <doc path="docs/epics.md" title="Epics" section="Story 4.2: Top Applicants Bar Chart">
+        Story definition: horizontal bar chart, readable names, Top 10/25 toggle.
+      </doc>
+      <doc path="docs/PRD.md" title="PRD" section="FR32-35">
+        FR32: Top N applicants bar chart. FR33: Configure N (10/25). FR34: Show names and counts. FR35: Hover for details.
+      </doc>
+    </docs>
+
+    <code>
+      <file path="tip4patlibs_core.py" kind="module" symbol="ChartBuilder" lines="1717-1729" reason="Add top_applicants_bar() method after trend_line()">
+        Placeholder class. Story 4.1 adds foundation and trend_line(). This story adds top_applicants_bar().
+      </file>
+      <file path="tip4patlibs_core.py" kind="module" symbol="analysis_results['applicants']" lines="77" reason="DataFrame with applicant_name, application_count, invention_count, country">
+        Populated by PatstatQueries.get_top_applicants(). Used by this chart.
+      </file>
+      <file path="tip4patlibs_core.py" kind="class" symbol="PatstatQueries.get_top_applicants" lines="555-706" reason="Returns top applicants DataFrame with name, counts, country">
+        Query implementation complete. Uses SQL escape hatch for complex GROUP BY.
+      </file>
+      <file path="tip4patlibs_core.py" kind="function" symbol="display_results" reason="Add applicants chart section with toggle widget">
+        Created in Story 4.1. Add Output widget and Dropdown for limit toggle.
+      </file>
+    </code>
+
+    <dependencies>
+      <python>
+        <package name="plotly" version="TIP-provided">px.bar with orientation='h'</package>
+        <package name="ipywidgets" version="TIP-provided">Dropdown for Top 10/25 toggle, Output for re-render</package>
+      </python>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint source="ADR-001">All code in tip4patlibs_core.py module</constraint>
+    <constraint source="Tech Spec">German company names can be 50+ chars - truncate to 30</constraint>
+    <constraint source="Architecture">yaxis categoryorder='total ascending' for largest at top</constraint>
+    <constraint source="NFR4">Chart renders within 5 seconds</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface name="ChartBuilder.top_applicants_bar" kind="static method">
+      <signature>def top_applicants_bar(df: pd.DataFrame, state: AnalysisState, limit: int = 10) -> go.Figure</signature>
+      <path>tip4patlibs_core.py:ChartBuilder</path>
+    </interface>
+    <interface name="truncate_name" kind="helper function">
+      <signature>def truncate_name(name: str, max_length: int = 30) -> str</signature>
+      <path>tip4patlibs_core.py (new helper)</path>
+    </interface>
+    <interface name="limit_dropdown" kind="widget">
+      <signature>widgets.Dropdown(options=[('Top 10', 10), ('Top 25', 25)], value=10)</signature>
+      <path>display_results() function</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>Manual testing on TIP platform. Validate visual output and interactivity.</standards>
+    <locations>Manual validation in TIP_for_PATLIBs.ipynb Cell 6</locations>
+    <ideas>
+      <idea ac="1,2">Test with EP + Field 13, verify horizontal bars with largest at top</idea>
+      <idea ac="3">Verify long German company names (SIEMENS AG, ROBERT BOSCH GMBH) display correctly</idea>
+      <idea ac="4">Verify title shows "Top 10 Applicants: EP - Medical technology"</idea>
+      <idea ac="5">Hover over bar, verify full name and all counts shown</idea>
+      <idea ac="6">Switch toggle to Top 25, verify chart re-renders with more bars</idea>
+      <idea ac="7">Visual inspection of EPO Red bar color</idea>
+      <idea ac="8">Test with obscure selection returning no applicants</idea>
+    </ideas>
+  </tests>
+</story-context>

@@ -1,0 +1,157 @@
+<story-context id="bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>3</epicId>
+    <storyId>2</storyId>
+    <title>Trend Query (Applications Over Time)</title>
+    <status>drafted</status>
+    <generatedAt>2026-01-12</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/3-2-trend-query-applications-over-time.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>PATLIB user</asA>
+    <iWant>to see patent application counts by year</iWant>
+    <soThat>I can identify trends in innovation activity</soThat>
+    <tasks>
+      <task id="1" status="pending">Verify get_trend_data() implementation (AC: 1, 2, 7)
+        <subtask id="1.1">Confirm DataFrame returned has correct schema</subtask>
+        <subtask id="1.2">Verify year column is integer type</subtask>
+        <subtask id="1.3">Verify ordering by year ascending</subtask>
+        <subtask id="1.4">Test with valid AnalysisState inputs</subtask>
+      </task>
+      <task id="2" status="pending">Test Tech Field Mode (AC: 3)
+        <subtask id="2.1">Test with DE + Field 13 (Medical) + 2019-2023</subtask>
+        <subtask id="2.2">Verify tls230_appln_techn_field join works</subtask>
+        <subtask id="2.3">Verify techn_field_nr filter applied</subtask>
+        <subtask id="2.4">Check application counts are reasonable</subtask>
+      </task>
+      <task id="3" status="pending">Test IPC Mode (AC: 4)
+        <subtask id="3.1">Test with DE + IPC A61B + 2019-2023</subtask>
+        <subtask id="3.2">Verify tls209_appln_ipc join works</subtask>
+        <subtask id="3.3">Test with multiple IPC codes (A61B, A61C)</subtask>
+        <subtask id="3.4">Verify OR logic for multiple codes</subtask>
+      </task>
+      <task id="4" status="pending">Test Region Filter (AC: 5)
+        <subtask id="4.1">Test with DE + DE2 (Bayern) region</subtask>
+        <subtask id="4.2">Verify counts are lower than country-level</subtask>
+        <subtask id="4.3">Verify NUTS LIKE pattern matches correctly</subtask>
+      </task>
+      <task id="5" status="pending">Test SME Filter (AC: 6)
+        <subtask id="5.1">Enable SME filter on state</subtask>
+        <subtask id="5.2">Verify subquery executes correctly</subtask>
+        <subtask id="5.3">Compare counts with/without SME filter</subtask>
+      </task>
+      <task id="6" status="pending">Performance Validation (AC: 8)
+        <subtask id="6.1">Time query with 5-year span</subtask>
+        <subtask id="6.2">Time query with 10-year span</subtask>
+        <subtask id="6.3">Ensure under 60 second completion for 5-year</subtask>
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="AC1" title="Trend Query Execution">
+      Query executes against PATSTAT and returns pandas DataFrame
+    </criterion>
+    <criterion id="AC2" title="DataFrame Schema">
+      Returns columns: year (int), application_count (int), invention_count (int), ordered by year
+    </criterion>
+    <criterion id="AC3" title="Tech Field Mode Join">
+      Uses tls230_appln_techn_field join with techn_field_nr filter
+    </criterion>
+    <criterion id="AC4" title="IPC Mode Join">
+      Uses tls209_appln_ipc join with ipc_class_symbol LIKE filter
+    </criterion>
+    <criterion id="AC5" title="Region Filter">
+      Joins tls206_person and filters by nuts LIKE pattern
+    </criterion>
+    <criterion id="AC6" title="SME Filter">
+      Uses subquery for applicants with less than 100 applications
+    </criterion>
+    <criterion id="AC7" title="Aggregation Logic">
+      Counts distinct appln_id and docdb_family_id, grouped by year
+    </criterion>
+    <criterion id="AC8" title="Performance Target">
+      Query completes within 60 seconds for 5-year range
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-3.md</path>
+        <title>Epic 3 Technical Specification</title>
+        <section>AC2: Trend Data Query</section>
+        <snippet>get_trend_data(state) returns DataFrame with year, application_count, invention_count</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 3.2: Trend Query</section>
+        <snippet>Query joins tls201, tls230/tls209, tls207, tls206. GROUP BY year.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/3-1-patstatqueries-class-base-query.md</path>
+        <title>Story 3.1 - Base Query</title>
+        <section>Implementation</section>
+        <snippet>get_trend_data() already implemented with tech field and IPC modes</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>tip4patlibs_core.py</path>
+        <kind>method</kind>
+        <symbol>PatstatQueries.get_trend_data</symbol>
+        <lines>407-549</lines>
+        <reason>Main implementation to validate. Already complete from Story 3.1.</reason>
+      </file>
+      <file>
+        <path>tip4patlibs_core.py</path>
+        <kind>class</kind>
+        <symbol>AnalysisState</symbol>
+        <lines>255-343</lines>
+        <reason>State class with all filter parameters passed to query.</reason>
+      </file>
+    </code>
+    <dependencies>
+      <python>
+        <package name="pandas" used="true">DataFrame for query results</package>
+        <package name="sqlalchemy" used="true">ORM query building</package>
+        <package name="epo.tipdata.patstat" used="true">PATSTAT ORM models</package>
+      </python>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint source="ADR-002">ORM primary for trend query (straightforward aggregation)</constraint>
+    <constraint source="ADR-008">Use appln_auth for country filtering</constraint>
+    <constraint source="NFR2">Query must complete within 60 seconds for 5-year spans</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>PatstatQueries.get_trend_data</name>
+      <kind>method</kind>
+      <signature>def get_trend_data(self, state: AnalysisState, debug: bool = False) -> pd.DataFrame</signature>
+      <path>tip4patlibs_core.py:407</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>Manual validation on TIP platform. Verify DataFrame schema and data sanity.</standards>
+    <locations>
+      <location>TIP JupyterLab environment</location>
+      <location>Validation notebook cell with debug mode</location>
+    </locations>
+    <ideas>
+      <idea ac="AC1">Run query with valid state, verify DataFrame returned</idea>
+      <idea ac="AC2">Check df.columns == ['year', 'application_count', 'invention_count']</idea>
+      <idea ac="AC3">Use debug=True to verify tls230 join in SQL</idea>
+      <idea ac="AC4">Switch to IPC mode, verify tls209 join in SQL</idea>
+      <idea ac="AC5">Add region filter, verify reduced counts</idea>
+      <idea ac="AC6">Enable SME filter, verify subquery in SQL</idea>
+      <idea ac="AC8">Time query execution with time.time()</idea>
+    </ideas>
+  </tests>
+</story-context>
