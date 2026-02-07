@@ -44,6 +44,9 @@ ENV/
 .env
 .env.local
 
+# MCP local config
+.mcp.json
+
 # Jupyter checkpoints
 .ipynb_checkpoints/
 */.ipynb_checkpoints/
