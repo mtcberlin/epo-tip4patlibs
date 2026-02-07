@@ -1,5 +1,9 @@
 {
   "table_name": "tls224_appln_cpc",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Contains Cooperative Patent Classification (CPC) codes assigned to patent applications, providing detailed technical categorization.",
   "columns": [
     {

@@ -1,5 +1,9 @@
 {
   "table_name": "tls210_appln_n_cls",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Contains national classification codes assigned to patent applications by various patent offices using country-specific classification systems.",
   "columns": [
     {

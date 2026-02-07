@@ -1,5 +1,9 @@
 {
   "table_name": "tls801_country",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Reference table containing country codes and names with organizational membership information (EU, EPO, OECD).",
   "columns": [
     {

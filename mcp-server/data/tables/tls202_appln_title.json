@@ -1,5 +1,9 @@
 {
   "table_name": "tls202_appln_title",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Contains patent application titles in various languages, providing the invention name as it appears in the application.",
   "columns": [
     {

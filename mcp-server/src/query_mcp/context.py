@@ -35,20 +35,28 @@ class ContextStore:
 
         logger.info(f"Loaded {len(self._table_cache)} tables from {self.tables_dir}")
 
-    def list_tables(self) -> list[dict]:
+    def list_tables(self, platform: str | None = None) -> list[dict]:
         """Return all table names with descriptions.
 
+        Args:
+            platform: If set, filter to tables available on this platform
+                      (e.g., 'bigquery', 'tip'). None returns all tables.
+
         Returns:
-            List of dicts with 'table_name' and 'description' keys.
+            List of dicts with 'table_name', 'description', and 'availability' keys.
         """
         self._ensure_loaded()
-        return [
-            {
+        results = []
+        for name, data in sorted(self._table_cache.items()):
+            availability = data.get("availability", ["bigquery", "tip"])
+            if platform and platform not in availability:
+                continue
+            results.append({
                 "table_name": name,
-                "description": data.get("description", "")
-            }
-            for name, data in sorted(self._table_cache.items())
-        ]
+                "description": data.get("description", ""),
+                "availability": availability,
+            })
+        return results
 
     def get_table_schema(self, table_name: str) -> dict | None:
         """Get full schema details for a specific table.

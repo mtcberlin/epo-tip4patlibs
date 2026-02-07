@@ -1,5 +1,9 @@
 {
   "table_name": "tls230_appln_techn_field",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Assigns patent applications to broad technical fields based on IPC codes, enabling high-level technology analysis.",
   "columns": [
     {

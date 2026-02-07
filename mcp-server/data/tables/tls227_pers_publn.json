@@ -1,5 +1,9 @@
 {
   "table_name": "tls227_pers_publn",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Links persons (applicants and inventors) to patent publications, specifying their sequence numbers and roles for each publication.",
   "columns": [
     {

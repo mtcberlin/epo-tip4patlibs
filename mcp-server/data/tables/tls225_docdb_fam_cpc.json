@@ -1,5 +1,9 @@
 {
   "table_name": "tls225_docdb_fam_cpc",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Contains CPC classification codes assigned at the DOCDB patent family level, with versioning and status information.",
   "columns": [
     {

@@ -1,5 +1,9 @@
 {
   "table_name": "tls214_npl_publn",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Contains non-patent literature (NPL) citations such as scientific articles, books, and technical documents referenced in patent applications.",
   "columns": [
     {

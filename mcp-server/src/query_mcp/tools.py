@@ -13,10 +13,16 @@ def get_tools() -> list[Tool]:
     return [
         Tool(
             name="list_tables",
-            description="List all available database tables with their descriptions. Use this first to understand what data is available.",
+            description="List all available database tables with their descriptions. Use this first to understand what data is available. Optionally filter by platform ('bigquery' or 'tip').",
             inputSchema={
                 "type": "object",
-                "properties": {},
+                "properties": {
+                    "platform": {
+                        "type": "string",
+                        "description": "Filter tables by platform availability: 'bigquery' (BigQuery direct) or 'tip' (Technology Intelligence Platform). Omit to list all tables.",
+                        "enum": ["bigquery", "tip"]
+                    }
+                },
                 "required": []
             }
         ),
@@ -65,17 +71,20 @@ def get_tools() -> list[Tool]:
     ]
 
 
-def handle_list_tables(ctx: ContextStore) -> list[TextContent]:
+def handle_list_tables(ctx: ContextStore, platform: str | None = None) -> list[TextContent]:
     """Handle list_tables tool call."""
-    tables = ctx.list_tables()
+    tables = ctx.list_tables(platform=platform)
 
     if not tables:
-        return [TextContent(type="text", text="No tables found.")]
+        filter_msg = f" for platform '{platform}'" if platform else ""
+        return [TextContent(type="text", text=f"No tables found{filter_msg}.")]
 
     # Format as readable list
-    lines = [f"**Available Tables ({len(tables)}):**\n"]
+    filter_label = f" (platform: {platform})" if platform else ""
+    lines = [f"**Available Tables ({len(tables)}){filter_label}:**\n"]
     for t in tables:
-        lines.append(f"- **{t['table_name']}**: {t['description']}")
+        avail = ", ".join(t["availability"])
+        lines.append(f"- **{t['table_name']}** [{avail}]: {t['description']}")
 
     return [TextContent(type="text", text="\n".join(lines))]
 
@@ -91,8 +100,10 @@ def handle_get_table_schema(table_name: str, ctx: ContextStore) -> list[TextCont
         )]
 
     # Format schema as readable output
+    availability = schema.get("availability", ["bigquery", "tip"])
+    avail_str = ", ".join(availability)
     lines = [
-        f"**Table: {schema['table_name']}**",
+        f"**Table: {schema['table_name']}** [{avail_str}]",
         f"_{schema.get('description', 'No description')}_\n",
         "**Columns:**"
     ]

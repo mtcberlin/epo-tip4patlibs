@@ -1,5 +1,9 @@
 {
   "table_name": "tls803_legal_event_code",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Reference table mapping authority-specific legal event codes to standardized descriptions and categories.",
   "columns": [
     {

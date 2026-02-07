@@ -1,5 +1,9 @@
 {
   "table_name": "tls904_nuts",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Reference table containing NUTS (Nomenclature of Territorial Units for Statistics) regional codes and names for European geographic analysis.",
   "columns": [
     {

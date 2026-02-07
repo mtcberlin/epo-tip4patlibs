@@ -1,5 +1,8 @@
 {
   "table_name": "tls_ipc_hierarchy",
+  "availability": [
+    "bigquery"
+  ],
   "description": "Complete IPC (International Patent Classification) hierarchy table with 79,833 entries spanning all levels from sections (A-H) down to the deepest subgroups. Provides human-readable titles, parent-child relationships, and patent count statistics for each classification symbol. Use this to look up IPC codes, browse the classification tree, or resolve symbols to titles.",
   "columns": [
     {

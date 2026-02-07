@@ -1,5 +1,9 @@
 {
   "table_name": "tls204_appln_prior",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Links patent applications to their priority applications, establishing priority claims and patent family relationships.",
   "columns": [
     {

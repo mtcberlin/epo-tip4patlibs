@@ -1,5 +1,9 @@
 {
   "table_name": "tls215_citn_categ",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Provides categorization of patent citations, indicating their relevance and importance in the examination process.",
   "columns": [
     {

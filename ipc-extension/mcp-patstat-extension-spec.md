@@ -15,6 +15,35 @@ We want to add two categories of functionality:
 
 ---
 
+## Platform Availability
+
+PATSTAT tables are available on two platforms with different table sets:
+
+- **BigQuery direct** (`patstat-mtc.patstat`) — All 29 tables including custom extensions
+- **TIP** (Technology Intelligence Platform) — The 28 standard EPO PATSTAT tables only
+
+The custom `tls_ipc_hierarchy` table exists only on BigQuery direct. It is NOT available on TIP's PATSTAT instance.
+
+### Implementation
+
+Each table JSON in `data/tables/` carries an `"availability"` field:
+
+```json
+// Standard PATSTAT table (28 tables)
+{ "availability": ["bigquery", "tip"] }
+
+// Custom extension table (tls_ipc_hierarchy)
+{ "availability": ["bigquery"] }
+```
+
+The `list_tables` tool accepts an optional `platform` parameter (`"bigquery"` or `"tip"`) to filter tables by availability. When omitted, all tables are returned with their availability tags shown.
+
+The `get_table_schema` response includes the availability info so the LLM always knows which platform a table is usable on.
+
+**Impact on new tools:** Tools that query `tls_ipc_hierarchy` (e.g., `search_ipc_by_technology`, `resolve_ipc`) are inherently BigQuery-only. Their tool descriptions should state this clearly.
+
+---
+
 ## Tool 1: `run_query`
 
 ### Purpose

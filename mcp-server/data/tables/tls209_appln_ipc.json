@@ -1,5 +1,9 @@
 {
   "table_name": "tls209_appln_ipc",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Contains International Patent Classification (IPC) codes assigned to patent applications, categorizing inventions by technical field.",
   "columns": [
     {

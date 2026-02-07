@@ -1,5 +1,9 @@
 {
   "table_name": "tls229_appln_nace2",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Links patent applications to NACE Rev. 2 industry classification codes, indicating relevant economic sectors and industries.",
   "columns": [
     {

@@ -1,5 +1,9 @@
 {
   "table_name": "tls226_person_orig",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Stores original person data (applicants and inventors) as submitted to patent offices, including unharmonized names and addresses before standardization processing.",
   "columns": [
     {

@@ -1,5 +1,9 @@
 {
   "table_name": "tls902_ipc_nace2",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Concordance table mapping IPC patent classification codes to NACE Rev. 2 industry classification codes with conditional logic.",
   "columns": [
     {

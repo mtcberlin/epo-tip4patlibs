@@ -1,5 +1,9 @@
 {
   "table_name": "tls216_appln_contn",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Tracks continuation relationships between patent applications, including divisional, continuation, and continuation-in-part applications.",
   "columns": [
     {
