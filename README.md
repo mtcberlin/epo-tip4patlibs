@@ -1,55 +1,68 @@
 # TIP for PATLIBs
 
-Patent Analysis Tool for PATLIB Staff on EPO's Technology Intelligence Platform.
+Patent Analysis Training Materials for PATLIB Staff on EPO's Technology Intelligence Platform.
 
-## Overview
+## Executive Summary
 
-TIP for PATLIBs is a ready-to-use Jupyter notebook application that enables PATLIB staff to perform sophisticated patent analysis without programming skills. It provides no-code UI controls (dropdowns, buttons, sliders) that make TIP's powerful PATSTAT backend accessible to entry-level users.
+**TIP for PATLIBs Phase 2** delivers four production-ready Jupyter notebooks and educational materials for EPO Academy's PATLIB training program as part of the PATLIB2028 roadmap.
+
+**Budget:** 14,000 EUR
+
+### Deliverables
+
+| # | Notebook | Description |
+|---|----------|-------------|
+| 1 | **Query Library** | 42 parameterized PATSTAT queries with selector UI |
+| 2 | **Interactive Demo** | Guided TIP walkthrough for training sessions |
+| 3 | **AI Query Builder** | Natural language → PATSTAT SQL generation |
+| 4 | **University Analysis** | European university patent portfolio analysis |
+
+**Plus:** Handbook, quick reference guides, 20 hours training delivery, Streamlit app maintenance
+
+### Target Users
+
+- **PATLIB Staff (Entry-Level):** Run queries without coding
+- **PATLIB Staff (Multiplicators):** Extend and share customizations
+- **University PATLIB Staff:** Analyze university innovation landscapes
+
+### Key Differentiators
+
+- **Learn by doing:** Notebooks are useful from first cell execution
+- **TIP-native:** Built for the platform PATLIBs already have access to
+- **Transparent code:** Users see Python/SQL but interact via UI controls
+- **Dual-purpose:** Training material AND practical tool
+
+## Project Classification
+
+| Attribute | Value |
+|-----------|-------|
+| Project Type | Jupyter notebook training toolkit |
+| Domain | Patent Information (Institutional) |
+| Complexity | Medium |
+| Context | Brownfield (existing notebooks to refactor) |
 
 ## Quick Start
 
-1. Open `TIP_for_PATLIBs.ipynb` in JupyterLab
+1. Open the desired notebook in TIP's JupyterLab environment
 2. Run the first cell (marked "Run this cell first!")
 3. Follow the on-screen instructions
 
-## File Structure
+## Repository Structure
 
 ```
-tip4patlibs/
-├── TIP_for_PATLIBs.ipynb      # User-facing notebook
-├── tip4patlibs_core.py        # Core logic module (168 LOC)
-└── README.md                  # This file
-```
-
-## Module Structure
-
-The `tip4patlibs_core.py` module contains:
-
-| Component | Purpose | Status |
-|-----------|---------|--------|
-| `init_patstat()` | Initialize PATSTAT connection | Implemented |
-| `get_db()` | Get active database session | Implemented |
-| `ReferenceData` | Cached dropdown options (countries, tech fields, sectors) | Implemented |
-| `AnalysisState` | State management for user selections | Implemented |
-| `PatstatQueries` | PATSTAT query builder | Placeholder |
-| `WidgetFactory` | UI component factories | Placeholder |
-| `ChartBuilder` | Plotly visualization builders | Placeholder |
-| `Exporter` | CSV/PNG export utilities | Placeholder |
-
-## Code Organization
-
-**Current LOC:** 339 lines
-
-**Split Threshold:** If the module exceeds 500 LOC, it will be split into separate files under a `lib/` folder:
-
-```
-lib/
-├── __init__.py
-├── state.py          # AnalysisState class
-├── queries.py        # PATSTAT query builders
-├── widgets.py        # UI components
-├── charts.py         # Plotly visualizations
-└── export.py         # CSV/PNG export
+epo-tip4patlibs-bmad/
+├── _bmad-output/
+│   └── planning-artifacts/
+│       ├── product-brief-*.md      # Product Brief
+│       └── prd.md                  # Product Requirements Document
+├── context/
+│   ├── _bmadv4_docs/               # Phase 1 artifacts (reference)
+│   ├── index.md                    # Documentation index
+│   ├── project-overview.md         # Architecture overview
+│   └── *.md                        # Additional context docs
+├── TIP_for_PATLIBs.ipynb           # Original notebook (Phase 1)
+├── tip4patlibs_core.py             # Core logic module
+└── README.md                       # This file
 ```
 
 ## MCP Server
@@ -60,11 +73,19 @@ See [mcp-server/README.md](mcp-server/README.md) for setup and usage instruction
 
 ## Development
 
-This project follows the BMAD Method for development. See `docs/` folder for:
-- PRD (Product Requirements Document)
-- Architecture decisions
-- Epic and story breakdowns
-- Sprint status tracking
+This project follows the BMAD Method for development.
+
+**Planning Artifacts:**
+- Product Brief: `_bmad-output/planning-artifacts/product-brief-*.md`
+- PRD: `_bmad-output/planning-artifacts/prd.md`
+
+**Context Documentation:**
+- See `context/index.md` for full documentation index
+
+## Related Resources
+
+- **Streamlit App:** [patstat.streamlit.app](https://patstat.streamlit.app/) (honeypot/demo)
+- **EPO TIP:** Technology Intelligence Platform (requires EPO access)
 
 ## License
 
