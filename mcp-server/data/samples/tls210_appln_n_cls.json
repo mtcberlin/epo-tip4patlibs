@@ -1,0 +1,50 @@
+{
+  "table_name": "tls210_appln_n_cls",
+  "columns": [
+    "appln_id",
+    "nat_class_symbol"
+  ],
+  "rows": [
+    {
+      "appln_id": "21853879",
+      "nat_class_symbol": "H1N N382 PY"
+    },
+    {
+      "appln_id": "275241775",
+      "nat_class_symbol": "21F 83 03"
+    },
+    {
+      "appln_id": "22638397",
+      "nat_class_symbol": "F2D DB141 D(AQ"
+    },
+    {
+      "appln_id": "20946827",
+      "nat_class_symbol": "B8P PE2J PE2J"
+    },
+    {
+      "appln_id": "796504",
+      "nat_class_symbol": "2/02"
+    },
+    {
+      "appln_id": "22460653",
+      "nat_class_symbol": "C2C C668 BP BP"
+    },
+    {
+      "appln_id": "22209656",
+      "nat_class_symbol": "C5G G191 AB"
+    },
+    {
+      "appln_id": "22593348",
+      "nat_class_symbol": "B5K K3A3 K3Z"
+    },
+    {
+      "appln_id": "22733543",
+      "nat_class_symbol": "C2C CAB KR S"
+    },
+    {
+      "appln_id": "6405480",
+      "nat_class_symbol": "120E"
+    }
+  ],
+  "row_count": 10
+}

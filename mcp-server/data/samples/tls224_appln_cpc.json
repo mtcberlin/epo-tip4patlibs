@@ -1,0 +1,50 @@
+{
+  "table_name": "tls224_appln_cpc",
+  "columns": [
+    "appln_id",
+    "cpc_class_symbol"
+  ],
+  "rows": [
+    {
+      "appln_id": "10393749",
+      "cpc_class_symbol": "B22C  17/00"
+    },
+    {
+      "appln_id": "54955608",
+      "cpc_class_symbol": "B01J   2/006"
+    },
+    {
+      "appln_id": "550282181",
+      "cpc_class_symbol": "B65G  11/026"
+    },
+    {
+      "appln_id": "540079395",
+      "cpc_class_symbol": "H04L  43/50"
+    },
+    {
+      "appln_id": "543651091",
+      "cpc_class_symbol": "B02C   7/13"
+    },
+    {
+      "appln_id": "494152126",
+      "cpc_class_symbol": "B64C2003/148"
+    },
+    {
+      "appln_id": "552356216",
+      "cpc_class_symbol": "H04N  23/60"
+    },
+    {
+      "appln_id": "56434355",
+      "cpc_class_symbol": "C08G  59/621"
+    },
+    {
+      "appln_id": "7558573",
+      "cpc_class_symbol": "G01L  19/0084"
+    },
+    {
+      "appln_id": "416321412",
+      "cpc_class_symbol": "B60W2552/30"
+    }
+  ],
+  "row_count": 10
+}

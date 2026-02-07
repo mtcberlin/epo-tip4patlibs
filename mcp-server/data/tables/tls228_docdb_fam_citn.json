@@ -1,0 +1,16 @@
+{
+  "table_name": "tls228_docdb_fam_citn",
+  "description": "Contains citations between DOCDB patent families, aggregating citations at the family level rather than individual publications.",
+  "columns": [
+    {
+      "name": "cited_docdb_family_id",
+      "type": "INT64",
+      "description": "Foreign key referencing the cited DOCDB patent family."
+    },
+    {
+      "name": "docdb_family_id",
+      "type": "INT64",
+      "description": "Foreign key referencing the citing DOCDB patent family."
+    }
+  ]
+}

@@ -75,3 +75,26 @@ development_status:
   5-2-png-export: review  # 2026-01-12 - Implementation complete
   5-3-zero-results-data-quality-handling: review  # 2026-01-12 - Implementation complete
   epic-5-retrospective: optional
+
+  # ============================================
+  # PHASE 2 - Query Library & MCP Server
+  # ============================================
+
+  # Epic 6-7: Query Library (Informal Work - Exists Outside Epic Process)
+  # Status: prototype-exists (2026-01-23)
+  # Artifact: context/QueryLib_for_PATLIBs.ipynb (13 validated BigQuery queries)
+  # Note: Work completed informally, not via epic/story workflow
+  # Revalidate when: MCP complete - assess if formalization needed
+  # Revalidate criteria:
+  #   - Need parameterized UI for end users?
+  #   - Need proper documentation/export?
+  epic-6: prototype-exists  # Query Library Core
+  epic-7: prototype-exists  # Query Library Polish
+
+  # Epic 8: MCP Server Preparation
+  # Approach: Build → Discover → Refine (top-down, discovery-driven)
+  epic-8: contexted  # tech-spec created 2026-01-23
+  8-1-mcp-server-scaffold: review                 # 2026-01-23 - Ready for review
+  8-2-raw-context-testing: backlog                # Load existing context, test query generation, discover gaps
+  8-3-querylib-integration: backlog               # Extract QueryLib examples in LLM-useful format
+  8-4-context-refinement-config: backlog          # Refine context structure, make configurable for additions

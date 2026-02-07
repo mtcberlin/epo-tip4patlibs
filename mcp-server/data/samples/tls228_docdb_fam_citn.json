@@ -1,0 +1,50 @@
+{
+  "table_name": "tls228_docdb_fam_citn",
+  "columns": [
+    "docdb_family_id",
+    "cited_docdb_family_id"
+  ],
+  "rows": [
+    {
+      "docdb_family_id": "25199480",
+      "cited_docdb_family_id": "9393646"
+    },
+    {
+      "docdb_family_id": "53271063",
+      "cited_docdb_family_id": "22803936"
+    },
+    {
+      "docdb_family_id": "74660883",
+      "cited_docdb_family_id": "59736025"
+    },
+    {
+      "docdb_family_id": "89742101",
+      "cited_docdb_family_id": "77362880"
+    },
+    {
+      "docdb_family_id": "83453027",
+      "cited_docdb_family_id": "72050681"
+    },
+    {
+      "docdb_family_id": "82972130",
+      "cited_docdb_family_id": "67164268"
+    },
+    {
+      "docdb_family_id": "57400034",
+      "cited_docdb_family_id": "43480779"
+    },
+    {
+      "docdb_family_id": "87866367",
+      "cited_docdb_family_id": "52520390"
+    },
+    {
+      "docdb_family_id": "69949533",
+      "cited_docdb_family_id": "40624580"
+    },
+    {
+      "docdb_family_id": "48792371",
+      "cited_docdb_family_id": "39711255"
+    }
+  ],
+  "row_count": 10
+}

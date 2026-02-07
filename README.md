@@ -65,6 +65,12 @@ epo-tip4patlibs-bmad/
 └── README.md                       # This file
 ```
 
+## MCP Server
+
+The `mcp-server/` folder contains a Model Context Protocol server for AI-powered SQL query generation.
+
+See [mcp-server/README.md](mcp-server/README.md) for setup and usage instructions.
+
 ## Development
 
 This project follows the BMAD Method for development.
