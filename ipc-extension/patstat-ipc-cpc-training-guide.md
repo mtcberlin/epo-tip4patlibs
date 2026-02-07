@@ -21,14 +21,16 @@ PATSTAT stores classification data across several tables. Understanding which ta
 
 ## 2. Understanding Classification Code Formatting
 
-**Critical:** Classification symbols in PATSTAT use **fixed-width formatting with internal spaces**.
+**Critical:** Classification symbols in PATSTAT use a **fixed-width format**. The group number is right-justified in a 4-character field between the subclass and the `/`. The spaces are pure padding — they have no classification meaning.
 
 ```
-IPC example:  "A23L   7/117"    (not "A23L7/117")
-CPC example:  "B22C  17/00"     (not "B22C17/00")
+"A23L   7/117"   ← group 7    → 3 padding spaces  (4-char field: "   7")
+"H04L  29/06"    ← group 29   → 2 padding spaces  (4-char field: "  29")
+"A43D 100/02"    ← group 100  → 1 padding space   (4-char field: " 100")
+"F15B2211/50518" ← group 2211 → 0 padding spaces  (4-char field: "2211")
 ```
 
-This means exact-match queries will fail if you don't account for the spacing. Always use `LIKE` patterns or `TRIM`/`REPLACE` functions.
+This means exact-match queries will fail if you don't account for the spacing. Always use `LIKE` patterns or `REPLACE` functions.
 
 ---
 
