@@ -84,7 +84,7 @@ async def list_tools():
 @server.call_tool()
 async def call_tool(name: str, arguments: dict) -> list[TextContent]:
     if name == "list_tables":
-        return handle_list_tables(ctx)
+        return handle_list_tables(ctx, platform=arguments.get("platform"))
     elif name == "get_table_schema":
         return handle_get_table_schema(arguments.get("table_name", ""), ctx)
     elif name == "search_tables":

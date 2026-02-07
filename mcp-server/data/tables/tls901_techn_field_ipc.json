@@ -1,5 +1,9 @@
 {
   "table_name": "tls901_techn_field_ipc",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Reference table mapping IPC classification codes to broader technical fields and sectors for technology analysis.",
   "columns": [
     {

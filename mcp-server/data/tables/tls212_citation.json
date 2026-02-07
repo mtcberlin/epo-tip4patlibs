@@ -1,5 +1,9 @@
 {
   "table_name": "tls212_citation",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Contains all patent and non-patent literature citations made in patent publications, indicating prior art and technological relationships.",
   "columns": [
     {

@@ -1,5 +1,9 @@
 {
   "table_name": "tls205_tech_rel",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Links patent applications to technologically related applications, identifying technical relationships beyond simple citations.",
   "columns": [
     {

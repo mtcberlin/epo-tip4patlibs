@@ -1,5 +1,9 @@
 {
   "table_name": "tls231_inpadoc_legal_event",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Contains legal status events throughout a patent's lifecycle, including grants, lapses, transfers, and fee payments from INPADOC legal status data.",
   "columns": [
     {

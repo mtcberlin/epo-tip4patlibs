@@ -1,5 +1,9 @@
 {
   "table_name": "tls201_appln",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Core table containing patent application records with filing details, family information, and key metrics like grant status and citation counts.",
   "columns": [
     {

@@ -1,0 +1,64 @@
+{
+  "table_name": "tls_ipc_hierarchy",
+  "availability": [
+    "bigquery"
+  ],
+  "description": "Complete IPC (International Patent Classification) hierarchy table with 79,833 entries spanning all levels from sections (A-H) down to the deepest subgroups. Provides human-readable titles, parent-child relationships, and patent count statistics for each classification symbol. Use this to look up IPC codes, browse the classification tree, or resolve symbols to titles.",
+  "columns": [
+    {
+      "name": "symbol",
+      "type": "STRING",
+      "description": "Full IPC symbol in canonical 14-character format (e.g., 'A01B0007000000'). Primary key."
+    },
+    {
+      "name": "symbol_short",
+      "type": "STRING",
+      "description": "Human-readable short form of the IPC symbol (e.g., 'A01B7/00')."
+    },
+    {
+      "name": "symbol_patstat",
+      "type": "STRING",
+      "description": "IPC symbol in PATSTAT spacing format as used in tls209_appln_ipc.ipc_class_symbol (e.g., 'A01B   7/00'). NULL for sections."
+    },
+    {
+      "name": "kind",
+      "type": "STRING",
+      "description": "Classification level kind: 's'=section, 'c'=class, 'u'=subclass, 'm'=main group, '1'-'9'=subgroup depth levels."
+    },
+    {
+      "name": "level",
+      "type": "INT64",
+      "description": "Numeric hierarchy level: 2=section, 3=class, 4=subclass, 5=main group, 6-14=subgroup depths."
+    },
+    {
+      "name": "parent",
+      "type": "STRING",
+      "description": "Symbol of the parent node in the hierarchy (canonical format). 'IPC' for top-level sections."
+    },
+    {
+      "name": "parent_short",
+      "type": "STRING",
+      "description": "Human-readable short form of the parent symbol."
+    },
+    {
+      "name": "title_en",
+      "type": "STRING",
+      "description": "English title of this classification entry (short form, last hierarchy level only)."
+    },
+    {
+      "name": "title_full",
+      "type": "STRING",
+      "description": "Full English title including parent context joined by ' > ' separators."
+    },
+    {
+      "name": "size",
+      "type": "INT64",
+      "description": "Number of PATSTAT patent applications classified under this symbol."
+    },
+    {
+      "name": "size_percent",
+      "type": "FLOAT64",
+      "description": "Percentage of total PATSTAT applications classified under this symbol."
+    }
+  ]
+}

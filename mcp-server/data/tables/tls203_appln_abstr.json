@@ -1,5 +1,9 @@
 {
   "table_name": "tls203_appln_abstr",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Contains patent application abstracts in various languages, providing technical summaries of the inventions.",
   "columns": [
     {

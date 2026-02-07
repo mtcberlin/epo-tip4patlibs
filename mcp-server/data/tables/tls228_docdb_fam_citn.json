@@ -1,5 +1,9 @@
 {
   "table_name": "tls228_docdb_fam_citn",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Contains citations between DOCDB patent families, aggregating citations at the family level rather than individual publications.",
   "columns": [
     {

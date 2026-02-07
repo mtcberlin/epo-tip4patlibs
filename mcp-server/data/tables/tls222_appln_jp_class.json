@@ -1,5 +1,9 @@
 {
   "table_name": "tls222_appln_jp_class",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Contains Japanese patent classification codes (FI and F-terms) assigned to patent applications filed in Japan.",
   "columns": [
     {

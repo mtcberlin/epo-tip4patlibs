@@ -1,5 +1,9 @@
 {
   "table_name": "tls206_person",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Harmonized person data table containing standardized and consolidated information about applicants and inventors across all patent applications.",
   "columns": [
     {

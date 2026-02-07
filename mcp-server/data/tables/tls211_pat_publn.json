@@ -1,5 +1,9 @@
 {
   "table_name": "tls211_pat_publn",
+  "availability": [
+    "bigquery",
+    "tip"
+  ],
   "description": "Contains patent publication records representing published versions of patent applications, including publication dates and document details.",
   "columns": [
     {
