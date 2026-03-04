@@ -1,0 +1,7 @@
+Sector,Applicant_Count,Total_Families,Avg_Families,Median_Families,Max_Families,Earliest_Year,Latest_Year
+Company,6922,15487,2.237359144755851,1.0,202,2000,2023
+Individual,4541,6342,1.3966086765029728,1.0,52,2000,2023
+University,825,3588,4.349090909090909,2.0,99,2000,2023
+Government/Non-Profit,316,742,2.348101265822785,1.0,47,2000,2023
+Research Institution,172,742,4.313953488372093,1.0,308,2002,2023
+Healthcare/Hospital,73,102,1.3972602739726028,1.0,3,2020,2023
