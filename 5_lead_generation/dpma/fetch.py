@@ -106,6 +106,20 @@ class DpmaClient:
         """Convenience: search by applicant/proprietor name (``INH`` field)."""
         return self.search(f"INH={name}")
 
+    def search_aktenzeichen(self, appln_nr: str) -> list[Hit]:
+        """Look up a register record by application number (``AKZ`` field).
+
+        Accepts a PATSTAT-style DE application number directly — the 12-digit
+        Aktenzeichen base *without* the check digit, e.g. ``102019213199``. The
+        single hit carries the applicant name + PLZ (parse with
+        :func:`register_parser.parse_hit_applicant`) and the
+        ``leading-registered-number`` (base + computed check digit) for an
+        optional :meth:`get_register_info`. This is the bridge from PATSTAT
+        ``appln_nr`` to the DPMA register — ``getRegisterInfo`` rejects the bare
+        12-digit number, but ``AKZ`` search accepts it.
+        """
+        return self.search(f"AKZ={appln_nr}")
+
     def get_register_info(self, aktenzeichen: str) -> bytes:
         """Fetch the full ST.36 register record (feed to ``parse_register_xml``)."""
         return self._get(f"getRegisterInfo/{urllib.parse.quote(str(aktenzeichen), safe='')}")

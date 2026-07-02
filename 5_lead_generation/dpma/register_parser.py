@@ -44,12 +44,49 @@ __all__ = [
     "parse_register_xml",
     "iter_registrations_from_zip",
     "applicant_rows",
+    "parse_hit_applicant",
     "split_address1",
     "format_ipc",
 ]
 
 # PLZ = the leading 5 digits of address-1 (rest is the city). DE postcodes only.
 _PLZ_CITY = re.compile(r"^\s*(\d{5})\s+(.*\S)\s*$")
+# One applicant line from a search hit list: "Name, PLZ City, DE".
+_HIT_COUNTRY = re.compile(r",\s*([A-Za-z]{2})\s*$")
+_HIT_DE_PLZ = re.compile(r",\s*(\d{5})\s+(.+?)\s*,\s*DE\s*$")
+
+
+def parse_hit_applicant(text: Optional[str]) -> dict:
+    """Parse one ``<applicant>`` line from a search hit into name/plz/city/country.
+
+    Hit lines read ``"Name, PLZ Ort, DE"`` (companies may carry commas in the
+    name, e.g. ``"… GmbH & Co. KG, 12345 Ort, DE"``). PLZ is only returned for
+    **German** applicants (``country == 'DE'``) — a foreign 5-digit postcode
+    (e.g. French ``67000``) must not be mis-mapped through the DE crosswalk.
+    Foreign lines return ``plz=None`` and a best-effort name/city.
+    """
+    out = {"name": None, "plz": None, "city": None, "country": None}
+    if not text:
+        return out
+    s = text.strip()
+    cm = _HIT_COUNTRY.search(s)
+    out["country"] = cm.group(1).upper() if cm else None
+    if out["country"] == "DE":
+        m = _HIT_DE_PLZ.search(s)
+        if m:
+            out["plz"] = m.group(1)
+            out["city"] = m.group(2).strip()
+            out["name"] = s[: m.start()].strip().rstrip(",").strip() or None
+            return out
+    # Foreign, or DE without a parseable PLZ: name = all but the last comma-part.
+    body = s[: cm.start()].strip() if cm else s
+    parts = [p.strip() for p in body.split(",")]
+    if len(parts) >= 2:
+        out["city"] = parts[-1] or None
+        out["name"] = ", ".join(parts[:-1]).strip() or None
+    else:
+        out["name"] = body or None
+    return out
 
 
 def split_address1(address1: Optional[str]) -> tuple[Optional[str], Optional[str]]:

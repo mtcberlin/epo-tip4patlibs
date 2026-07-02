@@ -16,6 +16,7 @@ from .plz_nuts import enrich_rows, map_plz
 from .register_parser import (
     applicant_rows,
     iter_registrations_from_zip,
+    parse_hit_applicant,
     parse_register_xml,
 )
 
@@ -26,6 +27,7 @@ __all__ = [
     "parse_register_xml",
     "iter_registrations_from_zip",
     "applicant_rows",
+    "parse_hit_applicant",
     "map_plz",
     "enrich_rows",
 ]
