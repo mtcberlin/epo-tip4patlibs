@@ -23,7 +23,9 @@ applicant addresses:
 ### Route A — targeted (small result sets)
 1. `search/<Expertenabfrage>` → hit list XML (`PatentHitList.xsd`); each hit carries a
    `leading-registered-number` (führendes Aktenzeichen). Expert-query syntax = DPMAregister
-   "Expertenrecherche" (patents/utility models).
+   "Expertenrecherche" (patents/utility models). The applicant/proprietor field is **`INH`**
+   (Inhaber), e.g. `search/INH%3D<name>` — **not** `pa` (`pa=`/`PA=` are rejected with
+   *"'pa' not admissible at position 1"*, HitCount 0). `IN` is a broader variant.
 2. `getRegisterInfo/<Aktenzeichen>` → full register record as **ST.36 XML** (DPMA extension
    `DE-PATGBM-RegisterExt`), which contains applicant name **and address**.
 - ⚠️ **Hit cap: 1000** per search (100 on a test account) — too small for a whole
@@ -55,9 +57,22 @@ in bulk, then aggregate by region.
    national-only firms will typically be small × local — precisely the lead tail the PATLIB
    was missing.
 
-## Open items to confirm (need one sample record)
-- **Exact address tag names** in the `DE-PATGBM-RegisterExt` ST.36 XML (street / postcode /
-  city / country) — confirm from a single `getRegisterInfo` response before writing the parser.
+## Confirmed from sample records (2026-07-02)
+Verified against a 1977 utility model and a 2024 patent (`DE-PATGBM-RegisterExt`, schema 0.10):
+- **Address tags:** `bibliographic-data/parties/applicants/applicant/addressbook` →
+  `<name>` (applicant), `<text>` (full "Name, PLZ Ort, Land" string), and
+  `<address>` with **only** `<address-1>` + `<country>`. There is **no separate street /
+  postcode / city tag** — even modern records merge **PLZ + city** into `<address-1>`
+  (e.g. `66440 Blieskastel`), and street is not published at all. Extract PLZ as the leading
+  5 digits of `<address-1>` (`^(\d{5})\s`); foreign applicants have no PLZ (`Obernai, FR`).
+  `<inventors>` / `<agents>` / `<correspondence-address>` are separate party blocks — parse
+  `<applicants>` only.
+- **Other fields:** application number `application-reference/document-id/doc-number`
+  (`102024206684.2`); filing date `.../date`; kind via publication `<kind>` (`A*`=patent,
+  `U*`=utility model) or `office-specific-bib-data/type-of-ip-right`; IPC
+  `classifications-ipcr/classification-ipcr/text` (`G01N0033530000`).
+
+### Still open
 - **Number formats** for the Aktenzeichen ↔ `appln_nr` join (normalisation rules, check digits).
 - Coverage of the address field across record types (granted vs pending; company vs natural
   person).
@@ -66,7 +81,7 @@ in bulk, then aggregate by region.
 ```bash
 export DPMA_USER='...'; export DPMA_PASS='...'   # do not commit; rotate if shared
 curl -sS -u "$DPMA_USER:$DPMA_PASS" \
-  "https://dpmaconnect.dpma.de/dpmaws/rest-services/DPMAregisterPatService/search/pa%3D<name>" \
+  "https://dpmaconnect.dpma.de/dpmaws/rest-services/DPMAregisterPatService/search/INH%3D<name>" \
   -o hitlist.xml
 xmllint --format hitlist.xml | grep leading-registered-number | head
 curl -sS -u "$DPMA_USER:$DPMA_PASS" \
