@@ -31,15 +31,18 @@ Confirmed against a 1977 utility model and a 2024 patent (2026-07-02):
 
 from __future__ import annotations
 
+import io
 import re
+import zipfile
 from dataclasses import dataclass, field, asdict
-from typing import Optional
+from typing import Iterator, Optional
 from xml.etree import ElementTree as ET
 
 __all__ = [
     "Applicant",
     "Registration",
     "parse_register_xml",
+    "iter_registrations_from_zip",
     "applicant_rows",
     "split_address1",
     "format_ipc",
@@ -181,6 +184,32 @@ def parse_register_xml(data) -> Registration:
         title=title,
         applicants=applicants,
     )
+
+
+def iter_registrations_from_zip(data) -> Iterator[Registration]:
+    """Yield one :class:`Registration` per XML member of a register-extract ZIP.
+
+    ``data`` is the bytes (or a path / open file) of a ``getRegisterabzuege``
+    response — a ZIP holding one ST.36 record per registration, named by
+    Aktenzeichen (``1020242066842.xml``). Non-XML members (e.g. the
+    ``KeinTreffer.txt`` marker returned for an empty period) are skipped, as are
+    individual records that fail to parse (logged via the ``errors`` note is out
+    of scope here — malformed records are simply skipped).
+
+    This is the **population-scale** route for regional lead generation: pull a
+    whole publication period, then filter/aggregate by region — rather than
+    searching one applicant name at a time.
+    """
+    zf = data if isinstance(data, zipfile.ZipFile) else zipfile.ZipFile(
+        io.BytesIO(data) if isinstance(data, (bytes, bytearray)) else data
+    )
+    for name in zf.namelist():
+        if not name.lower().endswith(".xml"):
+            continue
+        try:
+            yield parse_register_xml(zf.read(name))
+        except ET.ParseError:
+            continue
 
 
 def applicant_rows(reg: Registration) -> list[dict]:

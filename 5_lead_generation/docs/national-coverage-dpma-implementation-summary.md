@@ -26,12 +26,12 @@ package** — not a full production pipeline.
 
 | Component | File | Notes |
 |-----------|------|-------|
-| REST client | [`dpma/fetch.py`](../dpma/fetch.py) | `search` + `getRegisterInfo`; Basic auth from `DPMA_USER`/`DPMA_PASS` env vars only |
-| ST.36 parser | [`dpma/register_parser.py`](../dpma/register_parser.py) | XML → applicant rows (name, PLZ, city, country, appln no., filing date, IPC, kind A/U) |
+| REST client | [`dpma/fetch.py`](../dpma/fetch.py) | **`getRegisterabzuege`** (bulk period extract — population route), `getRegisterInfo` (single record), `search` (`INH=`); Basic auth from `DPMA_USER`/`DPMA_PASS` env only |
+| ST.36 parser | [`dpma/register_parser.py`](../dpma/register_parser.py) | XML → applicant rows (name, PLZ, city, country, appln no., filing date, IPC, kind A/U); `iter_registrations_from_zip` streams a whole extract |
 | PLZ → region | [`dpma/plz_nuts.py`](../dpma/plz_nuts.py) | PLZ → NUTS3 + Bundesland via bundled Eurostat crosswalk |
 | Crosswalk data | [`dpma/data/pc2025_DE_NUTS-2024_v1.0.csv`](../dpma/data/pc2025_DE_NUTS-2024_v1.0.csv) | Eurostat GISCO, NUTS 2024, CC-BY-SA-4.0 |
-| Sample fixtures | `dpma/samples/*.xml` | 1977 utility model + 2024 patent; **company applicants only** (inventor personal data removed) |
-| Demo | [`../national_coverage_demo.ipynb`](../national_coverage_demo.ipynb) | offline (bundled samples) + optional live fetch + regional roll-up |
+| Sample fixtures | `dpma/samples/` | single records (1977 U + 2024 A) + a 27-record mini-extract ZIP; **company applicants only** (inventor personal data removed) |
+| Demo | [`../national_coverage_demo.ipynb`](../national_coverage_demo.ipynb) | **region-based lead gen**: period → all filings → PLZ→NUTS → filter/aggregate by region → deduped lead list (offline mini-extract + live pull) |
 | Package + docs | `dpma/__init__.py`, `dpma/README.md` | importable as `from dpma import ...` |
 
 ## Key findings (corrected the original plan)
@@ -48,20 +48,29 @@ package** — not a full production pipeline.
 
 ## Verification
 
-- All three helpers **live-tested** against `dpmaconnect.dpma.de` (981 hits for `INH=Hager`,
-  query-rejection path, fetch → parse round-trip).
-- Notebook **executed end-to-end via nbconvert — 0 errors** (offline + live paths).
+- Helpers **live-tested** against `dpmaconnect.dpma.de`: `INH=Hager` search (981 hits) +
+  query-rejection path, single-record round-trip, and the **bulk extract** for the 2026-06-20
+  week (6 760 records → 1 953 DE applicants region-mapped, e.g. Bayern top leads BMW 47 /
+  Schaeffler 33 filings).
+- Notebook **executed end-to-end via nbconvert — 0 errors** (offline mini-extract + live pull +
+  quarter loop).
 - **No secrets committed** (`os.environ` only); committed fixtures contain no natural-person data.
+
+## Design correction (2026-07-02)
+
+The first cut searched by applicant *name* (`INH=`) — backwards for lead generation, which
+needs **region → applicants**. Reworked to the population route: pick a period →
+`getRegisterabzuege` → parse all → PLZ→NUTS → filter/aggregate by region. `getPublikationsdaten_XML`
+was found **permission-denied** for the account, so `getRegisterabzuege` is the route used.
 
 ## Deliberately out of scope (next steps)
 
 - **PATSTAT join:** DPMA Aktenzeichen ↔ PATSTAT `appln_nr` (`appln_auth='DE'`) after number
   normalisation, plus a per-family `has_EP` flag to tag firms EP/PCT-active vs national-only.
   Number-format normalisation is still open.
-- **Bulk routes** for whole regions: `getRegisterabzuege` / `getPublikationsdaten_XML`
-  (`search` caps at 1000 hits).
 - **Union & re-tiering:** rebuild the regional list as PATSTAT-NUTS ∪ DPMA-national-only, fed
   into the same depth × reach tiering.
+- **Applicant-name harmonisation** for tighter dedupe across spelling variants.
 
 ## Caveats
 

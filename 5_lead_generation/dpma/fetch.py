@@ -20,9 +20,12 @@ Notes / limits (from ``docs/national-coverage-extension-dpmaconnect.md``):
 from __future__ import annotations
 
 import base64
+import io
 import os
+import re
 import urllib.parse
 import urllib.request
+import zipfile
 from dataclasses import dataclass
 from typing import Optional
 from xml.etree import ElementTree as ET
@@ -106,6 +109,43 @@ class DpmaClient:
     def get_register_info(self, aktenzeichen: str) -> bytes:
         """Fetch the full ST.36 register record (feed to ``parse_register_xml``)."""
         return self._get(f"getRegisterInfo/{urllib.parse.quote(str(aktenzeichen), safe='')}")
+
+    def get_register_extract(self, date: str, period: str = "weekly") -> bytes:
+        """Fetch a bulk register extract (``getRegisterabzuege``) as ZIP bytes.
+
+        This is the **population route** for regional lead generation: it returns
+        *all* registrations with register activity in the given period — one
+        ST.36 record per file — which you then filter/aggregate by region
+        (feed to :func:`register_parser.iter_registrations_from_zip`).
+
+        ``date`` is ``YYYY-MM-DD`` and must match an actual extract date;
+        ``period`` is one of ``daily`` / ``weekly`` / ``monthly`` / ``yearly``.
+        Raises ``ValueError`` if the account lacks permission, the period is
+        empty (a ``KeinTreffer.txt`` marker), or the server returns an error.
+
+        Note: the sibling ``getPublikationsdaten_XML`` route is *not* used here —
+        it requires a separate DPMAconnect permission the workshop account may
+        not hold.
+        """
+        if period not in {"daily", "weekly", "monthly", "yearly"}:
+            raise ValueError(f"period must be daily/weekly/monthly/yearly, got {period!r}")
+        raw = self._get(
+            f"getRegisterabzuege/{urllib.parse.quote(date, safe='')}/{period}"
+        )
+        # An error is returned as an XML <Transaction> instead of a ZIP.
+        if not raw[:2] == b"PK":
+            msg = raw.decode("utf-8", "replace")
+            m = re.search(r"<TransactionErrorText>(.*?)</TransactionErrorText>", msg, re.S)
+            raise ValueError(f"getRegisterabzuege failed: {m.group(1) if m else msg[:200]}")
+        # A ZIP whose only member is KeinTreffer.txt means "no records this period".
+        with zipfile.ZipFile(io.BytesIO(raw)) as zf:
+            names = zf.namelist()
+            if not any(n.lower().endswith(".xml") for n in names):
+                raise ValueError(
+                    f"no records for {date}/{period} "
+                    f"(extract contained: {', '.join(names) or 'nothing'})"
+                )
+        return raw
 
 
 def _t(el, path: str) -> Optional[str]:

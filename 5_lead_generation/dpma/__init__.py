@@ -13,13 +13,18 @@ See ``../docs/national-coverage-extension-dpmaconnect.md`` for the design.
 
 from . import fetch, plz_nuts, register_parser
 from .plz_nuts import enrich_rows, map_plz
-from .register_parser import applicant_rows, parse_register_xml
+from .register_parser import (
+    applicant_rows,
+    iter_registrations_from_zip,
+    parse_register_xml,
+)
 
 __all__ = [
     "fetch",
     "plz_nuts",
     "register_parser",
     "parse_register_xml",
+    "iter_registrations_from_zip",
     "applicant_rows",
     "map_plz",
     "enrich_rows",

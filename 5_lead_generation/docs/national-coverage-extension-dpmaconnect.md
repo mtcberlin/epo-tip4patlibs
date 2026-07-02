@@ -31,13 +31,19 @@ applicant addresses:
 - ⚠️ **Hit cap: 1000** per search (100 on a test account) — too small for a whole
   Bundesland/year. Use Route B for population-scale work.
 
-### Route B — bulk (population scale) — the one we'd build on
-- `getRegisterabzuege/<yyyy-mm-dd>/<daily|weekly|monthly|yearly>` → ZIP of the register
-  extract for a closed period.
-- `getPublikationsdaten_XML/<yyyyWW>` → ZIP of bibliographic + legal-status XML per
-  publication week.
-Both yield ST.36-style XML for **all** DE patents/utility models → parse applicant addresses
-in bulk, then aggregate by region.
+### Route B — bulk (population scale) — **the route the notebook uses**
+- `getRegisterabzuege/<yyyy-mm-dd>/<daily|weekly|monthly|yearly>` → ZIP with **one ST.36
+  record per registration** (a weekly extract ≈ 6 000–7 000 records / ~12 MB). ✅ **Works
+  with the workshop account.** This is the population entry point: pull a period, parse every
+  record, map PLZ → NUTS, aggregate by region. Confirmed 2026-07-02 on the 2026-06-20 week
+  (6 760 records → 1 953 DE applicants region-mapped).
+- `getPublikationsdaten_XML/<yyyyWW>` → ⚠️ **permission denied** for the `mtc.berlin`
+  account ("No permission of user=mtc.berlin for right=Publikationsdaten"). Needs a separate
+  DPMAconnect right; not used.
+
+Semantics note: `getRegisterabzuege` is the register-*change* stream (records with activity in
+the period, incl. foreign applicants and EP validations), not only new filings — keep the DE
+subset for regional leads.
 
 ## Proposed pipeline
 1. **Fetch** (Route B): pull the relevant `getRegisterabzuege` / `getPublikationsdaten_XML`
