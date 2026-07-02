@@ -38,8 +38,13 @@ tells a PATLIB which regional firms are worth approaching for IP services and tr
 - **Region across BOTH NUTS vintages** — old level-3 codes (`FR421/FR422`) *and* current
   level-4 REGPAT codes (`FRF11/FRF12`). Never truncate one prefix with `SUBSTR(nuts,1,4)`:
   that silently drops every level-4 record (Alsace: 52/280 → **78/396** once both are included).
-- **Genuine patent applications:** `TRIM(appln_kind) = 'A'` — `appln_kind` is space-padded,
-  so `= 'A'` matches nothing; and this excludes `T` (EP validations) and `U` (utility models).
+- **`appln_kind` is space-padded — always `TRIM` it** before comparing (`appln_kind = 'A'`
+  matches nothing; use `TRIM(appln_kind) = 'A'`). *Scope note:* restricting to
+  `TRIM(appln_kind) = 'A'` (genuine applications, excluding `T` EP-validations and `U`
+  utility models) belongs to the **national-only coverage counting** (the "what can't we
+  see" statistic). The **regional applicant corpus** deliberately does *not* filter
+  `appln_kind` — the verified **78/396** reference is counted without it, since family-level
+  `COUNT(DISTINCT docdb_family_id)` already collapses each company's inventions to families.
 - **Reach across all family members:** join back to `tls201_appln` on `docdb_family_id` and
   read `appln_auth` for every member, not just the regional filing.
 - **Window:** filing years (e.g. 2017–2022) = *active in window*.
