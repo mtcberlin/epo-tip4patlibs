@@ -50,3 +50,9 @@ ENV/
 # Jupyter checkpoints
 .ipynb_checkpoints/
 */.ipynb_checkpoints/
+
+# DPMAconnect scratch output (raw API dumps; keep only curated fixtures)
+/hitlist.xml
+/registerinfo.xml
+/reg.xml
+/reg2.xml
