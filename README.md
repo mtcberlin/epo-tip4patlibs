@@ -9,7 +9,7 @@ Course Material for PATLIB staff in Europe, to get the most out of the EPO Techn
 | 2 TIP4PATLIBs Query Library | Learning PATSTAT and Patent Analystics with ready to use Queries, that are answering questions of PATLIB staff and audience |
 |3 TIP4PATLIBs AI Support Basics | Screencasts, Course Materials, Notebook Collection for using Claude Code or Google Gemini for Patent Analytics |
 |4 TIP4PATLIBs PATSTAT Explorer | Screencasts, Course Material and Notebook + App for Applicant and Technology Search within PATSTAT |
-|5 TIP4PATLIBs Lead Generation | Screencasts, Course Material and Notebook + App for Applicant and Technology Search within PATSTAT |
+|5 TIP4PATLIBs Lead Generation | Course Material and Notebook for regional lead generation: profiling the EP/PCT-active company applicants of a region by portfolio depth and geographic reach, and segmenting them into lead tiers |
 
 ### Quick Start
 
