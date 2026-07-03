@@ -36,7 +36,7 @@ non-negotiables, the two-axis + tiering approach, the coverage-reality caveat, t
 verification workflow with Alsace anchor numbers, and pointers to the three `docs/`.
 
 ### `epo_training_regional-leads.ipynb` (participant manual)
-Follows the repo's proven manual pattern (`1_notebooks/4_tostartwithTIP.ipynb`): title
+Follows the repo's proven manual pattern (`1_startwithtip/2_getting-started-with-patstat.ipynb`): title
 header → `PatstatClient` setup → then per step, markdown (**Why**) + parameterized SQL cell
 + **How to read this**. A single `# --- CHANGE THIS ---` `NUTS_CODES` block (default = the
 four Alsace vintage codes) lets a participant swap in their own region.

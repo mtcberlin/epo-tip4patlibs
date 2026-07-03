@@ -3,13 +3,13 @@ Course Material for PATLIB staff in Europe, to get the most out of the EPO Techn
 
 ## Content
 
-| Course | Description |
-|----------|-------------|
-| 1 TIP4PATLIBs Basics | Python, Jupyter, SQL Basics within TIP for Patent Analysts with Screencasts, Course Materials, Notebook Collection  |
-| 2 TIP4PATLIBs Query Library | Learning PATSTAT and Patent Analystics with ready to use Queries, that are answering questions of PATLIB staff and audience |
-|3 TIP4PATLIBs AI Support Basics | Screencasts, Course Materials, Notebook Collection for using Claude Code or Google Gemini for Patent Analytics |
-|4 TIP4PATLIBs PATSTAT Explorer | Screencasts, Course Material and Notebook + App for Applicant and Technology Search within PATSTAT |
-|5 TIP4PATLIBs Lead Generation | Course Material and Notebook for regional lead generation: profiling the EP/PCT-active company applicants of a region by portfolio depth and geographic reach, and segmenting them into lead tiers |
+| Course | Folder | Description |
+|--------|--------|-------------|
+| 1 Start with TIP | `1_startwithtip/` | Set up Claude Code persistently on TIP, then get hands-on with your first PATSTAT queries (company & institution search) |
+| 2 Legacy | `2_legacy/` | Earlier worked end-to-end analysis notebooks (Airbus filing strategy, TU Dortmund portfolio) |
+| 3 Query Library | `3_querylib/` | Learning PATSTAT and patent analytics with ready-to-use queries that answer the questions PATLIB staff and their audience ask |
+| 4 PATSTAT Explorer | `4_patstat_explorer/` | Course material and notebook + app for applicant and technology search within PATSTAT |
+| 5 Lead Generation | `5_lead_generation/` | Regional lead generation: profiling the EP/PCT-active company applicants of a region by portfolio depth and geographic reach, and segmenting them into lead tiers |
 
 ### Quick Start
 

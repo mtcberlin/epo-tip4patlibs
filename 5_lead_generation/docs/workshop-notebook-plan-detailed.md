@@ -49,7 +49,7 @@ non-negotiables (family-based `COUNT(DISTINCT docdb_family_id)`, `applt_seq_nr>0
 Alsace numbers 78/396), and pointers to the three `docs/`. Keep it concise.
 
 ### B. `epo_training_regional-leads.ipynb` (rebuild → participant manual)
-Follow the repo's proven manual pattern (`1_notebooks/4_tostartwithTIP.ipynb`).
+Follow the repo's proven manual pattern (`1_startwithtip/2_getting-started-with-patstat.ipynb`).
 Top of notebook: a `# --- CHANGE THIS ---` **NUTS_CODES** parameter block (default = the
 four Alsace vintage codes) so a participant swaps in their own region. Structure:
 1. Title/purpose header (fix "Integlligence" typo; audience = PATLIB staff, platform=TIP,
@@ -74,7 +74,7 @@ All SQL verified live via patstat-mcp; adapt any BigQuery-only idiom for TIP if 
 ## Critical files
 - `5_lead_generation/regional-applicant-profiling-instruction.md`
 - `5_lead_generation/epo_training_regional-leads.ipynb`
-- Reference (read-only): `5_lead_generation/docs/*.md`, `1_notebooks/4_tostartwithTIP.ipynb`
+- Reference (read-only): `5_lead_generation/docs/*.md`, `1_startwithtip/2_getting-started-with-patstat.ipynb`
 
 ## Verification
 - Run each SQL via `mcp__PATSTAT_MCP__execute_query` (dry-run first for cost) during
