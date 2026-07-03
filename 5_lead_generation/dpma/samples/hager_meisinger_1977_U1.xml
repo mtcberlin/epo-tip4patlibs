@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dpma-patent-document xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                      xmlns:reg="http://elsa.dpma.de/patgbm/register/schema"
+                      xmlns:fo="http://www.w3.org/1999/XSL/Format"
+                      xmlns:fn="http://www.w3.org/2005/xpath-functions"
+                      xmlns="http://www.dpma.de/standards/XMLSchema/DE-PATGBM-RegisterExt"
+                      schema-version="0.10">
+   <bibliographic-data>
+      <publication-references>
+         <publication-reference sequence="1">
+            <document-id>
+               <country>DE</country>
+               <doc-number>000007722846</doc-number>
+               <kind>U1</kind>
+            </document-id>
+         </publication-reference>
+      </publication-references>
+      <application-reference>
+         <document-id>
+            <country>DE</country>
+            <doc-number>G7722846.7</doc-number>
+            <date>1977-07-21</date>
+         </document-id>
+      </application-reference>
+      <invention-title lang="DE">Rotierendes Werkzeug zum Bearbeiten von aus Gips oder einem ähnlichen Material hergestellten Modellen in der Dentaltechnik</invention-title>
+      <classifications-ipcr>
+         <classification-ipcr sequence="1">
+            <text>A61C0009000000</text>
+            <ipc-version-indicator>1985.01</ipc-version-indicator>
+         </classification-ipcr>
+      </classifications-ipcr>
+      <parties>
+         <applicants>
+            <applicant sequence="1" app-type="applicant">
+               <addressbook>
+                  <text>Hager &amp; Meisinger GmbH, 40217 Düsseldorf, DE</text>
+                  <name>Hager &amp; Meisinger GmbH</name>
+                  <address>
+                     <address-1>40217 Düsseldorf</address-1>
+                     <country>DE</country>
+                  </address>
+               </addressbook>
+            </applicant>
+         </applicants>
+      </parties>
+      <office-specific-bib-data>
+         <type-of-ip-right>gebrauchsmuster</type-of-ip-right>
+         <status>nicht-anhaengig-erloschen</status>
+         <national-filing-data>1977-07-21</national-filing-data>
+         <date-of-publication-of-grant>1977-11-24</date-of-publication-of-grant>
+         <publication-of-date-of-registration>1977-11-24</publication-of-date-of-registration>
+         <date-last-register-update>2013-02-08</date-last-register-update>
+      </office-specific-bib-data>
+      <related-documents/>
+   </bibliographic-data>
+   <events>
+      <event-data>
+         <type-of-procedure>vorverfahren</type-of-procedure>
+         <procedural-status>R000</procedural-status>
+         <date-of-procedural-status>1977-07-21</date-of-procedural-status>
+      </event-data>
+      <event-data>
+         <type-of-procedure>gebrauchsmusterverfahren</type-of-procedure>
+         <procedural-status>R156</procedural-status>
+         <date-of-procedural-status>1981-09-25</date-of-procedural-status>
+      </event-data>
+      <event-data>
+         <type-of-procedure>publikationen</type-of-procedure>
+         <procedural-status>R207</procedural-status>
+         <date-of-procedural-status>1977-11-24</date-of-procedural-status>
+         <publication-info>
+            <issue-number>47</issue-number>
+            <year>1977</year>
+            <publication-date>1977-11-24</publication-date>
+            <publication-type>grossteile-publikation</publication-type>
+            <part>teil-4</part>
+         </publication-info>
+      </event-data>
+      <event-data>
+         <type-of-procedure>gebrauchsmusterverfahren</type-of-procedure>
+         <procedural-status>R160</procedural-status>
+         <date-of-procedural-status>1977-11-24</date-of-procedural-status>
+      </event-data>
+   </events>
+</dpma-patent-document>
