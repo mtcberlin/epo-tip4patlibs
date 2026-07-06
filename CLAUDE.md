@@ -33,7 +33,7 @@ persistent Claude Code + Git/SSH setup — see **`1_startwithtip/1_getting-start
 
 ## Conventions
 - Notebooks open with the branded red **TIP4PATLIBS** header (see
-  `5_lead_generation/epo_training_regional-leads.ipynb`) plus a short table of
+  `5_lead_generation/1_regional-leads.ipynb`) plus a short table of
   contents. Keep new notebooks visually consistent.
 - Ship a sensible default so a notebook runs out of the box (e.g. Alsace `FR42`
   in lead generation), with user-editable parameters near the top.

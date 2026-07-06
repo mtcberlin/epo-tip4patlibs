@@ -1,7 +1,7 @@
 # Development Brief — Regional Applicant Profiling SQL
 
 *This is the brief we use to **develop and verify the SQL** that powers the workshop
-notebook `epo_training_regional-leads.ipynb`, using Claude + the **patstat-mcp** (EPO
+notebook `1_regional-leads.ipynb`, using Claude + the **patstat-mcp** (EPO
 PATSTAT Global on BigQuery) against live data.*
 
 > **Read this first, then read the three `docs/`** — they hold the fully worked, live-verified

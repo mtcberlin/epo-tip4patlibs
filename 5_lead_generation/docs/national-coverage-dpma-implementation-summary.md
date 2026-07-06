@@ -31,7 +31,7 @@ package** — not a full production pipeline.
 | PLZ → region | [`dpma/plz_nuts.py`](../dpma/plz_nuts.py) | PLZ → NUTS3 + Bundesland via bundled Eurostat crosswalk |
 | Crosswalk data | [`dpma/data/pc2025_DE_NUTS-2024_v1.0.csv`](../dpma/data/pc2025_DE_NUTS-2024_v1.0.csv) | Eurostat GISCO, NUTS 2024, CC-BY-SA-4.0 |
 | Sample fixtures | `dpma/samples/` | single records (1977 U + 2024 A) + a 27-record mini-extract ZIP; **company applicants only** (inventor personal data removed) |
-| Demo | [`../national_coverage_demo.ipynb`](../national_coverage_demo.ipynb) | **region-based lead gen**: period → all filings → PLZ→NUTS → filter/aggregate by region → deduped lead list (offline mini-extract + live pull) |
+| Demo | [`../2_national-coverage.ipynb`](../2_national-coverage.ipynb) | **region-based lead gen**: period → all filings → PLZ→NUTS → filter/aggregate by region → deduped lead list (offline mini-extract + live pull) |
 | Package + docs | `dpma/__init__.py`, `dpma/README.md` | importable as `from dpma import ...` |
 
 ## Key findings (corrected the original plan)

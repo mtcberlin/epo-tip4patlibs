@@ -5,7 +5,7 @@ missing** (NUTS is assigned on the EP/PCT route only) and map them to the same
 NUTS3 regions PATSTAT uses. Background & design:
 [`../docs/national-coverage-extension-dpmaconnect.md`](../docs/national-coverage-extension-dpmaconnect.md).
 
-Demo: [`../national_coverage_demo.ipynb`](../national_coverage_demo.ipynb).
+Demo: [`../2_national-coverage.ipynb`](../2_national-coverage.ipynb).
 
 ## Modules
 
@@ -40,7 +40,7 @@ Single applicant lookup (secondary): `client.search_applicant("Hager")` →
 Offline (no credentials): iterate the bundled mini-extract
 `samples/registerabzug_sample_2026-06-20_weekly.zip`, or parse the single-record
 samples under `samples/`. The full demo is
-[`../national_coverage_demo.ipynb`](../national_coverage_demo.ipynb).
+[`../2_national-coverage.ipynb`](../2_national-coverage.ipynb).
 
 ## Data
 
