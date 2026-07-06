@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+# Claude Code status line script
+# ~/.claude/statusline-command.sh
+
+input=$(cat)
+
+# Extract values
+used=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
+model=$(echo "$input" | jq -r '.model.display_name // empty')
+cwd=$(echo "$input" | jq -r '.workspace.current_dir // .cwd // empty')
+cost=$(echo "$input" | jq -r '.cost.total_cost_usd // empty')
+dur_ms=$(echo "$input" | jq -r '.cost.total_duration_ms // empty')
+
+parts=''
+
+# Folder: show basename of cwd, plus git branch in dim parens if inside a repo
+if [ -n "$cwd" ]; then
+  folder=$(basename "$cwd")
+  parts=$'\033[34m'"${folder}"$'\033[0m'
+
+  branch=$(git -C "$cwd" symbolic-ref --short -q HEAD 2>/dev/null \
+           || git -C "$cwd" rev-parse --short HEAD 2>/dev/null)
+  if [ -n "$branch" ]; then
+    # Dirty indicator: yellow ✱ if there are uncommitted/untracked changes
+    dirty=''
+    if [ -n "$(git -C "$cwd" status --porcelain 2>/dev/null)" ]; then
+      dirty=$' \033[33m✱\033[0m'
+    fi
+    parts="${parts} "$'\033[2m('"${branch}"$')\033[0m'"${dirty}"
+  fi
+fi
+
+# Context window usage — visual progress bar
+if [ -n "$used" ]; then
+  used_int=${used%.*}
+  if [ "$used_int" -ge 80 ]; then
+    ctx_color=$'\033[31m'   # red — critical
+  elif [ "$used_int" -ge 60 ]; then
+    ctx_color=$'\033[33m'   # yellow — warning
+  elif [ "$used_int" -ge 40 ]; then
+    ctx_color=$'\033[32m'   # green — okay
+  else
+    ctx_color=$'\033[36m'   # cyan — fresh
+  fi
+  reset=$'\033[0m'
+  dim=$'\033[2m'
+
+  # Build a 10-block progress bar
+  bar_width=10
+  filled=$(( used_int * bar_width / 100 ))
+  [ "$filled" -gt "$bar_width" ] && filled=$bar_width
+  empty=$(( bar_width - filled ))
+
+  bar=''
+  for i in $(seq 1 "$filled"); do bar="${bar}█"; done
+  for i in $(seq 1 "$empty");  do bar="${bar}░"; done
+
+  ctx_part="${dim}ctx:${reset} ${ctx_color}[${bar}]${reset} ${ctx_color}${used_int}%${reset}"
+  [ -n "$parts" ] && parts="${parts} "$'\033[2m|'$'\033[0m '
+  parts="${parts}${ctx_part}"
+fi
+
+# Cost + session duration
+if [ -n "$cost" ] || [ -n "$dur_ms" ]; then
+  dim=$'\033[2m'
+  reset=$'\033[0m'
+  green=$'\033[32m'
+  cd_part=''
+
+  if [ -n "$cost" ]; then
+    cost_fmt=$(printf '$%.2f' "$cost")
+    cd_part="${green}${cost_fmt}${reset}"
+  fi
+
+  if [ -n "$dur_ms" ]; then
+    total_s=$(( ${dur_ms%.*} / 1000 ))
+    h=$(( total_s / 3600 ))
+    m=$(( (total_s % 3600) / 60 ))
+    s=$(( total_s % 60 ))
+    if [ "$h" -gt 0 ]; then
+      dur_fmt=$(printf '%dh%02dm' "$h" "$m")
+    elif [ "$m" -gt 0 ]; then
+      dur_fmt=$(printf '%dm%02ds' "$m" "$s")
+    else
+      dur_fmt=$(printf '%ds' "$s")
+    fi
+    [ -n "$cd_part" ] && cd_part="${cd_part} "
+    cd_part="${cd_part}${dim}${dur_fmt}${reset}"
+  fi
+
+  [ -n "$parts" ] && parts="${parts} "$'\033[2m|'$'\033[0m '
+  parts="${parts}${cd_part}"
+fi
+
+# Model name
+if [ -n "$model" ]; then
+  [ -n "$parts" ] && parts="${parts} "$'\033[2m|'$'\033[0m '
+  parts="${parts}"$'\033[35m'"${model}"$'\033[0m'
+fi
+
+printf '%s' "$parts"

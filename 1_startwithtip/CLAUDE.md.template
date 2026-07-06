@@ -1,0 +1,48 @@
+# EPO TIP Environment — Claude Working Notes
+
+This machine is an **EPO Technology Intelligence Platform (TIP)** JupyterLab
+container. These facts change how you should work here — read before acting.
+
+## Persistence (critical)
+- **Only `/home/jovyan` survives a restart.** `~` is symlinked to it (a 30 GB
+  persistent volume). Everything else — `/opt/conda`, `/`, all system dirs — is
+  an **overlay rebuilt from the container image on every restart**; changes
+  there are lost.
+- The init script `/usr/bin/init_juser.sh` **overwrites `~/.bashrc`,
+  `~/.profile`, `~/.condarc` on every start.** Never persist customizations
+  there. Put shell/env tweaks in **`~/.bash_aliases`** (never touched), or in
+  the owning tool's own config under `~`.
+- Safe to write (persistent): `~/.bash_aliases`, `~/.gitconfig`, `~/.ssh/`,
+  `~/.npm-global/`, `~/.config/`, `~/.claude/`, `~/.claude.json`.
+
+## Tooling already set up here
+- **Claude Code**: installed via a persistent npm prefix at `~/.npm-global`
+  (PATH exported from `~/.bash_aliases`). Update with `claude upgrade` — do not
+  `npm install -g` into `/opt/conda`, it won't survive a restart.
+- **Git + GitHub over SSH**: identity in `~/.gitconfig`, key in
+  `~/.ssh/id_ed25519`. Use SSH remotes (`git@github.com:org/repo.git`).
+  Fine-grained PATs owned by a personal account *cannot* see an organization's
+  private repos (GitHub returns 404) — don't suggest that route; SSH just works.
+
+## PATSTAT / patent data
+- The EPO data library `epo.tipdata.patstat` is installed **only in the base
+  conda env** (`/opt/conda/lib/python3.12/site-packages`). Standard connection:
+  ```python
+  from epo.tipdata.patstat import PatstatClient
+  import pandas as pd
+  patstat = PatstatClient(env='PROD')                 # PROD = full production DB
+  df = pd.DataFrame(patstat.sql_query(sql, use_legacy_sql=False))
+  ```
+- **Gotcha:** inside a `python -m venv` the library is invisible. Either create
+  the venv with `--system-site-packages`, or add
+  `/opt/conda/lib/python3.12/site-packages` via a `.pth` file. Simplest: use the
+  base conda Python for PATSTAT work.
+- Course/reference data is mounted **read-only** at `~/training/` (owned by UID
+  65533; a Kubernetes EmptyDir populated from a git-worktree checkout). Never
+  write there — copy out first if you need to modify.
+- Data edition to assume: **PATSTAT Global, Autumn 2025** — but confirm at
+  runtime, editions change.
+
+## Python
+- Base interpreter: `/opt/conda/bin/python` (Python 3.12, conda); pandas present.
+- A notebook reporting `In a venv: False` on TIP is expected and fine.
