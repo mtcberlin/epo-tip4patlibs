@@ -16,7 +16,7 @@ The module already contains three **live-verified methodology docs** (Alsace/FR4
 Philippe-vs-PATSTAT comparison, regional-analysis guide fixes) but the two front-door
 artifacts are still drafts:
 - `regional-applicant-profiling-instruction.md` — still framed as an open task brief.
-- `epo_training_regional-leads.ipynb` — a bare skeleton (placeholder sections, one
+- `1_regional-leads.ipynb` — a bare skeleton (placeholder sections, one
   "paste SQL here" cell, empty scratch cells, a title typo).
 
 Goal: (1) rework the instruction md, and (2) turn the notebook into a **self-contained
@@ -48,7 +48,7 @@ non-negotiables (family-based `COUNT(DISTINCT docdb_family_id)`, `applt_seq_nr>0
 (NUTS = EP/PCT-active subset only), how to verify against live data (dry-run cost, expected
 Alsace numbers 78/396), and pointers to the three `docs/`. Keep it concise.
 
-### B. `epo_training_regional-leads.ipynb` (rebuild → participant manual)
+### B. `1_regional-leads.ipynb` (rebuild → participant manual)
 Follow the repo's proven manual pattern (`1_startwithtip/2_getting-started-with-patstat.ipynb`).
 Top of notebook: a `# --- CHANGE THIS ---` **NUTS_CODES** parameter block (default = the
 four Alsace vintage codes) so a participant swaps in their own region. Structure:
@@ -73,7 +73,7 @@ All SQL verified live via patstat-mcp; adapt any BigQuery-only idiom for TIP if 
 
 ## Critical files
 - `5_lead_generation/regional-applicant-profiling-instruction.md`
-- `5_lead_generation/epo_training_regional-leads.ipynb`
+- `5_lead_generation/1_regional-leads.ipynb`
 - Reference (read-only): `5_lead_generation/docs/*.md`, `1_startwithtip/2_getting-started-with-patstat.ipynb`
 
 ## Verification
@@ -104,7 +104,7 @@ notebook, then send it + the docs to participants); (4) **open a PR to `develop`
 - Sachsen (`DED`) runs end-to-end through the corpus query → NOVALED GMBH (155), HELIATEK,
   INFINEON TECH DRESDEN, etc. Sensible.
 
-### Changes to `epo_training_regional-leads.ipynb`
+### Changes to `1_regional-leads.ipynb`
 - In **Step 2** (NUTS discovery) and/or **Step 3** (params): add a one-line note that some
   countries need both vintages (FR) while others need only one prefix per region (DE) — the
   discovery query is how you find out.
@@ -130,14 +130,14 @@ pattern, SQL dialect, and named-column access all match the repo's working TIP n
 (airbus). Only gaps below.
 
 ### Changes
-1. **`epo_training_regional-leads.ipynb`, segmentation cell (18):** replace the fragile
+1. **`1_regional-leads.ipynb`, segmentation cell (18):** replace the fragile
    `df_segments.pivot(...).reindex(...).fillna(0).astype(int)` with
    `pd.pivot_table(df_segments, index='depth_tier', columns='reach_tier', values='companies',
    aggfunc='sum', fill_value=0)` then `.reindex(index=[small,medium,large],
    columns=[local,regional,global], fill_value=0)`. Bulletproof across pandas versions and
    handles missing tier combos / empty regions gracefully. `.pivot` is the only Python
    construct not proven by an existing TIP notebook.
-2. **`epo_training_regional-leads.ipynb`:** add a one-line performance note near Step 3 —
+2. **`1_regional-leads.ipynb`:** add a one-line performance note near Step 3 —
    default Alsace is fast and free on TIP; a whole large Bundesland scans much more and may
    take longer.
 3. **`regional-applicant-profiling-instruction.md`:** soften the `TRIM(appln_kind)='A'`
@@ -181,7 +181,7 @@ builder regeneration.
    English retained.
 
 ### Files
-- `5_lead_generation/epo_training_regional-leads.ipynb` (targeted JSON edits)
+- `5_lead_generation/1_regional-leads.ipynb` (targeted JSON edits)
 - `README.md`
 
 ### Verification & ship

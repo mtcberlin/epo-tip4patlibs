@@ -14,7 +14,7 @@ PATLIB knows which regional firms to approach.
 
 Two front-door artifacts were still drafts and needed reworking:
 - `regional-applicant-profiling-instruction.md` — an open task brief.
-- `epo_training_regional-leads.ipynb` — a bare skeleton (placeholders, one "paste SQL here"
+- `1_regional-leads.ipynb` — a bare skeleton (placeholders, one "paste SQL here"
   cell, a title typo).
 
 **Goal:** rework the instruction into a development brief, and turn the notebook into a
@@ -35,7 +35,7 @@ The brief for building/verifying the notebook SQL with Claude + patstat-mcp: met
 non-negotiables, the two-axis + tiering approach, the coverage-reality caveat, the
 verification workflow with Alsace anchor numbers, and pointers to the three `docs/`.
 
-### `epo_training_regional-leads.ipynb` (participant manual)
+### `1_regional-leads.ipynb` (participant manual)
 Follows the repo's proven manual pattern (`1_startwithtip/2_getting-started-with-patstat.ipynb`): title
 header → `PatstatClient` setup → then per step, markdown (**Why**) + parameterized SQL cell
 + **How to read this**. A single `# --- CHANGE THIS ---` `NUTS_CODES` block (default = the

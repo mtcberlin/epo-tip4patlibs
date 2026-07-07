@@ -10,7 +10,7 @@ Author: Arne Krüger (mtc.berlin / depa.tech) · License: **EPO Internal Use**.
 ## Repository layout
 | Path | Module / purpose |
 |------|------------------|
-| `1_startwithtip/` | **Start here.** Set up Claude Code persistently (`1_tip-specifics.ipynb`), then run your first PATSTAT queries (`2_getting-started-with-patstat.ipynb`) |
+| `1_startwithtip/` | **Start here.** Set up Claude Code persistently (`1_getting-started-with-tip.ipynb`), then run your first PATSTAT queries (`2_getting-started-with-patstat.ipynb`) |
 | `2_legacy/` | Earlier worked end-to-end examples (Airbus filing strategy, TU Dortmund portfolio) |
 | `3_querylib/` | Query Library — ready-to-use PATSTAT queries |
 | `4_patstat_explorer/` | Applicant & technology search notebook + app |
@@ -29,11 +29,11 @@ df = pd.DataFrame(patstat.sql_query(sql, use_legacy_sql=False))
 ```
 Data edition: **PATSTAT Global, Autumn 2025**. For the full TIP environment model
 — what persists across restarts, the `epo.tipdata` venv gotcha, and the
-persistent Claude Code + Git/SSH setup — see **`1_startwithtip/1_tip-specifics.ipynb`**.
+persistent Claude Code + Git/SSH setup — see **`1_startwithtip/1_getting-started-with-tip.ipynb`**.
 
 ## Conventions
 - Notebooks open with the branded red **TIP4PATLIBS** header (see
-  `5_lead_generation/epo_training_regional-leads.ipynb`) plus a short table of
+  `5_lead_generation/1_regional-leads.ipynb`) plus a short table of
   contents. Keep new notebooks visually consistent.
 - Ship a sensible default so a notebook runs out of the box (e.g. Alsace `FR42`
   in lead generation), with user-editable parameters near the top.
