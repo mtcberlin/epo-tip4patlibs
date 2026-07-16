@@ -1,4 +1,4 @@
-# Hand-off brief — a DPMA register MCP server (working title `depatisnet-mcp`)
+# Hand-off brief — the DPMA register MCP server (`dpma-mcp`)
 
 **For:** an agent building a new MCP server, modelled on the **MTC OPS MCP** (`ops_*` tools,
 markdown/json dual output, hosted at `*.depa.tech/mcp`, Docker + Coolify).
@@ -7,18 +7,17 @@ as MCP tools, so an agent can do live, per-record lookups the way it already doe
 **Source material:** [`../2_national-coverage.ipynb`](../2_national-coverage.ipynb) and the
 [`../dpma/`](../dpma/) package (stdlib-only, ~400 lines, live-tested — vendor it, don't rewrite it).
 
+**Name — settled 2026-07-16: `dpma-mcp`, tool prefix `dpma_`.** *Not* `depatisnet-mcp` (the
+working title this started under): DEPATISnet is DPMA's *publication search* system, whereas this
+server wraps **DPMAconnect Plus → `DPMAregisterPatService`** — the **register** (procedural/legal
+status + applicant addresses), a different service. `dpma-mcp` is accurate today and leaves room
+for DEPATISnet-style publication routes later. Don't rename it back.
+
 ---
 
-## 0. Read this first — five decisions to take before coding
+## 0. Read this first — four decisions to take before coding
 
-1. **The name is wrong and should change.** DEPATISnet is DPMA's *publication search* system. The
-   notebook and `dpma/fetch.py` use **DPMAconnect Plus → `DPMAregisterPatService`** — the
-   **register** (procedural/legal status + applicant addresses), a different service. A server
-   named `depatisnet-mcp` that serves register data will mislead every future reader and every
-   agent reading the tool descriptions. **Recommendation: `dpma-mcp`** (room for DEPATISnet-style
-   publication routes later), tool prefix `dpma_`. Confirm with Arne before the repo is created —
-   renaming a hosted MCP after connectors point at it is painful.
-2. **Do not duplicate `de_applicant_nuts`.** A sibling brief
+1. **Do not duplicate `de_applicant_nuts`.** A sibling brief
    ([`patstat-mcp-de-nuts-extension-brief.md`](patstat-mcp-de-nuts-extension-brief.md)) specifies a
    BigQuery table that batch-resolves ~6,400 national-only applicants once. That is the
    **population-scale, cached** answer; this MCP is the **interactive, live, single-record**
@@ -26,20 +25,20 @@ as MCP tools, so an agent can do live, per-record lookups the way it already doe
    read the cached table first and only call DPMA on a miss.** Decide up front whether v1 does that
    or is live-only (live-only is a fine v1 — but design the lookup behind one function so the cache
    can slot in).
-3. **Shared credentials + terms of use.** The server would hold **one** DPMAconnect account
+2. **Shared credentials + terms of use.** The server would hold **one** DPMAconnect account
    (`mtc.berlin`) and re-serve its data to every connector user. OPS has an explicit developer
    quota model; DPMAconnect's ToS on redistribution via a third-party service is **unverified**.
    Check `docs/2026.06_SchnittstellenbeschreibungDPMAconnectPlus.pdf` and the DPMAconnect terms
    before exposing this beyond an internal instance. Flag to Arne — this is a go/no-go for public
    hosting, not an implementation detail.
-4. **GDPR is sharper here than in the notebook.** The notebook filters to
+3. **GDPR is sharper here than in the notebook.** The notebook filters to
    `psn_sector='COMPANY'` *in PATSTAT*. The DPMA register has **no sector flag** — a raw
    `dpma_search` will happily return natural-person applicants' home addresses, and an MCP hands
    them straight to an LLM. Decide the default: recommend a `legal_form` heuristic (GmbH/AG/KG/
    e.V./SE/…) with natural-person addresses **suppressed by default** and an explicit opt-in
    parameter, documented in the tool description. The parser already reads `applicants` only (never
    inventors/agents) — keep that.
-5. **Leave the bulk route out of v1.** `getRegisterabzuege` returns a ~12 MB ZIP / 6,000–7,000
+4. **Leave the bulk route out of v1.** `getRegisterabzuege` returns a ~12 MB ZIP / 6,000–7,000
    records per week. That is not an MCP tool response; it belongs to the batch table builder.
    `iter_registrations_from_zip` still ships in `dpma/` for that job.
 
