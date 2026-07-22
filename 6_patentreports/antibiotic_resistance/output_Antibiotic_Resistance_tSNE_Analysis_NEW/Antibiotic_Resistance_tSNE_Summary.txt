@@ -1,0 +1,122 @@
+================================================================================
+t-SNE CLUSTER ANALYSIS SUMMARY
+Antibiotic Resistance Patent Classification
+================================================================================
+
+Generated: 2026-02-26 16:49:41
+
+DATASET OVERVIEW
+--------------------------------------------------------------------------------
+Total Patent Families: 3,840
+Number of Clusters: 7
+IPC Codes Used for t-SNE: 25
+t-SNE Parameters: perplexity=30, max_iter=1000, random_state=42
+K-means Parameters: n_clusters=7, n_init=15, max_iter=500, random_state=42
+
+
+CLUSTER DISTRIBUTION
+--------------------------------------------------------------------------------
+Cluster 0: 360 families (9.4%)
+Cluster 1: 447 families (11.6%)
+Cluster 2: 514 families (13.4%)
+Cluster 3: 367 families (9.6%)
+Cluster 4: 733 families (19.1%)
+Cluster 5: 673 families (17.5%)
+Cluster 6: 746 families (19.4%)
+
+
+CLUSTER CHARACTERISTICS (TOP 3 IPC CODES WITH PERCENTAGES)
+--------------------------------------------------------------------------------
+
+Cluster 0 (360 families) | 143 IPC codes
+  C12Q   1: 1,122 occurrences (71.1% of families)
+    → Measuring or testing processes involving enzymes or microorganisms (diagnostic methods)
+  G01N  33: 562 occurrences (14.4% of families)
+    → Investigating or analyzing materials by specific methods (diagnostic testing)
+  G01N  21: 388 occurrences (41.4% of families)
+    → Investigating or analyzing materials by optical means
+
+Cluster 1 (447 families) | 192 IPC codes
+  A61K  31: 2,036 occurrences (76.1% of families)
+    → Medicinal preparations containing organic active ingredients
+  A61P  31: 808 occurrences (81.0% of families)
+    → Antiinfectives (antibacterials, antivirals, antimycotics, antiparasitics)
+  A61K  47: 419 occurrences (29.1% of families)
+    → Medicinal preparations characterized by non-active ingredients (excipients, carriers)
+
+Cluster 2 (514 families) | 312 IPC codes
+  C12N  15: 522 occurrences (8.9% of families)
+    → Mutation or genetic engineering; DNA or RNA concerning genetic engineering
+  A61P  31: 499 occurrences (45.3% of families)
+    → Antiinfectives (antibacterials, antivirals, antimycotics, antiparasitics)
+  A61K  38: 426 occurrences (28.2% of families)
+    → Medicinal preparations containing peptides
+
+Cluster 3 (367 families) | 135 IPC codes
+  C12Q   1: 1,035 occurrences (85.3% of families)
+    → Measuring or testing processes involving enzymes or microorganisms (diagnostic methods)
+  A61K  31: 165 occurrences (15.5% of families)
+    → Medicinal preparations containing organic active ingredients
+  C12M   1: 107 occurrences (14.2% of families)
+
+Cluster 4 (733 families) | 245 IPC codes
+  C12N  15: 1,408 occurrences (53.8% of families)
+    → Mutation or genetic engineering; DNA or RNA concerning genetic engineering
+  C12Q   1: 1,276 occurrences (36.3% of families)
+    → Measuring or testing processes involving enzymes or microorganisms (diagnostic methods)
+  G01N  33: 776 occurrences (29.7% of families)
+    → Investigating or analyzing materials by specific methods (diagnostic testing)
+
+Cluster 5 (673 families) | 325 IPC codes
+  A61K  31: 6,916 occurrences (56.6% of families)
+    → Medicinal preparations containing organic active ingredients
+  A61P  31: 2,488 occurrences (84.2% of families)
+    → Antiinfectives (antibacterials, antivirals, antimycotics, antiparasitics)
+  A61K  47: 802 occurrences (25.4% of families)
+    → Medicinal preparations characterized by non-active ingredients (excipients, carriers)
+
+Cluster 6 (746 families) | 273 IPC codes
+  A61K  31: 1,845 occurrences (68.5% of families)
+    → Medicinal preparations containing organic active ingredients
+  A61P  31: 1,187 occurrences (83.1% of families)
+    → Antiinfectives (antibacterials, antivirals, antimycotics, antiparasitics)
+  C12N  15: 460 occurrences (12.1% of families)
+    → Mutation or genetic engineering; DNA or RNA concerning genetic engineering
+
+
+CLUSTER INTERPRETATIONS
+--------------------------------------------------------------------------------
+
+Cluster 0 (360 families):
+  DIAGNOSTIC METHODS: Testing and detection of antibiotic resistance
+
+Cluster 1 (447 families):
+  PHARMACEUTICAL PREPARATIONS: Drug formulations and antibiotic therapies
+
+Cluster 2 (514 families):
+  MIXED TECHNOLOGIES
+
+Cluster 3 (367 families):
+  DIAGNOSTIC METHODS: Testing and detection of antibiotic resistance
+
+Cluster 4 (733 families):
+  MOLECULAR DIAGNOSTICS & BIOTECH: Genetic testing and diagnostic methods for resistance detection
+
+Cluster 5 (673 families):
+  PHARMACEUTICAL PREPARATIONS: Drug formulations and antibiotic therapies
+
+Cluster 6 (746 families):
+  PHARMACEUTICAL PREPARATIONS: Drug formulations and antibiotic therapies
+
+
+FILE OUTPUTS
+--------------------------------------------------------------------------------
+1. Antibiotic_Resistance_Elbow_Plot.png - Elbow method plot
+2. Antibiotic_Resistance_tSNE_Clusters.png - Static cluster visualization
+3. Antibiotic_Resistance_Interactive_Scatter.html - PNG-style interactive plot with cluster selector
+4. Antibiotic_Resistance_Cluster_Dashboard.html - Interactive dashboard with DataTables
+5. Antibiotic_Resistance_Cluster_Data.xlsx - Cluster assignments and metadata
+6. Antibiotic_Resistance_IPC_Binary_Matrices.xlsx - Binary IPC matrices by cluster
+7. Antibiotic_Resistance_tSNE_Summary.txt - This summary report
+
+================================================================================

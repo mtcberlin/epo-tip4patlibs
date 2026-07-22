@@ -15,6 +15,8 @@ Author: Arne Krüger (mtc.berlin / depa.tech) · License: **EPO Internal Use**.
 | `3_querylib/` | Query Library — ready-to-use PATSTAT queries |
 | `4_patstat_explorer/` | Applicant & technology search notebook + app |
 | `5_lead_generation/` | Regional lead generation — profile a region's EP/PCT applicants by portfolio depth × geographic reach, segment into lead tiers |
+| `6_patentreports/` | Landscape reports (**Riccardo Priore**) — triadic families, filing authorities, t-SNE clusters, interactive explorer. Ships **pre-executed** (see below) |
+| `7_ipscore/` | Patent valuation (**Riccardo Priore**) — EPO IPScore questionnaire → NPV; self-contained interactive HTML tools embedded via `IFrame` |
 | `setup/` | Install helpers (e.g. Claude Code) |
 | `harmonization/`, `ipc-extension/`, `context/`, `docs/` | Supporting analyses & material |
 | `_bmad*`, `.claude/`, `.agent/`, `.gemini/` | Agent tooling (BMAD workflows) — not course content |
@@ -40,3 +42,16 @@ persistent Claude Code + Git/SSH setup — see **`1_startwithtip/1_getting-start
 - Inside TIP, prefer PATSTAT (`env='PROD'`). The `*_bq.ipynb` variants are
   BigQuery ports and need separate credentials — not needed on TIP.
 - Git: SSH remotes, do work on `develop`, open PRs into `main`.
+
+### Guest modules 6 & 7 (Riccardo Priore)
+Modules `6_patentreports/` and `7_ipscore/` are contributed material, reworked to
+match this course's look. Two deliberate deviations from the conventions above:
+- **They ship pre-executed** (outputs kept) — modules 1–5 clear outputs so
+  participants run them; 6–7 are read as finished reports in a 90-min showcase.
+- **The header credits `created by Riccardo Priore`**, not the repo author.
+
+Never re-run or re-generate their code cells to "tidy" them — the outputs *are* the
+deliverable. Each folder has a `PROVENANCE.md` naming the upstream repo and commit;
+his repository stays the canonical source. IPScore is an **EPO tool** in an ASP
+adaptation. The IPScore HTML tools are *generated* from JSON + Jinja2 templates —
+edit the data or template and re-render, never the generated HTML.
