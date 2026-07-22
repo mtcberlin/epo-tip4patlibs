@@ -1,0 +1,542 @@
+{
+  "INSIGHTS": {
+    "B5": {
+      "1": "<strong>&#10060; Ostacolo critico.</strong> Cinque anni sono un percorso molto lungo. I costi di sviluppo si accumulano anno dopo anno senza nessun ricavo a compensarli — e quando finalmente arriverai sul mercato, i concorrenti potrebbero aver già occupato lo spazio. Questo scenario porta quasi sempre a un VAN molto basso o negativo.",
+      "2": "<strong>&#9888;&#65039; Ritardo significativo.</strong> Due anni di sviluppo residuo ritarderanno il primo euro di ricavi e aggiungeranno costi sostanziali. È ancora recuperabile, ma avrai bisogno di una lunga finestra di mercato e un forte impatto sui ricavi per compensare. Cerca modi per accelerare.",
+      "3": "<strong>&#9888;&#65039; Al limite — gestibile.</strong> Un anno al lancio è il minimo che raccomandiamo. I costi di sviluppo sono limitati e i ricavi iniziano entro 12 mesi. Se i parametri di mercato e finanziari sono solidi, puoi ancora raggiungere l'obiettivo VAN.",
+      "4": "<strong>&#9989; Posizione solida.</strong> Sei mesi al lancio significano costi residui minimi e ricavi che partono quasi subito. Un contributo positivo e concreto al tuo VAN.",
+      "5": "<strong>&#9989; Caso ottimale.</strong> Pronti a vendere oggi — zero ritardo, zero costi di sviluppo residui. Ogni flusso di cassa inizia dall'anno uno a piena intensità. VAN massimo da questo parametro."
+    },
+    "C2": {
+      "1": "<strong>&#10060; Mercato quasi stagnante.</strong> Con una crescita di appena lo 0,5% annuo, questo mercato è sostanzialmente piatto. I ricavi aumenteranno appena nel corso della vita del brevetto, e i flussi di cassa futuri perdono gran parte del loro valore una volta attualizzati. Costruire un VAN significativo in questo contesto è molto difficile.",
+      "2": "<strong>&#9888;&#65039; Crescita lenta.</strong> Al 2,5% annuo — grossomodo in linea con l'inflazione — c'è un modesto potenziale. Il brevetto può ancora creare valore, ma altri parametri devono essere particolarmente forti per compensare lo slancio limitato del mercato.",
+      "3": "<strong>&#9888;&#65039; Sano e gestibile.</strong> Un tasso di crescita annuo del 5% è solido. I ricavi si compongono a un ritmo ragionevole anno dopo anno. Compatibile con la maggior parte degli obiettivi VAN quando gli altri parametri sono anch'essi validi.",
+      "4": "<strong>&#9989; Crescita sostenuta.</strong> All'8% annuo, la tua base di ricavi si espande rapidamente. Ogni anno aggiuntivo sul mercato porta valore in misura significativamente maggiore. Un booster rilevante per il VAN.",
+      "5": "<strong>&#9989; Mercato eccezionale.</strong> Una crescita annua del 15% o più è straordinaria. I ricavi si compongono a velocità elevata, amplificando drasticamente il VAN. Se la tua tecnologia entra in un mercato con questa crescita, le prospettive finanziarie sono molto attraenti."
+    },
+    "C3": {
+      "1": "<strong>&#10060; Decisamente troppo breve.</strong> Sei mesi di esclusiva commerciale non bastano quasi mai a recuperare l'investimento. Nel momento in cui i concorrenti si mobilitano, la tua finestra si sta già chiudendo. Questo punteggio da solo impedisce tipicamente di raggiungere qualsiasi obiettivo VAN significativo.",
+      "2": "<strong>&#10060; Finestra molto stretta.</strong> Un anno offre una pista di entrate estremamente corta. Potrebbe funzionare solo se la tecnologia è già sul mercato (B5=5) e l'incremento dei ricavi è molto elevato (C6=5). Per la maggior parte delle situazioni, è insufficiente.",
+      "3": "<strong>&#9888;&#65039; Stretto ma gestibile.</strong> Due anni sono una finestra limitata. Puoi stabilire una posizione e iniziare a recuperare i costi, ma non c'è margine per ritardi o imprevisti. Gli altri parametri — in particolare C6 e C2 — devono essere forti.",
+      "4": "<strong>&#9989; Finestra solida.</strong> Quattro anni sono il minimo raccomandato per la maggior parte degli obiettivi VAN. Tempo sufficiente per far crescere la posizione, generare ricavi sostanziali e recuperare l'investimento con margine.",
+      "5": "<strong>&#9989; Eccellente.</strong> Otto anni di esclusiva competitiva sono lo scenario più favorevole possibile. Una lunga pista di ricavi protetti che moltiplica drasticamente il VAN — questo singolo parametro ha il maggiore impatto individuale di tutti nel modello."
+    },
+    "C6": {
+      "1": "<strong>&#10060; Impatto trascurabile.</strong> Meno dello 0,5% di incremento dei ricavi significa che il brevetto sposta appena l'ago della bilancia commerciale. Il ritorno finanziario fatica a giustificare anche solo il costo del mantenimento del brevetto nella maggior parte dei Paesi.",
+      "2": "<strong>&#9888;&#65039; Piccolo incremento.</strong> Un aumento del 2% dei ricavi è modesto. Su una base settoriale di €5M si traduce in circa €100K di ricavi aggiuntivi annui al picco — non trascurabile, ma compatibile con l'obiettivo VAN solo se gli altri parametri sono molto forti.",
+      "3": "<strong>&#9888;&#65039; Soglia gestibile.</strong> Un incremento del 4% è il minimo gestibile per la maggior parte degli obiettivi VAN. Su una base settoriale di €5M si traducono in circa €200K di ricavi aggiuntivi annui — significativo, soprattutto su una finestra di 4 anni.",
+      "4": "<strong>&#9989; Forte impatto commerciale.</strong> Un incremento del 6% dei ricavi mostra chiaramente che il mercato è disposto a pagare un premio per ciò che questo brevetto offre. Un driver VAN positivo e affidabile.",
+      "5": "<strong>&#9989; Eccezionale.</strong> Il 10% o più di ricavi aggiuntivi significa che il brevetto sta offrendo un vantaggio competitivo dominante — i clienti pagano significativamente di più o tu catturi una quota molto più ampia. Il driver di ricavi più forte nel modello."
+    },
+    "D1": {
+      "1": "<strong>&#10060; Il brevetto non protegge i ricavi centrali.</strong> Se la tua attività può andare avanti normalmente senza questo brevetto, allora non sta proteggendo nessun reddito essenziale. Il termine positivo più importante nella formula VAN — chiamato ricavi protetti — scende a quasi zero. Il brevetto ha un valore economico molto limitato in questo scenario.",
+      "2": "<strong>&#9888;&#65039; Dipendenza limitata.</strong> Solo il 25% della produzione sarebbe a rischio senza questo brevetto. C'è una certa protezione, ma la maggior parte dei ricavi non dipende dal brevetto. I ricavi protetti nella formula sono modesti.",
+      "3": "<strong>&#9888;&#65039; Dipendenza significativa.</strong> Senza questo brevetto, circa metà della produzione sarebbe a rischio. Questa rappresenta una protezione economica reale — il brevetto è importante per la tua attività e contribuisce significativamente al VAN.",
+      "4": "<strong>&#9989; Alta dipendenza.</strong> Solo il 25% della produzione sopravvivrebbe senza questo brevetto. Questa tecnologia è essenziale per le tue operazioni, e i ricavi protetti nella formula VAN sono elevati — un forte contributore positivo.",
+      "5": "<strong>&#9989; Protezione massima.</strong> L'intera attività dipende da questo brevetto. La componente di ricavi protetti del VAN è al suo massimo — questo brevetto è il tuo asset commerciale principale. La giustificazione finanziaria per mantenerlo e difenderlo è qui al suo punto più forte."
+    },
+    "D2": {
+      "1": "<strong>&#10060; Investimento residuo enorme.</strong> Spendere il 30% dei ricavi del settore in ulteriore sviluppo prima del lancio assorberà praticamente tutto il valore futuro. In questa situazione, ottenere un VAN positivo è quasi impossibile.",
+      "2": "<strong>&#9888;&#65039; Onere di costo elevato.</strong> Il 15% dei ricavi del settore ancora da spendere prima del lancio è un ostacolo alto. Avrai bisogno di una finestra di mercato lunga e commercialmente di successo per recuperarlo. Esplora attivamente se i costi possono essere ridotti.",
+      "3": "<strong>&#9888;&#65039; Costi moderati — gestibili.</strong> L'8% dei ricavi del settore ancora in sviluppo. È gestibile se il tempo al mercato è breve (punteggio 3 o superiore). Se il lancio è ancora a 2+ anni, questo livello di costi pesarà significativamente sul VAN.",
+      "4": "<strong>&#9989; Costi residui bassi.</strong> Solo il 2,5% dei ricavi del settore ancora da spendere prima del lancio. Sei vicino al traguardo. Investimento ridotto, ricavi imminenti — una posizione solida.",
+      "5": "<strong>&#9989; Praticamente terminato.</strong> Meno dell'1% di costi di sviluppo residui significa che sei pronto per la commercializzazione. I flussi di cassa futuri sono quasi completamente liberi dal peso dello sviluppo — beneficio netto massimo."
+    },
+    "D3": {
+      "1": "<strong>&#10060; Aumento significativo dei costi.</strong> La produzione diventa il 30% più costosa. Questo aumento erode il margine di profitto su ogni unità venduta, ogni anno — un freno persistente che si accumula per tutto il periodo di ricavi.",
+      "2": "<strong>&#9888;&#65039; Aumento dei costi — pianifica con attenzione.</strong> Un aumento del 15% dei costi di produzione è un onere reale e continuativo sui margini. Il tuo VAN sarà notevolmente inferiore rispetto a uno scenario neutro. Si possono ridurre questi costi con efficienze di processo?",
+      "3": "<strong>&#9888;&#65039; Neutro — né aiutato né penalizzato.</strong> Nessuna variazione nei costi di produzione. Il brevetto non rende la produzione più o meno costosa. Questo è il riferimento — accettabile, ma si perde il vantaggio del risparmio dei punteggi più alti.",
+      "4": "<strong>&#9989; Risparmio sui costi — ogni anno.</strong> La tecnologia riduce i costi di produzione del 15%. Ogni anno di operatività, risparmi rispetto a prima. Un contributo annuo significativo e ricorrente al VAN.",
+      "5": "<strong>&#9989; Eccellente guadagno di efficienza.</strong> Il 30% in meno di costi di produzione significa che il brevetto rende le tue operazioni molto più competitive. Questo risparmio ricorrente si accumula per tutto il periodo di ricavi ed è uno dei contributori annui più potenti al VAN."
+    },
+    "D4": {
+      "1": "<strong>&#10060; Elevato fabbisogno di capitale iniziale.</strong> Aver bisogno del 20% di capitale in più rispetto a oggi per implementare questa tecnologia crea un costo una tantum significativo al lancio. Questo riduce il VAN dei primi anni e mette pressione sui flussi di cassa proprio quando i ricavi stanno appena iniziando.",
+      "2": "<strong>&#9888;&#65039; Investimento extra moderato al lancio.</strong> Il 10% di capitale in più rispetto a oggi — un onere gestibile, ma che riduce il VAN del primo anno. Vale la pena trovare modi per ridurlo se possibile.",
+      "3": "<strong>&#9888;&#65039; Nessun cambiamento di capitale — neutro.</strong> Lo stesso investimento di oggi. Il brevetto non richiede alcun esborso di capitale aggiuntivo, il che è un riferimento accettabile.",
+      "4": "<strong>&#9989; Risparmio di capitale al lancio.</strong> Il 30% di capitale in meno significa che liberi risorse significative nel primo anno commerciale. Un miglioramento reale del VAN iniziale e della flessibilità finanziaria.",
+      "5": "<strong>&#9989; Risparmio di capitale rilevante.</strong> Dimezzare il fabbisogno di capitale è eccellente — ottieni molto di più con molto meno investimento iniziale. Il miglioramento più forte possibile al flusso di cassa dell'anno di lancio."
+    }
+  },
+  "PARAM_META": {
+    "B5": {
+      "icon": "&#9200;",
+      "name": "Tempo al Mercato"
+    },
+    "C2": {
+      "icon": "&#128200;",
+      "name": "Tasso di Crescita del Mercato"
+    },
+    "C3": {
+      "icon": "&#128336;",
+      "name": "Finestra Competitiva"
+    },
+    "C6": {
+      "icon": "&#128181;",
+      "name": "Incremento dei Ricavi"
+    },
+    "D1": {
+      "icon": "&#128274;",
+      "name": "Dipendenza Aziendale"
+    },
+    "D2": {
+      "icon": "&#128295;",
+      "name": "Costi di Sviluppo Residui"
+    },
+    "D3": {
+      "icon": "&#9881;",
+      "name": "Effetto sui Costi di Produzione"
+    },
+    "D4": {
+      "icon": "&#127970;",
+      "name": "Investimento in Capitale"
+    }
+  },
+  "PARAM_TIPS": {
+    "B5": {
+      "red": "Accelera immediatamente il percorso verso il mercato — questa è l'azione ad altissima priorità. Ogni anno aggiuntivo di ritardo prima del lancio è estremamente costoso.",
+      "yellow": "Sei vicino al lancio. Concentrati sull'eliminare gli ostacoli residui per ridurre il tempo al mercato sotto 1 anno, se possibile.",
+      "green": "Bene. Proteggi questa tempistica — evita derive di scope o ritardi regolatori che potrebbero posticipare la data di lancio."
+    },
+    "C2": {
+      "red": "Il mercato che stai puntando cresce molto lentamente. Considera se segmenti adiacenti in più rapida crescita potrebbero essere raggiunti con la stessa tecnologia.",
+      "yellow": "Crescita moderata del mercato. Assicurati che la tua finestra commerciale (C3) e l'incremento dei ricavi (C6) siano il più forti possibile per compensare.",
+      "green": "Forte crescita del mercato — assicurati che il tuo piano commerciale sia pronto a coglierla prima che i concorrenti si muovano."
+    },
+    "C3": {
+      "red": "La tua finestra competitiva è troppo breve per recuperare l'investimento. Rifletti su cosa potrebbe estendere l'esclusiva di mercato: rivendicazioni più ampie, segreti commerciali, barriere regolamentari.",
+      "yellow": "Una finestra di 2 anni è stretta. Lavora sulla creazione di costi di switching, relazioni con i clienti e innovazioni successive per estenderla.",
+      "green": "Una finestra competitiva solida. Usala attivamente — la finestra non rimarrà aperta per sempre."
+    },
+    "C6": {
+      "red": "Il brevetto sta generando pochissimo incremento commerciale. Rivedi se la tecnologia è genuinamente differenziata agli occhi dei clienti.",
+      "yellow": "L'incremento dei ricavi è gestibile ma modesto. Investi nella validazione commerciale — i clienti sono effettivamente disposti a pagare un premio?",
+      "green": "Forte impatto commerciale. Capitalizzalo attraverso la strategia di prezzo e un focus attivo sulle vendite che valorizzi i benefici abilitati dal brevetto."
+    },
+    "D1": {
+      "red": "Questo brevetto protegge pochi ricavi centrali. Il caso economico per mantenerlo è debole a meno che gli altri parametri non siano eccezionali.",
+      "yellow": "Il brevetto protegge circa la metà dei tuoi ricavi — una dipendenza significativa ma non critica. Considera di ristrutturare le operazioni per aumentare la dipendenza dalla tecnologia brevettata.",
+      "green": "Il brevetto protegge il cuore della tua attività. Questo è un forte argomento per investire nella sua difesa ed estensione."
+    },
+    "D2": {
+      "red": "I costi di sviluppo residui sono molto elevati e danneggeranno gravemente il VAN. Cerca finanziamenti (bandi, crediti fiscali R&S) e delimita rigorosamente ciò che è strettamente necessario.",
+      "yellow": "Costi residui moderati. Richiedi incentivi R&S e regimi Patent Box fiscali ove disponibili — possono ridurre significativamente il costo effettivo.",
+      "green": "Costi residui bassi. Assicurati che lo sviluppo rimanga nei tempi e nel budget per preservare questo vantaggio."
+    },
+    "D3": {
+      "red": "La produzione diventa significativamente più costosa. Esplora miglioramenti di processo, automazione o esternalizzazione per ridurre l'impatto sui costi prima del lancio.",
+      "yellow": "Posizione di costo neutrale. Cerca opportunità di trasformare questo in un vantaggio di costo attraverso l'ottimizzazione dei processi.",
+      "green": "La tecnologia ti rende più efficiente — rendilo parte della tua storia commerciale, poiché costi più bassi significano prezzi più competitivi o margini più alti."
+    },
+    "D4": {
+      "red": "Il fabbisogno di capitale aggiuntivo al lancio è elevato. Esplora leasing, rollout graduale o produzione in conto terzi per ridurre l'esborso iniziale.",
+      "yellow": "Investimento neutro. Nessun onere extra, ma nemmeno risparmio — cerca opportunità per ridurre l'impronta di capitale.",
+      "green": "Minori fabbisogni di capitale liberano risorse. Usa questa flessibilità finanziaria per rafforzare altre parti del piano aziendale."
+    }
+  },
+  "OEK_VALUES": {
+    "B5": [
+      5,
+      2,
+      1,
+      0.5,
+      0
+    ],
+    "C2": [
+      0.005,
+      0.025,
+      0.05,
+      0.08,
+      0.15
+    ],
+    "C3": [
+      0.5,
+      1,
+      2,
+      4,
+      8
+    ],
+    "C6": [
+      0.005,
+      0.02,
+      0.04,
+      0.06,
+      0.1
+    ],
+    "D1": [
+      1,
+      0.75,
+      0.5,
+      0.25,
+      0
+    ],
+    "D2": [
+      0.3,
+      0.15,
+      0.08,
+      0.025,
+      0.005
+    ],
+    "D3": [
+      1.3,
+      1.15,
+      1,
+      0.85,
+      0.7
+    ],
+    "D4": [
+      1.2,
+      1.1,
+      1,
+      0.7,
+      0.5
+    ]
+  },
+  "COLORS": {
+    "B5": [
+      "red",
+      "red",
+      "yellow",
+      "green",
+      "green"
+    ],
+    "C2": [
+      "red",
+      "red",
+      "yellow",
+      "green",
+      "green"
+    ],
+    "C3": [
+      "red",
+      "red",
+      "yellow",
+      "green",
+      "green"
+    ],
+    "C6": [
+      "red",
+      "red",
+      "yellow",
+      "green",
+      "green"
+    ],
+    "D1": [
+      "red",
+      "red",
+      "yellow",
+      "green",
+      "green"
+    ],
+    "D2": [
+      "red",
+      "red",
+      "yellow",
+      "green",
+      "green"
+    ],
+    "D3": [
+      "red",
+      "red",
+      "yellow",
+      "green",
+      "green"
+    ],
+    "D4": [
+      "red",
+      "red",
+      "yellow",
+      "green",
+      "green"
+    ]
+  },
+  "QUAL_QUESTIONS": [
+    {
+      "id": "Ag",
+      "t": "Il brevetto &egrave; ufficialmente concesso da un ufficio brevetti?",
+      "opts": [
+        "Non ancora — in attesa di esame, o non ancora depositato",
+        "Sì, è concesso — ma il periodo di opposizione è ancora aperto",
+        "Sì, pienamente concesso — e non vi sono opposizioni pendenti"
+      ]
+    },
+    {
+      "id": "Al",
+      "t": "Quanti anni di protezione brevettuale ti restano ancora?",
+      "opts": [
+        "Meno di 4 anni residui",
+        "Tra 4 e 8 anni residui",
+        "Più di 8 anni residui"
+      ]
+    },
+    {
+      "id": "Ab",
+      "t": "Quanto ampiamente il brevetto protegge la tecnologia?",
+      "opts": [
+        "In modo ristretto — solo una forma molto specifica del prodotto",
+        "In modo moderato — i concorrenti dovrebbero fare uno sforzo reale per aggirarlo",
+        "In modo ampio — copre il principio centrale, molto difficile da eludere"
+      ]
+    },
+    {
+      "id": "Ac",
+      "t": "In quanti Paesi o mercati il brevetto &egrave; registrato?",
+      "opts": [
+        "In un solo Paese",
+        "In alcuni mercati chiave (circa 3&ndash;5 Paesi)",
+        "In tutti i principali mercati rilevanti a livello mondiale"
+      ]
+    },
+    {
+      "id": "Ec",
+      "t": "Quanto è centrale questo brevetto per ciò che fa la tua azienda?",
+      "opts": [
+        "Non molto centrale — supporta un'attività secondaria",
+        "In parte centrale — sostiene una linea di business importante",
+        "Assolutamente centrale — è un pilastro di tutta l'attività"
+      ]
+    },
+    {
+      "id": "Es",
+      "t": "Esiste un piano commerciale chiaro su come verrà utilizzato questo brevetto?",
+      "opts": [
+        "Nessun piano definito al momento",
+        "Esiste un piano parziale, ma non è ancora completamente sviluppato",
+        "Pienamente integrato nella strategia aziendale"
+      ]
+    }
+  ],
+  "OEK_CARDS": [
+    {
+      "id": "B5",
+      "icon": "&#9200;",
+      "title": "Tempo al Mercato",
+      "question": "Quando sarà pronta la tecnologia per generare vendite?",
+      "context": "Ogni anno di ritardo prima del lancio significa costi di sviluppo che si accumulano senza entrate a compensarli. Una tecnologia già vendibile oggi vale enormemente di più di una che necessita ancora di 2 o 3 anni di lavoro — anche se tutto il resto è identico.",
+      "opts": [
+        {
+          "label": "Oltre 5 anni",
+          "desc": "Siamo ancora in fase di ricerca o sviluppo — il lancio è lontano"
+        },
+        {
+          "label": "Circa 2 anni",
+          "desc": "Resta ancora lavoro di sviluppo significativo prima del lancio"
+        },
+        {
+          "label": "Circa 1 anno",
+          "desc": "Prevediamo di essere pronti al lancio entro i prossimi 12 mesi"
+        },
+        {
+          "label": "Circa 6 mesi",
+          "desc": "Le preparazioni finali sono in corso — il lancio è imminente"
+        },
+        {
+          "label": "Pronti ora",
+          "desc": "La tecnologia è completamente sviluppata e possiamo iniziare a vendere oggi"
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "icon": "&#128200;",
+      "title": "Tasso di Crescita del Mercato",
+      "question": "Con che velocità cresce ogni anno il mercato in cui stai entrando?",
+      "context": "Un mercato in crescita più rapida significa che ogni anno in cui sei sul mercato, la tua base di ricavi si espande naturalmente — ancora prima di considerare i tuoi sforzi commerciali.",
+      "opts": [
+        {
+          "label": "Molto lento — circa 0,5% all'anno",
+          "desc": "Un mercato maturo o in declino, quasi fermo"
+        },
+        {
+          "label": "Lento — circa 2,5% all'anno",
+          "desc": "Crescita modesta, grossomodo in linea con l'inflazione"
+        },
+        {
+          "label": "Moderato — circa 5% all'anno",
+          "desc": "Mercato sano e stabile, in espansione a ritmo solido"
+        },
+        {
+          "label": "Rapido — circa 8% all'anno",
+          "desc": "Settore dinamico e in espansione, con forte slancio"
+        },
+        {
+          "label": "Molto rapido — 15% o più all'anno",
+          "desc": "Mercato ad alta crescita o in boom, in rapida espansione"
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "icon": "&#128336;",
+      "title": "Finestra Competitiva (Durata Commerciale)",
+      "question": "Una volta sul mercato, per quanti anni riuscirai realisticamente a mantenere un vantaggio competitivo prima che arrivino sostituti o imitatori?",
+      "context": "Sono gli anni di entrate protette o semi-protette su cui puoi realisticamente contare. Potrebbero finire prima della scadenza del brevetto se i concorrenti trovano soluzioni alternative. Sii onesto — sovrastimare questo parametro è l'errore di previsione più comune.",
+      "opts": [
+        {
+          "label": "Circa 6 mesi",
+          "desc": "I concorrenti reagiranno e si avvicineranno molto rapidamente"
+        },
+        {
+          "label": "Circa 1 anno",
+          "desc": "Una finestra brevissima prima che emergano sostituti"
+        },
+        {
+          "label": "Circa 2 anni",
+          "desc": "Tempo sufficiente per stabilire una posizione, ma molto stretto"
+        },
+        {
+          "label": "Circa 4 anni",
+          "desc": "Una finestra solida — abbastanza per crescere e recuperare l'investimento"
+        },
+        {
+          "label": "8 anni o più",
+          "desc": "Vantaggio duraturo con elevate barriere all'imitazione"
+        }
+      ]
+    },
+    {
+      "id": "C6",
+      "icon": "&#128181;",
+      "title": "Incremento dei Ricavi",
+      "question": "Di quanto questo brevetto aumenterà i ricavi nella tua area di business, rispetto a operare senza di esso?",
+      "context": "Pensala come il premio commerciale che il brevetto garantisce: vendite aggiuntive grazie a un prodotto superiore, prezzi più alti, o nuovi clienti che altrimenti non raggiungeresti.",
+      "opts": [
+        {
+          "label": "Molto piccolo — meno dello 0,5% dei ricavi del settore",
+          "desc": "Differenza commercialmente quasi impercettibile"
+        },
+        {
+          "label": "Piccolo — circa il 2% dei ricavi del settore",
+          "desc": "Incremento modesto, visibile ma non drammatico"
+        },
+        {
+          "label": "Moderato — circa il 4% dei ricavi del settore",
+          "desc": "Un vantaggio competitivo significativo, percepito dai clienti"
+        },
+        {
+          "label": "Significativo — circa il 6% dei ricavi del settore",
+          "desc": "Un chiaro e forte premio commerciale generato dal brevetto"
+        },
+        {
+          "label": "Importante — 10% o più dei ricavi del settore",
+          "desc": "Un vantaggio dominante — i clienti pagano sostanzialmente di più o scelgono te"
+        }
+      ]
+    },
+    {
+      "id": "D1",
+      "icon": "&#128274;",
+      "title": "Dipendenza Aziendale",
+      "question": "Se questo brevetto venisse rimosso oggi, quale parte della tua attività potresti ancora gestire?",
+      "context": "Più la tua azienda dipende da questo brevetto, più entrate protegge — e quindi maggiore è il suo valore economico. Un brevetto che protegge una caratteristica marginale di un prodotto vale molto meno di uno senza cui l'intera azienda crollerebbe.",
+      "opts": [
+        {
+          "label": "Tutta — l'attività andrebbe avanti normalmente",
+          "desc": "Il brevetto non protegge nessun ricavo essenziale"
+        },
+        {
+          "label": "Circa tre quarti — perderemmo circa il 25% della produzione",
+          "desc": "Una certa dipendenza, ma la maggior parte dell'attività sopravvivrebbe"
+        },
+        {
+          "label": "Circa la metà — perderemmo circa il 50% della produzione",
+          "desc": "Il brevetto protegge una parte importante dell'attività"
+        },
+        {
+          "label": "Circa un quarto — perderemmo circa il 75% della produzione",
+          "desc": "L'attività dipende fortemente da questa tecnologia"
+        },
+        {
+          "label": "Nulla — l'intera attività dipende da questo brevetto",
+          "desc": "Senza di esso, l'azienda non può operare"
+        }
+      ]
+    },
+    {
+      "id": "D2",
+      "icon": "&#128295;",
+      "title": "Costi di Sviluppo Residui",
+      "question": "Quanto denaro deve ancora essere investito in questa tecnologia prima che sia pronta per la vendita?",
+      "context": "Questi sono i costi da sostenere prima di vedere qualsiasi ricavo — compaiono come flussi di cassa negativi negli anni iniziali e riducono direttamente il VAN.",
+      "opts": [
+        {
+          "label": "Molto elevati — circa il 30% dei ricavi annui del settore",
+          "desc": "Investimento residuo enorme prima del lancio"
+        },
+        {
+          "label": "Elevati — circa il 15% dei ricavi annui del settore",
+          "desc": "Costi ancora sostanziali prima della commercializzazione"
+        },
+        {
+          "label": "Moderati — circa l'8% dei ricavi annui del settore",
+          "desc": "Investimento pre-lancio significativo ma gestibile"
+        },
+        {
+          "label": "Bassi — circa il 2–3% dei ricavi annui del settore",
+          "desc": "Costi residui ridotti — siamo quasi pronti"
+        },
+        {
+          "label": "Minimi — meno dell'1% dei ricavi annui del settore",
+          "desc": "Praticamente finito — sviluppo ulteriore quasi nullo"
+        }
+      ]
+    },
+    {
+      "id": "D3",
+      "icon": "&#9881;&#65039;",
+      "title": "Effetto sui Costi di Produzione",
+      "question": "Una volta commercializzata, questa tecnologia renderà la tua produzione più costosa o meno costosa rispetto a oggi?",
+      "context": "Questo effetto si applica ogni anno di operatività. Un risparmio sui costi si accumula per tutto il periodo di ricavi — un aumento dei costi è un freno persistente sui margini.",
+      "opts": [
+        {
+          "label": "Molto più costosa — i costi di produzione aumentano di circa il 30%",
+          "desc": "Un significativo onere sui costi ogni anno"
+        },
+        {
+          "label": "Leggermente più costosa — i costi aumentano di circa il 15%",
+          "desc": "Un aumento moderato dei costi annui"
+        },
+        {
+          "label": "Nessun cambiamento — i costi di produzione restano invariati",
+          "desc": "Neutro — né risparmio né aumento"
+        },
+        {
+          "label": "Leggermente meno costosa — i costi di produzione calano di circa il 15%",
+          "desc": "Un risparmio annuo significativo sulle operazioni"
+        },
+        {
+          "label": "Molto meno costosa — i costi di produzione calano di circa il 30%",
+          "desc": "Un importante guadagno di efficienza ogni anno di operatività"
+        }
+      ]
+    },
+    {
+      "id": "D4",
+      "icon": "&#127970;",
+      "title": "Investimento in Capitale al Lancio",
+      "question": "Per implementare commercialmente questa tecnologia, avrai bisogno di più o meno attrezzatura capitale rispetto a quella che hai oggi?",
+      "context": "Si tratta di un costo una tantum al momento del lancio. Un investimento aggiuntivo elevato riduce il VAN dei primi anni; averne bisogno di meno è un bonus positivo.",
+      "opts": [
+        {
+          "label": "Significativamente di più — circa il 20% in più di capitale rispetto a oggi",
+          "desc": "Un esborso iniziale sostanziale al lancio"
+        },
+        {
+          "label": "Leggermente di più — circa il 10% in più di capitale rispetto a oggi",
+          "desc": "Un investimento aggiuntivo moderato al lancio"
+        },
+        {
+          "label": "Lo stesso — nessun cambiamento nel fabbisogno di capitale",
+          "desc": "Neutro — stesso livello di investimento di oggi"
+        },
+        {
+          "label": "Meno — circa il 30% in meno di capitale rispetto a oggi",
+          "desc": "Un risparmio significativo di capitale al lancio"
+        },
+        {
+          "label": "Molto meno — circa il 50% in meno di capitale rispetto a oggi",
+          "desc": "Dimezzare il fabbisogno — risparmio rilevante di capitale"
+        }
+      ]
+    }
+  ]
+}

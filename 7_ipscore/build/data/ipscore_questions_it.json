@@ -1,0 +1,690 @@
+[
+  {
+    "id": "A1",
+    "sec": "A",
+    "t": "Qual è lo stato del brevetto?",
+    "opts": [
+      "Brevetto non ancora depositato",
+      "Domanda di brevetto depositata",
+      "Ricerca di anteriorità e valutazione di brevettabilità completate",
+      "Brevetto concesso",
+      "Periodo di opposizione scaduto senza opposizioni"
+    ],
+    "h": "<strong>Perché conta:</strong> Un brevetto in fase di domanda ha ancora incertezza sulla concessione; un brevetto concesso offre piena protezione. <strong>Iter in Europa (EPO):</strong> dalla domanda alla concessione passano mediamente 3–5 anni. <strong>Consiglio:</strong> se siete ancora in fase di domanda, considerate il punteggio in ottica futura una volta concesso.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "A2",
+    "sec": "A",
+    "t": "Qual è la solidità giuridica del brevetto?",
+    "opts": [
+      "Nessuna ricerca di anteriorità effettuata",
+      "Ricerca rapida ('quick & dirty') effettuata su database pubblici",
+      "Ricerca di anteriorità presso un ufficio nazionale",
+      "Ricerca internazionale (ISR/PCT) effettuata",
+      "Ricerca di anteriorità e ricerca di contraffazione completa"
+    ],
+    "h": "<strong>Cosa misura:</strong> quanto il brevetto è difendibile in caso di contestazione. <strong>Benchmark italiano:</strong> una ricerca professionale completa (anteriorità + contraffazione) costa €3.000–€8.000 ma aumenta significativamente il valore legale del brevetto. <strong>PCT:</strong> la ricerca internazionale PCT è lo standard per brevetti multi-paese.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "A3",
+    "sec": "A",
+    "t": "Per quanto tempo è ancora valido il brevetto?",
+    "opts": [
+      "0–2 anni di vita residua",
+      "2–4 anni di vita residua",
+      "4–8 anni di vita residua",
+      "8–12 anni di vita residua",
+      "Oltre 12 anni di vita residua"
+    ],
+    "h": "<strong>Durata massima:</strong> 20 anni dalla data di deposito (art. 60 CPI). <strong>Eccezione farmaceutica:</strong> il Certificato Complementare di Protezione (CCP) può estendere la tutela fino a 5 anni extra. <strong>Tasse annuali EPO:</strong> crescono da ~€500 (anno 3) a ~€1.800+ (anno 10+); considerare se il rinnovo è economicamente sostenibile.",
+    "oek": null,
+    "risk": 1,
+    "opp": 1
+  },
+  {
+    "id": "A4",
+    "sec": "A",
+    "t": "Quanto sono ampie e inclusive le rivendicazioni del brevetto?",
+    "opts": [
+      "Rivendicazioni molto strette e specifiche",
+      "Rivendicazioni abbastanza strette",
+      "Rivendicazioni ragionevolmente ampie",
+      "Rivendicazioni ampiamente inclusive",
+      "Le rivendicazioni riguardano un principio generale (tecnologia di base)"
+    ],
+    "h": "<strong>Cosa sono le rivendicazioni:</strong> definiscono lo spazio di monopolio legale. Più sono ampie, più difficile per i concorrenti aggirarle. <strong>Trade-off:</strong> rivendicazioni troppo ampie possono essere invalidate per mancanza di base nella descrizione. <strong>Strategia consigliata:</strong> strutturare in rivendicazione principale ampia + rivendicazioni dipendenti di fall-back.",
+    "oek": null,
+    "risk": 0,
+    "opp": 1
+  },
+  {
+    "id": "A5",
+    "sec": "A",
+    "t": "La copertura geografica del brevetto include i mercati rilevanti?",
+    "opts": [
+      "Protezione in un singolo mercato nazionale",
+      "Protezione in pochi paesi del mercato di riferimento",
+      "Protezione nella maggior parte dei paesi rilevanti",
+      "Protezione in tutti i paesi del mercato attuale",
+      "Protezione in tutti i paesi attuali e potenzialmente rilevanti"
+    ],
+    "h": "<strong>Costi orientativi:</strong> brevetto europeo (EPC) con validazione in 5 paesi ≈ €15.000–€25.000 totali nei 10 anni; PCT globale molto di più. <strong>Paesi prioritari per le PMI italiane:</strong> DE, FR, GB, US, CN sono spesso i mercati più critici. <strong>Consiglio:</strong> coprire almeno i paesi dei principali clienti e dei concorrenti più pericolosi.",
+    "oek": null,
+    "risk": 1,
+    "opp": 1
+  },
+  {
+    "id": "A6",
+    "sec": "A",
+    "t": "Il brevetto viene monitorato per identificare eventuali violazioni?",
+    "opts": [
+      "Nessun monitoraggio contro le contraffazioni",
+      "Monitoraggio casuale tramite segnalazioni commerciali",
+      "Monitoraggio sistematico parziale di prodotti concorrenti selezionati",
+      "Monitoraggio sistematico dei mercati rilevanti",
+      "Monitoraggio globale formalizzato con watchdog dedicato"
+    ],
+    "h": "<strong>Strumenti disponibili:</strong> alert automatici su Espacenet/USPTO, servizi di watch brevettuale (€500–€3.000/anno). <strong>Perché è importante:</strong> senza monitoraggio, le violazioni non vengono rilevate e il brevetto perde valore pratico. <strong>Per PMI:</strong> anche un monitoraggio annuale manuale dei principali concorrenti è meglio di nulla.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "A7",
+    "sec": "A",
+    "t": "Sono frequenti controversie legali nei mercati operativi?",
+    "opts": [
+      "Procedimenti legali molto frequenti nel settore",
+      "Procedimenti legali presenti nel settore",
+      "Controversie (pre-contenziosi) frequenti nel settore",
+      "Controversie occasionali",
+      "Controversie e procedimenti legali non abituali nel settore"
+    ],
+    "h": "<strong>Nota contro-intuitiva:</strong> un settore litigioso abbassa il punteggio perché difendere il brevetto è costoso e rischioso. <strong>Benchmark:</strong> settori ad alto contenzioso: farmaceutico, ICT/software, semiconduttori. Settori a basso contenzioso: molti settori manifatturieri tradizionali italiani. <strong>Costi di un contenzioso:</strong> un'azione legale brevettuale in Italia può costare €50.000–€300.000.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "A8",
+    "sec": "A",
+    "t": "L'azienda ha i mezzi per far rispettare i diritti brevettuali?",
+    "opts": [
+      "Generalmente troppo costoso e difficile far valere i diritti",
+      "Diritti difesi solo in paesi selezionati nei mercati principali",
+      "Diritti difesi nei confronti di concorrenti selezionati",
+      "Diritti difesi in quasi tutti i casi se non troppo costoso",
+      "I diritti brevettuali vengono sempre difesi"
+    ],
+    "h": "<strong>Alternative al contenzioso classico:</strong> la mediazione brevettuale (WIPO) o le clausole di arbitrato nei contratti possono ridurre i costi. <strong>Assicurazione brevettuale:</strong> prodotti come \"Patent Insurance\" (es. Arag, DAS) coprono parte dei costi legali — premi da €2.000–€10.000/anno. <strong>Per piccole aziende:</strong> valutare partnership con studi legali specializzati a quota di successo.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "B1",
+    "sec": "B",
+    "t": "L'invenzione è una tecnologia unica nel suo campo?",
+    "opts": [
+      "L'invenzione ha un effetto marginale rispetto alla tecnologia esistente",
+      "L'invenzione ha qualche miglioramento rispetto all'esistente",
+      "L'invenzione ha un miglioramento significativo rispetto all'esistente",
+      "L'invenzione ha un miglioramento sostanziale ed è chiaramente innovativa",
+      "L'invenzione può cambiare il modo in cui il settore opera"
+    ],
+    "h": "<strong>Come valutare:</strong> confrontare con lo stato dell'arte al momento del deposito. <strong>Segnali di alta unicità:</strong> assenza di prior art simile, pubblicazioni scientifiche che la citano, interesse di grandi aziende all'acquisto o licensing. <strong>Consiglio:</strong> richiedere un FTO (Freedom to Operate) analysis per identificare eventuali brevetti bloccanti (costo €3.000–€8.000).",
+    "oek": null,
+    "risk": 0,
+    "opp": 1
+  },
+  {
+    "id": "B2",
+    "sec": "B",
+    "t": "L'invenzione è tecnicamente superiore alle tecnologie sostitutive?",
+    "opts": [
+      "La tecnologia opera in un campo dominato da tecnologie sostitutive nuove e più avanzate",
+      "Esiste un'ampia gamma di tecnologie sostitutive abbastanza competitive",
+      "Esistono tecnologie sostitutive ma limitate nell'uso e nell'applicazione",
+      "Esistono tecnologie sostitutive ma non ancora competitive",
+      "Non esistono tecnologie sostitutive note"
+    ],
+    "h": "<strong>Cosa sono le tecnologie sostitutive:</strong> soluzioni diverse che risolvono lo stesso problema (es. streaming vs. DVD). <strong>Esempio italiano:</strong> una macchina di packaging brevettata affronta la \"minaccia\" di soluzioni manuali o di processi completamente diversi. <strong>Analisi consigliata:</strong> mappare le alternative tecnologiche sul mercato e valutarne la maturità.",
+    "oek": null,
+    "risk": 1,
+    "opp": 1
+  },
+  {
+    "id": "B3",
+    "sec": "B",
+    "t": "In che misura l'invenzione è stata testata?",
+    "opts": [
+      "L'invenzione è stata testata solo in teoria (calcoli/simulazioni)",
+      "Sono stati effettuati esperimenti o test isolati",
+      "Test di produzione completati con successo",
+      "Produzione in fase di avviamento (ramp-up)",
+      "Produzione a piena scala già operativa"
+    ],
+    "h": "<strong>Perché conta:</strong> il grado di maturità tecnologica (TRL - Technology Readiness Level) influenza direttamente il rischio commerciale. <strong>TRL corrispondente:</strong> 1=TRL 1-3, 2=TRL 4, 3=TRL 5-6, 4=TRL 7-8, 5=TRL 9. <strong>Per i finanziatori:</strong> i bandi MISE/MUR e Horizon Europe valutano spesso il TRL come requisito minimo.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "B4",
+    "sec": "B",
+    "t": "La tecnologia brevettata richiede nuove competenze o attrezzature produttive?",
+    "opts": [
+      "Richiede un processo produttivo completamente nuovo da zero",
+      "Sviluppo sostanziale dei processi produttivi necessario prima di poterla utilizzare",
+      "Qualche sviluppo dei processi produttivi necessario",
+      "Solo lievi adattamenti necessari ai processi esistenti",
+      "Può essere utilizzata con la tecnologia produttiva attuale senza modifiche"
+    ],
+    "h": "<strong>Impatto sui costi:</strong> un processo completamente nuovo può richiedere €100K–€2M+ in investimenti. <strong>Agevolazioni disponibili:</strong> Industria 4.0 (iper-ammortamento 250% su beni tecnologici), bandi Simest/SACE per internazionalizzazione. <strong>Suggerimento:</strong> valutare contratti di produzione in conto terzi (terzisti) per ridurre l'investimento iniziale.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "B5",
+    "sec": "B",
+    "t": "Quanto tempo è necessario prima che la tecnologia possa essere commercializzata?",
+    "opts": [
+      "5 anni prima della commercializzazione [valore: 5]",
+      "2 anni [valore: 2]",
+      "1 anno [valore: 1]",
+      "6 mesi [valore: 0,5]",
+      "Pronta per le attività commerciali — 0 anni [valore: 0]"
+    ],
+    "h": "<strong>Questo valore viene usato nel calcolo VAN:</strong> sposta in avanti l'orizzonte dei ricavi e riduce il valore attuale netto. <strong>Componenti tipiche del tempo:</strong> sviluppo prodotto, certificazioni (CE, ISO), approvazioni regolatorie (AIFA per farmaci), scaling produttivo. <strong>Consiglio:</strong> agire sul time-to-market è spesso il miglior investimento per massimizzare il VAN.",
+    "oek": [
+      5,
+      2,
+      1,
+      0.5,
+      0
+    ],
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "B6",
+    "sec": "B",
+    "t": "I prodotti contraffattori sono facili da produrre da parte dei concorrenti?",
+    "opts": [
+      "La tecnologia è facilmente identificabile, facile da copiare e riprodurre",
+      "La tecnologia è facile da copiare e produrre",
+      "La tecnologia è comparativamente facile da identificare, copiare e produrre",
+      "La tecnologia è complessa e difficile da copiare e produrre",
+      "La tecnologia è complessa ed estremamente difficile da copiare e produrre"
+    ],
+    "h": "<strong>Strategie di protezione aggiuntive:</strong> segreto industriale complementare al brevetto, complessità tecnica intrinseca, supply chain esclusiva. <strong>Esempio positivo:</strong> tecnologie che richiedono materiali speciali, processi ad alta precisione o know-how tacito difficile da replicare. <strong>Nota legale:</strong> il know-how non brevettato è protetto dall'art. 98-99 CPI come segreto commerciale.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "B7",
+    "sec": "B",
+    "t": "I prodotti contraffattori sono facili da identificare?",
+    "opts": [
+      "È estremamente difficile identificare prodotti contraffattori",
+      "È difficile ma non impossibile identificare prodotti contraffattori",
+      "È abbastanza facile identificare prodotti contraffattori",
+      "È facile identificare prodotti contraffattori",
+      "È estremamente facile identificare prodotti contraffattori"
+    ],
+    "h": "<strong>Perché importa:</strong> se la violazione è facilmente rilevabile, i concorrenti sono più deterriti e il brevetto vale di più in pratica. <strong>Strumenti di rilevamento:</strong> analisi chimica/spettroscopica, ingegneria inversa, confronto visivo/funzionale, monitoraggio fiere e cataloghi. <strong>Settori a bassa rilevabilità:</strong> processi chimici intermedi, software, metodi di business.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "B8",
+    "sec": "B",
+    "t": "Il deployment della tecnologia dipende da accordi di licenza con terzi?",
+    "opts": [
+      "L'uso del brevetto dipende da accordi di licenza estesi con concorrenti",
+      "L'uso dipende da alcune licenze con concorrenti",
+      "L'uso non dipende da licenze particolari con concorrenti",
+      "Licenze necessarie ma non con concorrenti diretti",
+      "L'uso del brevetto è completamente indipendente da accordi di licenza"
+    ],
+    "h": "<strong>Patent thicket:</strong> in settori come ICT e farmaceutica, è comune che una tecnologia richieda licenze da decine di brevetti di terzi. <strong>FRAND:</strong> i brevetti essenziali agli standard (SEP) devono essere licenziati a condizioni Fair, Reasonable and Non-Discriminatory. <strong>Consiglio:</strong> verificare tramite FTO analysis la necessità di in-licensing prima di investire in sviluppo prodotto.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "B9",
+    "sec": "B",
+    "t": "La tecnologia ha valore di marketing verso i clienti (customer value)?",
+    "opts": [
+      "Il brevetto fornisce un miglioramento dell'utilità del prodotto molto difficile da comunicare ai clienti",
+      "Miglioramento difficile da comunicare",
+      "Il brevetto fornisce un miglioramento comunicabile dell'utilità del prodotto",
+      "Miglioramento lieve ma facile da comunicare",
+      "Il brevetto fornisce caratteristiche distintive utilizzabili attivamente nel marketing"
+    ],
+    "h": "<strong>Il marchio ® vs il brevetto™:</strong> il brevetto tutela la tecnologia, ma il suo valore di marketing si materializza quando diventa un differenziatore percepito dal cliente. <strong>Esempi di alta comunicabilità:</strong> \"motore brevettato 30% più efficiente\", \"materiale brevettato 2x più resistente\". <strong>Integrazione strategica:</strong> combinare il brevetto con design registrato e marchio per una protezione IP completa.",
+    "oek": null,
+    "risk": 0,
+    "opp": 1
+  },
+  {
+    "id": "C1",
+    "sec": "C",
+    "t": "Quali sono le opzioni di commercializzazione della tecnologia?",
+    "opts": [
+      "Non esiste un mercato noto per la tecnologia brevettata",
+      "La tecnologia non è ancora stata indirizzata a un mercato specifico",
+      "Esiste un mercato consolidato per la tecnologia",
+      "Esiste un mercato consolidato con ulteriori opzioni di mercato ben definite",
+      "Esiste un mercato consolidato con altri mercati emergenti e tangibili"
+    ],
+    "h": "<strong>Canali di commercializzazione:</strong> vendita diretta, licensing, franchising tecnologico, joint venture, spin-off. <strong>Market sizing Italia:</strong> valutare TAM (mercato totale), SAM (raggiungibile), SOM (obiettivo realistico). <strong>Supporto disponibile:</strong> Invitalia, CDP Venture Capital, network EEN (Enterprise Europe Network) per trovare partner commerciali internazionali.",
+    "oek": null,
+    "risk": 1,
+    "opp": 1
+  },
+  {
+    "id": "C2",
+    "sec": "C",
+    "t": "Qual è la crescita del mercato nell'area di business dove viene utilizzata la tecnologia?",
+    "opts": [
+      "Molto bassa: 0,5% annuo [valore: 0,005]",
+      "Bassa: 2,5% annuo [valore: 0,025]",
+      "Media: 5% annuo [valore: 0,05]",
+      "Alta: 8% annuo [valore: 0,08]",
+      "Molto alta: 15% annuo [valore: 0,15]"
+    ],
+    "h": "<strong>Questo valore entra nel calcolo VAN</strong> come tasso di crescita del fatturato dell'area di business. <strong>Benchmark Italia 2024:</strong> manifatturiero tradizionale 1-3%, medicale/pharma 5-8%, cleantech/rinnovabili 8-15%, AI/digitale 10-20%. <strong>Fonte suggerita:</strong> report ISTAT, Federazioni di settore (Confindustria), Eurostat, rapporti di mercato IBISWorld/Statista.",
+    "oek": [
+      0.005,
+      0.025,
+      0.05,
+      0.08,
+      0.15
+    ],
+    "risk": 0,
+    "opp": 1
+  },
+  {
+    "id": "C3",
+    "sec": "C",
+    "t": "Qual è la vita attesa della tecnologia nel mercato dopo la commercializzazione?",
+    "opts": [
+      "6 mesi [valore: 0,5]",
+      "1 anno [valore: 1]",
+      "2 anni [valore: 2]",
+      "4 anni [valore: 4]",
+      "8 anni [valore: 8]"
+    ],
+    "h": "<strong>Questo valore entra nel calcolo VAN</strong> come orizzonte dei flussi di cassa aggiuntivi. <strong>Fattori che riducono la vita di mercato:</strong> rapida obsolescenza tecnologica, forte concorrenza, cambi normativi. <strong>Fattori che la allungano:</strong> standard di settore, elevati costi di switching per i clienti, ecosistemi proprietari. <strong>Nota:</strong> la vita di mercato può essere minore della durata residua del brevetto.",
+    "oek": [
+      0.5,
+      1,
+      2,
+      4,
+      8
+    ],
+    "risk": 0,
+    "opp": 1
+  },
+  {
+    "id": "C4",
+    "sec": "C",
+    "t": "Esistono prodotti competitivi o sostitutivi attivi nel mercato?",
+    "opts": [
+      "Alto grado di sviluppo di tecnologie competitive o sostitutive in corso",
+      "È probabile che tecnologie competitive o sostitutive vengano sviluppate",
+      "50% di probabilità che tecnologie competitive vengano sviluppate",
+      "Buona probabilità di mantenere l'esclusività nel mercato",
+      "L'esclusività nel mercato è praticamente certa"
+    ],
+    "h": "<strong>Analisi della concorrenza:</strong> monitorare i brevetti dei concorrenti su Espacenet e Google Patents per anticipare nuovi entranti. <strong>Barriere all'ingresso:</strong> elevati investimenti R&D, knowledge tacito, economie di scala, effetti rete rendono più difficile la sostituzione. <strong>Settori ad alta sostituzione:</strong> app mobile, soluzioni SaaS, componenti elettronici commoditizzati. <strong>Settori a bassa sostituzione:</strong> macchinari industriali specializzati, processi chimici complessi, dispositivi medici certificati.",
+    "oek": null,
+    "risk": 1,
+    "opp": 1
+  },
+  {
+    "id": "C5",
+    "sec": "C",
+    "t": "Quale prezzo finale il consumatore è disposto a pagare rispetto a prodotti già noti?",
+    "opts": [
+      "Prezzo raggiungibile significativamente inferiore a quello dei concorrenti",
+      "Inferiore a quello dei concorrenti",
+      "Uguale a quello dei concorrenti",
+      "Superiore a quello dei concorrenti",
+      "Significativamente superiore a quello dei concorrenti"
+    ],
+    "h": "<strong>Pricing power:</strong> un brevetto che consente di praticare prezzi premium è il segno più diretto di valore economico. <strong>Come stimarlo:</strong> ricerche di mercato, conjoint analysis, test A/B su campioni di clienti, confronto con prodotti sostitutivi. <strong>Esempio:</strong> un dispositivo medico brevettato con efficacia clinica superiore può giustificare un premium del 30–100% rispetto all'alternative generica.",
+    "oek": null,
+    "risk": 0,
+    "opp": 1
+  },
+  {
+    "id": "C6",
+    "sec": "C",
+    "t": "Qual è il potenziale incremento del fatturato nell'area di business grazie alla tecnologia brevettata?",
+    "opts": [
+      "Incremento molto piccolo: 0,5% del fatturato dell'area [valore: 0,005]",
+      "Piccolo: 2% [valore: 0,02]",
+      "Medio: 4% [valore: 0,04]",
+      "Grande: 6% [valore: 0,06]",
+      "Molto grande: 10% [valore: 0,1]"
+    ],
+    "h": "<strong>Questo valore entra direttamente nel calcolo VAN</strong> come percentuale di incremento del fatturato nell'area di business grazie al brevetto. <strong>Come stimarlo:</strong> analisi storica di lanci simili nel settore, ricerche di mercato, pilota commerciale. <strong>Per PMI manifatturiere italiane:</strong> un incremento del 4–6% su un fatturato di €1M genera €40K–€60K di fatturato aggiuntivo annuo.",
+    "oek": [
+      0.005,
+      0.02,
+      0.04,
+      0.06,
+      0.1
+    ],
+    "risk": 0,
+    "opp": 1
+  },
+  {
+    "id": "C7",
+    "sec": "C",
+    "t": "Quale conoscenza ha l'azienda del potenziale applicativo e delle opportunità commerciali?",
+    "opts": [
+      "Conoscenza limitata solo all'applicazione primaria",
+      "Scarsa conoscenza del potenziale applicativo e commerciale",
+      "Buona conoscenza del potenziale applicativo, scarsa conoscenza commerciale",
+      "Buona conoscenza sia del potenziale applicativo sia delle opportunità commerciali",
+      "Conoscenza completa di tutte le applicazioni e opportunità commerciali, incluse quelle non tradizionali"
+    ],
+    "h": "<strong>Come migliorare questo punteggio:</strong> analisi settoriale cross-industry, partecipazione a fiere tecnologiche, scouting con partner EEN. <strong>Applicazioni non ovvie:</strong> molte tecnologie hanno usi in settori distanti da quello originario — questo espande significativamente il valore del brevetto. <strong>Strumento utile:</strong> Technology Intelligence Report da istituti come Fraunhofer o CNR-IBIMET.",
+    "oek": null,
+    "risk": 0,
+    "opp": 1
+  },
+  {
+    "id": "C8",
+    "sec": "C",
+    "t": "La tecnologia brevettata ha potenziale per generare ricavi da accordi di licenza?",
+    "opts": [
+      "Nessuna prospettiva rilevante di ricavi da licenze",
+      "Ricavi da licenze possibili in misura ridotta",
+      "Buone prospettive/potenziale di ricavi da accordi di licenza",
+      "Ottime prospettive di ricavi da licenze",
+      "Eccellenti prospettive: possibilità di licenze multiple o standard di settore"
+    ],
+    "h": "<strong>Royalty tipiche per settore:</strong> farmaceutico 5–20%, meccanica 2–5%, software 5–15%, chimico 3–8%. <strong>Piattaforme di licensing:</strong> IPH, LOT Network, Dennemeyer Consulting, IAM Market per trovare licenziatari. <strong>Strategia di patent pool:</strong> in settori come IoT, automotive, e-health, entrare in patent pool può garantire ricavi passivi continuativi.",
+    "oek": null,
+    "risk": 0,
+    "opp": 1
+  },
+  {
+    "id": "C9",
+    "sec": "C",
+    "t": "Le attività commerciali richiedono autorizzazioni speciali da enti pubblici o simili?",
+    "opts": [
+      "Autorizzazione necessaria — già rifiutata dall'autorità pubblica",
+      "Domanda non ancora presentata o provvisoriamente rifiutata",
+      "Domanda presentata alle autorità — risposta in attesa",
+      "Autorizzazione a termine approvata dall'autorità pubblica",
+      "Autorizzazione permanente ottenuta, oppure nessuna autorizzazione richiesta per commercializzare"
+    ],
+    "h": "<strong>Settori con autorizzazioni critiche:</strong> farmaceutico (AIFA, EMA), dispositivi medici (CE mark, classe IIa–III), alimentare (EFSA), energia (GSE), chimico (REACH). <strong>Tempi tipici:</strong> device medico classe II: 12–24 mesi; farmaco nuovo: 5–10 anni; prodotto alimentare funzionale: 2–4 anni. <strong>Consiglio:</strong> avviare le pratiche autorizzative in parallelo allo sviluppo tecnologico per ridurre il time-to-market.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "D1",
+    "sec": "D",
+    "t": "L'output attuale dell'area di business può essere mantenuto senza la tecnologia brevettata?",
+    "opts": [
+      "100% dell'output può essere mantenuto senza il brevetto [valore: 1]",
+      "75% dell'output può essere mantenuto [valore: 0,75]",
+      "50% dell'output può essere mantenuto [valore: 0,5]",
+      "25% dell'output può essere mantenuto [valore: 0,25]",
+      "0% — l'azienda dipende completamente dalla tecnologia brevettata [valore: 0]"
+    ],
+    "h": "<strong>Questo valore entra nel calcolo VAN:</strong> quanto più basso è (più dipendenza), tanto maggiori sono i \"ricavi recuperati\" attribuibili al brevetto. <strong>Interpretazione:</strong> se il brevetto protegge un componente critico di un prodotto core, il punteggio 5 (dipendenza totale) massimizza il valore VAN calcolato. <strong>Consiglio:</strong> essere conservativi nella stima — sopravvalutare la dipendenza gonfia il VAN artificialmente.",
+    "oek": [
+      1,
+      0.75,
+      0.5,
+      0.25,
+      0
+    ],
+    "risk": 0,
+    "opp": 0
+  },
+  {
+    "id": "D2",
+    "sec": "D",
+    "t": "Quali sono i costi futuri di sviluppo necessari prima della commercializzazione?",
+    "opts": [
+      "Investimento estremamente elevato: 30% del fatturato dell'area di business [0,3]",
+      "Molto elevato: 15% [0,15]",
+      "Alto: 8% [0,08]",
+      "Medio: 2,5% [0,025]",
+      "Basso: 0,5% [0,005]"
+    ],
+    "h": "<strong>Questo valore entra nel calcolo VAN</strong> come costo annuo di sviluppo prima della commercializzazione. <strong>Cosa includere:</strong> costi R&D residui, costi di brevettazione (deposito, esame, validazione), costi di certificazione e market entry. <strong>Incentivi disponibili:</strong> credito d'imposta R&S (20% costi ammissibili), Patent Box (detassazione al 50% dei redditi da brevetti), bandi PNRR.",
+    "oek": [
+      0.3,
+      0.15,
+      0.08,
+      0.025,
+      0.005
+    ],
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "D3",
+    "sec": "D",
+    "t": "Qual è l'indice dei costi di produzione implementando la tecnologia brevettata?",
+    "opts": [
+      "Aumento del 30% dei costi produttivi rispetto al livello attuale [1,3]",
+      "Aumento del 15% [1,15]",
+      "Nessuna variazione rispetto ai costi attuali [1,0]",
+      "Riduzione del 15% [0,85]",
+      "Riduzione del 30% [0,7]"
+    ],
+    "h": "<strong>Questo valore entra nel calcolo VAN</strong> direttamente come moltiplicatore dei costi operativi. <strong>Come stimarlo:</strong> confrontare i costi di produzione unitari con e senza la nuova tecnologia (analisi ABC - Activity Based Costing). <strong>Fonti di riduzione dei costi:</strong> automazione, minori scarti, riduzione tempi ciclo, minori consumi energetici. <strong>Benchmark:</strong> Industria 4.0 può portare a riduzioni dei costi del 10–25% in manifattura.",
+    "oek": [
+      1.3,
+      1.15,
+      1,
+      0.85,
+      0.7
+    ],
+    "risk": 1,
+    "opp": 1
+  },
+  {
+    "id": "D4",
+    "sec": "D",
+    "t": "Quale investimento è necessario per le attrezzature produttive rispetto al livello attuale?",
+    "opts": [
+      "120% dell'intensità di investimento attuale — richiede investimento aggiuntivo significativo [1,2]",
+      "110% dell'intensità attuale [1,1]",
+      "100% — investimento neutro, uguale all'attuale [1,0]",
+      "70% dell'intensità attuale — risparmio del 30% [0,7]",
+      "50% dell'intensità attuale — risparmio del 50% [0,5]"
+    ],
+    "h": "<strong>Questo valore entra nel calcolo VAN</strong> come fattore di intensità dell'investimento in attrezzature produttive. <strong>Come stimarlo:</strong> confrontare il valore degli impianti necessari con il parco macchine attuale. <strong>Leasing e noleggio:</strong> per ridurre l'esborso iniziale, considerare leasing operativo (deducibile al 100% per le imprese italiane) o noleggio a lungo termine. <strong>Fondi agevolati:</strong> Sabatini Plus, SIMEST, fondi BEI tramite banche convenzionate Mediocredito.",
+    "oek": [
+      1.2,
+      1.1,
+      1,
+      0.7,
+      0.5
+    ],
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "D5",
+    "sec": "D",
+    "t": "L'azienda ha la capacità finanziaria di coprire le tasse di rinnovo nei mercati rilevanti?",
+    "opts": [
+      "Mantenimento possibile in 1 solo paese",
+      "2–5 paesi",
+      "5–10 paesi",
+      "10–15 paesi",
+      "Oltre 15 paesi / tutti i paesi attuali e potenzialmente rilevanti"
+    ],
+    "h": "<strong>Costi di rinnovo orientativi (EPO, per paese):</strong> anni 3–5: €500–€800/anno; anni 6–10: €1.000–€1.500/anno; anni 11–15: €1.500–€2.500/anno. <strong>Strategia di razionalizzazione:</strong> ogni 2–3 anni, verificare se i mercati coperti generano ancora valore commerciale ed eventualmente abbandonare quelli non redditizi. <strong>Servizi di rinnovo:</strong> Dennemeyer Renewals, CPA Global, Anaqua offrono gestione automatizzata dei rinnovi con ottimizzazione dei costi.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "D6",
+    "sec": "D",
+    "t": "Qual è il contributo stimato della tecnologia brevettata ai profitti aziendali?",
+    "opts": [
+      "Meno del 3% degli utili cumulati",
+      "3–10% degli utili cumulati",
+      "10–15% degli utili cumulati",
+      "15–25% degli utili cumulati",
+      "Oltre il 25% degli utili cumulati"
+    ],
+    "h": "<strong>Come stimarlo:</strong> analizzare i margini del prodotto/servizio che usa il brevetto rispetto alla media aziendale. <strong>Patent Box Italia:</strong> i redditi derivanti direttamente dall'utilizzo di brevetti, know-how e design registrati beneficiano di una detassazione del 50% (DL 50/2017 modificato dalla L. 197/2022). <strong>Valutazione IP per bilancio:</strong> brevetti con contributo elevato possono essere iscritti all'attivo dello stato patrimoniale, migliorando i ratios finanziari per accesso al credito.",
+    "oek": null,
+    "risk": 0,
+    "opp": 0
+  },
+  {
+    "id": "E1",
+    "sec": "E",
+    "t": "L'obiettivo del brevetto è consolidare le posizioni nei mercati esistenti?",
+    "opts": [
+      "No",
+      "In misura ridotta",
+      "In qualche misura",
+      "In larga misura",
+      "In grandissima misura"
+    ],
+    "h": "<strong>Strategia difensiva:</strong> i brevetti come barriera d'entrata proteggono le quote di mercato conquistate. <strong>Patent clustering:</strong> un portafoglio di brevetti correlati (\"cluster\" o \"thicket\") rende molto più difficile per i concorrenti aggirare la protezione IP. <strong>Segnale per i clienti:</strong> la capacità di difendere legalmente la tecnologia aumenta la fiducia dei clienti nella continuità della supply.",
+    "oek": null,
+    "risk": 0,
+    "opp": 0
+  },
+  {
+    "id": "E2",
+    "sec": "E",
+    "t": "L'obiettivo del brevetto è conquistare nuovi mercati?",
+    "opts": [
+      "No",
+      "In misura ridotta",
+      "In qualche misura",
+      "In larga misura",
+      "In grandissima misura"
+    ],
+    "h": "<strong>Brevetto come leva di internazionalizzazione:</strong> un brevetto riconosciuto in nuovi mercati geografici o applicativi abbassa il rischio percepito dai potenziali partner locali. <strong>Strategia PCT:</strong> il deposito PCT (Patent Cooperation Treaty) garantisce 30 mesi per decidere in quali paesi procedere, permettendo di valutare le opportunità di mercato prima di sostenere i costi di nazionalizzazione. <strong>SACE/Simest:</strong> supportano l'export tech-based anche tramite voucher e finanziamenti agevolati.",
+    "oek": null,
+    "risk": 0,
+    "opp": 0
+  },
+  {
+    "id": "E3",
+    "sec": "E",
+    "t": "Il brevetto fa parte di un processo di costruzione dell'immagine aziendale (image building)?",
+    "opts": [
+      "No",
+      "In misura ridotta",
+      "In qualche misura",
+      "In larga misura",
+      "In grandissima misura"
+    ],
+    "h": "<strong>Il brevetto come asset di comunicazione:</strong> \"azienda con X brevetti\" comunica innovatività, solidità tecnologica e capacità di investimento in R&D. <strong>Utilizzo nel marketing B2B:</strong> certificazioni, premi innovazione, menzioni in capitolati d'appalto. <strong>Effetto sul credito bancario:</strong> un portafoglio IP documentato migliora il merito creditizio (rating Cerved/CRIF) e può sbloccare finanziamenti agevolati.",
+    "oek": null,
+    "risk": 0,
+    "opp": 0
+  },
+  {
+    "id": "E4",
+    "sec": "E",
+    "t": "L'obiettivo è garantire la 'libertà operativa' (freedom to operate) per le attività di sviluppo future?",
+    "opts": [
+      "No",
+      "In misura ridotta",
+      "In qualche misura",
+      "In larga misura",
+      "In grandissima misura"
+    ],
+    "h": "<strong>Freedom to Operate (FTO):</strong> assicurarsi che le attività di R&D future non violino brevetti altrui — il brevetto difensivo \"occupa lo spazio\" prima dei concorrenti. <strong>Brevetti difensivi:</strong> alcune aziende depositano brevetti non per commercializzarli, ma per impedire ai concorrenti di bloccarle. <strong>Defensive publication:</strong> alternativa al brevetto — pubblicare l'invenzione (prior art disclosure) per impedire che altri la brevettino, senza sostenere i costi di brevettazione.",
+    "oek": null,
+    "risk": 0,
+    "opp": 0
+  },
+  {
+    "id": "E5",
+    "sec": "E",
+    "t": "L'obiettivo del brevetto è limitare lo sviluppo competitivo dei concorrenti?",
+    "opts": [
+      "No",
+      "In misura ridotta",
+      "In qualche misura",
+      "In larga misura",
+      "In grandissima misura"
+    ],
+    "h": "<strong>Strategia offensiva:</strong> deposito di brevetti su varianti e miglioramenti per \"circondare\" l'invenzione centrale dei concorrenti. <strong>Attenzione agli abusi:</strong> l'uso del brevetto come strumento anticoncorrenziale può violare la normativa antitrust UE (art. 101-102 TFUE). <strong>Standard Setting Organization (SSO):</strong> in settori standardizzati, i brevetti essenziali agli standard (SEP) devono essere licenziati a condizioni FRAND.",
+    "oek": null,
+    "risk": 0,
+    "opp": 0
+  },
+  {
+    "id": "E6",
+    "sec": "E",
+    "t": "L'azienda utilizza il brevetto per accordi di licenza o vendita?",
+    "opts": [
+      "No",
+      "In misura ridotta",
+      "In qualche misura",
+      "In larga misura",
+      "In grandissima misura"
+    ],
+    "h": "<strong>Strategie di monetizzazione:</strong> (1) licenza esclusiva o non-esclusiva, (2) cessione (vendita) del brevetto, (3) cross-licensing, (4) patent pooling. <strong>Valutazione del brevetto per licensing:</strong> metodi del costo, del reddito, del mercato — un esperto IP valutor può produrre una perizia formale (€3.000–€15.000). <strong>Tassazione italiana:</strong> plusvalenze da cessione brevetti per PMI innovative e startup: detassazione parziale se reinvestite in R&D.",
+    "oek": null,
+    "risk": 0,
+    "opp": 0
+  },
+  {
+    "id": "E7",
+    "sec": "E",
+    "t": "Il brevetto fa parte delle aree tecnologiche core dell'azienda?",
+    "opts": [
+      "No",
+      "In misura ridotta",
+      "In qualche misura",
+      "In larga misura",
+      "In grandissima misura"
+    ],
+    "h": "<strong>Core technology areas:</strong> le tecnologie fondamentali che differenziano l'azienda dalla concorrenza e su cui si basa la value proposition. <strong>Portafoglio IP bilanciato:</strong> brevetti core + brevetti di miglioramento + brevetti difensivi + design registrati + marchi + know-how. <strong>IP Audit:</strong> un audit periodico del portafoglio IP (ogni 2–3 anni) aiuta a identificare brevetti da mantenere, cedere o abbandonare — ottimizzando i costi di mantenimento.",
+    "oek": null,
+    "risk": 0,
+    "opp": 0
+  },
+  {
+    "id": "E8",
+    "sec": "E",
+    "t": "Esiste allineamento tra il brevetto e la strategia aziendale complessiva?",
+    "opts": [
+      "No",
+      "In misura ridotta",
+      "In qualche misura",
+      "In larga misura",
+      "In grandissima misura"
+    ],
+    "h": "<strong>IP Strategy integrata:</strong> il brevetto dovrebbe supportare gli obiettivi di business a 3–5 anni: espansione geografica, nuovi mercati, difesa quota, licensing revenue. <strong>Revisione periodica:</strong> allineare il portafoglio IP alla strategia aziendale ad ogni ciclo di business planning. <strong>Supporto specialistico:</strong> Dennemeyer Consulting e altri IP strategy advisor offrono workshop di IP-business alignment per PMI (€5.000–€20.000 per un percorso completo).",
+    "oek": null,
+    "risk": 0,
+    "opp": 0
+  }
+]

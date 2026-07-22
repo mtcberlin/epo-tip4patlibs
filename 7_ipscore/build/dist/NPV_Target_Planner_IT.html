@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>IPscore Pianificatore VAN Obiettivo — Strumento EPO · Adattamento ASP</title>
+<style>
+:root{--navy:#1a2744;--blue:#2563eb;--orange:#f97316;--border:#e2e8f0;--green:#16a34a;--red:#dc2626;--yellow:#d97706}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f1f5f9;color:#1e293b;min-height:100vh}
+header{background:var(--navy);color:#fff;padding:12px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+header .brand{font-size:1.1rem;font-weight:700}
+header .sub{font-size:.75rem;opacity:.7;margin-top:2px}
+header .badge{background:#f59e0b;color:#fff;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:20px}
+.step-bar{background:#fff;border-bottom:1px solid var(--border);padding:10px 28px;display:flex;align-items:center;gap:6px;overflow-x:auto}
+.step{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.step-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#94a3b8;cursor:pointer;transition:all .2s}
+.step-dot.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.step-dot.done{background:var(--navy);border-color:var(--navy);color:#fff}
+.step-label{font-size:.68rem;color:#64748b;white-space:nowrap}
+.step-sep{width:20px;height:2px;background:var(--border);flex-shrink:0}
+.step-sep.done{background:var(--navy)}
+.npv-bar{background:#1e293b;color:#fff;padding:8px 28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:.82rem}
+.npv-bar .lbl{color:#94a3b8}
+.npv-live{font-size:1.15rem;font-weight:800;color:var(--orange)}
+.npv-tgt{font-weight:600;color:#cbd5e1}
+.npv-gap{padding:3px 12px;border-radius:12px;font-weight:700;font-size:.76rem}
+.gap-ok{background:var(--green)}
+.gap-warn{background:var(--yellow)}
+.gap-bad{background:var(--red)}
+.gap-none{background:#475569}
+.page{display:none;padding:24px 28px 100px;max-width:880px;margin:0 auto}
+.page.active{display:block}
+.page-title{font-size:1.3rem;font-weight:800;color:var(--navy);margin-bottom:4px}
+.page-desc{font-size:.88rem;color:#475569;margin-bottom:24px;line-height:1.6}
+.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.setup-grid{grid-template-columns:1fr}}
+.setup-field{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px 16px}
+.setup-field label{display:block;font-size:.78rem;font-weight:700;color:var(--navy);margin-bottom:6px}
+.setup-field .hint{font-size:.71rem;color:#64748b;font-weight:400;margin-left:4px}
+.setup-input{width:100%;border:1.5px solid var(--border);border-radius:6px;padding:8px 12px;font-size:.92rem;color:#1e293b;transition:border-color .15s}
+.setup-input:focus{outline:none;border-color:var(--blue)}
+.adv-toggle{font-size:.78rem;color:var(--blue);cursor:pointer;margin-top:16px;display:inline-flex;align-items:center;gap:4px;background:none;border:none;padding:0}
+.adv-section{display:none;margin-top:12px}
+.adv-section.open{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.demo-btn{background:var(--orange);color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:.88rem;font-weight:700;cursor:pointer;margin-top:20px;transition:background .15s}
+.demo-btn:hover{background:#ea580c}
+.oek-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:20px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.oek-card-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:8px}
+.oek-icon{font-size:1.6rem;flex-shrink:0;margin-top:2px}
+.oek-title{font-size:1.05rem;font-weight:800;color:var(--navy)}
+.oek-question{font-size:.88rem;color:#475569;margin-top:3px;line-height:1.5}
+.oek-context{font-size:.8rem;color:#64748b;background:#f8fafc;border-left:3px solid var(--blue);padding:8px 12px;border-radius:0 6px 6px 0;margin-bottom:14px;line-height:1.5}
+.opt-row{display:flex;flex-direction:column;gap:8px}
+.opt-item{border:2px solid var(--border);border-radius:8px;padding:11px 14px;cursor:pointer;display:flex;align-items:flex-start;gap:12px;transition:all .15s}
+.opt-item:hover{border-color:#93c5fd;background:#f0f6ff}
+.opt-item.sel-green{border-color:var(--green);background:#f0fdf4}
+.opt-item.sel-yellow{border-color:var(--yellow);background:#fffbeb}
+.opt-item.sel-red{border-color:var(--red);background:#fef2f2}
+.opt-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#fff;flex-shrink:0;margin-top:1px}
+.dot-green{background:var(--green)}
+.dot-yellow{background:var(--yellow)}
+.dot-red{background:var(--red)}
+.opt-label{font-size:.88rem;font-weight:700;color:var(--navy)}
+.opt-desc{font-size:.78rem;color:#64748b;margin-top:2px;line-height:1.4}
+.oek-insight{display:none;margin-top:12px;padding:12px 16px;border-radius:8px;font-size:.82rem;line-height:1.6}
+.insight-green{background:#f0fdf4;border:1px solid #bbf7d0;color:#166534}
+.insight-yellow{background:#fffbeb;border:1px solid #fde68a;color:#92400e}
+.insight-red{background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
+.qual-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:14px}
+.qual-q{font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:12px}
+.qual-opts{display:flex;flex-direction:column;gap:7px}
+.qual-opt{border:2px solid var(--border);border-radius:7px;padding:10px 14px;cursor:pointer;font-size:.83rem;color:#374151;transition:all .15s;display:flex;align-items:center;gap:10px}
+.qual-opt:hover{border-color:#93c5fd;background:#f0f6ff}
+.qual-opt.qual-sel{border-color:var(--blue);background:#eff6ff;color:var(--navy);font-weight:600}
+.qual-num{width:22px;height:22px;border-radius:50%;background:var(--border);color:#64748b;font-size:.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qual-sel .qual-num{background:var(--blue);color:#fff}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);padding:12px 28px;display:flex;justify-content:space-between;align-items:center;z-index:90}
+.nav-info{font-size:.8rem;color:#64748b;font-weight:600}
+.btn{padding:9px 24px;border-radius:8px;font-size:.88rem;font-weight:700;cursor:pointer;border:none;transition:all .15s}
+.btn-prev{background:#f1f5f9;color:var(--navy);border:1.5px solid var(--border)}
+.btn-prev:hover{background:#e2e8f0}
+.btn-next{background:var(--blue);color:#fff}
+.btn-next:hover{background:#1d4ed8}
+.btn-print{background:var(--orange);color:#fff}
+.btn-print:hover{background:#ea580c}
+.res-hero{background:linear-gradient(135deg,var(--navy),#2d4a8a);color:#fff;border-radius:12px;padding:26px;margin-bottom:20px;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.res-npv{text-align:center}
+.res-npv-val{font-size:2.4rem;font-weight:800;color:var(--orange);line-height:1}
+.res-npv-lbl{font-size:.78rem;opacity:.75;margin-top:4px}
+.res-bar-wrap{flex:1;min-width:200px}
+.res-bar-lbl{font-size:.8rem;opacity:.8;margin-bottom:6px}
+.res-bar-track{height:20px;background:rgba(255,255,255,.15);border-radius:10px;overflow:hidden}
+.res-bar-fill{height:20px;border-radius:10px;transition:width .5s;background:var(--orange)}
+.res-verdict{font-size:.85rem;margin-top:10px;background:rgba(255,255,255,.1);border-radius:8px;padding:10px 14px;line-height:1.5}
+.param-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+@media(max-width:600px){.param-grid{grid-template-columns:1fr}}
+.param-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px}
+.param-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.param-icon{font-size:1rem}
+.param-name{font-size:.82rem;font-weight:700;color:var(--navy);flex:1}
+.param-badge{font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:10px;color:#fff}
+.badge-green{background:var(--green)}
+.badge-yellow{background:var(--yellow)}
+.badge-red{background:var(--red)}
+.param-tip{font-size:.76rem;color:#475569;line-height:1.45}
+.qual-result-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:20px}
+.qual-result-card h3{font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:12px}
+.qual-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;font-size:.8rem;color:#374151;line-height:1.45}
+.qual-dot{width:16px;height:16px;border-radius:50%;flex-shrink:0;margin-top:2px}
+.actions-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:20px}
+.actions-card h3{font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:12px}
+.action-item{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start}
+.action-num{width:24px;height:24px;border-radius:50%;background:var(--orange);color:#fff;font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.action-text{font-size:.82rem;color:#374151;line-height:1.5}
+@media print{header,.step-bar,.npv-bar,.nav-bar{display:none!important}.page{display:block!important;padding:10px}body{background:#fff}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="brand">IPscore Pianificatore VAN Obiettivo &mdash; Strumento EPO &bull; Adattamento ASP</div>
+    <div class="sub">Parti dall&#x27;obiettivo e scopri cosa serve per raggiungerlo</div>
+  </div>
+  <div class="badge">PIANIFICATORE INTERATTIVO</div>
+</header>
+<div class="step-bar" id="step-bar"></div>
+<div class="npv-bar" id="npv-bar">
+  <span class="lbl">VAN Stimato:</span>
+  <span class="npv-live" id="npv-live">—</span>
+  <span class="lbl">&nbsp;|&nbsp; Obiettivo:</span>
+  <span class="npv-tgt" id="npv-tgt">inserisci i dati prima</span>
+  <span class="npv-gap gap-none" id="npv-gap">configura prima</span>
+</div>
+<div id="pages"></div>
+<div class="nav-bar">
+  <button class="btn btn-prev" id="btn-prev" onclick="navigate(-1)">&#8592; Precedente</button>
+  <div class="nav-info" id="nav-info"></div>
+  <button class="btn btn-next" id="btn-next" onclick="navigate(1)">Avanti &#8594;</button>
+</div>
+<script>
+var cur = 0, NPAGE = 6;
+var inputs = {bt:0, targetPct:15, sectorShare:30, costRatio:73, r:11, deprecPct:2.5, deprecPeriod:8};
+var oekScores = {B5:3, C2:3, C3:3, C6:3, D1:3, D2:3, D3:3, D4:3};
+var qualScores = {Ag:1, Al:1, Ab:1, Ac:1, Ec:1, Es:1};
+var COLORS = {
+  B5:['red','red','yellow','green','green'],
+  C2:['red','red','yellow','green','green'],
+  C3:['red','red','yellow','green','green'],
+  C6:['red','red','yellow','green','green'],
+  D1:['red','red','yellow','green','green'],
+  D2:['red','red','yellow','green','green'],
+  D3:['red','red','yellow','green','green'],
+  D4:['red','red','yellow','green','green']
+};
+var OEK_VALUES = {
+  B5:[5,2,1,0.5,0], C2:[0.005,0.025,0.05,0.08,0.15], C3:[0.5,1,2,4,8],
+  C6:[0.005,0.02,0.04,0.06,0.1], D1:[1,0.75,0.5,0.25,0], D2:[0.3,0.15,0.08,0.025,0.005],
+  D3:[1.3,1.15,1.0,0.85,0.7], D4:[1.2,1.1,1.0,0.7,0.5]
+};
+var OEK_CARDS = [{"id": "B5", "icon": "&#9200;", "title": "Tempo al Mercato", "question": "Quando sarà pronta la tecnologia per generare vendite?", "context": "Ogni anno di ritardo prima del lancio significa costi di sviluppo che si accumulano senza entrate a compensarli. Una tecnologia già vendibile oggi vale enormemente di più di una che necessita ancora di 2 o 3 anni di lavoro — anche se tutto il resto è identico.", "opts": [{"label": "Oltre 5 anni", "desc": "Siamo ancora in fase di ricerca o sviluppo — il lancio è lontano"}, {"label": "Circa 2 anni", "desc": "Resta ancora lavoro di sviluppo significativo prima del lancio"}, {"label": "Circa 1 anno", "desc": "Prevediamo di essere pronti al lancio entro i prossimi 12 mesi"}, {"label": "Circa 6 mesi", "desc": "Le preparazioni finali sono in corso — il lancio è imminente"}, {"label": "Pronti ora", "desc": "La tecnologia è completamente sviluppata e possiamo iniziare a vendere oggi"}]}, {"id": "C2", "icon": "&#128200;", "title": "Tasso di Crescita del Mercato", "question": "Con che velocità cresce ogni anno il mercato in cui stai entrando?", "context": "Un mercato in crescita più rapida significa che ogni anno in cui sei sul mercato, la tua base di ricavi si espande naturalmente — ancora prima di considerare i tuoi sforzi commerciali.", "opts": [{"label": "Molto lento — circa 0,5% all'anno", "desc": "Un mercato maturo o in declino, quasi fermo"}, {"label": "Lento — circa 2,5% all'anno", "desc": "Crescita modesta, grossomodo in linea con l'inflazione"}, {"label": "Moderato — circa 5% all'anno", "desc": "Mercato sano e stabile, in espansione a ritmo solido"}, {"label": "Rapido — circa 8% all'anno", "desc": "Settore dinamico e in espansione, con forte slancio"}, {"label": "Molto rapido — 15% o più all'anno", "desc": "Mercato ad alta crescita o in boom, in rapida espansione"}]}, {"id": "C3", "icon": "&#128336;", "title": "Finestra Competitiva (Durata Commerciale)", "question": "Una volta sul mercato, per quanti anni riuscirai realisticamente a mantenere un vantaggio competitivo prima che arrivino sostituti o imitatori?", "context": "Sono gli anni di entrate protette o semi-protette su cui puoi realisticamente contare. Potrebbero finire prima della scadenza del brevetto se i concorrenti trovano soluzioni alternative. Sii onesto — sovrastimare questo parametro è l'errore di previsione più comune.", "opts": [{"label": "Circa 6 mesi", "desc": "I concorrenti reagiranno e si avvicineranno molto rapidamente"}, {"label": "Circa 1 anno", "desc": "Una finestra brevissima prima che emergano sostituti"}, {"label": "Circa 2 anni", "desc": "Tempo sufficiente per stabilire una posizione, ma molto stretto"}, {"label": "Circa 4 anni", "desc": "Una finestra solida — abbastanza per crescere e recuperare l'investimento"}, {"label": "8 anni o più", "desc": "Vantaggio duraturo con elevate barriere all'imitazione"}]}, {"id": "C6", "icon": "&#128181;", "title": "Incremento dei Ricavi", "question": "Di quanto questo brevetto aumenterà i ricavi nella tua area di business, rispetto a operare senza di esso?", "context": "Pensala come il premio commerciale che il brevetto garantisce: vendite aggiuntive grazie a un prodotto superiore, prezzi più alti, o nuovi clienti che altrimenti non raggiungeresti.", "opts": [{"label": "Molto piccolo — meno dello 0,5% dei ricavi del settore", "desc": "Differenza commercialmente quasi impercettibile"}, {"label": "Piccolo — circa il 2% dei ricavi del settore", "desc": "Incremento modesto, visibile ma non drammatico"}, {"label": "Moderato — circa il 4% dei ricavi del settore", "desc": "Un vantaggio competitivo significativo, percepito dai clienti"}, {"label": "Significativo — circa il 6% dei ricavi del settore", "desc": "Un chiaro e forte premio commerciale generato dal brevetto"}, {"label": "Importante — 10% o più dei ricavi del settore", "desc": "Un vantaggio dominante — i clienti pagano sostanzialmente di più o scelgono te"}]}, {"id": "D1", "icon": "&#128274;", "title": "Dipendenza Aziendale", "question": "Se questo brevetto venisse rimosso oggi, quale parte della tua attività potresti ancora gestire?", "context": "Più la tua azienda dipende da questo brevetto, più entrate protegge — e quindi maggiore è il suo valore economico. Un brevetto che protegge una caratteristica marginale di un prodotto vale molto meno di uno senza cui l'intera azienda crollerebbe.", "opts": [{"label": "Tutta — l'attività andrebbe avanti normalmente", "desc": "Il brevetto non protegge nessun ricavo essenziale"}, {"label": "Circa tre quarti — perderemmo circa il 25% della produzione", "desc": "Una certa dipendenza, ma la maggior parte dell'attività sopravvivrebbe"}, {"label": "Circa la metà — perderemmo circa il 50% della produzione", "desc": "Il brevetto protegge una parte importante dell'attività"}, {"label": "Circa un quarto — perderemmo circa il 75% della produzione", "desc": "L'attività dipende fortemente da questa tecnologia"}, {"label": "Nulla — l'intera attività dipende da questo brevetto", "desc": "Senza di esso, l'azienda non può operare"}]}, {"id": "D2", "icon": "&#128295;", "title": "Costi di Sviluppo Residui", "question": "Quanto denaro deve ancora essere investito in questa tecnologia prima che sia pronta per la vendita?", "context": "Questi sono i costi da sostenere prima di vedere qualsiasi ricavo — compaiono come flussi di cassa negativi negli anni iniziali e riducono direttamente il VAN.", "opts": [{"label": "Molto elevati — circa il 30% dei ricavi annui del settore", "desc": "Investimento residuo enorme prima del lancio"}, {"label": "Elevati — circa il 15% dei ricavi annui del settore", "desc": "Costi ancora sostanziali prima della commercializzazione"}, {"label": "Moderati — circa l'8% dei ricavi annui del settore", "desc": "Investimento pre-lancio significativo ma gestibile"}, {"label": "Bassi — circa il 2–3% dei ricavi annui del settore", "desc": "Costi residui ridotti — siamo quasi pronti"}, {"label": "Minimi — meno dell'1% dei ricavi annui del settore", "desc": "Praticamente finito — sviluppo ulteriore quasi nullo"}]}, {"id": "D3", "icon": "&#9881;&#65039;", "title": "Effetto sui Costi di Produzione", "question": "Una volta commercializzata, questa tecnologia renderà la tua produzione più costosa o meno costosa rispetto a oggi?", "context": "Questo effetto si applica ogni anno di operatività. Un risparmio sui costi si accumula per tutto il periodo di ricavi — un aumento dei costi è un freno persistente sui margini.", "opts": [{"label": "Molto più costosa — i costi di produzione aumentano di circa il 30%", "desc": "Un significativo onere sui costi ogni anno"}, {"label": "Leggermente più costosa — i costi aumentano di circa il 15%", "desc": "Un aumento moderato dei costi annui"}, {"label": "Nessun cambiamento — i costi di produzione restano invariati", "desc": "Neutro — né risparmio né aumento"}, {"label": "Leggermente meno costosa — i costi di produzione calano di circa il 15%", "desc": "Un risparmio annuo significativo sulle operazioni"}, {"label": "Molto meno costosa — i costi di produzione calano di circa il 30%", "desc": "Un importante guadagno di efficienza ogni anno di operatività"}]}, {"id": "D4", "icon": "&#127970;", "title": "Investimento in Capitale al Lancio", "question": "Per implementare commercialmente questa tecnologia, avrai bisogno di più o meno attrezzatura capitale rispetto a quella che hai oggi?", "context": "Si tratta di un costo una tantum al momento del lancio. Un investimento aggiuntivo elevato riduce il VAN dei primi anni; averne bisogno di meno è un bonus positivo.", "opts": [{"label": "Significativamente di più — circa il 20% in più di capitale rispetto a oggi", "desc": "Un esborso iniziale sostanziale al lancio"}, {"label": "Leggermente di più — circa il 10% in più di capitale rispetto a oggi", "desc": "Un investimento aggiuntivo moderato al lancio"}, {"label": "Lo stesso — nessun cambiamento nel fabbisogno di capitale", "desc": "Neutro — stesso livello di investimento di oggi"}, {"label": "Meno — circa il 30% in meno di capitale rispetto a oggi", "desc": "Un risparmio significativo di capitale al lancio"}, {"label": "Molto meno — circa il 50% in meno di capitale rispetto a oggi", "desc": "Dimezzare il fabbisogno — risparmio rilevante di capitale"}]}];
+var QUAL_QUESTIONS = [{"id": "Ag", "t": "Il brevetto &egrave; ufficialmente concesso da un ufficio brevetti?", "opts": ["Non ancora — in attesa di esame, o non ancora depositato", "Sì, è concesso — ma il periodo di opposizione è ancora aperto", "Sì, pienamente concesso — e non vi sono opposizioni pendenti"]}, {"id": "Al", "t": "Quanti anni di protezione brevettuale ti restano ancora?", "opts": ["Meno di 4 anni residui", "Tra 4 e 8 anni residui", "Più di 8 anni residui"]}, {"id": "Ab", "t": "Quanto ampiamente il brevetto protegge la tecnologia?", "opts": ["In modo ristretto — solo una forma molto specifica del prodotto", "In modo moderato — i concorrenti dovrebbero fare uno sforzo reale per aggirarlo", "In modo ampio — copre il principio centrale, molto difficile da eludere"]}, {"id": "Ac", "t": "In quanti Paesi o mercati il brevetto &egrave; registrato?", "opts": ["In un solo Paese", "In alcuni mercati chiave (circa 3&ndash;5 Paesi)", "In tutti i principali mercati rilevanti a livello mondiale"]}, {"id": "Ec", "t": "Quanto è centrale questo brevetto per ciò che fa la tua azienda?", "opts": ["Non molto centrale — supporta un'attività secondaria", "In parte centrale — sostiene una linea di business importante", "Assolutamente centrale — è un pilastro di tutta l'attività"]}, {"id": "Es", "t": "Esiste un piano commerciale chiaro su come verrà utilizzato questo brevetto?", "opts": ["Nessun piano definito al momento", "Esiste un piano parziale, ma non è ancora completamente sviluppato", "Pienamente integrato nella strategia aziendale"]}];
+
+var INSIGHTS = {"B5": {"1": "<strong>&#10060; Ostacolo critico.</strong> Cinque anni sono un percorso molto lungo. I costi di sviluppo si accumulano anno dopo anno senza nessun ricavo a compensarli — e quando finalmente arriverai sul mercato, i concorrenti potrebbero aver già occupato lo spazio. Questo scenario porta quasi sempre a un VAN molto basso o negativo.", "2": "<strong>&#9888;&#65039; Ritardo significativo.</strong> Due anni di sviluppo residuo ritarderanno il primo euro di ricavi e aggiungeranno costi sostanziali. È ancora recuperabile, ma avrai bisogno di una lunga finestra di mercato e un forte impatto sui ricavi per compensare. Cerca modi per accelerare.", "3": "<strong>&#9888;&#65039; Al limite — gestibile.</strong> Un anno al lancio è il minimo che raccomandiamo. I costi di sviluppo sono limitati e i ricavi iniziano entro 12 mesi. Se i parametri di mercato e finanziari sono solidi, puoi ancora raggiungere l'obiettivo VAN.", "4": "<strong>&#9989; Posizione solida.</strong> Sei mesi al lancio significano costi residui minimi e ricavi che partono quasi subito. Un contributo positivo e concreto al tuo VAN.", "5": "<strong>&#9989; Caso ottimale.</strong> Pronti a vendere oggi — zero ritardo, zero costi di sviluppo residui. Ogni flusso di cassa inizia dall'anno uno a piena intensità. VAN massimo da questo parametro."}, "C2": {"1": "<strong>&#10060; Mercato quasi stagnante.</strong> Con una crescita di appena lo 0,5% annuo, questo mercato è sostanzialmente piatto. I ricavi aumenteranno appena nel corso della vita del brevetto, e i flussi di cassa futuri perdono gran parte del loro valore una volta attualizzati. Costruire un VAN significativo in questo contesto è molto difficile.", "2": "<strong>&#9888;&#65039; Crescita lenta.</strong> Al 2,5% annuo — grossomodo in linea con l'inflazione — c'è un modesto potenziale. Il brevetto può ancora creare valore, ma altri parametri devono essere particolarmente forti per compensare lo slancio limitato del mercato.", "3": "<strong>&#9888;&#65039; Sano e gestibile.</strong> Un tasso di crescita annuo del 5% è solido. I ricavi si compongono a un ritmo ragionevole anno dopo anno. Compatibile con la maggior parte degli obiettivi VAN quando gli altri parametri sono anch'essi validi.", "4": "<strong>&#9989; Crescita sostenuta.</strong> All'8% annuo, la tua base di ricavi si espande rapidamente. Ogni anno aggiuntivo sul mercato porta valore in misura significativamente maggiore. Un booster rilevante per il VAN.", "5": "<strong>&#9989; Mercato eccezionale.</strong> Una crescita annua del 15% o più è straordinaria. I ricavi si compongono a velocità elevata, amplificando drasticamente il VAN. Se la tua tecnologia entra in un mercato con questa crescita, le prospettive finanziarie sono molto attraenti."}, "C3": {"1": "<strong>&#10060; Decisamente troppo breve.</strong> Sei mesi di esclusiva commerciale non bastano quasi mai a recuperare l'investimento. Nel momento in cui i concorrenti si mobilitano, la tua finestra si sta già chiudendo. Questo punteggio da solo impedisce tipicamente di raggiungere qualsiasi obiettivo VAN significativo.", "2": "<strong>&#10060; Finestra molto stretta.</strong> Un anno offre una pista di entrate estremamente corta. Potrebbe funzionare solo se la tecnologia è già sul mercato (B5=5) e l'incremento dei ricavi è molto elevato (C6=5). Per la maggior parte delle situazioni, è insufficiente.", "3": "<strong>&#9888;&#65039; Stretto ma gestibile.</strong> Due anni sono una finestra limitata. Puoi stabilire una posizione e iniziare a recuperare i costi, ma non c'è margine per ritardi o imprevisti. Gli altri parametri — in particolare C6 e C2 — devono essere forti.", "4": "<strong>&#9989; Finestra solida.</strong> Quattro anni sono il minimo raccomandato per la maggior parte degli obiettivi VAN. Tempo sufficiente per far crescere la posizione, generare ricavi sostanziali e recuperare l'investimento con margine.", "5": "<strong>&#9989; Eccellente.</strong> Otto anni di esclusiva competitiva sono lo scenario più favorevole possibile. Una lunga pista di ricavi protetti che moltiplica drasticamente il VAN — questo singolo parametro ha il maggiore impatto individuale di tutti nel modello."}, "C6": {"1": "<strong>&#10060; Impatto trascurabile.</strong> Meno dello 0,5% di incremento dei ricavi significa che il brevetto sposta appena l'ago della bilancia commerciale. Il ritorno finanziario fatica a giustificare anche solo il costo del mantenimento del brevetto nella maggior parte dei Paesi.", "2": "<strong>&#9888;&#65039; Piccolo incremento.</strong> Un aumento del 2% dei ricavi è modesto. Su una base settoriale di €5M si traduce in circa €100K di ricavi aggiuntivi annui al picco — non trascurabile, ma compatibile con l'obiettivo VAN solo se gli altri parametri sono molto forti.", "3": "<strong>&#9888;&#65039; Soglia gestibile.</strong> Un incremento del 4% è il minimo gestibile per la maggior parte degli obiettivi VAN. Su una base settoriale di €5M si traducono in circa €200K di ricavi aggiuntivi annui — significativo, soprattutto su una finestra di 4 anni.", "4": "<strong>&#9989; Forte impatto commerciale.</strong> Un incremento del 6% dei ricavi mostra chiaramente che il mercato è disposto a pagare un premio per ciò che questo brevetto offre. Un driver VAN positivo e affidabile.", "5": "<strong>&#9989; Eccezionale.</strong> Il 10% o più di ricavi aggiuntivi significa che il brevetto sta offrendo un vantaggio competitivo dominante — i clienti pagano significativamente di più o tu catturi una quota molto più ampia. Il driver di ricavi più forte nel modello."}, "D1": {"1": "<strong>&#10060; Il brevetto non protegge i ricavi centrali.</strong> Se la tua attività può andare avanti normalmente senza questo brevetto, allora non sta proteggendo nessun reddito essenziale. Il termine positivo più importante nella formula VAN — chiamato ricavi protetti — scende a quasi zero. Il brevetto ha un valore economico molto limitato in questo scenario.", "2": "<strong>&#9888;&#65039; Dipendenza limitata.</strong> Solo il 25% della produzione sarebbe a rischio senza questo brevetto. C'è una certa protezione, ma la maggior parte dei ricavi non dipende dal brevetto. I ricavi protetti nella formula sono modesti.", "3": "<strong>&#9888;&#65039; Dipendenza significativa.</strong> Senza questo brevetto, circa metà della produzione sarebbe a rischio. Questa rappresenta una protezione economica reale — il brevetto è importante per la tua attività e contribuisce significativamente al VAN.", "4": "<strong>&#9989; Alta dipendenza.</strong> Solo il 25% della produzione sopravvivrebbe senza questo brevetto. Questa tecnologia è essenziale per le tue operazioni, e i ricavi protetti nella formula VAN sono elevati — un forte contributore positivo.", "5": "<strong>&#9989; Protezione massima.</strong> L'intera attività dipende da questo brevetto. La componente di ricavi protetti del VAN è al suo massimo — questo brevetto è il tuo asset commerciale principale. La giustificazione finanziaria per mantenerlo e difenderlo è qui al suo punto più forte."}, "D2": {"1": "<strong>&#10060; Investimento residuo enorme.</strong> Spendere il 30% dei ricavi del settore in ulteriore sviluppo prima del lancio assorberà praticamente tutto il valore futuro. In questa situazione, ottenere un VAN positivo è quasi impossibile.", "2": "<strong>&#9888;&#65039; Onere di costo elevato.</strong> Il 15% dei ricavi del settore ancora da spendere prima del lancio è un ostacolo alto. Avrai bisogno di una finestra di mercato lunga e commercialmente di successo per recuperarlo. Esplora attivamente se i costi possono essere ridotti.", "3": "<strong>&#9888;&#65039; Costi moderati — gestibili.</strong> L'8% dei ricavi del settore ancora in sviluppo. È gestibile se il tempo al mercato è breve (punteggio 3 o superiore). Se il lancio è ancora a 2+ anni, questo livello di costi pesarà significativamente sul VAN.", "4": "<strong>&#9989; Costi residui bassi.</strong> Solo il 2,5% dei ricavi del settore ancora da spendere prima del lancio. Sei vicino al traguardo. Investimento ridotto, ricavi imminenti — una posizione solida.", "5": "<strong>&#9989; Praticamente terminato.</strong> Meno dell'1% di costi di sviluppo residui significa che sei pronto per la commercializzazione. I flussi di cassa futuri sono quasi completamente liberi dal peso dello sviluppo — beneficio netto massimo."}, "D3": {"1": "<strong>&#10060; Aumento significativo dei costi.</strong> La produzione diventa il 30% più costosa. Questo aumento erode il margine di profitto su ogni unità venduta, ogni anno — un freno persistente che si accumula per tutto il periodo di ricavi.", "2": "<strong>&#9888;&#65039; Aumento dei costi — pianifica con attenzione.</strong> Un aumento del 15% dei costi di produzione è un onere reale e continuativo sui margini. Il tuo VAN sarà notevolmente inferiore rispetto a uno scenario neutro. Si possono ridurre questi costi con efficienze di processo?", "3": "<strong>&#9888;&#65039; Neutro — né aiutato né penalizzato.</strong> Nessuna variazione nei costi di produzione. Il brevetto non rende la produzione più o meno costosa. Questo è il riferimento — accettabile, ma si perde il vantaggio del risparmio dei punteggi più alti.", "4": "<strong>&#9989; Risparmio sui costi — ogni anno.</strong> La tecnologia riduce i costi di produzione del 15%. Ogni anno di operatività, risparmi rispetto a prima. Un contributo annuo significativo e ricorrente al VAN.", "5": "<strong>&#9989; Eccellente guadagno di efficienza.</strong> Il 30% in meno di costi di produzione significa che il brevetto rende le tue operazioni molto più competitive. Questo risparmio ricorrente si accumula per tutto il periodo di ricavi ed è uno dei contributori annui più potenti al VAN."}, "D4": {"1": "<strong>&#10060; Elevato fabbisogno di capitale iniziale.</strong> Aver bisogno del 20% di capitale in più rispetto a oggi per implementare questa tecnologia crea un costo una tantum significativo al lancio. Questo riduce il VAN dei primi anni e mette pressione sui flussi di cassa proprio quando i ricavi stanno appena iniziando.", "2": "<strong>&#9888;&#65039; Investimento extra moderato al lancio.</strong> Il 10% di capitale in più rispetto a oggi — un onere gestibile, ma che riduce il VAN del primo anno. Vale la pena trovare modi per ridurlo se possibile.", "3": "<strong>&#9888;&#65039; Nessun cambiamento di capitale — neutro.</strong> Lo stesso investimento di oggi. Il brevetto non richiede alcun esborso di capitale aggiuntivo, il che è un riferimento accettabile.", "4": "<strong>&#9989; Risparmio di capitale al lancio.</strong> Il 30% di capitale in meno significa che liberi risorse significative nel primo anno commerciale. Un miglioramento reale del VAN iniziale e della flessibilità finanziaria.", "5": "<strong>&#9989; Risparmio di capitale rilevante.</strong> Dimezzare il fabbisogno di capitale è eccellente — ottieni molto di più con molto meno investimento iniziale. Il miglioramento più forte possibile al flusso di cassa dell'anno di lancio."}};
+
+
+var PARAM_META = {"B5": {"icon": "&#9200;", "name": "Tempo al Mercato"}, "C2": {"icon": "&#128200;", "name": "Tasso di Crescita del Mercato"}, "C3": {"icon": "&#128336;", "name": "Finestra Competitiva"}, "C6": {"icon": "&#128181;", "name": "Incremento dei Ricavi"}, "D1": {"icon": "&#128274;", "name": "Dipendenza Aziendale"}, "D2": {"icon": "&#128295;", "name": "Costi di Sviluppo Residui"}, "D3": {"icon": "&#9881;", "name": "Effetto sui Costi di Produzione"}, "D4": {"icon": "&#127970;", "name": "Investimento in Capitale"}};
+
+
+function fmtEur(n){
+  if(!n&&n!==0) return '—';
+  return n.toLocaleString('it-IT',{style:'currency',currency:'EUR',maximumFractionDigits:0});
+}
+
+function readSetup(){
+  var g = function(id){return parseFloat(document.getElementById(id).value)||0;};
+  inputs.bt = g('s_bt');
+  inputs.targetPct = g('s_tpct')||15;
+  inputs.sectorShare = g('s_sector')||30;
+  inputs.costRatio = g('s_costs')||73;
+  inputs.r = g('s_discount')||11;
+  inputs.deprecPct = g('s_deprecpct')||2.5;
+  inputs.deprecPeriod = g('s_deprecperiod')||8;
+}
+
+function calcNPV(){
+  if(!inputs.bt||!inputs.sectorShare) return 0;
+  var BT=inputs.bt, S=inputs.sectorShare/100, shareCosts=inputs.costRatio/100;
+  var r=inputs.r/100, depPeriod=inputs.deprecPeriod;
+  var shareDeprec_pct=inputs.deprecPct, invIndex=depPeriod*inputs.deprecPct/100;
+  var T=OEK_VALUES.B5[oekScores.B5-1], g=OEK_VALUES.C2[oekScores.C2-1];
+  var L=OEK_VALUES.C3[oekScores.C3-1], et=OEK_VALUES.C6[oekScores.C6-1];
+  var D1=OEK_VALUES.D1[oekScores.D1-1], D2=OEK_VALUES.D2[oekScores.D2-1];
+  var D3=OEK_VALUES.D3[oekScores.D3-1], D4=OEK_VALUES.D4[oekScores.D4-1];
+  function frac(y){
+    if(y<=T) return 0;
+    if(y-T<1) return y-T;
+    if(y<=T+L) return 1;
+    if(y-T-L<1) return 1-(y-T-L);
+    return 0;
+  }
+  var rev=[0];
+  for(var y=1;y<=10;y++) rev.push(frac(y)*et*Math.pow(1+g,y-1)*S*Math.pow(1+g,y)*100);
+  var yFirst=0;
+  for(var y=1;y<=10;y++){if(rev[y]>0){yFirst=y;break;}}
+  // Matches Excel 'Financial calculations' rows 98-121: sum revenue over every
+  // year y with y>T and y<=T+1+depPeriod (always depPeriod+1 calendar-year
+  // slots, not depPeriod), then divide by depPeriod.
+  var sumR=0;
+  for(var y=1;y<=10;y++){ if(y>T && y<=T+1+depPeriod) sumR+=rev[y]; }
+  var avgRev=depPeriod>0?sumR/depPeriod:0;
+  var van=0;
+  for(var y=1;y<=10;y++){
+    var rv=rev[y], fr=frac(y);
+    var devCost=(y<=T)?D2*S*100:0;
+    var costs=rv*D3*shareCosts+devCost;
+    var invest=(y===yFirst&&yFirst>0)?avgRev*D4*invIndex:0;
+    var invRed=(y===yFirst&&yFirst>0)?depPeriod*shareDeprec_pct*(1-D4)*S*Math.pow(1+g,y):0;
+    var reg=fr*(1-shareCosts)*(1-D1)*S*Math.pow(1+g,y)*100;
+    var eff=fr*shareCosts*(1-D3)*S*Math.pow(1+g,y)*100;
+    van+=(rv-costs-invest+reg+eff+invRed)*BT/100/Math.pow(1+r,y);
+  }
+  return van;
+}
+
+function updateNPVBar(){
+  var npv=calcNPV();
+  var tgt=inputs.bt>0?(inputs.bt*inputs.targetPct/100):0;
+  document.getElementById('npv-live').textContent=inputs.bt>0?fmtEur(npv):'—';
+  document.getElementById('npv-tgt').textContent=inputs.bt>0?fmtEur(tgt):"inserisci i dati prima";
+  var gap=document.getElementById('npv-gap');
+  if(!inputs.bt){gap.textContent="configura prima"; gap.className='npv-gap gap-none'; return;}
+  var pct=tgt>0?Math.round(npv/tgt*100):0;
+  if(npv>=tgt){gap.textContent="&#10003; Obiettivo raggiunto";gap.className='npv-gap gap-ok';}
+  else if(pct>=80){gap.textContent='&#9888; {pct}% dell\'obiettivo'.replace('{pct}',pct);gap.className='npv-gap gap-warn';}
+  else{gap.textContent='&#10060; {pct}% dell\'obiettivo'.replace('{pct}',pct);gap.className='npv-gap gap-bad';}
+}
+
+function selectOEK(id, score){
+  oekScores[id]=score;
+  for(var s=1;s<=5;s++){
+    var el=document.getElementById('opt-'+id+'-'+s);
+    if(!el) continue;
+    el.className='opt-item'+(s===score?' sel-'+COLORS[id][s-1]:'');
+  }
+  var ins=document.getElementById('insight-'+id);
+  if(ins&&INSIGHTS[id]&&INSIGHTS[id][score]){
+    ins.className='oek-insight insight-'+COLORS[id][score-1];
+    ins.innerHTML=INSIGHTS[id][score];
+    ins.style.display='block';
+  }
+  updateNPVBar();
+}
+
+function selectQual(id, score){
+  qualScores[id]=score;
+  for(var s=1;s<=3;s++){
+    var el=document.getElementById('qopt-'+id+'-'+s);
+    if(el) el.classList.toggle('qual-sel', s===score);
+  }
+}
+
+function navigate(dir){
+  if(cur===0) readSetup();
+  var pages=document.querySelectorAll('.page');
+  var dots=document.querySelectorAll('.step-dot');
+  var seps=document.querySelectorAll('.step-sep');
+  pages[cur].classList.remove('active');
+  dots[cur].classList.remove('active'); dots[cur].classList.add('done');
+  if(seps[cur]) seps[cur].classList.add('done');
+  cur=Math.max(0,Math.min(NPAGE-1,cur+dir));
+  pages[cur].classList.add('active');
+  dots[cur].classList.remove('done'); dots[cur].classList.add('active');
+  updateNavInfo();
+  if(cur===NPAGE-1) updateResults();
+  window.scrollTo(0,0);
+}
+
+function goToPage(p){
+  if(p<0||p>=NPAGE) return;
+  if(cur===0) readSetup();
+  document.querySelectorAll('.page')[cur].classList.remove('active');
+  document.querySelectorAll('.step-dot')[cur].classList.remove('active');
+  cur=p;
+  document.querySelectorAll('.page')[cur].classList.add('active');
+  document.querySelectorAll('.step-dot')[cur].classList.remove('done');
+  document.querySelectorAll('.step-dot')[cur].classList.add('active');
+  updateNavInfo();
+  if(cur===NPAGE-1) updateResults();
+  window.scrollTo(0,0);
+}
+
+function updateNavInfo(){
+  var names=["Configurazione", "Tecnologia", "Mercato", "Finanza", "Legale & Strategia", "Risultati"];
+  document.getElementById('nav-info').textContent="Passo"+' '+(cur+1)+' '+"di"+' '+NPAGE+' — '+names[cur];
+  document.getElementById('btn-prev').style.display=cur===0?'none':'';
+  if(cur===NPAGE-1){
+    document.getElementById('btn-next').style.display='none';
+    if(!document.getElementById('btn-print2')){
+      var pb=document.createElement('button');
+      pb.className='btn btn-print'; pb.id='btn-print2';
+      pb.innerHTML="&#128424; Stampa / PDF"; pb.onclick=function(){window.print();};
+      document.querySelector('.nav-bar').appendChild(pb);
+    }
+  } else {
+    document.getElementById('btn-next').style.display='';
+    var pb2=document.getElementById('btn-print2'); if(pb2) pb2.remove();
+  }
+}
+
+function buildStepBar(){
+  var bar=document.getElementById('step-bar');
+  var names=["Configurazione", "Tecnologia", "Mercato", "Finanza", "Legale &amp; Strategia", "Risultati"];
+  var html='';
+  for(var i=0;i<NPAGE;i++){
+    if(i>0) html+='<div class="step-sep" id="sep-'+(i-1)+'"></div>';
+    html+='<div class="step"><div class="step-dot'+(i===0?' active':'')
+      +'" id="dot-'+i+'" onclick="goToPage('+i+')">'+(i+1)+'</div>'
+      +'<span class="step-label">'+names[i]+'</span></div>';
+  }
+  bar.innerHTML=html;
+}
+
+function oekCard(id, icon, title, question, context, opts){
+  var rows=opts.map(function(opt,i){
+    var s=i+1, c=COLORS[id][i];
+    return `<div class="opt-item" id="opt-${id}-${s}" onclick="selectOEK('${id}',${s})">
+      <div class="opt-dot dot-${c}">${s}</div>
+      <div><div class="opt-label">${opt.label}</div><div class="opt-desc">${opt.desc}</div></div>
+    </div>`;
+  }).join('');
+  return `<div class="oek-card">
+    <div class="oek-card-header">
+      <div class="oek-icon">${icon}</div>
+      <div><div class="oek-title">${title}</div><div class="oek-question">${question}</div></div>
+    </div>
+    <div class="oek-context">${context}</div>
+    <div class="opt-row">${rows}</div>
+    <div class="oek-insight" id="insight-${id}"></div>
+  </div>`;
+}
+
+function qualCard(id, question, opts){
+  var rows=opts.map(function(opt,i){
+    var s=i+1;
+    return `<div class="qual-opt" id="qopt-${id}-${s}" onclick="selectQual('${id}',${s})">
+      <div class="qual-num">${s}</div>${opt}
+    </div>`;
+  }).join('');
+  return `<div class="qual-card"><div class="qual-q">${question}</div><div class="qual-opts">${rows}</div></div>`;
+}
+
+function buildPages(){
+  var pagesDiv=document.getElementById('pages');
+  pagesDiv.innerHTML='';
+
+  // PAGE 0 — Setup
+  var p0=document.createElement('div');
+  p0.className='page active'; p0.id='page-0';
+  p0.innerHTML=`
+    <div class="page-title">&#127919; Definisci il tuo obiettivo</div>
+    <div class="page-desc">Inserisci i dati della tua azienda e il VAN che vuoi raggiungere. Ti guideremo passo dopo passo e vedrai in tempo reale se la situazione consente di raggiungere l&#x27;obiettivo.</div>
+    <div class="setup-grid">
+      <div class="setup-field" style="grid-column:span 2">
+        <label>Fatturato Annuo Totale Aziendale <span class="hint">(intera azienda, non solo l&#x27;area brevettata)</span></label>
+        <input class="setup-input" type="number" id="s_bt" placeholder="es. 8000000" oninput="readSetup();updateNPVBar()">
+      </div>
+      <div class="setup-field">
+        <label>Obiettivo VAN <span class="hint">% del fatturato</span></label>
+        <input class="setup-input" type="number" id="s_tpct" value="15" min="1" max="50" oninput="readSetup();updateNPVBar()">
+        <div style="font-size:.73rem;color:#64748b;margin-top:6px">Intervallo tipico: 5&ndash;25% del fatturato. Pi&ugrave; alto &egrave; l&#x27;obiettivo, pi&ugrave; esigenti saranno i parametri richiesti.</div>
+      </div>
+      <div class="setup-field">
+        <label>Area di Business del Brevetto <span class="hint">% del fatturato</span></label>
+        <input class="setup-input" type="number" id="s_sector" value="30" min="1" max="100" oninput="readSetup();updateNPVBar()">
+        <div style="font-size:.73rem;color:#64748b;margin-top:6px">Quale percentuale dei tuoi ricavi totali proviene dal segmento di mercato in cui opera questo brevetto?</div>
+      </div>
+      <div class="setup-field">
+        <label>Costi Operativi <span class="hint">% del fatturato</span></label>
+        <input class="setup-input" type="number" id="s_costs" value="73" min="1" max="99" oninput="readSetup();updateNPVBar()">
+        <div style="font-size:.73rem;color:#64748b;margin-top:6px">Tutti i costi operativi (produzione + spese generali) come percentuale del fatturato totale. Intervallo tipico: 65&ndash;85%.</div>
+      </div>
+      <div class="setup-field">
+        <label>Tasso di Sconto <span class="hint">%</span></label>
+        <input class="setup-input" type="number" id="s_discount" value="11" min="1" max="30" oninput="readSetup();updateNPVBar()">
+        <div style="font-size:.73rem;color:#64748b;margin-top:6px">Non sei sicuro? Usa il 10% come valore prudente. Le aziende con maggior rischio dovrebbero usare 12&ndash;15%.</div>
+      </div>
+    </div>
+    <button class="adv-toggle" onclick="document.getElementById('adv').classList.toggle('open');this.textContent=document.getElementById('adv').classList.contains('open')?"&#9650; Nascondi impostazioni avanzate":"&#9660; Impostazioni avanzate (ammortamento)"">&#9660; Impostazioni avanzate (ammortamento)</button>
+    <div id="adv" class="adv-section">
+      <div class="setup-field">
+        <label>Ammortamento Annuo <span class="hint">% del fatturato</span></label>
+        <input class="setup-input" type="number" id="s_deprecpct" value="2.5" step="0.1" oninput="readSetup();updateNPVBar()">
+      </div>
+      <div class="setup-field">
+        <label>Vita Utile dei Cespiti <span class="hint">anni</span></label>
+        <input class="setup-input" type="number" id="s_deprecperiod" value="8" oninput="readSetup();updateNPVBar()">
+      </div>
+    </div>
+    <br>
+    <button class="demo-btn" onclick="fillDemo()">&#9654; Carica esempio guidato (NovaMed Diagnostics Ltd.)</button>
+  `;
+  pagesDiv.appendChild(p0);
+
+  // PAGE 1 — Technology (B5 only, high emphasis)
+  var p1=document.createElement('div');
+  p1.className='page'; p1.id='page-1';
+  p1.innerHTML=`
+    <div class="page-title">&#9200; Finestra Tecnologica</div>
+    <div class="page-desc">&Egrave; il parametro singolarmente pi&ugrave; potente dell&apos;intero modello. Rispondi con onest&agrave; &mdash; il resto della pianificazione dipende da questo.</div>
+    ${OEK_CARDS.filter(function(c){return ['B5'].indexOf(c.id)>=0;}).map(function(c){return oekCard(c.id,c.icon,c.title,c.question,c.context,c.opts);}).join('')}
+    <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:16px;font-size:.82rem;color:#1e3a8a;line-height:1.6">
+      <strong>&#128161; Perch&eacute; conta cos&igrave; tanto?</strong> La formula VAN somma i flussi di cassa su 10 anni, attualizzando ciascuno a oggi. Ogni anno di ritardo fa due cose contemporaneamente: aggiunge costi di sviluppo negli anni iniziali (negativo) <em>e</em> ritarda l&apos;inizio dei ricavi positivi (negativo). Questi due effetti si sommano, rendendo il tempo al mercato la leva dominante in quasi tutti gli scenari.
+    </div>
+  `;
+  pagesDiv.appendChild(p1);
+
+  // PAGE 2 — Market (C2, C3, C6)
+  var p2=document.createElement('div');
+  p2.className='page'; p2.id='page-2';
+  p2.innerHTML=`
+    <div class="page-title">&#127758; Potenziale di Mercato</div>
+    <div class="page-desc">Tre domande che definiscono quante entrate il tuo brevetto pu&ograve; effettivamente generare durante la sua vita commerciale. Insieme, costituiscono la principale fonte di valore positivo nel modello.</div>
+    ${OEK_CARDS.filter(function(c){return ['C2','C3','C6'].indexOf(c.id)>=0;}).map(function(c){return oekCard(c.id,c.icon,c.title,c.question,c.context,c.opts);}).join('')}
+  `;
+  pagesDiv.appendChild(p2);
+
+  // PAGE 3 — Finance (D1, D2, D3, D4)
+  var p3=document.createElement('div');
+  p3.className='page'; p3.id='page-3';
+  p3.innerHTML=`
+    <div class="page-title">&#128200; Leve Finanziarie</div>
+    <div class="page-desc">Quattro domande su costi e investimenti. Determinano quanto dell&apos;opportunit&agrave; di mercato si converte effettivamente in valore netto, dopo aver considerato ci&ograve; che devi spendere per realizzarla.</div>
+    ${OEK_CARDS.filter(function(c){return ['D1','D2','D3','D4'].indexOf(c.id)>=0;}).map(function(c){return oekCard(c.id,c.icon,c.title,c.question,c.context,c.opts);}).join('')}
+  `;
+  pagesDiv.appendChild(p3);
+
+  // PAGE 4 — Legal & Strategy
+  var p4=document.createElement('div');
+  p4.className='page'; p4.id='page-4';
+  p4.innerHTML=`
+    <div class="page-title">&#9878;&#65039; Fondamenta Legale e Strategica</div>
+    <div class="page-desc">Il VAN calcolato nei passi precedenti si concretizza solo se il brevetto &egrave; ben protetto e l&apos;azienda ha un piano per valorizzarlo. Queste sei domande valutano quella base.</div>
+    <div style="font-size:.82rem;color:#475569;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;margin-bottom:18px">
+      &#9432; Queste domande non cambiano il numero del VAN &mdash; ma indicano quanto quel numero sia <strong>affidabile</strong> nella pratica.
+    </div>
+    ${QUAL_QUESTIONS.map(function(q){return qualCard(q.id,q.t,q.opts);}).join('')}
+  `;
+  pagesDiv.appendChild(p4);
+
+  // PAGE 5 — Results
+  var p5=document.createElement('div');
+  p5.className='page'; p5.id='page-5';
+  p5.innerHTML=`
+    <div class="page-title">&#127942; I Tuoi Risultati</div>
+    <div class="page-desc">Ecco un riepilogo di dove si trova il tuo brevetto rispetto all&apos;obiettivo VAN &mdash; e cosa prioritizzare.</div>
+    <div class="res-hero" id="res-hero">
+      <div class="res-npv">
+        <div class="res-npv-val" id="res-npv-val">—</div>
+        <div class="res-npv-lbl">VAN Stimato</div>
+        <div style="font-size:.78rem;margin-top:6px;opacity:.75" id="res-tgt-lbl">Obiettivo: —</div>
+      </div>
+      <div class="res-bar-wrap">
+        <div class="res-bar-lbl" id="res-bar-lbl">Avanzamento verso l&#x27;obiettivo</div>
+        <div class="res-bar-track"><div class="res-bar-fill" id="res-bar-fill" style="width:0%"></div></div>
+        <div class="res-verdict" id="res-verdict">Completa i passi precedenti per vedere il tuo risultato.</div>
+      </div>
+    </div>
+    <div class="param-grid" id="param-grid"></div>
+    <div class="qual-result-card" id="qual-result"></div>
+    <div class="actions-card" id="actions-card">
+      <h3>&#127919; Le Tue Azioni Prioritarie</h3>
+      <div id="actions-list"></div>
+    </div>
+    <div style="text-align:center;margin:20px 0">
+      <button class="btn btn-print" onclick="window.print()">&#128424; Stampa / Salva PDF</button>
+    </div>
+  `;
+  pagesDiv.appendChild(p5);
+}
+
+var PARAM_TIPS = {"B5": {"red": "Accelera immediatamente il percorso verso il mercato — questa è l'azione ad altissima priorità. Ogni anno aggiuntivo di ritardo prima del lancio è estremamente costoso.", "yellow": "Sei vicino al lancio. Concentrati sull'eliminare gli ostacoli residui per ridurre il tempo al mercato sotto 1 anno, se possibile.", "green": "Bene. Proteggi questa tempistica — evita derive di scope o ritardi regolatori che potrebbero posticipare la data di lancio."}, "C2": {"red": "Il mercato che stai puntando cresce molto lentamente. Considera se segmenti adiacenti in più rapida crescita potrebbero essere raggiunti con la stessa tecnologia.", "yellow": "Crescita moderata del mercato. Assicurati che la tua finestra commerciale (C3) e l'incremento dei ricavi (C6) siano il più forti possibile per compensare.", "green": "Forte crescita del mercato — assicurati che il tuo piano commerciale sia pronto a coglierla prima che i concorrenti si muovano."}, "C3": {"red": "La tua finestra competitiva è troppo breve per recuperare l'investimento. Rifletti su cosa potrebbe estendere l'esclusiva di mercato: rivendicazioni più ampie, segreti commerciali, barriere regolamentari.", "yellow": "Una finestra di 2 anni è stretta. Lavora sulla creazione di costi di switching, relazioni con i clienti e innovazioni successive per estenderla.", "green": "Una finestra competitiva solida. Usala attivamente — la finestra non rimarrà aperta per sempre."}, "C6": {"red": "Il brevetto sta generando pochissimo incremento commerciale. Rivedi se la tecnologia è genuinamente differenziata agli occhi dei clienti.", "yellow": "L'incremento dei ricavi è gestibile ma modesto. Investi nella validazione commerciale — i clienti sono effettivamente disposti a pagare un premio?", "green": "Forte impatto commerciale. Capitalizzalo attraverso la strategia di prezzo e un focus attivo sulle vendite che valorizzi i benefici abilitati dal brevetto."}, "D1": {"red": "Questo brevetto protegge pochi ricavi centrali. Il caso economico per mantenerlo è debole a meno che gli altri parametri non siano eccezionali.", "yellow": "Il brevetto protegge circa la metà dei tuoi ricavi — una dipendenza significativa ma non critica. Considera di ristrutturare le operazioni per aumentare la dipendenza dalla tecnologia brevettata.", "green": "Il brevetto protegge il cuore della tua attività. Questo è un forte argomento per investire nella sua difesa ed estensione."}, "D2": {"red": "I costi di sviluppo residui sono molto elevati e danneggeranno gravemente il VAN. Cerca finanziamenti (bandi, crediti fiscali R&S) e delimita rigorosamente ciò che è strettamente necessario.", "yellow": "Costi residui moderati. Richiedi incentivi R&S e regimi Patent Box fiscali ove disponibili — possono ridurre significativamente il costo effettivo.", "green": "Costi residui bassi. Assicurati che lo sviluppo rimanga nei tempi e nel budget per preservare questo vantaggio."}, "D3": {"red": "La produzione diventa significativamente più costosa. Esplora miglioramenti di processo, automazione o esternalizzazione per ridurre l'impatto sui costi prima del lancio.", "yellow": "Posizione di costo neutrale. Cerca opportunità di trasformare questo in un vantaggio di costo attraverso l'ottimizzazione dei processi.", "green": "La tecnologia ti rende più efficiente — rendilo parte della tua storia commerciale, poiché costi più bassi significano prezzi più competitivi o margini più alti."}, "D4": {"red": "Il fabbisogno di capitale aggiuntivo al lancio è elevato. Esplora leasing, rollout graduale o produzione in conto terzi per ridurre l'esborso iniziale.", "yellow": "Investimento neutro. Nessun onere extra, ma nemmeno risparmio — cerca opportunità per ridurre l'impronta di capitale.", "green": "Minori fabbisogni di capitale liberano risorse. Usa questa flessibilità finanziaria per rafforzare altre parti del piano aziendale."}};
+
+
+function updateResults(){
+  readSetup();
+  var npv=calcNPV();
+  var tgt=inputs.bt>0?(inputs.bt*inputs.targetPct/100):0;
+  var pct=tgt>0?Math.round(npv/tgt*100):0;
+  var barPct=Math.min(pct,120);
+  document.getElementById('res-npv-val').textContent=inputs.bt>0?fmtEur(npv):'—';
+  document.getElementById('res-tgt-lbl').textContent="Obiettivo: "+(inputs.bt>0?fmtEur(tgt):'—');
+  var fill=document.getElementById('res-bar-fill');
+  fill.style.width=barPct+'%';
+  fill.style.background=pct>=100?'var(--green)':pct>=80?'var(--yellow)':'var(--red)';
+  var verdict='';
+  if(!inputs.bt){verdict="Inserisci il fatturato aziendale e l'obiettivo nella pagina di configurazione per vedere il risultato.";}
+  else if(pct>=100){verdict="<strong>&#10003; Obiettivo raggiunto.</strong> Il profilo dei parametri corrente supporta un VAN pari o superiore all'obiettivo. Concentrati sul mantenere questa posizione — proteggi la tecnologia, fai valere il brevetto ed esegui il piano commerciale.";}
+  else if(pct>=80){verdict='<strong>&#9888; Quasi raggiunto — {pct}% dell\'obiettivo.</strong> Sei vicino. Una o due migliorie mirate sui parametri più deboli dovrebbero colmare il divario. Vedi le azioni prioritarie qui sotto.'.replace('{pct}',pct);}
+  else if(pct>=50){verdict='<strong>&#9888; A metà strada — {pct}% dell\'obiettivo.</strong> Diversi parametri necessitano di rafforzamento. Il gap del VAN è reale ma colmabile. Prioritizza gli elementi in rosso qui sotto.'.replace('{pct}',pct);}
+  else{verdict='<strong>&#10060; Gap significativo — {pct}% dell\'obiettivo.</strong> Il profilo attuale è molto distante dall\'obiettivo. Sono necessari cambiamenti importanti in più parametri prima che il brevetto possa giustificare il suo obiettivo commerciale.'.replace('{pct}',pct);}
+  document.getElementById('res-verdict').innerHTML=verdict;
+  document.getElementById('res-bar-lbl').textContent='Sei al {pct}% del tuo obiettivo'.replace('{pct}',pct);
+
+  // Parameter grid
+  var pg=document.getElementById('param-grid'); pg.innerHTML='';
+  var reds=[],yellows=[];
+  Object.keys(PARAM_META).forEach(function(id){
+    var score=oekScores[id], color=COLORS[id][score-1];
+    var m=PARAM_META[id];
+    var icon=color==='green'?'&#9989;':color==='yellow'?'&#9888;&#65039;':'&#10060;';
+    var badgeCls='badge-'+color;
+    var tip=PARAM_TIPS[id]?PARAM_TIPS[id][color]:'';
+    var html='<div class="param-card">'
+      +'<div class="param-head">'
+      +'<span class="param-icon">'+m.icon+'</span>'
+      +'<span class="param-name">'+m.name+'</span>'
+      +'<span class="param-badge '+badgeCls+'">'+icon+' Punteggio '+score+'</span>'
+      +'</div>'
+      +'<div class="param-tip">'+tip+'</div>'
+      +'</div>';
+    pg.innerHTML+=html;
+    if(color==='red') reds.push({id:id,score:score,name:m.name,tip:PARAM_TIPS[id].red});
+    else if(color==='yellow') yellows.push({id:id,score:score,name:m.name,tip:PARAM_TIPS[id].yellow});
+  });
+
+  // Qualitative result
+  var legalScore=qualScores.Ag+qualScores.Al+qualScores.Ab+qualScores.Ac;
+  var stratScore=qualScores.Ec+qualScores.Es;
+  var legalStatus=legalScore>=10?{icon:'&#9989;',color:'#16a34a',label:"Protezione legale solida"}:legalScore>=7?{icon:'&#9888;&#65039;',color:'#d97706',label:"Adeguata — con qualche lacuna"}:{icon:'&#10060;',color:'#dc2626',label:"Richiede attenzione"};
+  var stratStatus=stratScore>=5?{icon:'&#9989;',color:'#16a34a',label:"Ben allineato con la strategia"}:stratScore>=4?{icon:'&#9888;&#65039;',color:'#d97706',label:"Parzialmente allineato"}:{icon:'&#10060;',color:'#dc2626',label:"Allineamento strategico assente"};
+  var legalRec=legalScore<7?"Lavora sullo stato di concessione del brevetto, la vita residua, la copertura geografica e l'ampiezza delle rivendicazioni per costruire una solida base legale che possa effettivamente proteggere il VAN che stai puntando.":legalScore<10?"La posizione legale è adeguata ma presenta lacune. Prioritizza l'elemento legale più debole (copertura o applicabilità) per ridurre il rischio di perdere inaspettatamente la tua finestra competitiva.":"La tua base legale è solida. Continua a monitorare per violazioni e rivaluta la copertura ogni 2&ndash;3 anni.";
+  var stratRec=stratScore<4?"Un brevetto senza un piano commerciale chiaro raramente raggiunge il suo potenziale VAN. Definisci come lo utilizzerai: vendita diretta, licenza o posizionamento difensivo — e integralo nel tuo piano aziendale annuale.":stratScore<5?"La tua strategia è parzialmente in atto. Formalizza il piano commerciale e assicurati che la leadership si impegni a utilizzare attivamente il brevetto.":"Ottimo allineamento strategico. Assicurati che il piano venga rivisto annualmente e resti collegato alle priorità aziendali.";
+  document.getElementById('qual-result').innerHTML='<h3>&#9878;&#65039; Fondamenta Legale e Strategica</h3>'
+    +'<div class="qual-row"><div class="qual-dot" style="background:'+legalStatus.color+'"></div><div><strong>Protezione legale: '+legalStatus.icon+' '+legalStatus.label+'</strong><br>'+legalRec+'</div></div>'
+    +'<div class="qual-row"><div class="qual-dot" style="background:'+stratStatus.color+'"></div><div><strong>Allineamento strategico: '+stratStatus.icon+' '+stratStatus.label+'</strong><br>'+stratRec+'</div></div>';
+
+  // Actions
+  var actions=[].concat(reds,yellows).slice(0,4);
+  var al=document.getElementById('actions-list');
+  if(actions.length===0){
+    al.innerHTML='<div class="action-item"><div class="action-num">&#10003;</div><div class="action-text">Tutti i parametri chiave sono nella zona verde. Mantieni la posizione attuale, fai valere il brevetto attivamente ed esegui il piano commerciale.</div></div>';
+  } else {
+    al.innerHTML=actions.map(function(a,i){
+      return '<div class="action-item"><div class="action-num">'+(i+1)+'</div><div class="action-text"><strong>'+a.name+'</strong> (punteggio attuale: {score}): '.replace('{score}',a.score)+a.tip+'</div></div>';
+    }).join('');
+  }
+
+  updateNPVBar();
+}
+
+function fillDemo(){
+  document.getElementById('s_bt').value=8000000;
+  document.getElementById('s_tpct').value=15;
+  document.getElementById('s_sector').value=30;
+  document.getElementById('s_costs').value=73;
+  document.getElementById('s_discount').value=11;
+  document.getElementById('s_deprecpct').value=2.5;
+  document.getElementById('s_deprecperiod').value=8;
+  readSetup();
+  var ds={"B5": 3, "C2": 4, "C3": 4, "C6": 3, "D1": 3, "D2": 4, "D3": 3, "D4": 3};
+  Object.keys(ds).forEach(function(id){selectOEK(id,ds[id]);});
+  var dq={"Ag": 3, "Al": 3, "Ab": 2, "Ac": 2, "Ec": 3, "Es": 2};
+  Object.keys(dq).forEach(function(id){selectQual(id,dq[id]);});
+  updateNPVBar();
+  alert("Esempio caricato: NovaMed Diagnostics Ltd.\nFatturato: €8M | VAN obiettivo: 15% | Quota settore: 30%\nNaviga tra le pagine per esplorare le scelte dei parametri.");
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  buildPages();
+  buildStepBar();
+  updateNavInfo();
+  updateNPVBar();
+  // init all OEK selections to default score 3
+  Object.keys(oekScores).forEach(function(id){selectOEK(id,oekScores[id]);});
+  Object.keys(qualScores).forEach(function(id){selectQual(id,qualScores[id]);});
+});
+</script>
+</body>
+</html>

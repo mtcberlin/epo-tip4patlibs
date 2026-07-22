@@ -56,3 +56,8 @@ ENV/
 /registerinfo.xml
 /reg.xml
 /reg2.xml
+
+# Riccardo IPScore build pipeline: source material (templates + data + scripts),
+# NOT a build artifact. Must survive the generic build/ rule above.
+!7_ipscore/build/
+!7_ipscore/build/**

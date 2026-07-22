@@ -1,0 +1,690 @@
+[
+  {
+    "id": "A1",
+    "sec": "A",
+    "t": "What is the patent status?",
+    "opts": [
+      "Patent not yet filed",
+      "Patent application filed",
+      "Prior art search and patentability assessment completed",
+      "Patent granted",
+      "Opposition period expired without opposition"
+    ],
+    "h": "<strong>Why it matters:</strong> A patent still under application has uncertainty about grant; a granted patent provides full protection. <strong>EPO timeline:</strong> from application to grant typically takes 3&ndash;5 years. <strong>Tip:</strong> if still at application stage, consider the score in future terms once the patent is granted.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "A2",
+    "sec": "A",
+    "t": "What is the legal strength of the patent?",
+    "opts": [
+      "No prior art search carried out",
+      "Quick search on public databases",
+      "Prior art search at a national patent office",
+      "International search (ISR/PCT) carried out",
+      "Complete prior art and infringement search"
+    ],
+    "h": "<strong>What it measures:</strong> how defensible the patent is in case of challenge. <strong>A professional complete search</strong> (prior art + infringement) costs &euro;3,000&ndash;&euro;8,000 but significantly increases the patent's legal value. <strong>PCT:</strong> the international PCT search is the standard for multi-country patents.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "A3",
+    "sec": "A",
+    "t": "How long is the patent still valid?",
+    "opts": [
+      "0&ndash;2 years of remaining life",
+      "2&ndash;4 years of remaining life",
+      "4&ndash;8 years of remaining life",
+      "8&ndash;12 years of remaining life",
+      "More than 12 years of remaining life"
+    ],
+    "h": "<strong>Maximum term:</strong> 20 years from the filing date (Article 63 EPC). <strong>Pharmaceutical exception:</strong> a Supplementary Protection Certificate (SPC) can extend protection by up to 5 extra years. <strong>EPO annual fees:</strong> grow from ~&euro;500 (year 3) to ~&euro;1,800+ (year 10+); consider whether renewal is economically sustainable.",
+    "oek": null,
+    "risk": 1,
+    "opp": 1
+  },
+  {
+    "id": "A4",
+    "sec": "A",
+    "t": "How broad and inclusive are the patent claims?",
+    "opts": [
+      "Very narrow and specific claims",
+      "Fairly narrow claims",
+      "Reasonably broad claims",
+      "Broadly inclusive claims",
+      "Claims cover a general principle (core / platform technology)"
+    ],
+    "h": "<strong>What claims are:</strong> they define the legal monopoly space. The broader they are, the harder it is for competitors to work around them. <strong>Trade-off:</strong> overly broad claims may be invalidated for lack of support in the description. <strong>Recommended strategy:</strong> structure with a broad independent claim plus dependent fall-back claims.",
+    "oek": null,
+    "risk": 0,
+    "opp": 1
+  },
+  {
+    "id": "A5",
+    "sec": "A",
+    "t": "Does the patent's geographical coverage include the relevant markets?",
+    "opts": [
+      "Protection in a single national market",
+      "Protection in a few countries of the target market",
+      "Protection in most relevant countries",
+      "Protection in all current market countries",
+      "Protection in all current and potentially relevant countries"
+    ],
+    "h": "<strong>Indicative costs:</strong> European patent (EPC) validated in 5 countries &asymp; &euro;15,000&ndash;&euro;25,000 total over 10 years; global PCT considerably more. <strong>Priority countries for SMEs:</strong> DE, FR, GB, US, CN are often the most critical markets. <strong>Tip:</strong> cover at least the countries of key customers and the most dangerous competitors.",
+    "oek": null,
+    "risk": 1,
+    "opp": 1
+  },
+  {
+    "id": "A6",
+    "sec": "A",
+    "t": "Is the patent monitored to identify potential infringements?",
+    "opts": [
+      "No monitoring against infringements",
+      "Occasional monitoring through commercial signals",
+      "Partial systematic monitoring of selected competing products",
+      "Systematic monitoring of relevant markets",
+      "Formalised global monitoring with a dedicated watchdog"
+    ],
+    "h": "<strong>Available tools:</strong> automatic alerts on Espacenet / USPTO, patent watch services (&euro;500&ndash;&euro;3,000/year). <strong>Why it matters:</strong> without monitoring, infringements go undetected and the patent loses practical value. <strong>For SMEs:</strong> even an annual manual check of key competitors' products is better than no monitoring at all.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "A7",
+    "sec": "A",
+    "t": "Are legal disputes frequent in the operating markets?",
+    "opts": [
+      "Legal proceedings very frequent in the sector",
+      "Legal proceedings present in the sector",
+      "Disputes (pre-litigation) frequent in the sector",
+      "Occasional disputes",
+      "Legal disputes and proceedings not usual in the sector"
+    ],
+    "h": "<strong>Counter-intuitive note:</strong> a litigious sector lowers the score because defending the patent is costly and risky. <strong>High-litigation sectors:</strong> pharmaceuticals, ICT/software, semiconductors. Low-litigation sectors: many traditional manufacturing sectors. <strong>Litigation costs:</strong> patent proceedings in Europe can cost &euro;50,000&ndash;&euro;500,000+.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "A8",
+    "sec": "A",
+    "t": "Does the company have the means to enforce patent rights?",
+    "opts": [
+      "Generally too expensive and difficult to enforce rights",
+      "Rights defended only in selected countries in key markets",
+      "Rights defended against selected competitors",
+      "Rights defended in almost all cases unless too costly",
+      "Patent rights are always enforced"
+    ],
+    "h": "<strong>Alternatives to litigation:</strong> patent mediation (WIPO) or arbitration clauses in contracts can reduce costs significantly. <strong>Patent insurance:</strong> products covering part of legal costs &mdash; premiums from &euro;2,000&ndash;&euro;10,000/year. <strong>For small companies:</strong> consider partnerships with specialist law firms on a success-fee basis.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "B1",
+    "sec": "B",
+    "t": "Is the invention a unique technology in its field?",
+    "opts": [
+      "The invention has a marginal effect compared to existing technology",
+      "The invention has some improvement over existing technology",
+      "The invention has a significant improvement over existing technology",
+      "The invention has a substantial improvement and is clearly innovative",
+      "The invention could change the way the sector operates"
+    ],
+    "h": "<strong>How to assess:</strong> compare with the state of the art at the time of filing. <strong>Signs of high uniqueness:</strong> no similar prior art, scientific publications citing the invention, interest from large companies in purchasing or licensing. <strong>Tip:</strong> request an FTO (Freedom to Operate) analysis to identify potentially blocking patents (cost &euro;3,000&ndash;&euro;8,000).",
+    "oek": null,
+    "risk": 0,
+    "opp": 1
+  },
+  {
+    "id": "B2",
+    "sec": "B",
+    "t": "Is the invention technically superior to substitute technologies?",
+    "opts": [
+      "The technology operates in a field dominated by new and more advanced substitute technologies",
+      "There is a wide range of fairly competitive substitute technologies",
+      "Substitute technologies exist but are limited in use and application",
+      "Substitute technologies exist but are not yet competitive",
+      "No known substitute technologies exist"
+    ],
+    "h": "<strong>What substitute technologies are:</strong> different solutions that solve the same problem (e.g. streaming vs. DVD). <strong>Example:</strong> a patented packaging machine faces the \"threat\" of manual solutions or entirely different processes. <strong>Recommended analysis:</strong> map alternative technologies in the market and assess their maturity.",
+    "oek": null,
+    "risk": 1,
+    "opp": 1
+  },
+  {
+    "id": "B3",
+    "sec": "B",
+    "t": "To what extent has the invention been tested?",
+    "opts": [
+      "The invention has only been tested in theory (calculations/simulations)",
+      "Isolated experiments or tests have been carried out",
+      "Production tests successfully completed",
+      "Production in start-up phase (ramp-up)",
+      "Full-scale production already operational"
+    ],
+    "h": "<strong>Why it matters:</strong> the degree of technological maturity (TRL &mdash; Technology Readiness Level) directly influences commercial risk. <strong>Corresponding TRL:</strong> 1=TRL 1&ndash;3, 2=TRL 4, 3=TRL 5&ndash;6, 4=TRL 7&ndash;8, 5=TRL 9. <strong>For funders:</strong> Horizon Europe / EIC often evaluate TRL as a minimum eligibility requirement.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "B4",
+    "sec": "B",
+    "t": "Does the patented technology require new skills or production equipment?",
+    "opts": [
+      "Requires a completely new production process from scratch",
+      "Substantial development of production processes needed before it can be used",
+      "Some development of production processes needed",
+      "Only minor adaptations to existing processes needed",
+      "Can be used with current production technology without modifications"
+    ],
+    "h": "<strong>Impact on costs:</strong> a completely new process may require &euro;100K&ndash;&euro;2M+ in investment. <strong>Available support:</strong> Industry 4.0 initiatives, EIC / Horizon Europe grants, national R&amp;D tax credit schemes. <strong>Tip:</strong> consider contract manufacturing (outsourced production) to reduce initial investment.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "B5",
+    "sec": "B",
+    "t": "How much time is needed before the technology can be commercialised?",
+    "opts": [
+      "5 years before commercialisation [value: 5]",
+      "2 years [value: 2]",
+      "1 year [value: 1]",
+      "6 months [value: 0.5]",
+      "Ready for commercial activities &mdash; 0 years [value: 0]"
+    ],
+    "h": "<strong>This value is used in the NPV calculation:</strong> it shifts the revenue horizon forward and reduces the net present value. <strong>Typical time components:</strong> product development, certifications (CE mark, ISO), regulatory approvals (EMA for medicines), production scaling. <strong>Tip:</strong> reducing time-to-market is often the best investment to maximise NPV.",
+    "oek": [
+      5,
+      2,
+      1,
+      0.5,
+      0
+    ],
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "B6",
+    "sec": "B",
+    "t": "Are counterfeit products easy to produce by competitors?",
+    "opts": [
+      "The technology is easily identifiable, easy to copy and reproduce",
+      "The technology is easy to copy and produce",
+      "The technology is comparatively easy to identify, copy and produce",
+      "The technology is complex and difficult to copy and produce",
+      "The technology is complex and extremely difficult to copy and produce"
+    ],
+    "h": "<strong>Additional protection strategies:</strong> trade secret complementary to the patent, inherent technical complexity, exclusive supply chain. <strong>Positive example:</strong> technologies requiring special materials, high-precision processes or tacit know-how that is difficult to replicate. <strong>Legal note:</strong> trade secrets and know-how are protected under the EU Trade Secrets Directive (2016/943).",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "B7",
+    "sec": "B",
+    "t": "Are counterfeit products easy to identify?",
+    "opts": [
+      "It is extremely difficult to identify counterfeit products",
+      "It is difficult but not impossible to identify counterfeit products",
+      "It is fairly easy to identify counterfeit products",
+      "It is easy to identify counterfeit products",
+      "It is extremely easy to identify counterfeit products"
+    ],
+    "h": "<strong>Why it matters:</strong> if infringement is easily detectable, competitors are more deterred and the patent has greater practical value. <strong>Detection tools:</strong> chemical/spectroscopic analysis, reverse engineering, visual/functional comparison, trade fair and catalogue monitoring. <strong>Sectors with low detectability:</strong> intermediate chemical processes, software, business methods.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "B8",
+    "sec": "B",
+    "t": "Does deployment of the technology depend on licence agreements with third parties?",
+    "opts": [
+      "Use of the patent depends on extensive licence agreements with competitors",
+      "Use depends on some licences with competitors",
+      "Use does not depend on particular licences with competitors",
+      "Licences needed but not with direct competitors",
+      "Use of the patent is completely independent of licence agreements"
+    ],
+    "h": "<strong>Patent thicket:</strong> in sectors such as ICT and pharmaceuticals, a technology commonly requires licences from dozens of third-party patents. <strong>FRAND:</strong> standard-essential patents (SEPs) must be licensed on Fair, Reasonable and Non-Discriminatory terms. <strong>Tip:</strong> verify via an FTO analysis whether in-licensing is needed before investing in product development.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "B9",
+    "sec": "B",
+    "t": "Does the technology have marketing value towards customers (customer value)?",
+    "opts": [
+      "The patent provides a product utility improvement very difficult to communicate to customers",
+      "Improvement difficult to communicate",
+      "The patent provides a communicable improvement in product utility",
+      "Slight but easily communicable improvement",
+      "The patent provides distinctive features that can be actively used in marketing"
+    ],
+    "h": "<strong>Trade mark vs. patent:</strong> the patent protects the technology, but its marketing value materialises when it becomes a differentiator perceived by the customer. <strong>Examples of high communicability:</strong> \"patented engine 30% more efficient\", \"patented material 2x stronger\". <strong>Strategic integration:</strong> combine the patent with registered design and trade mark for comprehensive IP protection.",
+    "oek": null,
+    "risk": 0,
+    "opp": 1
+  },
+  {
+    "id": "C1",
+    "sec": "C",
+    "t": "What are the commercialisation options for the technology?",
+    "opts": [
+      "No known market exists for the patented technology",
+      "The technology has not yet been targeted at a specific market",
+      "A consolidated market exists for the technology",
+      "A consolidated market exists with further well-defined market options",
+      "A consolidated market exists with other emerging and tangible markets"
+    ],
+    "h": "<strong>Commercialisation channels:</strong> direct sale, licensing, technology franchising, joint venture, spin-off. <strong>Market sizing:</strong> assess TAM (total addressable market), SAM (serviceable), SOM (realistic target). <strong>Available support:</strong> EEN (Enterprise Europe Network) and EIC for finding international commercial partners.",
+    "oek": null,
+    "risk": 1,
+    "opp": 1
+  },
+  {
+    "id": "C2",
+    "sec": "C",
+    "t": "What is the market growth in the business area where the technology is used?",
+    "opts": [
+      "Very low: 0.5% per year [value: 0.005]",
+      "Low: 2.5% per year [value: 0.025]",
+      "Medium: 5% per year [value: 0.05]",
+      "High: 8% per year [value: 0.08]",
+      "Very high: 15% per year [value: 0.15]"
+    ],
+    "h": "<strong>This value enters the NPV calculation</strong> as the turnover growth rate of the business area. <strong>Benchmark 2024:</strong> traditional manufacturing 1&ndash;3%, medical/pharma 5&ndash;8%, cleantech/renewables 8&ndash;15%, AI/digital 10&ndash;20%. <strong>Suggested sources:</strong> Eurostat, sector federation reports, IBISWorld / Statista market reports.",
+    "oek": [
+      0.005,
+      0.025,
+      0.05,
+      0.08,
+      0.15
+    ],
+    "risk": 0,
+    "opp": 1
+  },
+  {
+    "id": "C3",
+    "sec": "C",
+    "t": "What is the expected market life of the technology after commercialisation?",
+    "opts": [
+      "6 months [value: 0.5]",
+      "1 year [value: 1]",
+      "2 years [value: 2]",
+      "4 years [value: 4]",
+      "8 years [value: 8]"
+    ],
+    "h": "<strong>This value enters the NPV calculation</strong> as the horizon for additional cash flows. <strong>Factors reducing market life:</strong> rapid technological obsolescence, strong competition, regulatory changes. <strong>Factors extending it:</strong> sector standards, high switching costs for customers, proprietary ecosystems. <strong>Note:</strong> market life may be shorter than the patent's remaining term.",
+    "oek": [
+      0.5,
+      1,
+      2,
+      4,
+      8
+    ],
+    "risk": 0,
+    "opp": 1
+  },
+  {
+    "id": "C4",
+    "sec": "C",
+    "t": "Are there competitive or substitute products active in the market?",
+    "opts": [
+      "High degree of development of competitive or substitute technologies under way",
+      "Competitive or substitute technologies are likely to be developed",
+      "50% probability that competitive technologies will be developed",
+      "Good probability of maintaining exclusivity in the market",
+      "Market exclusivity is virtually certain"
+    ],
+    "h": "<strong>Competitive analysis:</strong> monitor competitors' patents on Espacenet and Google Patents to anticipate new entrants. <strong>Barriers to entry:</strong> high R&amp;D investment, tacit knowledge, economies of scale, network effects make substitution more difficult. <strong>High-substitution sectors:</strong> mobile apps, SaaS solutions, commoditised electronics. Low-substitution sectors: specialised industrial machinery, complex chemical processes, certified medical devices.",
+    "oek": null,
+    "risk": 1,
+    "opp": 1
+  },
+  {
+    "id": "C5",
+    "sec": "C",
+    "t": "What final price is the consumer willing to pay compared to already known products?",
+    "opts": [
+      "Achievable price significantly lower than competitors",
+      "Lower than competitors",
+      "Equal to competitors",
+      "Higher than competitors",
+      "Significantly higher than competitors"
+    ],
+    "h": "<strong>Pricing power:</strong> a patent enabling premium pricing is the most direct sign of economic value. <strong>How to estimate:</strong> market research, conjoint analysis, A/B testing with customer samples, comparison with substitute products. <strong>Example:</strong> a patented medical device with superior clinical efficacy can justify a 30&ndash;100% premium over the generic alternative.",
+    "oek": null,
+    "risk": 0,
+    "opp": 1
+  },
+  {
+    "id": "C6",
+    "sec": "C",
+    "t": "What is the potential increase in turnover in the business area thanks to the patented technology?",
+    "opts": [
+      "Very small increase: 0.5% of business area turnover [value: 0.005]",
+      "Small: 2% [value: 0.02]",
+      "Medium: 4% [value: 0.04]",
+      "Large: 6% [value: 0.06]",
+      "Very large: 10% [value: 0.1]"
+    ],
+    "h": "<strong>This value enters directly into the NPV calculation</strong> as the percentage increase in business area turnover attributable to the patent. <strong>How to estimate:</strong> historical analysis of similar launches in the sector, market research, commercial pilot. <strong>For SMEs:</strong> a 4&ndash;6% increase on &euro;1M turnover generates &euro;40K&ndash;&euro;60K of additional annual revenue.",
+    "oek": [
+      0.005,
+      0.02,
+      0.04,
+      0.06,
+      0.1
+    ],
+    "risk": 0,
+    "opp": 1
+  },
+  {
+    "id": "C7",
+    "sec": "C",
+    "t": "What knowledge does the company have of the application potential and commercial opportunities?",
+    "opts": [
+      "Limited knowledge only of the primary application",
+      "Poor knowledge of application and commercial potential",
+      "Good knowledge of application potential, poor commercial knowledge",
+      "Good knowledge of both application potential and commercial opportunities",
+      "Complete knowledge of all applications and commercial opportunities, including non-traditional ones"
+    ],
+    "h": "<strong>How to improve this score:</strong> cross-industry sector analysis, participation in technology trade fairs, scouting with EEN partners. <strong>Non-obvious applications:</strong> many technologies have uses in sectors far from the original one &mdash; this significantly expands the patent's value. <strong>Useful tool:</strong> Technology Intelligence Reports from institutes such as Fraunhofer or similar research organisations.",
+    "oek": null,
+    "risk": 0,
+    "opp": 1
+  },
+  {
+    "id": "C8",
+    "sec": "C",
+    "t": "Does the patented technology have the potential to generate revenue from licence agreements?",
+    "opts": [
+      "No relevant licensing revenue prospects",
+      "Licensing revenue possible to a limited extent",
+      "Good prospects / potential for revenue from licence agreements",
+      "Excellent licensing revenue prospects",
+      "Outstanding prospects: possibility of multiple licences or industry standards"
+    ],
+    "h": "<strong>Typical royalties by sector:</strong> pharmaceutical 5&ndash;20%, mechanical engineering 2&ndash;5%, software 5&ndash;15%, chemicals 3&ndash;8%. <strong>Licensing platforms:</strong> IAM Market, Dennemeyer Consulting, IP exchanges for finding licensees. <strong>Patent pool strategy:</strong> in sectors such as IoT, automotive, e-health, joining a patent pool can provide continuous passive income.",
+    "oek": null,
+    "risk": 0,
+    "opp": 1
+  },
+  {
+    "id": "C9",
+    "sec": "C",
+    "t": "Do commercial activities require special authorisations from public bodies or similar?",
+    "opts": [
+      "Authorisation needed &mdash; already refused by the public authority",
+      "Application not yet submitted or provisionally refused",
+      "Application submitted to authorities &mdash; awaiting response",
+      "Time-limited authorisation approved by the public authority",
+      "Permanent authorisation obtained, or no authorisation required to commercialise"
+    ],
+    "h": "<strong>Sectors with critical authorisations:</strong> pharmaceuticals (EMA/MHRA), medical devices (CE mark, class IIa&ndash;III), food (EFSA), energy, chemicals (REACH). <strong>Typical timelines:</strong> class II medical device: 12&ndash;24 months; new drug: 5&ndash;10 years; functional food: 2&ndash;4 years. <strong>Tip:</strong> start the authorisation process in parallel with technological development to reduce time-to-market.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "D1",
+    "sec": "D",
+    "t": "Can the current output of the business area be maintained without the patented technology?",
+    "opts": [
+      "100% of output can be maintained without the patent [value: 1]",
+      "75% of output can be maintained [value: 0.75]",
+      "50% of output can be maintained [value: 0.5]",
+      "25% of output can be maintained [value: 0.25]",
+      "0% &mdash; the company depends entirely on the patented technology [value: 0]"
+    ],
+    "h": "<strong>This value enters the NPV calculation:</strong> the lower it is (more dependence), the greater the regained revenue attributable to the patent. <strong>Interpretation:</strong> if the patent protects a critical component of a core product, score 5 (total dependence) maximises the calculated NPV. <strong>Tip:</strong> be conservative in the estimate &mdash; overestimating dependence inflates NPV artificially.",
+    "oek": [
+      1,
+      0.75,
+      0.5,
+      0.25,
+      0
+    ],
+    "risk": 0,
+    "opp": 0
+  },
+  {
+    "id": "D2",
+    "sec": "D",
+    "t": "What are the future development costs needed before commercialisation?",
+    "opts": [
+      "Extremely high investment: 30% of business area turnover [0.3]",
+      "Very high: 15% [0.15]",
+      "High: 8% [0.08]",
+      "Medium: 2.5% [0.025]",
+      "Low: 0.5% [0.005]"
+    ],
+    "h": "<strong>This value enters the NPV calculation</strong> as the annual development cost before commercialisation. <strong>What to include:</strong> residual R&amp;D costs, patenting costs (filing, examination, validation), certification and market entry costs. <strong>Available incentives:</strong> R&amp;D tax credits, IP Box / Patent Box regimes (UK: 10% rate; many EU countries offer similar schemes), Horizon Europe grants.",
+    "oek": [
+      0.3,
+      0.15,
+      0.08,
+      0.025,
+      0.005
+    ],
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "D3",
+    "sec": "D",
+    "t": "What is the production cost index when implementing the patented technology?",
+    "opts": [
+      "30% increase in production costs compared to current level [1.3]",
+      "15% increase [1.15]",
+      "No change compared to current costs [1.0]",
+      "15% reduction [0.85]",
+      "30% reduction [0.7]"
+    ],
+    "h": "<strong>This value enters directly into the NPV calculation</strong> as a multiplier of operating costs. <strong>How to estimate:</strong> compare unit production costs with and without the new technology (Activity Based Costing). <strong>Sources of cost reduction:</strong> automation, less waste, reduced cycle times, lower energy consumption. <strong>Benchmark:</strong> Industry 4.0 can lead to 10&ndash;25% cost reductions in manufacturing.",
+    "oek": [
+      1.3,
+      1.15,
+      1,
+      0.85,
+      0.7
+    ],
+    "risk": 1,
+    "opp": 1
+  },
+  {
+    "id": "D4",
+    "sec": "D",
+    "t": "What investment is required for production equipment compared to the current level?",
+    "opts": [
+      "120% of current investment intensity &mdash; requires significant additional investment [1.2]",
+      "110% of current intensity [1.1]",
+      "100% &mdash; neutral investment, equal to current [1.0]",
+      "70% of current intensity &mdash; 30% saving [0.7]",
+      "50% of current intensity &mdash; 50% saving [0.5]"
+    ],
+    "h": "<strong>This value enters the NPV calculation</strong> as the production equipment investment intensity factor. <strong>How to estimate:</strong> compare the value of equipment needed with the current asset base. <strong>Leasing and rental:</strong> to reduce initial outlay, consider operating leases or long-term rental. <strong>Available funds:</strong> EIB-backed loans through partner banks, regional development funds.",
+    "oek": [
+      1.2,
+      1.1,
+      1,
+      0.7,
+      0.5
+    ],
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "D5",
+    "sec": "D",
+    "t": "Does the company have the financial capacity to cover renewal fees in the relevant markets?",
+    "opts": [
+      "Maintenance possible in 1 country only",
+      "2&ndash;5 countries",
+      "5&ndash;10 countries",
+      "10&ndash;15 countries",
+      "More than 15 countries / all current and potentially relevant countries"
+    ],
+    "h": "<strong>Indicative renewal costs (EPO, per country):</strong> years 3&ndash;5: &euro;500&ndash;&euro;800/year; years 6&ndash;10: &euro;1,000&ndash;&euro;1,500/year; years 11&ndash;15: &euro;1,500&ndash;&euro;2,500/year. <strong>Rationalisation strategy:</strong> every 2&ndash;3 years, check whether covered markets still generate commercial value and consider abandoning unprofitable ones. <strong>Renewal services:</strong> Dennemeyer Renewals, CPA Global, Anaqua offer automated renewal management with cost optimisation.",
+    "oek": null,
+    "risk": 1,
+    "opp": 0
+  },
+  {
+    "id": "D6",
+    "sec": "D",
+    "t": "What is the estimated contribution of the patented technology to company profits?",
+    "opts": [
+      "Less than 3% of cumulative profits",
+      "3&ndash;10% of cumulative profits",
+      "10&ndash;15% of cumulative profits",
+      "15&ndash;25% of cumulative profits",
+      "More than 25% of cumulative profits"
+    ],
+    "h": "<strong>How to estimate:</strong> analyse the margins of the product/service using the patent compared to the company average. <strong>IP Box regimes:</strong> income derived directly from patents, know-how and registered designs benefits from preferential tax treatment in many OECD countries (e.g. UK Patent Box at 10%; Netherlands, Luxembourg, Belgium and others offer similar schemes). <strong>IP valuation for accounts:</strong> patents with a high contribution can be recognised as assets on the balance sheet, improving financial ratios for credit access.",
+    "oek": null,
+    "risk": 0,
+    "opp": 0
+  },
+  {
+    "id": "E1",
+    "sec": "E",
+    "t": "Is the patent's objective to consolidate positions in existing markets?",
+    "opts": [
+      "No",
+      "To a limited extent",
+      "To some extent",
+      "To a large extent",
+      "To a very large extent"
+    ],
+    "h": "<strong>Defensive strategy:</strong> patents as entry barriers protect earned market share. <strong>Patent clustering:</strong> a portfolio of related patents (\"cluster\" or \"thicket\") makes it much harder for competitors to work around IP protection. <strong>Signal to customers:</strong> the ability to legally defend the technology increases customer confidence in supply continuity.",
+    "oek": null,
+    "risk": 0,
+    "opp": 0
+  },
+  {
+    "id": "E2",
+    "sec": "E",
+    "t": "Is the patent's objective to enter new markets?",
+    "opts": [
+      "No",
+      "To a limited extent",
+      "To some extent",
+      "To a large extent",
+      "To a very large extent"
+    ],
+    "h": "<strong>Patent as an internationalisation lever:</strong> a patent recognised in new geographical or application markets lowers the perceived risk for potential local partners. <strong>PCT strategy:</strong> PCT filing guarantees 30 months to decide in which countries to proceed, allowing market opportunities to be assessed before incurring nationalisation costs. <strong>EIC / EEN:</strong> support tech-based export and internationalisation through vouchers and concessional financing.",
+    "oek": null,
+    "risk": 0,
+    "opp": 0
+  },
+  {
+    "id": "E3",
+    "sec": "E",
+    "t": "Is the patent part of a company image-building process?",
+    "opts": [
+      "No",
+      "To a limited extent",
+      "To some extent",
+      "To a large extent",
+      "To a very large extent"
+    ],
+    "h": "<strong>The patent as a communication asset:</strong> \"company with X patents\" communicates innovativeness, technological strength and capacity to invest in R&amp;D. <strong>Use in B2B marketing:</strong> certifications, innovation awards, mentions in tender specifications. <strong>Effect on bank credit:</strong> a documented IP portfolio improves creditworthiness and can unlock preferential financing.",
+    "oek": null,
+    "risk": 0,
+    "opp": 0
+  },
+  {
+    "id": "E4",
+    "sec": "E",
+    "t": "Is the objective to ensure freedom to operate for future development activities?",
+    "opts": [
+      "No",
+      "To a limited extent",
+      "To some extent",
+      "To a large extent",
+      "To a very large extent"
+    ],
+    "h": "<strong>Freedom to Operate (FTO):</strong> ensuring that future R&amp;D activities do not infringe third-party patents &mdash; a defensive patent \"occupies the space\" before competitors do. <strong>Defensive patents:</strong> some companies file patents not to commercialise them but to prevent competitors from blocking them. <strong>Defensive publication:</strong> alternative to patenting &mdash; publishing the invention (prior art disclosure) to prevent others from patenting it, without incurring patenting costs.",
+    "oek": null,
+    "risk": 0,
+    "opp": 0
+  },
+  {
+    "id": "E5",
+    "sec": "E",
+    "t": "Is the patent's objective to limit the competitive development of competitors?",
+    "opts": [
+      "No",
+      "To a limited extent",
+      "To some extent",
+      "To a large extent",
+      "To a very large extent"
+    ],
+    "h": "<strong>Offensive strategy:</strong> filing patents on variants and improvements to \"surround\" competitors' core inventions. <strong>Caution on abuse:</strong> using the patent as an anti-competitive tool may violate EU competition law (Articles 101&ndash;102 TFEU). <strong>Standard Setting Organisations (SSOs):</strong> in standardised sectors, standard-essential patents (SEPs) must be licensed on FRAND terms.",
+    "oek": null,
+    "risk": 0,
+    "opp": 0
+  },
+  {
+    "id": "E6",
+    "sec": "E",
+    "t": "Does the company use the patent for licensing or sale agreements?",
+    "opts": [
+      "No",
+      "To a limited extent",
+      "To some extent",
+      "To a large extent",
+      "To a very large extent"
+    ],
+    "h": "<strong>Monetisation strategies:</strong> (1) exclusive or non-exclusive licence, (2) patent assignment (sale), (3) cross-licensing, (4) patent pooling. <strong>Patent valuation for licensing:</strong> cost, income and market approaches &mdash; a qualified IP valuator can produce a formal opinion (&euro;3,000&ndash;&euro;15,000). <strong>Taxation:</strong> capital gains from patent assignments may benefit from preferential treatment in many jurisdictions when reinvested in R&amp;D.",
+    "oek": null,
+    "risk": 0,
+    "opp": 0
+  },
+  {
+    "id": "E7",
+    "sec": "E",
+    "t": "Is the patent part of the company's core technology areas?",
+    "opts": [
+      "No",
+      "To a limited extent",
+      "To some extent",
+      "To a large extent",
+      "To a very large extent"
+    ],
+    "h": "<strong>Core technology areas:</strong> the fundamental technologies that differentiate the company from competitors and underpin the value proposition. <strong>Balanced IP portfolio:</strong> core patents + improvement patents + defensive patents + registered designs + trade marks + know-how. <strong>IP Audit:</strong> a periodic IP portfolio audit (every 2&ndash;3 years) helps identify patents to maintain, sell or abandon &mdash; optimising maintenance costs.",
+    "oek": null,
+    "risk": 0,
+    "opp": 0
+  },
+  {
+    "id": "E8",
+    "sec": "E",
+    "t": "Is there alignment between the patent and the overall company strategy?",
+    "opts": [
+      "No",
+      "To a limited extent",
+      "To some extent",
+      "To a large extent",
+      "To a very large extent"
+    ],
+    "h": "<strong>Integrated IP Strategy:</strong> the patent should support the 3&ndash;5 year business objectives: geographical expansion, new markets, market share defence, licensing revenue. <strong>Periodic review:</strong> align the IP portfolio with the company strategy at each business planning cycle. <strong>Specialist support:</strong> Dennemeyer Consulting and other IP strategy advisors offer IP-business alignment workshops for SMEs.",
+    "oek": null,
+    "risk": 0,
+    "opp": 0
+  }
+]
