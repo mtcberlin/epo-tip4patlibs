@@ -55,16 +55,22 @@ class TestQueryLibCoreModuleStructure(unittest.TestCase):
 
     def test_module_level_state_initialized_to_none(self):
         """Module-level state should start as None (idempotent)."""
-        # Reload module to test initial state
-        import importlib
-        import TIP_for_PATLIBs_QueryLib_core
-        importlib.reload(TIP_for_PATLIBs_QueryLib_core)
+        # Load a private copy rather than importlib.reload(). reload() replaces the
+        # *shared* module object, which gives its classes new identities — instances
+        # built before the reload then fail isinstance() checks in other test modules.
+        import importlib.util
+        import TIP_for_PATLIBs_QueryLib_core as shared
 
-        # After reload, should be None (not connected)
-        self.assertIsNone(TIP_for_PATLIBs_QueryLib_core.patstat_client,
-                          "patstat_client should be None after module reload")
-        self.assertIsNone(TIP_for_PATLIBs_QueryLib_core.db,
-                          "db should be None after module reload")
+        spec = importlib.util.spec_from_file_location(
+            "_qlib_core_freshly_loaded", shared.__file__)
+        fresh = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(fresh)
+
+        # A freshly loaded module is not connected to anything yet
+        self.assertIsNone(fresh.patstat_client,
+                          "patstat_client should be None in a freshly loaded module")
+        self.assertIsNone(fresh.db,
+                          "db should be None in a freshly loaded module")
 
 
 class TestInitPatstat(unittest.TestCase):
