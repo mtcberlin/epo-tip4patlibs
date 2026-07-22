@@ -33,6 +33,15 @@ Data edition: **PATSTAT Global, Autumn 2025**. For the full TIP environment mode
 — what persists across restarts, the `epo.tipdata` venv gotcha, and the
 persistent Claude Code + Git/SSH setup — see **`1_startwithtip/1_getting-started-with-tip.ipynb`**.
 
+### The home directory is `/home/jovyan` — via a symlink
+TIP uses `jovyan` as the base user; `/home/<your-username>` is a **symlink** to
+`/home/jovyan`. Both paths are the same directory, but they are *different strings*, and
+that breaks path arithmetic: `Path.home()` returns the unresolved `/home/<username>`
+while `Path.cwd()` returns the resolved `/home/jovyan/...`, so
+`Path.cwd().relative_to(Path.home())` raises `ValueError`. Use `Path.home().resolve()`,
+or the `JUPYTER_SERVER_ROOT` env var (`/home/jovyan`) when you need a path relative to
+Jupyter's root — e.g. to build a `/files/` URL.
+
 ## Conventions
 - Notebooks open with the branded red **TIP4PATLIBS** header (see
   `5_lead_generation/1_regional-leads.ipynb`) plus a short table of
