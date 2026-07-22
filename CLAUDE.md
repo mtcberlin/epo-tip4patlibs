@@ -17,12 +17,12 @@ Author: Arne Krüger (mtc.berlin / depa.tech) · License: **EPO Internal Use**.
 | `5_lead_generation/` | Regional lead generation — profile a region's EP/PCT applicants by portfolio depth × geographic reach, segment into lead tiers |
 | `6_patentreports/` | Landscape reports (**Riccardo Priore**) — triadic families, filing authorities, t-SNE clusters, interactive explorer. Ships **pre-executed** (see below) |
 | `7_ipscore/` | Patent valuation (**Riccardo Priore**) — EPO IPScore questionnaire → NPV; self-contained interactive HTML tools embedded via `IFrame` |
-| `_bmad*`, `.claude/`, `.agent/`, `.gemini/` | Agent tooling (BMAD workflows) — not course content |
 
 The course is **modules 1–7 plus this file and `README.md`** — nothing else. Earlier
 supporting folders (`setup/`, `harmonization/`, `ipc-extension/`, `context/`, `docs/`)
-were removed once no module referenced them any more; recover any of them from history
-with `git checkout fdcf789 -- <path>`. Environment setup now lives entirely in
+and the BMAD agent tooling (`_bmad*`, `.claude/`, `.agent/`, `.gemini/`) were removed
+once no module referenced them any more; recover any of them from history with
+`git checkout fdcf789 -- <path>`. Environment setup now lives entirely in
 `1_startwithtip/1_getting-started-with-tip.ipynb`.
 
 ## Running notebooks on TIP
