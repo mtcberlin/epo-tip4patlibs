@@ -24,7 +24,8 @@ To import it from any course notebook, regardless of folder depth::
 
     import sys
     from pathlib import Path
-    root = next(p for p in [Path.cwd(), *Path.cwd().parents] if (p / "CLAUDE.md").exists())
+    root = next((p for p in [Path.cwd(), *Path.cwd().parents]
+                 if (p / "CLAUDE.md").exists()), Path.cwd())
     sys.path.insert(0, str(root / "1_startwithtip"))
 """
 
