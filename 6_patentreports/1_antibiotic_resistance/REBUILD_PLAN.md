@@ -48,19 +48,38 @@ straight 1→2→3→4 chain is both simpler and more teachable.
   3_advanced_analyses.ipynb             ← NEW: networks, clustering, citations, SDG
   4_assemble_report.ipynb               ← NEW: narrative + inline figures → one self-contained HTML
   1_.../ 2_.../ 3_.../ 4_..._output/    ← one output folder per notebook (existing convention)
-  report/antibiotic_resistance_report.html
+  report/
+    antibiotic_resistance_report.html      ← the clean landscape report (links to the original in 0_inputs/)
+    antibiotic_resistance_report_data.xlsx ← consolidated data workbook, one sheet per chart
+  0_inputs/Antibiotic_Report_FINAL.html    ← Riccardo's 50 MB original, linked from our report as "open the full original report"
 ```
 
 Every analysis unit follows the **same teachable shape** so the workshop can explain it once:
 
 > a markdown cell stating **the question** → one code cell that **reads `dataset.xlsx` → queries
-> PATSTAT → builds one Plotly figure** → `fig.show()` inline → saves the figure as an **inline
-> HTML fragment** (`fig.to_html(full_html=False, include_plotlyjs=False)`) into the step's output
-> folder for Step 4 to stitch.
+> PATSTAT → builds one Plotly figure from a tidy dataframe** → `fig.show()` inline → saves **two
+> things** into the step's output folder: the figure as an **inline HTML fragment**
+> (`fig.to_html(full_html=False, include_plotlyjs=False)`), and **the exact dataframe behind the
+> chart** (a small parquet/csv).
 
-Step 4 concatenates the narrative + all fragments with a **single** plotly.js include → one
-self-contained, TIP-renderable report. This is the modern structure done cleanly (no IFrame, no
-timestamped filenames, no `nbconvert` post-step).
+Step 4 then emits **two deliverables from the same per-analysis contributions**:
+
+1. **`report/antibiotic_resistance_report.html`** — narrative + all figure fragments stitched with
+   a **single** plotly.js include → one self-contained, TIP-renderable report (the modern
+   structure done cleanly: no IFrame, no timestamped filenames, no `nbconvert` post-step).
+2. **`report/antibiotic_resistance_report_data.xlsx`** — **one consolidated workbook, one sheet per
+   analysis**, holding the exact data that each chart visualises.
+
+This symmetry is a feature: **every chart in the report has a matching sheet in the workbook**.
+It gives PATLIB staff the "show me the numbers" companion (which matches Riccardo's own
+Excel-verification habit), makes the report auditable, and lets a client re-use the data without
+touching TIP.
+
+> **Clarification on the deliverables.** We produce the schlanke `antibiotic_resistance_report.html`
+> (+ the data workbook). `Antibiotic_Report_FINAL.html` (50 MB) is **Riccardo's original input**,
+> kept in `0_inputs/` because Step 4 / the t-SNE step read cluster data out of it — it is *not*
+> something we regenerate. If a second, FINAL-style page is genuinely wanted as an output, that is
+> a separate decision (see D6); the default is one clean report + one data workbook.
 
 ### The 13 report analyses → step assignment
 
@@ -134,3 +153,4 @@ the finished state.
 | **D3** | Keep triadic families + authority breakdown (not in the 13)? | Keep **authority** (it is the geographic story); make **triadic** an optional bonus or drop |
 | **D4** | Narrative: recompute the numbers, or reuse his text verbatim? | **Recompute where cheap**; reuse his prose for interpretation. Avoids stale/"fake" figures |
 | **D5** | Do the file-reorg-style rename now, or build new notebooks alongside then retire the old 3? | **Build 2/3/4 fresh, then retire current nb3**; keep nb1 |
+| **D6** | Deliverables: one clean report + data workbook, or also a second FINAL-style page? | **One clean `report.html` + `report_data.xlsx`** (one sheet per chart). A second page only if explicitly wanted |
