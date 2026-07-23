@@ -30,6 +30,50 @@ Both are **reference only** — not code we import or patch.
 
 ---
 
+## 📍 Where we are — session log (last updated 2026-07-23, end of day)
+
+**Done and verified on TIP ✅**
+- **MVP spine** — nb1 dataset (search strategy preserved, corpus identical) + 2 charts; nb3 the IPC
+  co-occurrence network; nb4 the inline assembler → one self-contained `4_report/…report.html` +
+  `…report_data.xlsx`, opened via the shared `open_html()` proxy button. Ran flawlessly on TIP.
+- **E1 / D8 dual-mode report** — nb4 emits Paged (default) ⇄ One-page, header toggle remembered in
+  `localStorage`, pure inline sections (no iframes). Verified on TIP.
+- **Phase 2 — nb2 core landscape (10 charts, orders 210–290)** — authority totals/trend + national
+  trends + innovation waves + national-vs-international + family size + top applicants + sectors
+  (`psn_sector`) + grant rate + most-influential-orgs (BigQuery `tls228` forward citations). **Ran
+  perfectly on TIP** (incl. the BigQuery cell). A NULL-`psn_sector` crash was caught offline and
+  fixed before TIP.
+
+**Folder layout now**
+- `2_antibiotic_resistance_mvp/` — **frozen snapshot** of the proven 5-chart demo (Arne). Do not
+  develop here; it is the safe fallback for the workshop.
+- `2_antibiotic_resistance_rebuild/` — **the active rebuild** (this plan lives here). nb1 ✅, nb2 ✅
+  (10 charts), nb3 = co-occurrence only (Phase 3 pending), nb4 ✅ dual-mode.
+
+**Next up — Phase 3 (nb3 advanced), rows 11–17.** Not yet built:
+- Temporal co-occurrence evolution (ref: current `1_antibiotic_resistance/` nb3)
+- Backward citation network + temporal citation patterns (his report text-only → **add charts**; BigQuery)
+- Forward citation network (ref: `FWD_Network`; BigQuery)
+- t-SNE clustering (ref: `tSNE_Analysis_NEW`; ORM + sklearn)
+- UN SDG mapping (ref: `SDG_Analysis`; ORM)
+- Triadic families (ref: current nb3)
+- Suggested report orders: continue the 300s (network already 310) → 320, 330, … Keep gaps.
+- After nb3: re-run nb4 on TIP; both report modes should pick the new charts up automatically.
+
+**How to resume (the working loop)**
+1. `git pull` first — Arne runs notebooks on TIP and commits executed outputs; build on his real state.
+2. Offline agent authors notebooks clean; **execution is TIP-only** (every analysis queries PATSTAT
+   PROD). Author output-free, Arne runs each phase on TIP and commits outputs.
+3. Extract reference logic with sub-agents (as in Phases 1–2) before authoring — faithful tables/
+   columns/filters so numbers match. Reference notebooks: primary = `../1_antibiotic_resistance/`
+   (runs on TIP); secondary = `~/Downloads/TIP notebooks/` (Riccardo's delivered originals).
+4. **Never read raw `.ipynb`** — use `…/rickypriore/patlib-sessions/_docu/tools/nbsrc.py`.
+5. Each analysis follows the `report_kit.record(order, slug, title, fig, data, output_dir, note)`
+   contract; nb4 (`load_contributions`) stitches by `order`. Smoke-test pandas transforms offline
+   before TIP. Branch `develop`; commit small; push when Arne needs it on TIP.
+
+---
+
 ## What the inventory established (facts, verified)
 
 1. **One shared corpus.** A single file `Antibiotic_Resistance_Dataset.xlsx` is built by the
