@@ -206,6 +206,14 @@ cell.
    teaching-cell shape — before mass-building.
 2. **Phase 2 — Step 2 (core landscape):** geographic, filing strategy, family size, sectors
    (basic + enhanced), grant rate, authority, top orgs (rows 2–9).
+   **Status: built offline ✅ (2026-07-23), pending TIP verification.** nb2 now holds 10 charts
+   (orders 210–290): authority totals/trend (already verified), national filing trends + innovation
+   waves (built from scratch — no producer), national-vs-international filing strategy, family-size
+   distribution, top applicants by families, applicants by institutional sector (`psn_sector`),
+   grant rate by top applicants, and most influential organisations (BigQuery forward citations —
+   the reference's broken "missing country" filter dropped per D4). Reference logic extracted from
+   the delivered notebooks; pandas transforms smoke-tested locally (a NULL-`psn_sector` crash fixed
+   pre-TIP). **Next: Arne runs `2_core_landscape_analyses` on TIP; report the first failing cell if any.**
 3. **Phase 3 — Step 3 (advanced):** co-occurrence, temporal co-occurrence, backward/forward/temporal
    citations, t-SNE, SDG, triadic (rows 10–17).
 4. **Phase 4 — narrative & polish:** rewrite the PURPOSE / KEY RESULTS / KEY FINDING narrative with

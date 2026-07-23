@@ -9,7 +9,7 @@ full plan and the locked decisions (D1–D7).
 | # | Notebook | Produces |
 |---|----------|----------|
 | 1 | `1_dataset_and_search_strategy.ipynb` | the shared corpus `…_output/dataset.xlsx` + 2 charts |
-| 2 | `2_core_landscape_analyses.ipynb` | filing-authority charts (totals, WO-vs-EP trend) |
+| 2 | `2_core_landscape_analyses.ipynb` | the "who / where / when" battery — 10 charts (authorities, national trends, innovation waves, filing strategy, family size, top applicants, sectors, grant rate, top cited orgs) |
 | 3 | `3_advanced_analyses.ipynb` | the IPC technology co-occurrence network |
 | 4 | `4_assemble_report.ipynb` | `4_report/antibiotic_resistance_report.html` + `…_report_data.xlsx` |
 
@@ -31,10 +31,12 @@ The small contract lives in [`report_kit.py`](report_kit.py).
 
 ## Status
 
-This is the **MVP spine** (dataset + geographic + technology network + assembled report). It proves
-the whole pipeline end-to-end; further analyses slot in by following the same `record` contract.
-The sibling folder `../1_antibiotic_resistance/` is the current working version, kept untouched as
-the reference until this rebuild reaches parity on TIP.
+The MVP spine is proven on TIP (dataset + a few charts + dual-mode report). **Phase 2** then filled
+notebook 2 into the full core-landscape battery (10 charts). Notebook 3 (advanced) still holds the
+technology network only — the remaining advanced analyses (temporal, citations, t-SNE, SDG, triadic)
+are the next phase. Further analyses slot in by following the same `record` contract. The sibling
+folder `../1_antibiotic_resistance/` is the current working version, kept untouched as the reference
+until this rebuild reaches parity on TIP.
 
 Notebooks are authored offline and **executed on TIP** (they cannot run without PATSTAT); outputs
 are committed after a TIP run.
