@@ -238,3 +238,46 @@ is authored to final quality (D2), so the MVP is a real slice of the finished co
 | **D5** | Rename in place, or rebuild fresh? | ✅ **Clean rebuild of all four notebooks** (his code is too dirty). nb1 preserves only the search strategy so the corpus is identical. |
 | **D6** | One report, or also a FINAL-style page? | ✅ **Four notebooks → one `report.html` + one `report_data.xlsx`.** His 50 MB `FINAL.html` is neither input nor deliverable of the rebuild — it is used **only for QC/quality benchmarking**. |
 | **D7** | Where does the rebuild live? | ✅ **Sibling folder `2_antibiotic_resistance_rebuild/`** (Arne, 2026-07-23). The current `1_antibiotic_resistance/` stays untouched as the **working reference** — its three notebooks run on TIP today and are the primary reference (executable ground truth), Riccardo's delivered notebooks the secondary one. Retirement of the old module is decided after the rebuild proves itself on TIP. |
+| **D8** | Report navigation for the growing chart set? | ✅ **Dual-mode report — Paged ⇄ One page, toggled in the header** (Arne, 2026-07-23). Default **Paged** (what worked in the demo). Built next by the offline agent, then handed to the TIP agent to verify both modes render. |
+
+---
+
+## Post-MVP enhancements
+
+### E1 — Paged / One-page toggle in the assembler (D8)
+
+**Why.** The MVP report is a one-pager: all chart sections stacked, scroll. Good for
+scanning/export, but with the full ~17 charts a live workshop wants **one chart per view**
+with Previous/Next — the model Arne liked in the old module. Build **both** into the one
+self-contained report, switched by a header control; no second file.
+
+**Reuse, don't reinvent.** The paging shell is already written and proven in the *old*
+module: `1_antibiotic_resistance/3_additional_analyses_and_report.ipynb`, the Step-7
+assembler cell. Lift its JavaScript/CSS. It already provides, verified on TIP:
+
+- `show(i)` that hides all sections and reveals one (`section.hidden = …`)
+- a **step bar** of buttons — here make each button carry the **chart title** (hover/tooltip
+  or short label), not just a number, since 17 numbered buttons are unusable
+- **Previous / Next** buttons and **←/→ arrow-key** navigation
+- **lazy `Plotly.Plots.resize`** on reveal (a plotly div laid out while hidden has no size —
+  this is essential, charts render blank without it)
+- hash deep-linking (`#3`) so a page is shareable
+
+**What changes vs. the old shell.** The rebuild report is **pure inline plotly divs** —
+no iframes. Drop the old shell's `srcdoc`/`data-doc` iframe handling entirely; every page
+is a local `<section>`. Add the **mode toggle**:
+
+- **Paged** (default): wrap each contribution in `<section hidden>`; `show(0)` on load.
+- **One page**: reveal every section (`hidden=false`), hide the Prev/Next + step bar, let
+  the body scroll. A single header button flips between the two and remembers the choice
+  (e.g. `localStorage`).
+
+**Where it lives.** The assembler template in `4_assemble_report.ipynb` (Step that builds
+`html` from `load_contributions()` entries). `report_kit.py` is unaffected — fragments and
+manifest already carry `title`/`order`, which the step bar consumes directly.
+
+**Testing handoff.** Offline agent edits the assembler; Arne re-runs `4_assemble_report`
+on TIP (fast — the five fragments already exist, no PATSTAT queries); the finished report
+comes back to the TIP agent to confirm **both** modes render inside TIP (paged switching,
+one-page scroll, no blank charts, the `open_html` button still opens it). Validate on the
+5-chart spine **before** the full set, so the navigation is proven small.
