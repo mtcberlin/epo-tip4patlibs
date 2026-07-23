@@ -4,16 +4,25 @@
 teachable pipeline** that a workshop audience can follow — "here is how you get, in four
 understandable steps, from a search strategy to the finished landscape report."
 
-Riccardo's delivered notebooks (in `~/Downloads/TIP notebooks/`) are the **reference for the
-analysis logic** — what each analysis computes, which table, which chart, which metric — **not
-code we import or patch**.
+**Reference hierarchy (important).** The rebuild has two references, in this order:
 
-> **Decisions locked (D1–D6, see table at the end).** D1 four-step chain · D2 MVP spine first but
+1. **The current module `6_patentreports/1_antibiotic_resistance/` — the primary reference.** Its
+   three notebooks **run successfully on TIP today**, end to end. However badly implemented or
+   convoluted a given step may be, *it works* — it is executable ground truth for queries, data
+   shapes and results. When in doubt, what the current module computes wins.
+2. **Riccardo's delivered notebooks** (in `~/Downloads/TIP notebooks/`) — the secondary reference,
+   for the analyses the current module does **not** contain (filing strategy, family size, sectors,
+   grant rates, top orgs, SDG, forward citations, t-SNE).
+
+Both are **reference only** — not code we import or patch.
+
+> **Decisions locked (D1–D7, see table at the end).** D1 four-step chain · D2 MVP spine first but
 > built to full-course quality from the start · D3 **keep every analysis** (nothing dropped) ·
 > D4 **recompute all numbers** (we run on TIP — no query cost) · D5 **clean rebuild of all four
 > notebooks** (his code is too dirty to carry over) · D6 exactly **four notebooks → one
-> `report.html` + one `report_data.xlsx`**; his 50 MB `FINAL.html` is **not** kept or linked in our
-> repo — it stays in his repo and is used by us **only for QC/quality benchmarking**.
+> `report.html` + one `report_data.xlsx`**; his 50 MB `FINAL.html` is neither input nor deliverable
+> of the rebuild, **QC/quality benchmarking only** · D7 the rebuild lives in the **sibling folder
+> `2_antibiotic_resistance_rebuild/`** — the current module stays untouched as working reference.
 
 > **Workshop constraint (from D2).** This is teaching material: **every code cell gets a short,
 > plain-language markdown explanation directly above it** — what it does and why — so the room can
@@ -58,24 +67,37 @@ Chosen over Arne's "Option 1 (a 0_ foundation set)" because the inventory proves
 is simply **Step 1 (the dataset)** — there is no separate shared "set" beyond that one file, so a
 straight 1→2→3→4 chain is both simpler and more teachable.
 
+**The rebuild lives in a sibling folder** — the current, working module stays untouched as the
+running reference until the rebuild reaches parity:
+
 ```
-6_patentreports/1_antibiotic_resistance/
-  1_dataset_and_search_strategy.ipynb   ← the corpus (rebuilt clean; keeps the same search strategy)
-  2_core_landscape_analyses.ipynb       ← NEW: the "who / where / when" battery
-  3_advanced_analyses.ipynb             ← NEW: networks, clustering, citations, SDG
-  4_assemble_report.ipynb               ← NEW: narrative + inline figures → one self-contained HTML
-  1_.../ 2_.../ 3_.../ 4_..._output/    ← one output folder per notebook (existing convention)
-  report/
-    antibiotic_resistance_report.html      ← the clean, self-contained landscape report
-    antibiotic_resistance_report_data.xlsx ← consolidated data workbook, one sheet per chart
+6_patentreports/
+  1_antibiotic_resistance/                ← today's WORKING version — untouched, the reference
+  2_antibiotic_resistance_rebuild/        ← the clean rebuild (this plan)
+    1_dataset_and_search_strategy.ipynb   ← the corpus (same search strategy, re-authored clean)
+    2_core_landscape_analyses.ipynb       ← NEW: the "who / where / when" battery
+    3_advanced_analyses.ipynb             ← NEW: networks, clustering, citations, SDG
+    4_assemble_report.ipynb               ← NEW: narrative + inline figures → one self-contained HTML
+    1_.../ 2_.../ 3_.../ 4_..._output/    ← one output folder per notebook (same convention)
+    report/
+      antibiotic_resistance_report.html      ← the clean, self-contained landscape report
+      antibiotic_resistance_report_data.xlsx ← consolidated data workbook, one sheet per chart
 ```
 
-**No `0_inputs/` (D6).** We regenerate everything ourselves — the dataset, every chart, the
-clusters. Riccardo's prebuilt artifacts (`Antibiotic_Report_FINAL.html` 50 MB,
-`interactive_scatter.html`, `cluster_dashboard.html`) are **not** inputs to our pipeline and are
-**removed from our repo**. His original report stays in his repo; we open it side-by-side only to
-**benchmark quality** — "did our clean report reach a comparable level?" That cleanup (git-rm the
-committed 50 MB file + the two HTMLs, drop the now-empty `0_inputs/`) is **build step 0**.
+**How today's notebooks map into the new cut** (the new 2/3 are *not* today's 2/3):
+
+| Today (works on TIP) | In the rebuild |
+|---|---|
+| 1 dataset & search strategy | new **1** (re-authored, same corpus) |
+| 2 technology network | analysis row 10 in new **3** (IPC co-occurrence network) |
+| 3 additional analyses + report | analyses → new **2**/**3** (triadic, authority, temporal, clusters); the assembler → new **4** |
+
+**No `0_inputs/` in the rebuild (D6).** We regenerate everything ourselves — the dataset, every
+chart, the clusters. Riccardo's prebuilt artifacts (`Antibiotic_Report_FINAL.html` 50 MB,
+`interactive_scatter.html`, `cluster_dashboard.html`) stay where they are in `1_antibiotic_resistance/`
+as part of the reference; the rebuild neither reads nor links them. His original report is a
+**quality yardstick** only. Whether/when `1_antibiotic_resistance/` is retired is a separate
+decision once the rebuild has proven itself on TIP.
 
 Every analysis unit follows the **same teachable shape** so the workshop can explain it once:
 
@@ -98,11 +120,12 @@ It gives PATLIB staff the "show me the numbers" companion (which matches Riccard
 Excel-verification habit), makes the report auditable, and lets a client re-use the data without
 touching TIP.
 
-> **Clarification on the deliverables (D6).** We produce exactly two files: the lean
+> **Clarification on the deliverables (D6).** The rebuild produces exactly two files: the lean
 > `antibiotic_resistance_report.html` and the `..._report_data.xlsx`. Riccardo's 50 MB
-> `FINAL.html` is **not** an input and **not** a deliverable in our repo — our t-SNE step recomputes
-> its own cluster data from `dataset.xlsx`, so there is nothing to read out of his file. It exists
-> only in his repo, as a **quality yardstick** we review against.
+> `FINAL.html` is **not** an input and **not** a deliverable of the rebuild — our t-SNE step
+> recomputes its own cluster data from `dataset.xlsx`, so there is nothing to read out of his
+> file. It stays in the reference module (and in his repo) purely as a **quality yardstick** we
+> review against.
 
 ### ⚠️ There is no fixed "13-analysis spec" — his reports disagree
 
@@ -174,9 +197,9 @@ cell.
 
 ## Phasing (so there is always a working artifact)
 
-0. **Step 0 — cleanup (D6).** git-rm `Antibiotic_Report_FINAL.html` (50 MB) + `interactive_scatter.html`
-   + `cluster_dashboard.html`, drop the empty `0_inputs/`. Retire the imported nb2/nb3 once their
-   replacements exist.
+0. **Step 0 — scaffold.** Create `6_patentreports/2_antibiotic_resistance_rebuild/` and move this
+   plan into it. **Nothing is deleted** — `1_antibiotic_resistance/` keeps working untouched as the
+   reference; its retirement is decided later, after the rebuild has proven itself on TIP.
 1. **Phase 1 — prove the spine.** Re-author Step 1 clean, write the Step-4 inline assembler, and
    wire up 2–3 analyses end-to-end: dataset → a few figures → one self-contained report **that
    renders in TIP** + the matching `report_data.xlsx`. Validates the whole approach — including the
@@ -213,4 +236,5 @@ is authored to final quality (D2), so the MVP is a real slice of the finished co
 | **D3** | Which analyses to keep? | ✅ **Keep everything.** Nothing dropped; text-only analyses get a chart + data sheet added. Target = the full 17-row set. |
 | **D4** | Recompute numbers or reuse his text? | ✅ **Recompute all numbers** — we run on TIP, no query cost. His prose reused only for interpretation. |
 | **D5** | Rename in place, or rebuild fresh? | ✅ **Clean rebuild of all four notebooks** (his code is too dirty). nb1 preserves only the search strategy so the corpus is identical. |
-| **D6** | One report, or also a FINAL-style page? | ✅ **Four notebooks → one `report.html` + one `report_data.xlsx`.** His 50 MB `FINAL.html` is **not** kept/linked in our repo — it lives in his repo and is used **only for QC/quality benchmarking**. |
+| **D6** | One report, or also a FINAL-style page? | ✅ **Four notebooks → one `report.html` + one `report_data.xlsx`.** His 50 MB `FINAL.html` is neither input nor deliverable of the rebuild — it is used **only for QC/quality benchmarking**. |
+| **D7** | Where does the rebuild live? | ✅ **Sibling folder `2_antibiotic_resistance_rebuild/`** (Arne, 2026-07-23). The current `1_antibiotic_resistance/` stays untouched as the **working reference** — its three notebooks run on TIP today and are the primary reference (executable ground truth), Riccardo's delivered notebooks the secondary one. Retirement of the old module is decided after the rebuild proves itself on TIP. |
