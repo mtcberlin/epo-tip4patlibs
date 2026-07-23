@@ -33,9 +33,15 @@ code we import or patch**.
    `Image('x.png')`, then `nbconvert --to html --no-input`. His report-generator does not create
    information; it arranges pre-made chart files.
 3. **`IFrame` is the fatal flaw.** That is exactly the approach we verified does **not render in
-   TIP** (Jupyter's `/files/` CSP sandbox disables JavaScript). Our assembler must **inline** the
-   figures, matching the actual structure of the `MODERNIZED.html` we already have (inline plotly
-   divs, self-contained).
+   TIP** (Jupyter's `/files/` CSP sandbox disables JavaScript). Our assembler must **inline** every
+   figure (inline plotly divs, one plotly.js, self-contained) — **no iframe pages at all**. The
+   current nb3 assembler still wraps its "doc"/"file" pages in iframes; those are precisely the ones
+   that stay blank in TIP, and the clean rebuild removes them.
+   - **Opening the finished report is already solved.** The self-contained HTML is opened with the
+     shared helper **`open_html()` in `1_startwithtip/tip_tools.py`** (used today at the end of nb3):
+     it serves the file through **jupyter-server-proxy** and shows a **red "Open" button** (+ a
+     download fallback). That button is the *only* place a proxy is involved — it opens a finished
+     file, it is not an iframe. **Step 4 must reuse `open_html`, not reinvent it.**
 4. **Two charts have no producer** anywhere in his set: the *national-applications-trends bar*
    and the *innovation-waves* chart (report Analysis 2, Geographic). We rebuild those from
    scratch — standard analytics.
