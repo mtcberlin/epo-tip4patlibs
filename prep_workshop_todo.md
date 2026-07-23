@@ -6,6 +6,92 @@ his repository (`rickypriore/patlib-sessions`) stays the upstream source.
 
 ---
 
+## PLAN · Module 6 file reorganisation (proposed — awaiting go)
+
+**Problem.** The `output_*` folders are named after Riccardo's *old flat notebooks*
+(`Patent_Analysis_CLEAN`, `Network_Analysis`, `Triadic_Families`, `tSNE_Analysis_NEW`), which no
+longer map to our 1-2-3 chain. Worse, **notebook 3 writes into folders "belonging to" notebooks
+1 and 2**, so folder ≠ notebook and nobody can tell which file comes from where. Every filename
+also carries a redundant `Antibiotic_Resistance_` prefix inside a folder already called
+`1_antibiotic_resistance/`.
+
+**Goal.** One output folder per notebook, named exactly like the notebook, so a notebook and its
+outputs sit adjacent when sorted. Strip the redundant prefix. Separate external inputs and the
+final deliverable.
+
+### Producer map (verified)
+
+| Notebook | writes | reads (prerequisites) |
+|---|---|---|
+| `1_dataset_and_search_strategy` | `dataset.xlsx` (the seed), `dataset_highlighted.html`, `ipc_analysis.html`, `statistics.html` | — (queries PATSTAT) |
+| `2_technology_network` | `ipc_cooccurrence.xlsx`, `ipc_rankings.xlsx`, `technology_legend.xlsx`, `technology_network.html` | nb1 `dataset.xlsx` |
+| `3_additional_analyses_and_report` | 13 files: triadic (4), authority (3), cooccurrence-derived (3), cluster (3) | nb1 `dataset.xlsx`; nb2 `technology_legend.xlsx` + `ipc_cooccurrence.xlsx`; external `Antibiotic_Report_FINAL.html` |
+
+### Target layout
+
+```
+6_patentreports/1_antibiotic_resistance/
+├── 1_dataset_and_search_strategy.ipynb
+├── 1_dataset_and_search_strategy_output/
+│     dataset.xlsx  dataset_highlighted.html  ipc_analysis.html  statistics.html
+├── 2_technology_network.ipynb
+├── 2_technology_network_output/
+│     ipc_cooccurrence.xlsx  ipc_rankings.xlsx  technology_legend.xlsx  technology_network.html
+├── 3_additional_analyses_and_report.ipynb
+├── 3_additional_analyses_and_report_output/
+│     triadic_families_applicants.xlsx  triadic_applicant_ranking.xlsx
+│     triadic_applicant_ranking_table.html  triadic_families_map.html
+│     authority_breakdown.xlsx  intl_authority_totals.html  intl_authority_trend.html
+│     raw_cooccurrence_with_year.parquet  temporal_pair_evolution.xlsx
+│     relationship_change_heatmap.html
+│     cluster_families.json  cluster_data.json  cluster_explorer.html
+├── _inputs/                          # external — no notebook here regenerates these
+│     Antibiotic_Report_FINAL.html    # 50 MB; nb3 Step 4 reads it
+│     interactive_scatter.html        # from the un-imported t-SNE notebook; the report links it
+│     cluster_dashboard.html          # same
+│     patent_landscape_MODERNIZED.html # Riccardo's 13-analysis reference; the report links it
+├── report/
+│     antibiotic_resistance_report.html   # OUR assembled deliverable (Step 7)
+└── PROVENANCE.md
+```
+
+### What it costs (why this needs a coordinated edit, not just `git mv`)
+
+1. **Path rewrites in all three notebooks.** The 4 old folder names appear as literals ~31×
+   total (CLEAN 11, Network 10, Triadic 5, tSNE 5) plus 3 folder constants (`CLEAN`, `NETWORK`,
+   `TSNE`) in nb3's Step 7. Every read/write path must point at the new folder (and new filename
+   if we strip the prefix). Scripted find-replace, then verify no old path remains.
+2. **Cross-notebook reads must be repointed:** nb2→nb1, nb3→nb1+nb2.
+3. **Re-run required on TIP afterwards.** The notebooks ship pre-executed; renaming on disk +
+   in code leaves the *stored* outputs (print statements, and the links baked into the already
+   generated `report.html`) pointing at old paths. They are only refreshed by re-running 1→2→3
+   on TIP. Until then: code is correct for a fresh run, but committed HTML links are stale.
+4. **`git mv`** for every file so history is preserved.
+
+### Two variants
+
+- **A — folders only (low risk):** move files into the three `_output/` folders + `_inputs/` +
+  `report/`, keep filenames unchanged. Rewrite only the 4 folder names (~31 literals + 3
+  constants). Smallest surface.
+- **B — folders + strip `Antibiotic_Resistance_` prefix (tidier, recommended):** as A, plus
+  lowercase/de-prefix filenames per the tree above. Roughly doubles the rewrite surface but
+  gives the clean result the tree shows.
+
+**Recommendation: B**, executed as one scripted pass with a full old→new map, then a single
+verification (`grep` for any surviving `output_Antibiotic_Resistance_*` or `Antibiotic_Resistance_`
+path in code), then re-run on TIP.
+
+### Open questions before executing
+- [ ] Variant A or B?
+- [ ] `_inputs/` vs `0_inputs/` (leading `_` sorts *after* the numbered folders; `0_` forces it
+      first) — cosmetic, your call.
+- [ ] Is `MODERNIZED.html` a kept reference, or does our own `report.html` fully replace it? (It
+      is currently *linked from* our report, so it stays until Step 7 stops referencing it.)
+- [ ] Do this **before** the templating rebuild (§1) or after? Doing it first means the rebuild
+      writes into the clean layout from the start — I'd recommend first.
+
+---
+
 ## Guiding decision: show the whole chain, not just the last step
 
 Riccardo's own framing is that only the **final step** — the finished report — needs
