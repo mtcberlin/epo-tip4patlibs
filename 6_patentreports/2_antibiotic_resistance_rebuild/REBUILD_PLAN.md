@@ -78,9 +78,9 @@ running reference until the rebuild reaches parity:
     2_core_landscape_analyses.ipynb       ← NEW: the "who / where / when" battery
     3_advanced_analyses.ipynb             ← NEW: networks, clustering, citations, SDG
     4_assemble_report.ipynb               ← NEW: narrative + inline figures → one self-contained HTML
-    1_.../ 2_.../ 3_.../ 4_..._output/    ← one output folder per notebook (same convention)
-    report/
-      antibiotic_resistance_report.html      ← the clean, self-contained landscape report
+    1_.../ 2_.../ 3_.._output/            ← one output folder per notebook (same convention)
+    4_report/
+      antibiotic_resistance_report.html      ← the clean, self-contained landscape report (paged + one-page)
       antibiotic_resistance_report_data.xlsx ← consolidated data workbook, one sheet per chart
 ```
 
@@ -281,3 +281,11 @@ on TIP (fast — the five fragments already exist, no PATSTAT queries); the fini
 comes back to the TIP agent to confirm **both** modes render inside TIP (paged switching,
 one-page scroll, no blank charts, the `open_html` button still opens it). Validate on the
 5-chart spine **before** the full set, so the navigation is proven small.
+
+**Status: built offline ✅ (2026-07-23), pending TIP verification.** `4_assemble_report.ipynb`
+Step 2 now emits the dual-mode report: paged default (numbered step bar with per-chart title
+tooltips, Previous/Next, ←/→ keys, `Plotly.Plots.resize` on reveal, `#n` hash deep-links) plus a
+header **Paged ⇄ One-page** toggle remembered in `localStorage`; pure inline sections, no iframes.
+Validated offline against the real 5-chart fragments: structure correct (5 sections, one plotly.js,
+5 plot divs, no iframes, default paged) and the embedded JS passes a Node syntax check. **Next: Arne
+re-runs `4_assemble_report` on TIP and confirms both modes render.**

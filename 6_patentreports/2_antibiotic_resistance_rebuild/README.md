@@ -22,8 +22,10 @@ Every analysis follows one shape: **a question (markdown) → one code cell that
 shows the figure inline and saves both the figure (as an inline HTML fragment) and the data behind
 it. Notebook 4 collects all contributions from every `…_output/_report_parts/manifest.json`, orders
 them, and stitches them into **one self-contained HTML report** (a single embedded plotly.js, no
-iframes — so it renders inside TIP) plus **one data workbook** (one sheet per chart). The report is
-opened with the shared `open_html()` button (`1_startwithtip/tip_tools.py`).
+iframes — so it renders inside TIP) plus **one data workbook** (one sheet per chart). The report has
+**two view modes** switched by a header button: **Paged** (one chart at a time, step bar +
+Previous/Next + ←/→ keys) and **One page** (all charts stacked). It is opened with the shared
+`open_html()` button (`1_startwithtip/tip_tools.py`).
 
 The small contract lives in [`report_kit.py`](report_kit.py).
 
