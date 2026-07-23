@@ -6,6 +6,22 @@ his repository (`rickypriore/patlib-sessions`) stays the upstream source.
 
 ---
 
+## DONE · Module 6 file reorganisation (executed 2026-07-23, variant B)
+
+Executed as decided: variant B, `0_inputs/`, MODERNIZED dropped, reorg first. One output
+folder per notebook, prefix stripped. All 39 code-path references rewritten across the three
+notebooks and verified — **0 old paths remain in code or markdown**; every read/link path
+(10/10) resolves to a file on disk. `IPC_Rankings.xlsx` was never committed (write-only nb2
+output) — its code path now points at `2_technology_network_output/` and it is created on the
+next run. Notebooks stay valid and pre-executed (outputs preserved).
+
+⚠️ **Still requires a TIP re-run of 1→2→3.** Stored `print()` outputs and the links baked into
+the already-generated `report/antibiotic_resistance_report.html` still show the *old* paths —
+they only refresh when the chain is re-run on TIP. Until then the code is correct but those
+committed artefacts are stale.
+
+<details><summary>Original plan (for reference)</summary>
+
 ## PLAN · Module 6 file reorganisation (proposed — awaiting go)
 
 **Problem.** The `output_*` folders are named after Riccardo's *old flat notebooks*
@@ -89,6 +105,9 @@ path in code), then re-run on TIP.
       is currently *linked from* our report, so it stays until Step 7 stops referencing it.)
 - [ ] Do this **before** the templating rebuild (§1) or after? Doing it first means the rebuild
       writes into the clean layout from the start — I'd recommend first.
+
+
+</details>
 
 ---
 
