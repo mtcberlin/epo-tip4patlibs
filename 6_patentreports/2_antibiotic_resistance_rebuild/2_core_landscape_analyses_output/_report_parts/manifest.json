@@ -1,0 +1,22 @@
+{
+ "intl_authority_totals": {
+  "order": 210,
+  "slug": "intl_authority_totals",
+  "title": "Filings by international / regional authority",
+  "note": "Counts distinct applications (filings), not families. WO/EP/EA/AP/OA.",
+  "fragment": "intl_authority_totals.fragment.html",
+  "sheets": {
+   "data": "intl_authority_totals__data.parquet"
+  }
+ },
+ "intl_authority_trend": {
+  "order": 220,
+  "slug": "intl_authority_trend",
+  "title": "WO (PCT) vs EP over time",
+  "note": "Filings per year for WO and EP, 2000–2023.",
+  "fragment": "intl_authority_trend.fragment.html",
+  "sheets": {
+   "data": "intl_authority_trend__data.parquet"
+  }
+ }
+}
