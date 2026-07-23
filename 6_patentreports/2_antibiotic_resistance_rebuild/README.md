@@ -11,7 +11,7 @@ full plan and the locked decisions (D1–D7).
 | 1 | `1_dataset_and_search_strategy.ipynb` | the shared corpus `…_output/dataset.xlsx` + 2 charts |
 | 2 | `2_core_landscape_analyses.ipynb` | filing-authority charts (totals, WO-vs-EP trend) |
 | 3 | `3_advanced_analyses.ipynb` | the IPC technology co-occurrence network |
-| 4 | `4_assemble_report.ipynb` | `report/antibiotic_resistance_report.html` + `…_report_data.xlsx` |
+| 4 | `4_assemble_report.ipynb` | `4_report/antibiotic_resistance_report.html` + `…_report_data.xlsx` |
 
 Run 1 → 2 → 3 → 4 in order: each writes what the next reads, and notebook 4 assembles everything.
 
