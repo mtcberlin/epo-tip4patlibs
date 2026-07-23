@@ -8,6 +8,17 @@ Riccardo's delivered notebooks (in `~/Downloads/TIP notebooks/`) are the **refer
 analysis logic** — what each analysis computes, which table, which chart, which metric — **not
 code we import or patch**.
 
+> **Decisions locked (D1–D6, see table at the end).** D1 four-step chain · D2 MVP spine first but
+> built to full-course quality from the start · D3 **keep every analysis** (nothing dropped) ·
+> D4 **recompute all numbers** (we run on TIP — no query cost) · D5 **clean rebuild of all four
+> notebooks** (his code is too dirty to carry over) · D6 exactly **four notebooks → one
+> `report.html` + one `report_data.xlsx`**; his 50 MB `FINAL.html` is **not** kept or linked in our
+> repo — it stays in his repo and is used by us **only for QC/quality benchmarking**.
+
+> **Workshop constraint (from D2).** This is teaching material: **every code cell gets a short,
+> plain-language markdown explanation directly above it** — what it does and why — so the room can
+> follow live. Clean and teachable beats clever. This applies to all four notebooks.
+
 ---
 
 ## What the inventory established (facts, verified)
@@ -43,16 +54,22 @@ straight 1→2→3→4 chain is both simpler and more teachable.
 
 ```
 6_patentreports/1_antibiotic_resistance/
-  1_dataset_and_search_strategy.ipynb   ← the corpus (exists; the CLEAN logic, already reworked)
+  1_dataset_and_search_strategy.ipynb   ← the corpus (rebuilt clean; keeps the same search strategy)
   2_core_landscape_analyses.ipynb       ← NEW: the "who / where / when" battery
   3_advanced_analyses.ipynb             ← NEW: networks, clustering, citations, SDG
   4_assemble_report.ipynb               ← NEW: narrative + inline figures → one self-contained HTML
   1_.../ 2_.../ 3_.../ 4_..._output/    ← one output folder per notebook (existing convention)
   report/
-    antibiotic_resistance_report.html      ← the clean landscape report (links to the original in 0_inputs/)
+    antibiotic_resistance_report.html      ← the clean, self-contained landscape report
     antibiotic_resistance_report_data.xlsx ← consolidated data workbook, one sheet per chart
-  0_inputs/Antibiotic_Report_FINAL.html    ← Riccardo's 50 MB original, linked from our report as "open the full original report"
 ```
+
+**No `0_inputs/` (D6).** We regenerate everything ourselves — the dataset, every chart, the
+clusters. Riccardo's prebuilt artifacts (`Antibiotic_Report_FINAL.html` 50 MB,
+`interactive_scatter.html`, `cluster_dashboard.html`) are **not** inputs to our pipeline and are
+**removed from our repo**. His original report stays in his repo; we open it side-by-side only to
+**benchmark quality** — "did our clean report reach a comparable level?" That cleanup (git-rm the
+committed 50 MB file + the two HTMLs, drop the now-empty `0_inputs/`) is **build step 0**.
 
 Every analysis unit follows the **same teachable shape** so the workshop can explain it once:
 
@@ -75,63 +92,100 @@ It gives PATLIB staff the "show me the numbers" companion (which matches Riccard
 Excel-verification habit), makes the report auditable, and lets a client re-use the data without
 touching TIP.
 
-> **Clarification on the deliverables.** We produce the schlanke `antibiotic_resistance_report.html`
-> (+ the data workbook). `Antibiotic_Report_FINAL.html` (50 MB) is **Riccardo's original input**,
-> kept in `0_inputs/` because Step 4 / the t-SNE step read cluster data out of it — it is *not*
-> something we regenerate. If a second, FINAL-style page is genuinely wanted as an output, that is
-> a separate decision (see D6); the default is one clean report + one data workbook.
+> **Clarification on the deliverables (D6).** We produce exactly two files: the lean
+> `antibiotic_resistance_report.html` and the `..._report_data.xlsx`. Riccardo's 50 MB
+> `FINAL.html` is **not** an input and **not** a deliverable in our repo — our t-SNE step recomputes
+> its own cluster data from `dataset.xlsx`, so there is nothing to read out of his file. It exists
+> only in his repo, as a **quality yardstick** we review against.
 
-### The 13 report analyses → step assignment
+### ⚠️ There is no fixed "13-analysis spec" — his reports disagree
 
-| # | Analysis | Step | Reference notebook | Data access |
-|---|---|---|---|---|
-| 1 | Core dataset + IPC/stats | **1** | Patent_Analysis_CLEAN | builds corpus (ORM) |
-| 2 | Geographic filing (national trends, innovation waves) | **2** | ⚠️ **no producer — rebuild** | dataset → ORM |
-| 3 | International filing strategies | **2** | Filing_Strategy | dataset → ORM |
-| 4 | Family size & global reach | **2** | Family_Dimension | dataset → ORM |
-| 5 | Institutional sector (basic) | **2** | Sectors_Basic | dataset → ORM |
-| 6 | Institutional sector (enhanced) | **2** | Sectors_Enhanced (`psn_sector`) | dataset → ORM |
-| 7 | Grant rates | **2** | Grant_Rate | dataset → ORM |
-| 13 | Most influential organisations | **2** | Top_Cited_Applicants | dataset → **BigQuery SQL** |
-| 8 | IPC co-occurrence network | **3** | our current nb2 / Network_Analysis | dataset → ORM |
-| 9 | Temporal co-occurrence | **3** | Temporal_Network | dataset → ORM |
-| 10 | t-SNE clustering | **3** | tSNE_Analysis_NEW | dataset → ORM + sklearn |
-| 11 | UN SDG mapping | **3** | SDG_Analysis | dataset → ORM |
-| 12 | Forward citation network | **3** | FWD_Network | dataset → **BigQuery SQL** |
+Reviewing against the delivered generator changed this materially. The `MODERNIZED.html` we had
+(now deleted) and the `ILLUSTRATED_Report_CLEAN.ipynb` Riccardo delivered are **different report
+generations**: MODERNIZED's Analysis 8/9 were *IPC co-occurrence* + *temporal co-occurrence*;
+ILLUSTRATED's Analysis 8/9 are *backward citation network* + *temporal citation patterns*, and
+**co-occurrence is not in ILLUSTRATED at all.** So there is no single report to reproduce.
 
-Note: our current notebook 3 also computes **triadic families** and an **authority breakdown** —
-neither is one of the 13. Decision **D3** below: keep as a bonus or drop for a report-faithful set.
+**Conclusion (and it is exactly Arne's steer): we define our own coherent analysis set** — the
+analyses that (a) have a real producer we can rebuild cleanly and (b) earn a chart — rather than
+copy a drifting variant. We are **not** reproducing MODERNIZED byte-for-byte (it is deleted; no
+match is expected).
+
+His ILLUSTRATED report is also **chart-light**: of its 13 sections, only **9 embed a chart**;
+four (family size, sector-basic, backward-citations, temporal-citations) are **text only**.
+
+### The full set — keep everything (D3)
+
+Arne's call: **keep every analysis that appears anywhere in his set**, and where his report was
+text-only, **we add a chart + a data sheet** so the course is consistent. Nothing is dropped. This
+is the target (full-course) state; the MVP in Phase 1 is a subset of exactly these.
+
+| # | Analysis | Step | His report | Reference logic | Data access |
+|---|---|---|---|---|---|
+| 1 | Core dataset + IPC / statistics | **1** | ✅ | Patent_Analysis_CLEAN | builds corpus (ORM) |
+| 2 | Geographic filing (trends + innovation waves) | **2** | ✅ but ⚠️ **no producer — rebuild** | — | dataset → ORM |
+| 3 | International filing strategies | **2** | ✅ | Filing_Strategy | dataset → ORM |
+| 4 | Family size & global reach | **2** | ✖ text-only → **add chart** | Family_Dimension | dataset → ORM |
+| 5 | Institutional sector — basic | **2** | ✖ text-only → **add chart** | Sectors_Basic | dataset → ORM |
+| 6 | Institutional sector — enhanced | **2** | ✅ | Sectors_Enhanced (`psn_sector`) | dataset → ORM |
+| 7 | Grant rates | **2** | ✅ | Grant_Rate | dataset → ORM |
+| 8 | Authority breakdown (intl. totals + trend) | **2** | ✅ | CLEAN authority tables | dataset → ORM |
+| 9 | Most influential organisations | **2** | ✅ | Top_Cited_Applicants | dataset → **BigQuery** |
+| 10 | IPC co-occurrence network | **3** | (MODERNIZED) | current nb2 logic | dataset → ORM |
+| 11 | Temporal co-occurrence evolution | **3** | (MODERNIZED) | current nb3 logic | dataset → ORM |
+| 12 | Backward citation network | **3** | ✖ text-only → **add chart** | — / BigQuery | dataset → **BigQuery** |
+| 13 | Temporal citation patterns | **3** | ✖ text-only → **add chart** | — | dataset → ORM/BQ |
+| 14 | Forward citation network | **3** | ✅ | FWD_Network | dataset → **BigQuery** |
+| 15 | t-SNE clustering | **3** | ✅ | tSNE_Analysis_NEW | dataset → ORM + sklearn |
+| 16 | UN SDG mapping | **3** | ✅ | SDG_Analysis | dataset → ORM |
+| 17 | Triadic families | **3** | (nb3) | current nb3 logic | dataset → ORM |
+
+Every row produces **one Plotly figure + one data sheet** (networks yield **two** sheets — nodes and
+edges — see the workbook note). The four "add chart" rows are where we *improve* on his report rather
+than copy it. Step assignment: Step 2 = the "who/where/when" battery (rows 2–9), Step 3 = the
+advanced layer (rows 10–17).
 
 ---
 
-## What we already have vs. build fresh
+## Build approach — all four notebooks fresh (D5)
 
-- **Have (reusable, already clean):** Step 1 dataset; the co-occurrence logic (current nb2); the
-  temporal logic and cluster-explorer (current nb3). These get *moved* into the new step
-  structure, not rebuilt.
-- **Build fresh (clean, from the referenced logic):** geographic (incl. the 2 missing charts),
-  family size, sectors (basic+enhanced), grant rate, top organisations, SDG, forward citations,
-  t-SNE, and **the Step-4 inline assembler**.
-- **Two analyses use raw BigQuery SQL** (forward citations, top organisations) — the citation
-  self-joins. Keep that; it is the honest tool for those. Everything else is ORM.
+His code is too dirty to carry over, so **everything is authored clean**, not moved. The reference
+notebooks (his delivered set + our current imported nb2/nb3) tell us *what each analysis computes*;
+we re-express each one in the single teachable shape, with an explanation cell above every code
+cell.
+
+- **Step 1** keeps the **same search strategy** (keyword AND IPC/CPC) so the corpus is identical —
+  but is re-authored clean and fully explained. It is the one place we deliberately preserve logic
+  (a different corpus would invalidate every downstream number).
+- **Steps 2–4 are new.** Rows 2–9 → notebook 2; rows 10–17 → notebook 3; the inline assembler →
+  notebook 4.
+- **Four analyses use raw BigQuery SQL** (forward + backward citations, top organisations, temporal
+  citations) — the citation self-joins. That is the honest tool for those; everything else is ORM.
+- **The two missing-producer charts** (geographic trends + innovation waves) are built from scratch
+  with standard analytics.
 
 ---
 
 ## Phasing (so there is always a working artifact)
 
-1. **Phase 1 — prove the spine.** Finish Step 1, write the Step-4 inline assembler, and wire up
-   the 2–3 analyses we already have (co-occurrence, temporal). End-to-end: dataset → a few
-   figures → one self-contained report that renders in TIP. This validates the whole approach
-   before mass-building.
-2. **Phase 2 — Step 2 (core landscape):** geographic, family size, sectors, grant rate, top orgs.
-3. **Phase 3 — Step 3 (advanced):** t-SNE, SDG, forward citations (+ co-occurrence/temporal moved
-   in).
-4. **Phase 4 — narrative & polish:** port Riccardo's PURPOSE / KEY RESULTS / KEY FINDING narrative
-   (compute the numbers instead of hardcoding where cheap), consistent headers, dry-run on TIP.
+0. **Step 0 — cleanup (D6).** git-rm `Antibiotic_Report_FINAL.html` (50 MB) + `interactive_scatter.html`
+   + `cluster_dashboard.html`, drop the empty `0_inputs/`. Retire the imported nb2/nb3 once their
+   replacements exist.
+1. **Phase 1 — prove the spine.** Re-author Step 1 clean, write the Step-4 inline assembler, and
+   wire up 2–3 analyses end-to-end: dataset → a few figures → one self-contained report **that
+   renders in TIP** + the matching `report_data.xlsx`. Validates the whole approach — including the
+   teaching-cell shape — before mass-building.
+2. **Phase 2 — Step 2 (core landscape):** geographic, filing strategy, family size, sectors
+   (basic + enhanced), grant rate, authority, top orgs (rows 2–9).
+3. **Phase 3 — Step 3 (advanced):** co-occurrence, temporal co-occurrence, backward/forward/temporal
+   citations, t-SNE, SDG, triadic (rows 10–17).
+4. **Phase 4 — narrative & polish:** rewrite the PURPOSE / KEY RESULTS / KEY FINDING narrative with
+   **recomputed** numbers (D4), consistent headers, embed plotly.js (offline-safe), dry-run on TIP,
+   and the side-by-side quality check against his `FINAL.html`.
 
-An **MVP for the workshop** need not be all 13 — a strong subset (dataset + geographic + grant
-rate + sectors + one advanced + assembled report) already tells the full story. Target the 13 as
-the finished state.
+An **MVP for the workshop** need not be all 17 — a strong subset (dataset + geographic + grant
+rate + sectors + one advanced + assembled report) already tells the full story. But every MVP cell
+is authored to final quality (D2), so the MVP is a real slice of the finished course, not a throwaway.
 
 ---
 
@@ -144,13 +198,13 @@ the finished state.
 
 ---
 
-## Open decisions
+## Decisions — locked ✅ (Arne, 2026-07-23)
 
-| # | Question | Recommendation |
+| # | Question | Decision |
 |---|---|---|
-| **D1** | Four-step chain (this plan) vs. Arne's "0_ foundation set" (Option 1)? | **Four-step** — the inventory shows the foundation is just the dataset; a 0_ set adds nothing |
-| **D2** | Full 13 analyses now, or MVP subset first? | **MVP spine first (Phase 1)**, then fill to 13 |
-| **D3** | Keep triadic families + authority breakdown (not in the 13)? | Keep **authority** (it is the geographic story); make **triadic** an optional bonus or drop |
-| **D4** | Narrative: recompute the numbers, or reuse his text verbatim? | **Recompute where cheap**; reuse his prose for interpretation. Avoids stale/"fake" figures |
-| **D5** | Do the file-reorg-style rename now, or build new notebooks alongside then retire the old 3? | **Build 2/3/4 fresh, then retire current nb3**; keep nb1 |
-| **D6** | Deliverables: one clean report + data workbook, or also a second FINAL-style page? | **One clean `report.html` + `report_data.xlsx`** (one sheet per chart). A second page only if explicitly wanted |
+| **D1** | Four-step chain vs. a "0_ foundation set"? | ✅ **Four-step chain** (1→2→3→4). |
+| **D2** | Full set now, or MVP subset first? | ✅ **MVP spine first**, but built to full-course quality — **every code cell gets a short plain-language explanation above it** (it's a workshop). |
+| **D3** | Which analyses to keep? | ✅ **Keep everything.** Nothing dropped; text-only analyses get a chart + data sheet added. Target = the full 17-row set. |
+| **D4** | Recompute numbers or reuse his text? | ✅ **Recompute all numbers** — we run on TIP, no query cost. His prose reused only for interpretation. |
+| **D5** | Rename in place, or rebuild fresh? | ✅ **Clean rebuild of all four notebooks** (his code is too dirty). nb1 preserves only the search strategy so the corpus is identical. |
+| **D6** | One report, or also a FINAL-style page? | ✅ **Four notebooks → one `report.html` + one `report_data.xlsx`.** His 50 MB `FINAL.html` is **not** kept/linked in our repo — it lives in his repo and is used **only for QC/quality benchmarking**. |
