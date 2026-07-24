@@ -16,9 +16,10 @@ Author: Arne Krüger (mtc.berlin / depa.tech) · License: **EPO Internal Use**.
 | `4_patstat_explorer/` | Applicant & technology search notebook + app |
 | `5_lead_generation/` | Regional lead generation — profile a region's EP/PCT applicants by portfolio depth × geographic reach, segment into lead tiers |
 | `6_patentreports/` | Landscape reports (**Riccardo Priore**) — triadic families, filing authorities, t-SNE clusters, interactive explorer. Ships **pre-executed** (see below) |
-| `7_ipscore/` | Patent valuation (**Riccardo Priore**) — EPO IPScore questionnaire → NPV; self-contained interactive HTML tools embedded via `IFrame` |
+| `7_ipscore/` | Patent valuation (**Riccardo Priore**) — EPO IPScore questionnaire → NPV; self-contained interactive HTML tools, opened via `open_html()` (jupyter-server-proxy), **never** via `IFrame` |
+| `8_ipscore_rebuild/` | 🚧 Planning stage — our own rebuild of the IPScore ideas as an explained notebook chain, adding a PATSTAT evidence layer. See its `REBUILD_PLAN.md`; module 7 stays untouched as the working reference |
 
-The course is **modules 1–7 plus this file and `README.md`** — nothing else. Earlier
+The course is **modules 1–8 plus this file and `README.md`** — nothing else. Earlier
 supporting folders (`setup/`, `harmonization/`, `ipc-extension/`, `context/`, `docs/`)
 and the BMAD agent tooling (`_bmad*`, `.claude/`, `.agent/`, `.gemini/`) were removed
 once no module referenced them any more; recover any of them from history with

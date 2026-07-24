@@ -15,6 +15,7 @@ inside TIP's own JupyterLab.
 | 5 Lead Generation | `5_lead_generation/` | Regional lead generation: profiling the EP/PCT-active company applicants of a region by portfolio depth and geographic reach, and segmenting them into lead tiers |
 | 6 Patent Reports | `6_patentreports/` | Turning a patent dataset into a publishable landscape report — triadic families, filing authorities, technology clusters, interactive explorer *(by Riccardo Priore)* |
 | 7 IPScore | `7_ipscore/` | Patent valuation: the EPO IPScore questionnaire and its Net Present Value model, as interactive tools *(by Riccardo Priore)* |
+| 8 IPScore Rebuild | `8_ipscore_rebuild/` | 🚧 *Planning stage.* Rebuilding the ideas behind IPScore as an explained notebook chain — and separating what PATSTAT can prove about a patent from what stays expert judgement |
 
 ## Quick Start
 
