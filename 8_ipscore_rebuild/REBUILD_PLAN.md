@@ -43,8 +43,92 @@ answered). Built and verified offline:
 **All three EPO test patents reproduce exactly** (329,059.4284 / 4,361.2849 / −4,686.3598;
 largest deviation 6·10⁻¹¹, floating-point noise). The engine is verified.
 
-Next: **Phase 2** — a minimal `4_assemble_tool.ipynb` that turns one hand-scored patent into
-the HTML deliverable + workbook, so the whole chain exists end to end while it is still small.
+Committed as `f66c69f` — *Module 8 Phase 1: the engine, verified against the EPO workbook*.
+
+---
+
+## ▶️ Resume here — everything the next session needs
+
+*Written 2026-07-24 so work can continue from a cold start. Read this section, run the two
+commands, then go to "Phase 2, concretely".*
+
+### 30-second orientation
+
+Module 8 rebuilds the **EPO IPScore** valuation model in this course's shape. The engine is
+done and provably correct; three of the four notebooks still have to be written. Module 7 is
+Riccardo Priore's working version and stays untouched — it is the workshop-ready one until
+module 8 proves itself.
+
+### Check that the ground is still solid
+
+```bash
+cd 8_ipscore_rebuild
+python ipscore_kit.py                            # → 3 PASS, "All three EPO test patents reproduced."
+python tools/extract_spec_from_excel.py --check   # → "spec is up to date"
+```
+
+If the first fails, the engine broke — fix that before anything else. If the second fails,
+either the workbook moved or the spec was hand-edited (it never should be).
+
+### What exists, file by file
+
+| File | What it is | Touch it? |
+|---|---|---|
+| `ipscore_spec.json` | The model as data: 40 questions, 5 answer texts each, the 8 OEK tables, risk/opportunity flags, the 3 EPO test patents + their NPVs | **Never by hand** — regenerate with the extractor |
+| `ipscore_kit.py` | The only place anything is computed. `load_spec` · `Answer` · `profile` · `oek_from_answers` · `Financials` · `cash_flow` · `npv` · `verify` · `PALETTE` · `CHART_LAYOUT` | yes, this is the engine |
+| `tools/extract_spec_from_excel.py` | One-off derivation from `7_ipscore/IPscore_3.01 WORKHORSE.xlsx`. Not part of the course chain | only if the spec must change |
+| `1_the_model.ipynb` | Notebook 1, executed, 27 cells. Offline | done; edit only for narrative |
+
+### How the pieces fit (the mental model)
+
+Forty answers go in. Thirty-two of them only shape the **profile** (points per section, average
+risk, average opportunity). Eight — B5, C2, C3, C6, D1–D4 — are looked up in their OEK table
+and become **economic parameters**, which together with seven figures from the company accounts
+drive a ten-year cash flow whose discounted sum is the **NPV**. Module 8's own addition is that
+every `Answer` carries a provenance marker (`measured` / `informed` / `judgement`), so the
+output can show how much of the number is evidence.
+
+### Conventions already set — follow them
+
+- **Plain-language markdown above every code cell.** This is teaching material for PATLIB staff
+  who will not learn Python or SQL; explain the step, not the syntax.
+- **Branded red header + a "what this notebook does" box** at the top of every notebook — copy
+  the one in `1_the_model.ipynb`.
+- **Charts use `kit.PALETTE` and `kit.CHART_LAYOUT`**, shown inline with `fig.show()` (never
+  `write_html()` only — a pre-executed notebook that shows a reader nothing is the mistake
+  module 6 made). `CHART_LAYOUT` uses magic-underscore title keys, so `fig.update_layout(
+  **kit.CHART_LAYOUT, title="…")` works.
+- **`git check-ignore` any new folder** before assuming it is committed. `build/`, `dist/` and
+  `__pycache__/` are swallowed globally.
+- Work on `develop`, PR into `main`, SSH remotes.
+
+### Phase 2, concretely — the next thing to build
+
+A **minimal `4_assemble_tool.ipynb`**: hand-score one patent → the assembled deliverable. Small
+on purpose, so the whole chain exists end to end before notebooks 2 and 3 fill it out.
+
+1. Decide the report contract — how notebooks 2 and 3 hand their figures and tables to
+   notebook 4. Module 6 solved this with `report_kit.record()` writing fragments plus data into
+   `<notebook>_output/`; copy the *idea*, not the code, into `ipscore_kit.py`.
+2. Assemble one self-contained HTML file — narrative, the charts, and the answer table with its
+   provenance markers — into `4_tool/ipscore_valuation.html`, plus
+   `ipscore_valuation_data.xlsx` with one sheet per step.
+3. Open it on TIP with `open_html()` (jupyter-server-proxy). **`IFrame` cannot work** — Jupyter
+   serves `/files/` under a CSP sandbox that disables JavaScript. See module 7 for the pattern.
+4. Single embedded `plotly.js`, no external requests — the constraint module 6 already proved.
+
+Phases 3 (evidence from PATSTAT, TIP-only) and 4 (sensitivity over the 8 OEK levers) follow;
+see "Phasing" below.
+
+### Open items — none of them blocking
+
+- **The two charts in notebook 1 were never looked at.** No kaleido and no browser in the build
+  environment, so they are verified structurally (traces, ranges, tick labels, a validated
+  CVD-safe palette) but nobody has seen them rendered. Arne is checking on TIP.
+- **Notebook 1 ships executed** — deliberate, see the convention note under the decisions
+  table. Reverse if module 8 should be run rather than read.
+- **O1–O3** (legal-status tables on TIP, `nb_claims` coverage, what a PATLIB is really asked)
+  are still open and gate Phase 3. See the end of this file.
 
 ---
 
