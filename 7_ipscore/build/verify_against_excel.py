@@ -26,7 +26,7 @@ from pathlib import Path
 
 import openpyxl
 
-ROOT = Path(__file__).resolve().parent.parent  # /home/jovyan/Dennemeyer
+ROOT = Path(__file__).resolve().parent.parent  # the module folder, 7_ipscore/
 NODE_HARNESS = Path(__file__).resolve().parent / "verify_calcvan.js"
 
 

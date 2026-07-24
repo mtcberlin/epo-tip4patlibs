@@ -111,6 +111,39 @@ path in code), then re-run on TIP.
 
 ---
 
+## DONE · Module 7 preparation (executed 2026-07-24)
+
+Module 7 is **demo-ready**. It is the one module that needs no PATSTAT, no database and no
+internet: five self-contained HTML tools (an Excel model turned into a web page), launched
+inside TIP through `open_html()` / jupyter-server-proxy. Verified on TIP that day:
+`build/verify_against_excel.py` passes — all 3 Excel test patents (329,059.4284 / 4,361.2849 /
+−4,686.3598) plus the planner demo (1,225,801.6019), exact to 4 decimals.
+
+What was done:
+
+- **Launcher outputs cleared.** A test run had baked a session-bound URL
+  (`/user/<hub-id>/proxy/<port>/…`) into both code cells — dead for anyone else, and it carried
+  the hub session id. The two launcher cells are the one place where "guest modules ship
+  pre-executed" does not apply: their output is only valid inside the session that produced it.
+- **Notebook text corrected.** It told the reader to press a *Fill demo* button that **does not
+  exist**. Actual behaviour: `IPscore_EN_Demo.html` fills itself on load (`fillDemo()` in
+  `DOMContentLoaded`) and lands on the results page; `NPV_Target_Planner_EN.html` starts empty
+  and has a *"▶ Load worked example (NovaMed Diagnostics Ltd.)"* button on its Setup page.
+  Both are now described as they behave. Also: the two conflicting CSP explanations merged, the
+  dead `Session_Menu.ipynb` reference dropped, the verification claim made honest.
+- **Tidied.** `build/dist/` untracked (byte-identical to the live files, `render.py` recreates
+  it) and re-excluded in `.gitignore` after the `!7_ipscore/build/**` negation;
+  `Dennemeyer_HTML_Tools_Builder.ipynb` → `build_html_tools.ipynb` with its
+  `/home/jovyan/Dennemeyer` assert message fixed and two empty trailing cells dropped;
+  `BUILD_LOG.md` scope-noted and its file inventory corrected to what this repo actually holds;
+  `PROVENANCE.md` records every formal change. **No tool content was altered** and no cell of
+  his was re-run.
+
+⚠️ **Deliberately not done** — both change Riccardo's content, and he is being asked first:
+neutralising the named commercial vendors, and rendering a blank English form. See §5.
+
+---
+
 ## Guiding decision: show the whole chain, not just the last step
 
 Riccardo's own framing is that only the **final step** — the finished report — needs
@@ -141,9 +174,23 @@ and disappear on the next run.)*
 > **Decision: we do not ask Riccardo.** The templating script stays unavailable; we
 > reconstruct the assembly from what is already in the repo. Everything needed is there.
 
-**Status:** partly solved. Step 7 in notebook 3 assembles a one-file report
-(`Antibiotic_Resistance_Report.html`, 5.6 MB) — but it currently carries only the triadic
-ranking, not the full picture.
+**Status (2026-07-24): route B taken, and the work has moved.** This section is no longer the
+live plan — module 6's rebuild is now tracked in
+[`6_patentreports/2_antibiotic_resistance_rebuild/REBUILD_PLAN.md`](6_patentreports/2_antibiotic_resistance_rebuild/REBUILD_PLAN.md),
+which carries the session log and the locked decisions D1–D8. Where the two disagree, that
+file wins.
+
+Three folders now sit side by side in `6_patentreports/`:
+
+| Folder | What it is |
+|---|---|
+| `1_antibiotic_resistance/` | the imported version, formally reworked — reference, kept untouched |
+| `2_antibiotic_resistance_mvp/` | **frozen** minimal pipeline (4 notebooks, 5 charts, assembled report) — the guaranteed-to-run walkthrough. Do not extend |
+| `2_antibiotic_resistance_rebuild/` | the full clean build: `report_kit.py` contract, Phase 2 done (13-chart report, paged ⇄ one-page toggle). Phase 3 = the remaining advanced analyses |
+
+The analysis that led there is kept below for reference.
+
+<details><summary>Original route analysis (superseded by REBUILD_PLAN.md)</summary>
 
 #### What the target actually contains
 
@@ -196,12 +243,14 @@ Route B makes module 6 **fully reproducible from a PATSTAT query**, which is the
 showing the chain. It is more work, but it is exactly the work that turns the module from a
 display piece into a teaching artifact.
 
-- [ ] Decide the split: recompute the seven (B), and keep A only where re-computation is
+- [x] Decide the split: recompute the seven (B), and keep A only where re-computation is
       disproportionate.
-- [ ] Extend Step 7 into the real assembler — **assembly stays in the notebook**, not in an
+- [x] Extend Step 7 into the real assembler — **assembly stays in the notebook**, not in an
       external script. That was the original defect; do not reproduce it.
-- [ ] Keep charts as live plotly (as `…_MODERNIZED.html` does), not static images.
+- [x] Keep charts as live plotly (as `…_MODERNIZED.html` does), not static images.
 - [ ] End state: notebooks 1–3 produce the complete report with **no hidden step**.
+
+</details>
 
 ### 2. Simplify and clarify
 - [ ] Review the three notebooks end to end for redundancy — they were written independently
@@ -243,16 +292,55 @@ Two further upstream notebooks feed the *original* 13-analysis report but are no
       deliberate correctness choice (the separate t-SNE run yields *different* clusters:
       3,840 vs 3,585 families). Importing it would need that discrepancy explained, not hidden.
 
-### 5. Before the release
-- [ ] Dry-run all five topics against the clock (~8 min each).
+### 5. Module 7 — open points, and what to ask Riccardo
+
+**Direction, if module 7 gets the same MVP → Rebuild treatment as module 6:** the story stays
+**patent valuation as content** — what a patent is worth, where it is weak, which action moves
+the NPV. The Excel → web-tool build path stays a side note, closer to his original intent.
+(The alternative — teaching the conversion recipe itself — was considered and set aside.)
+
+#### Ask Riccardo before touching his content
+
+- [ ] **What does he want to show on stage?** Module 7 is currently 5 minutes of "here is a
+      valuation tool". He may have a different framing in mind — that answer decides whether a
+      rebuild is worth it at all.
+- [ ] **Are the named commercial vendors deliberate?** The help text names *Dennemeyer
+      Consulting, Dennemeyer Renewals, CPA Global, Anaqua, IAM Market, LOT Network, IPH*
+      (3 places EN, 3 IT). In EPO-branded material at a PATLIB conference that reads as
+      endorsement. Decision taken here: **neutralise EN and IT and re-render** — but only after
+      he confirms, since it changes his authored text.
+- [ ] **Should there be a blank English form?** Today `IPscore_IT.html` is the only blank
+      variant; English exists only as the pre-filled demo, so nobody can score their own patent
+      in English. `render_ipscore("en", demo_flag=False)` would produce it through the existing
+      pipeline. Decision taken here: **yes, plus a third launcher cell** — pending his answer.
+- [ ] **Is a rebuild acceptable to him, and how is attribution worded afterwards?** Modules 6
+      and 7 currently credit *created by Riccardo Priore*. A from-scratch version needs a
+      formulation both sides are happy with.
+- [ ] **Does he want the IT versions maintained?** They ship but no course notebook opens them.
+
+#### Technical, independent of his answer
+
+- [ ] **`build/smoke_test.js` is vacuous for the IPscore family** (verified 2026-07-24). All
+      three IPscore files return `{"total":"0/200","vanTotal":"0 €"}` for the live *and* the
+      regenerated file, because the DOM stub's `querySelector` always returns `checked:false`,
+      so `updateResults()` reads zeros — "MATCH" compares 0 with 0. The NPV Planner test is
+      real (€1,225,802). `verify_against_excel.py` is the binding check. Fix: make the stub
+      remember radio state.
+- [ ] Consider whether `build_html_tools.ipynb` belongs next to the course notebook at all, or
+      should move into `build/` (needs its `Path.cwd()/"build"` assumption adjusted).
+
+### 6. Before the release
+- [ ] Dry-run all five topics against the clock (~8 min each). Module 7 has no query latency —
+      it is the safe slot if the schedule slips.
 - [ ] Re-sync with upstream (`git fetch` in `rickypriore/patlib-sessions`) — he commits actively.
-- [ ] Release `develop` → `main`, then send Riccardo the link to both reworked modules.
+- [ ] Release `develop` → `main`, then send Riccardo the link to both reworked modules,
+      together with the questions in §5.
 
 ---
 
 ---
 
-## Warnings — read before touching module 6
+## Warnings — read before touching modules 6 and 7
 
 Things that will bite silently if forgotten. Each was verified, not assumed.
 
@@ -274,6 +362,8 @@ Things that will bite silently if forgotten. Each was verified, not assumed.
 5. **`.gitignore` has a generic `build/` rule** that already swallowed Riccardo's entire
    IPScore pipeline once. A negated rule (`!7_ipscore/build/`) restores it — check any new
    folder with a conventional name against `git check-ignore` before assuming it was committed.
+   Since 2026-07-24 a third rule re-excludes `7_ipscore/build/dist/` (regenerated output,
+   byte-identical to the live files). Order matters: it must stay *after* the negation.
 6. **Notebook 3's outputs are `print()` text only** — 17 stream outputs, zero rendered charts,
    because all four charts go to `write_html()`. "Pre-executed" therefore currently shows a
    reader almost nothing. This is the concrete reason for the display convention above.
@@ -281,6 +371,15 @@ Things that will bite silently if forgotten. Each was verified, not assumed.
    not in code. They clear on the next TIP run — do not hand-edit them out of the JSON.
 8. **Riccardo commits actively** (three substantive commits in two days). Re-sync before any
    large rework, and never edit his upstream files in place — his repo stays canonical.
+9. **Module 7: never commit the launcher cells with outputs.** `open_html()` emits a URL
+   containing the hub session id and an ephemeral port — valid only inside the session that
+   produced it, dead for everyone else. Rule 4 (guest modules ship pre-executed) does *not*
+   extend to launcher cells. Clear those two outputs before committing
+   `7_ipscore/1_ipscore-and-npv.ipynb`.
+10. **Module 7: the generated HTML is never hand-edited.** Change `build/data/*.json` or the
+   `.j2` template and re-render via `render.py --promote`, then re-run
+   `build/verify_against_excel.py` — an Italian apostrophe in a single-quoted JS string once
+   killed an entire page silently, which is why the pipeline exists at all.
 
 ## Reference
 

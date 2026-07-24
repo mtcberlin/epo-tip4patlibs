@@ -1,7 +1,13 @@
-# Dennemeyer HTML Tools — Build Log
+# IPScore HTML Tools — Build Log
 
-Working folder: `/home/jovyan/Dennemeyer/`  
-Last updated: 2026-07-16
+Riccardo Priore's build log, imported with the module. Written in his
+`/home/jovyan/Dennemeyer/` working folder, which also held a second, unrelated tool family
+(**ASP Invention Assessment** — different source Excel). **Only the IPScore and NPV Target
+Planner material came into this repo**; where the log below mentions the other family or the
+old working folder, it is describing that original context, not this one.
+
+Last updated by him: 2026-07-16 · scope notes and corrections added on import, marked
+*(this repo)*.
 
 ---
 
@@ -42,13 +48,16 @@ future change to either engine.
 
 ## Build Notebook (2026-07-15)
 
-`Dennemeyer_HTML_Tools_Builder.ipynb` regenerates the IPscore + NPV Target Planner
+*(this repo: the file is now `build_html_tools.ipynb`; upstream it is
+`Dennemeyer_HTML_Tools_Builder.ipynb`.)*
+
+`build_html_tools.ipynb` regenerates the IPscore + NPV Target Planner
 family (`IPscore_IT.html`, `IPscore_IT_Demo.html`, `IPscore_EN_Demo.html`,
 `NPV_Target_Planner_EN.html`, `NPV_Target_Planner_IT.html`) from structured data in
 `build/data/*.json` through shared Jinja2 templates in `build/templates/*.j2`, instead of
 hand-editing the HTML directly.
 
-**Not an Excel→HTML generator**: `IPscore_3.01.xlsx` only holds the deterministic skeleton
+**Not an Excel→HTML generator**: `IPscore_3.01 WORKHORSE.xlsx` only holds the deterministic skeleton
 (question IDs, plain EPO English text, risk/opportunity flags, OEK values). The Italian
 translations, € benchmark help text, demo narratives, and NPV Planner insights were
 authored directly in the HTML in past sessions and don't exist in the Excel — so the
@@ -63,22 +72,37 @@ data-equality check and a functional smoke test comparing computed IPscore/NPV v
 between the live and regenerated files. ASP Invention Assessment is a separate tool
 family (different source Excel) and is out of scope for this notebook.
 
+> ⚠️ *(this repo, verified 2026-07-24)* **The smoke test is only meaningful for the NPV
+> Planner family.** For all three IPscore files `build/smoke_test.js` returns
+> `{"total":"0/200","pct":"0%","vanTotal":"0 €"}` for the live *and* the regenerated file —
+> its DOM stub returns `checked:false` from `document.querySelector`, so `updateResults()`
+> reads zeros no matter what `fillDemo()` or `onRadio()` did. "MATCH" there compares 0 with 0
+> and cannot detect an engine regression. The NPV Planner test is real (€1,225,802). The
+> binding guarantee for the IPscore engine is `verify_against_excel.py`, which does exercise
+> `calcVAN()` for real. Fixing the stub (make the radio state readable back) would restore
+> the intended check.
+
 See the notebook itself for the extend-with-a-new-language / new-demo-scenario workflow.
 
 ---
 
-## File Inventory
+## File Inventory *(this repo — corrected on import)*
 
 | File | Size | Description |
 |------|------|-------------|
-| `ASP_Invention_Assessment_EN.html` | ~30 KB | Interactive EN invention assessment — blank form |
-| `ASP_Invention_Assessment_IT.html` | ~29 KB | Interactive IT invention assessment — blank form |
-| `ASP_Invention_Assessment_EN_AutoComment.html` | ~46 KB | EN demo — pre-filled fake scores + auto-generated summary |
-| `ASP_Invention_Assessment_IT_AutoComment.html` | ~48 KB | IT demo — pre-filled fake scores + auto-generated summary |
-| `IPscore_IT.html` | ~70 KB | EPO IPscore 3.0 — interactive Italian tool, blank form |
-| `IPscore_IT_Demo.html` | ~73 KB | EPO IPscore 3.0 — pre-filled demo (MedTech Italia S.r.l.) |
-| `ASP_Invention Assessment Calculator_preliminary for Startup workshop.xlsx` | — | Source Excel for ASP Invention Assessment |
-| `IPscore_3.01.xlsx` | — | Source Excel for IPscore (EPO) — used to reconstruct VAN formulas |
+| `IPscore_IT.html` | 70 KB | EPO IPscore 3.0 — interactive Italian tool, blank form |
+| `IPscore_IT_Demo.html` | 72 KB | EPO IPscore 3.0 — pre-filled demo (MedTech Italia S.r.l.) |
+| `IPscore_EN_Demo.html` | 70 KB | EPO IPscore 3.0 — pre-filled demo (BioSense Technologies Ltd.), **shown in the course notebook** |
+| `NPV_Target_Planner_EN.html` | 55 KB | NPV Target Planner, English — **shown in the course notebook** |
+| `NPV_Target_Planner_IT.html` | 58 KB | NPV Target Planner, Italian |
+| `IPscore_3.01 WORKHORSE.xlsx` | 414 KB | Source Excel for IPscore (EPO) — VAN formulas + the 3 test patents `verify_against_excel.py` checks against |
+
+There is **no blank English form**: `IPscore_IT.html` is the only blank variant. The pipeline
+could render one (`render_ipscore("en", demo_flag=False)`) but no live file exists.
+
+The four `ASP_Invention_Assessment_*.html` files and their source Excel, described in the
+section below, belong to the **other tool family in Riccardo's working folder** and were
+deliberately not imported. That section is kept for context only.
 
 ---
 
@@ -112,7 +136,7 @@ See the notebook itself for the extend-with-a-new-language / new-demo-scenario w
 
 ## IPscore_IT.html
 
-**Source**: `IPscore_3.01.xlsx` (EPO IPscore 3.01)  
+**Source**: `IPscore_3.01 WORKHORSE.xlsx` (EPO IPscore 3.01)  
 **Attribution**: EPO tool — header reads "Strumento EPO · Adattamento ASP". **Not** a Dennemeyer product.
 
 ### Page structure (8 pages, SPA with CSS display:none/block)
@@ -151,7 +175,12 @@ All page content rendered by `buildPages()` at `DOMContentLoaded`.
 | D3 | [1.3, 1.15, 1.0, 0.85, 0.7] — cost efficiency factor |
 | D4 | [1.2, 1.1, 1.0, 0.7, 0.5] — investment factor |
 
-### VAN formula (verified against Excel — Patent1 NPV≈22,473 ✓, Patent2 NPV≈4,361 ✓)
+### VAN formula (verified against Excel)
+
+*(this repo: the figures originally noted here — "Patent1 NPV≈22,473" — predate the `avgRev`
+fix at the top of this log. The current, reproducible values are Patent 1 = 329,059.4284,
+Patent 2 = 4,361.2849, Patent 3 = −4,686.3598; re-run `build/verify_against_excel.py` to
+confirm.)*
 
 ```
 Liquidity[y] = Revenue[y] - Costs[y] - Investments[y]

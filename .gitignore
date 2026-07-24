@@ -61,3 +61,7 @@ ENV/
 # NOT a build artifact. Must survive the generic build/ rule above.
 !7_ipscore/build/
 !7_ipscore/build/**
+
+# ...but build/dist/ inside it IS a build artifact: render.py recreates it, and its
+# contents are byte-identical to the promoted live files in 7_ipscore/.
+7_ipscore/build/dist/
