@@ -1,8 +1,8 @@
 # IPScore rebuild — what is this patent worth?
 
-> 🚧 **Under construction — planning stage, no notebooks yet.** The workshop-ready valuation
-> module is **[`7_ipscore/`](../7_ipscore/)**; use that one. This folder is where its ideas get
-> rebuilt in the course's own shape.
+> 🚧 **Under construction — notebook 1 of 4 is ready.** The workshop-ready valuation module is
+> **[`7_ipscore/`](../7_ipscore/)**; use that one for the session. This folder is where its
+> ideas get rebuilt in the course's own shape.
 
 A clean rebuild of the **ideas behind the EPO IPScore model**: a structured questionnaire that
 turns judgement about a patent into a score, a bridge from that score to economic parameters,
@@ -22,12 +22,18 @@ output. That split is the point of the module.
 
 ## Planned shape
 
-| # | Notebook | Answers | Needs |
-|---|----------|---------|-------|
-| 1 | `1_the_model.ipynb` | What the model is, and does our engine reproduce the EPO Excel exactly? | nothing — runs offline |
-| 2 | `2_evidence_from_patstat.ipynb` | For one real patent: what can PATSTAT actually answer? | **TIP / PATSTAT** |
-| 3 | `3_valuation_and_scenarios.ipynb` | What is it worth, and which lever moves that number most? | nothing |
-| 4 | `4_assemble_tool.ipynb` | One self-contained HTML valuation + one data workbook | nothing |
+| # | Notebook | Answers | Needs | State |
+|---|----------|---------|-------|-------|
+| 1 | `1_the_model.ipynb` | What the model is, and does our engine reproduce the EPO Excel exactly? | nothing — runs offline | ✅ ready |
+| 2 | `2_evidence_from_patstat.ipynb` | For one real patent: what can PATSTAT actually answer? | **TIP / PATSTAT** | planned |
+| 3 | `3_valuation_and_scenarios.ipynb` | What is it worth, and which lever moves that number most? | nothing | planned |
+| 4 | `4_assemble_tool.ipynb` | One self-contained HTML valuation + one data workbook | nothing | planned |
+
+Two files carry the module: **`ipscore_spec.json`** — the model as data (40 questions, the 8
+score→value tables, the EPO's three test patents) — and **`ipscore_kit.py`**, the only place
+anything is computed. Run `python ipscore_kit.py` for the acceptance test on its own.
+`tools/extract_spec_from_excel.py` re-derives the spec from the EPO workbook; it is a
+maintenance script, not part of the course chain.
 
 The full reasoning, the honest question-by-question mapping against PATSTAT, the phasing and
 the open decisions are in **[`REBUILD_PLAN.md`](REBUILD_PLAN.md)**. Where the ideas come from

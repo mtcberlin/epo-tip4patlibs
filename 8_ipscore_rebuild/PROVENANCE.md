@@ -1,8 +1,8 @@
 # Provenance — Module 8 (IPScore rebuild)
 
-**Status: planning. No notebooks yet.** The plan lives in
-[`REBUILD_PLAN.md`](REBUILD_PLAN.md); this file records where the ideas come from and who owns
-what, so attribution stays clean once code appears.
+**Status: Phase 1 complete** — the engine and notebook 1 exist and are verified. The plan lives
+in [`REBUILD_PLAN.md`](REBUILD_PLAN.md); this file records where the ideas come from and who
+owns what, so attribution stays clean.
 
 ## What this module is
 
@@ -62,6 +62,24 @@ That script reads the Excel directly and is the pattern to copy — not the numb
 
 ## Data
 
-The Excel workbook stays where it is (`7_ipscore/IPscore_3.01 WORKHORSE.xlsx`); module 8 reads
-it by relative path rather than keeping a second copy. PATSTAT access is the standard course
-route (`PatstatClient(env='PROD')`, PATSTAT Global Autumn 2025).
+The Excel workbook stays where it is (`7_ipscore/IPscore_3.01 WORKHORSE.xlsx`) and module 8
+keeps no second copy of it. It is read **once**, by `tools/extract_spec_from_excel.py`, into
+`ipscore_spec.json`; the notebooks then run against that file alone. So the *content* of the
+questionnaire and the OEK tables remains EPO's, extracted rather than retyped, and the module
+still stands on its own if module 7 is ever retired. Re-derive and compare at any time with
+`python tools/extract_spec_from_excel.py --check`.
+
+PATSTAT access is the standard course route (`PatstatClient(env='PROD')`, PATSTAT Global
+Autumn 2025).
+
+## What was built, and how it was checked (2026-07-24)
+
+`ipscore_kit.py` re-implements the workbook's 'Financial calculations' chain in Python: the
+fractional entry/exit year, the six liquidity components, the one-time investment effects in
+the launch year, and the ten-year discount. It reproduces all three EPO test patents to within
+floating-point noise. Risk and opportunity follow the workbook's own 'RiskOpportunity
+Calculation' sheet — `(5 − score) × −0.25` and `(score − 1) × 0.25`, averaged over the flagged
+questions only.
+
+Riccardo's `verify_against_excel.py` was read as prior art for *which* cells in the workbook
+matter; the formula chain here was re-derived from the sheet itself, and the two agree.
