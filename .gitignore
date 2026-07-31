@@ -47,6 +47,9 @@ ENV/
 # MCP local config
 .mcp.json
 
+# Claude Code per-machine settings (permissions etc.); the shared CLAUDE.md is tracked
+.claude/settings.local.json
+
 # Jupyter checkpoints
 .ipynb_checkpoints/
 */.ipynb_checkpoints/
