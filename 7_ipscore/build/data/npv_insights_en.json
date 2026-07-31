@@ -1,0 +1,542 @@
+{
+  "INSIGHTS": {
+    "B5": {
+      "1": "<strong>&#10060; Major obstacle.</strong> Five years is a very long road. Your development costs pile up year after year with zero revenue to show for it — and by the time you launch, competitors may have filled the gap. This scenario almost always leads to a very low or negative NPV.",
+      "2": "<strong>&#9888;&#65039; Significant delay.</strong> Two years of remaining development work will delay your first euro of revenue and add substantial costs. It is still workable, but you will need a long market window and strong revenue impact to compensate. Look for ways to accelerate.",
+      "3": "<strong>&#9888;&#65039; Borderline — manageable.</strong> One year to launch is the minimum we recommend. Development costs are limited, and revenue starts within 12 months. If your market and financial parameters are strong, this can still reach your NPV target.",
+      "4": "<strong>&#9989; Strong position.</strong> Six months to launch means minimal remaining costs and revenue starts almost immediately. A solid positive contribution to your NPV.",
+      "5": "<strong>&#9989; Best case.</strong> Ready to sell today — zero delay, zero remaining development cost. Every cash flow starts from year one at full strength. Maximum NPV from this parameter."
+    },
+    "C2": {
+      "1": "<strong>&#10060; Near-stagnant market.</strong> Growing at just 0.5% per year, this market is essentially flat. Revenue will barely increase over the patent life, and future cash flows lose most of their worth when discounted. Very hard to build meaningful NPV here.",
+      "2": "<strong>&#9888;&#65039; Slow growth.</strong> At 2.5% per year — roughly in line with inflation — there is modest upside. The patent can still create value, but other parameters need to be particularly strong to compensate for the limited market momentum.",
+      "3": "<strong>&#9888;&#65039; Healthy, workable.</strong> A 5% annual growth rate is solid. Revenue compounds at a reasonable pace year on year. Compatible with most NPV targets when the other parameters are also sound.",
+      "4": "<strong>&#9989; Strong growth.</strong> At 8% per year, your revenue base expands quickly. Each additional year on the market delivers meaningfully more value. A significant NPV booster.",
+      "5": "<strong>&#9989; Exceptional market.</strong> 15%+ annual growth is outstanding. Revenue compounds extremely fast, dramatically amplifying NPV. If your technology is entering a market growing this quickly, the financial outlook is very attractive."
+    },
+    "C3": {
+      "1": "<strong>&#10060; Far too short.</strong> Six months of market exclusivity is almost never enough to recover your investment. By the time competitors mobilise, your window is already closing. This score alone will typically prevent reaching any meaningful NPV target.",
+      "2": "<strong>&#10060; Very tight.</strong> One year gives you an extremely short revenue runway. This might work only if your technology is already on the market (B5=5) and your revenue uplift is very high (C6=5). For most situations, it is insufficient.",
+      "3": "<strong>&#9888;&#65039; Tight but workable.</strong> Two years is a limited window. You can establish a position and start recovering costs, but there is no room for delays or surprises. Other parameters — especially C6 and C2 — must be strong.",
+      "4": "<strong>&#9989; Solid window.</strong> Four years is the recommended minimum for most NPV targets. Enough time to grow your position, generate substantial revenue, and recover the investment with room to spare.",
+      "5": "<strong>&#9989; Outstanding.</strong> Eight years of competitive exclusivity is the strongest possible scenario. A long, protected revenue runway that dramatically multiplies NPV — this single parameter has the largest individual impact of any in the model."
+    },
+    "C6": {
+      "1": "<strong>&#10060; Negligible impact.</strong> Less than 0.5% revenue uplift means the patent barely moves the commercial needle. The financial return will struggle to justify even the cost of maintaining the patent in most countries.",
+      "2": "<strong>&#9888;&#65039; Small uplift.</strong> A 2% revenue increase is modest. On a &euro;5M sector base that is roughly &euro;100K of extra revenue per year at peak — not nothing, but compatible with your NPV target only if other parameters are very strong.",
+      "3": "<strong>&#9888;&#65039; Workable threshold.</strong> A 4% uplift is the workable minimum for most NPV targets. On a &euro;5M sector base that is around &euro;200K of additional annual revenue — meaningful, especially over a 4-year window.",
+      "4": "<strong>&#9989; Strong commercial impact.</strong> 6% revenue uplift clearly shows that the market is willing to pay a premium for what this patent delivers. A solid and reliable positive driver of NPV.",
+      "5": "<strong>&#9989; Exceptional.</strong> 10% or more extra revenue means the patent is delivering a dominant competitive advantage — customers pay significantly more or you capture a much larger share. The strongest revenue driver in the model."
+    },
+    "D1": {
+      "1": "<strong>&#10060; Patent not protecting core revenue.</strong> If your business can carry on normally without this patent, then it is not shielding any essential income. The biggest positive term in the NPV formula — called protected revenue — drops to near zero. The patent has very limited economic value in this scenario.",
+      "2": "<strong>&#9888;&#65039; Limited dependency.</strong> Only 25% of your output would be at risk without this patent. There is some protection, but most of your revenue is not patent-dependent. Protected revenue in the formula is modest.",
+      "3": "<strong>&#9888;&#65039; Meaningful dependency.</strong> Without this patent, roughly half your output would be at risk. This represents genuine economic protection — the patent is important to your business and contributes significantly to NPV.",
+      "4": "<strong>&#9989; High dependency.</strong> Only 25% of your output would survive without this patent. This technology is essential to your operations, and the protected revenue in the NPV formula is high — a strong positive contributor.",
+      "5": "<strong>&#9989; Maximum protection.</strong> Your entire business depends on this patent. The protected revenue component of NPV is at its highest — this patent is your core commercial asset. The financial justification for maintaining and defending it is strongest here."
+    },
+    "D2": {
+      "1": "<strong>&#10060; Enormous remaining investment.</strong> Spending 30% of your sector revenues on further development before launch will absorb virtually all future value. This situation makes a positive NPV nearly impossible to achieve.",
+      "2": "<strong>&#9888;&#65039; Heavy cost burden.</strong> 15% of sector revenues still to be spent before launch is a high hurdle. You will need a long and commercially successful market window to recover this. Actively explore whether costs can be reduced.",
+      "3": "<strong>&#9888;&#65039; Moderate costs — manageable.</strong> 8% of sector revenues remaining in development. This is workable if your time to market is short (score 3 or better). If launch is still 2+ years away, this cost level will hurt NPV significantly.",
+      "4": "<strong>&#9989; Low remaining costs.</strong> Only 2.5% of sector revenues left to spend before launch. You are close to the finish line. Small investment, near-term revenue — a strong position.",
+      "5": "<strong>&#9989; Essentially done.</strong> Less than 1% remaining development costs means you are ready to commercialise. Future cash flows are almost entirely unencumbered by development drag — maximum net benefit."
+    },
+    "D3": {
+      "1": "<strong>&#10060; Major cost increase.</strong> Production becomes 30% more expensive. This cost increase erodes your profit margin on every single unit you sell, every single year — a persistent drag that compounds over the entire revenue period.",
+      "2": "<strong>&#9888;&#65039; Cost increase — plan carefully.</strong> A 15% rise in production costs is a real and ongoing drain on margins. Your NPV will be noticeably lower than in a cost-neutral scenario. Can any process efficiencies reduce this?",
+      "3": "<strong>&#9888;&#65039; Neutral — neither helped nor hurt.</strong> No change in production costs. The patent does not make manufacturing more or less expensive. This is the baseline — acceptable, but you miss out on the efficiency bonus of higher scores.",
+      "4": "<strong>&#9989; Cost saving — every year.</strong> The technology reduces your production costs by 15%. Every year you operate, you save compared to before. This is a meaningful, recurring annual addition to NPV.",
+      "5": "<strong>&#9989; Outstanding efficiency gain.</strong> 30% lower production costs means the patent makes your operations dramatically more competitive. This recurring saving compounds over the full revenue period and is one of the most powerful annual contributors to NPV."
+    },
+    "D4": {
+      "1": "<strong>&#10060; Heavy upfront capital requirement.</strong> Needing 20% more capital than today to implement this technology creates a significant one-time cost at launch. This reduces your early-year NPV and puts pressure on cash flow right when revenue is just starting.",
+      "2": "<strong>&#9888;&#65039; Moderate extra investment at launch.</strong> 10% more capital than today — a manageable burden, but one that reduces your year-one NPV. Worth finding ways to lower this if possible.",
+      "3": "<strong>&#9888;&#65039; No change in capital — neutral.</strong> The same investment as today. The patent requires no additional capital outlay, which is an acceptable baseline.",
+      "4": "<strong>&#9989; Capital saving at launch.</strong> 30% less capital required means you free up significant resources in the first commercial year. A real improvement to early NPV and financial flexibility.",
+      "5": "<strong>&#9989; Major capital saving.</strong> Halving your capital requirements is outstanding — you achieve far more with far less upfront investment. The strongest possible improvement to launch-year cash flow."
+    }
+  },
+  "PARAM_META": {
+    "B5": {
+      "icon": "&#9200;",
+      "name": "Time to Market"
+    },
+    "C2": {
+      "icon": "&#128200;",
+      "name": "Market Growth Rate"
+    },
+    "C3": {
+      "icon": "&#128336;",
+      "name": "Competitive Window"
+    },
+    "C6": {
+      "icon": "&#128181;",
+      "name": "Revenue Uplift"
+    },
+    "D1": {
+      "icon": "&#128274;",
+      "name": "Business Dependency"
+    },
+    "D2": {
+      "icon": "&#128295;",
+      "name": "Remaining Dev. Costs"
+    },
+    "D3": {
+      "icon": "&#9881;",
+      "name": "Production Cost Effect"
+    },
+    "D4": {
+      "icon": "&#127970;",
+      "name": "Capital Investment"
+    }
+  },
+  "PARAM_TIPS": {
+    "B5": {
+      "red": "Accelerate your path to market immediately — this is the highest-priority action. Every extra year of delay before launch is extremely costly.",
+      "yellow": "You are within reach of launch. Focus on removing any remaining obstacles to reduce time to market below 1 year if at all possible.",
+      "green": "Good. Protect this timeline — avoid scope creep or regulatory delays that could push the launch date back."
+    },
+    "C2": {
+      "red": "The market you are targeting grows very slowly. Consider whether adjacent, faster-growing segments could be addressed with the same technology.",
+      "yellow": "Moderate market growth. Make sure your commercial window (C3) and revenue uplift (C6) are as strong as possible to compensate.",
+      "green": "Strong market growth — make sure your go-to-market plan is ready to capture it before competitors move."
+    },
+    "C3": {
+      "red": "Your competitive window is too short to recover the investment. Think hard about what would extend market exclusivity: broader claims, trade secrets, regulatory moats.",
+      "yellow": "A 2-year window is tight. Work on building switching costs, customer relationships and follow-on innovations to extend it.",
+      "green": "A solid competitive window. Use this time actively — the window will not stay open forever."
+    },
+    "C6": {
+      "red": "The patent is delivering very little commercial uplift. Revisit whether the technology is genuinely differentiated in the eyes of customers.",
+      "yellow": "The revenue uplift is workable but modest. Invest in commercial validation — are customers actually willing to pay a premium?",
+      "green": "Strong commercial impact. Capture it through pricing strategy and active sales focus on the patent-enabled benefits."
+    },
+    "D1": {
+      "red": "This patent protects little of your core revenue. The economic case for maintaining it is weak unless other parameters are exceptional.",
+      "yellow": "The patent protects roughly half your revenue — a meaningful but not critical dependency. Consider restructuring operations to increase reliance on the patented technology.",
+      "green": "The patent protects the heart of your business. This is a strong argument for investing in its defence and extension."
+    },
+    "D2": {
+      "red": "Remaining development costs are very high and will severely damage NPV. Seek funding (grants, R&D tax credits) and rigorously scope what is strictly necessary.",
+      "yellow": "Moderate remaining costs. Apply for R&D incentives and IP Box tax regimes where available — these can reduce the effective cost significantly.",
+      "green": "Low remaining costs. Make sure development stays on track and on budget to preserve this advantage."
+    },
+    "D3": {
+      "red": "Production becomes significantly more expensive. Explore process improvements, automation or outsourcing to reduce the cost impact before launch.",
+      "yellow": "Neutral cost position. Look for opportunities to turn this into a cost advantage through process optimisation.",
+      "green": "The technology makes you more efficient — make this part of your commercial story, as lower costs mean more competitive pricing or higher margins."
+    },
+    "D4": {
+      "red": "The additional capital requirement at launch is high. Explore leasing, phased rollout or contract manufacturing to reduce the upfront outlay.",
+      "yellow": "Neutral investment. No extra burden, but also no saving — look for opportunities to reduce the capital footprint.",
+      "green": "Lower capital requirements free up resources. Use this financial flexibility to strengthen other parts of the business plan."
+    }
+  },
+  "OEK_VALUES": {
+    "B5": [
+      5,
+      2,
+      1,
+      0.5,
+      0
+    ],
+    "C2": [
+      0.005,
+      0.025,
+      0.05,
+      0.08,
+      0.15
+    ],
+    "C3": [
+      0.5,
+      1,
+      2,
+      4,
+      8
+    ],
+    "C6": [
+      0.005,
+      0.02,
+      0.04,
+      0.06,
+      0.1
+    ],
+    "D1": [
+      1,
+      0.75,
+      0.5,
+      0.25,
+      0
+    ],
+    "D2": [
+      0.3,
+      0.15,
+      0.08,
+      0.025,
+      0.005
+    ],
+    "D3": [
+      1.3,
+      1.15,
+      1,
+      0.85,
+      0.7
+    ],
+    "D4": [
+      1.2,
+      1.1,
+      1,
+      0.7,
+      0.5
+    ]
+  },
+  "COLORS": {
+    "B5": [
+      "red",
+      "red",
+      "yellow",
+      "green",
+      "green"
+    ],
+    "C2": [
+      "red",
+      "red",
+      "yellow",
+      "green",
+      "green"
+    ],
+    "C3": [
+      "red",
+      "red",
+      "yellow",
+      "green",
+      "green"
+    ],
+    "C6": [
+      "red",
+      "red",
+      "yellow",
+      "green",
+      "green"
+    ],
+    "D1": [
+      "red",
+      "red",
+      "yellow",
+      "green",
+      "green"
+    ],
+    "D2": [
+      "red",
+      "red",
+      "yellow",
+      "green",
+      "green"
+    ],
+    "D3": [
+      "red",
+      "red",
+      "yellow",
+      "green",
+      "green"
+    ],
+    "D4": [
+      "red",
+      "red",
+      "yellow",
+      "green",
+      "green"
+    ]
+  },
+  "QUAL_QUESTIONS": [
+    {
+      "id": "Ag",
+      "t": "Is the patent officially granted by a patent office?",
+      "opts": [
+        "Not yet — still pending, or not yet filed",
+        "Yes, it is granted — but a legal challenge period is still open",
+        "Yes, fully granted — and no challenges remain"
+      ]
+    },
+    {
+      "id": "Al",
+      "t": "How many years of patent protection do you still have?",
+      "opts": [
+        "Less than 4 years remaining",
+        "Between 4 and 8 years remaining",
+        "More than 8 years remaining"
+      ]
+    },
+    {
+      "id": "Ab",
+      "t": "How broadly does the patent protect the technology?",
+      "opts": [
+        "Narrowly — only one very specific form of the product",
+        "Moderately — competitors would need real effort to work around it",
+        "Broadly — covers the core principle, very hard to design around"
+      ]
+    },
+    {
+      "id": "Ac",
+      "t": "In how many countries or markets is the patent registered?",
+      "opts": [
+        "Just one country",
+        "A handful of key markets (around 3&ndash;5 countries)",
+        "All major relevant markets worldwide"
+      ]
+    },
+    {
+      "id": "Ec",
+      "t": "How central is this patent to what your company does?",
+      "opts": [
+        "Not really central — it supports a side activity",
+        "Somewhat central — it underpins one important business line",
+        "Absolutely central — it is a cornerstone of the whole business"
+      ]
+    },
+    {
+      "id": "Es",
+      "t": "Is there a clear commercial plan for how this patent will be used?",
+      "opts": [
+        "No clear plan yet",
+        "A partial plan exists but is not fully developed",
+        "Fully integrated into the company's business strategy"
+      ]
+    }
+  ],
+  "OEK_CARDS": [
+    {
+      "id": "B5",
+      "icon": "&#9200;",
+      "title": "Time to Market",
+      "question": "When will your technology be ready to generate sales?",
+      "context": "Every year of delay before launch means development costs pile up with no revenue to offset them. A technology that can be sold today is worth dramatically more than one that needs 2 or 3 more years of work — even if everything else is identical.",
+      "opts": [
+        {
+          "label": "5+ years away",
+          "desc": "We are still in early research or development — launch is far off"
+        },
+        {
+          "label": "About 2 years away",
+          "desc": "Significant development work remains before we can launch"
+        },
+        {
+          "label": "About 1 year away",
+          "desc": "We expect to be ready to launch within the next 12 months"
+        },
+        {
+          "label": "Around 6 months away",
+          "desc": "Final preparations are under way — launch is imminent"
+        },
+        {
+          "label": "Ready now",
+          "desc": "The technology is fully developed and we can start selling today"
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "icon": "&#128200;",
+      "title": "Market Growth Rate",
+      "question": "How fast is the market you are entering growing each year?",
+      "context": "A faster-growing market means that each year you are on the market, your revenue base naturally expands — even before accounting for your own sales efforts.",
+      "opts": [
+        {
+          "label": "Very slow — about 0.5% per year",
+          "desc": "A mature or declining market, barely growing"
+        },
+        {
+          "label": "Slow — about 2.5% per year",
+          "desc": "Modest growth, roughly in line with general inflation"
+        },
+        {
+          "label": "Moderate — about 5% per year",
+          "desc": "Healthy, stable market expanding at a solid pace"
+        },
+        {
+          "label": "Fast — about 8% per year",
+          "desc": "A dynamic, expanding sector with strong momentum"
+        },
+        {
+          "label": "Very fast — 15% or more per year",
+          "desc": "A high-growth or booming market, rapidly expanding"
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "icon": "&#128336;",
+      "title": "Competitive Window (Market Lifetime)",
+      "question": "Once your product is on the market, how long will you realistically maintain a competitive edge before substitutes or copies arrive?",
+      "context": "This is how many years of protected or semi-protected revenue you can realistically count on. It may end before the patent expires if competitors find workarounds. Be honest — overestimating this is the most common forecasting mistake.",
+      "opts": [
+        {
+          "label": "About 6 months",
+          "desc": "Competitors will react and close in very quickly"
+        },
+        {
+          "label": "About 1 year",
+          "desc": "A very short window before substitutes emerge"
+        },
+        {
+          "label": "About 2 years",
+          "desc": "Enough time to establish a position, but very tight"
+        },
+        {
+          "label": "About 4 years",
+          "desc": "A solid window — enough to grow and recover investment"
+        },
+        {
+          "label": "8 years or more",
+          "desc": "Long-lasting advantage with high barriers to imitation"
+        }
+      ]
+    },
+    {
+      "id": "C6",
+      "icon": "&#128181;",
+      "title": "Revenue Uplift",
+      "question": "By how much will this patent increase revenues in your business area, compared to operating without it?",
+      "context": "Think of it as the commercial premium the patent delivers: extra sales from a superior product, higher prices, or new customers you would not otherwise reach.",
+      "opts": [
+        {
+          "label": "Very small — less than 0.5% of sector revenue",
+          "desc": "Barely a measurable difference commercially"
+        },
+        {
+          "label": "Small — about 2% of sector revenue",
+          "desc": "A modest uplift, visible but not dramatic"
+        },
+        {
+          "label": "Moderate — about 4% of sector revenue",
+          "desc": "A meaningful competitive advantage customers notice"
+        },
+        {
+          "label": "Significant — about 6% of sector revenue",
+          "desc": "A clear, strong commercial premium driven by the patent"
+        },
+        {
+          "label": "Major — 10% or more of sector revenue",
+          "desc": "A dominant advantage — customers pay substantially more or switch to you"
+        }
+      ]
+    },
+    {
+      "id": "D1",
+      "icon": "&#128274;",
+      "title": "Business Dependency",
+      "question": "If this patent were taken away today, what fraction of your business could you still run?",
+      "context": "The more your business depends on this patent, the more revenue it is protecting — and therefore the greater its economic value. A patent that protects a marginal feature of one product is worth far less than one without which the whole business would collapse.",
+      "opts": [
+        {
+          "label": "All of it — the business would carry on completely normally",
+          "desc": "The patent does not protect any critical revenue"
+        },
+        {
+          "label": "About three-quarters — we would lose roughly 25% of output",
+          "desc": "Some dependency, but most of the business would survive"
+        },
+        {
+          "label": "About half — we would lose roughly 50% of output",
+          "desc": "The patent protects a major part of the business"
+        },
+        {
+          "label": "About a quarter — we would lose roughly 75% of output",
+          "desc": "The business is highly dependent on this technology"
+        },
+        {
+          "label": "None — the entire business depends on this patent",
+          "desc": "Without it, the business cannot operate"
+        }
+      ]
+    },
+    {
+      "id": "D2",
+      "icon": "&#128295;",
+      "title": "Remaining Development Costs",
+      "question": "How much more money still needs to be invested in this technology before it is ready to sell?",
+      "context": "These are the costs you must pay before seeing any revenue — they appear as negative cash flows in the early years and directly reduce your NPV.",
+      "opts": [
+        {
+          "label": "Very high — about 30% of our annual sector revenue",
+          "desc": "Enormous remaining investment before launch"
+        },
+        {
+          "label": "High — about 15% of annual sector revenue",
+          "desc": "Substantial costs still ahead before commercialisation"
+        },
+        {
+          "label": "Moderate — about 8% of annual sector revenue",
+          "desc": "A significant but manageable pre-launch investment"
+        },
+        {
+          "label": "Low — about 2–3% of annual sector revenue",
+          "desc": "Small remaining costs — we are nearly ready"
+        },
+        {
+          "label": "Minimal — less than 1% of annual sector revenue",
+          "desc": "Virtually done — negligible further development needed"
+        }
+      ]
+    },
+    {
+      "id": "D3",
+      "icon": "&#9881;&#65039;",
+      "title": "Production Cost Effect",
+      "question": "Once commercialised, will this technology make your production more expensive or cheaper compared to today?",
+      "context": "This effect applies every year you operate. A cost saving compounds across the entire revenue period — a cost increase is a persistent drag on margins.",
+      "opts": [
+        {
+          "label": "Much more expensive — production costs rise by about 30%",
+          "desc": "A significant ongoing cost penalty each year"
+        },
+        {
+          "label": "Somewhat more expensive — costs rise by about 15%",
+          "desc": "A moderate annual cost increase"
+        },
+        {
+          "label": "No change — production costs stay the same",
+          "desc": "Neutral — neither saving nor costing more"
+        },
+        {
+          "label": "Somewhat cheaper — production costs fall by about 15%",
+          "desc": "A meaningful annual saving on operations"
+        },
+        {
+          "label": "Much cheaper — production costs fall by about 30%",
+          "desc": "A major efficiency gain every year of operation"
+        }
+      ]
+    },
+    {
+      "id": "D4",
+      "icon": "&#127970;",
+      "title": "Capital Investment at Launch",
+      "question": "To implement this technology commercially, will you need more or less capital equipment than you currently have?",
+      "context": "This is a one-time cost at the moment of launch. A large additional investment reduces early NPV; needing less capital than today is a positive bonus.",
+      "opts": [
+        {
+          "label": "Significantly more — about 20% more capital than today",
+          "desc": "A substantial one-time investment outlay at launch"
+        },
+        {
+          "label": "Slightly more — about 10% more capital than today",
+          "desc": "A moderate additional investment at launch"
+        },
+        {
+          "label": "The same — no change in capital requirements",
+          "desc": "Neutral — same level of investment as today"
+        },
+        {
+          "label": "Less — about 30% less capital than today",
+          "desc": "A meaningful saving in capital at launch"
+        },
+        {
+          "label": "Much less — about 50% less capital than today",
+          "desc": "Halving investment requirements — major capital saving"
+        }
+      ]
+    }
+  ]
+}

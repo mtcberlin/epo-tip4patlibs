@@ -47,6 +47,9 @@ ENV/
 # MCP local config
 .mcp.json
 
+# Claude Code per-machine settings (permissions etc.); the shared CLAUDE.md is tracked
+.claude/settings.local.json
+
 # Jupyter checkpoints
 .ipynb_checkpoints/
 */.ipynb_checkpoints/
@@ -56,3 +59,12 @@ ENV/
 /registerinfo.xml
 /reg.xml
 /reg2.xml
+
+# Riccardo IPScore build pipeline: source material (templates + data + scripts),
+# NOT a build artifact. Must survive the generic build/ rule above.
+!7_ipscore/build/
+!7_ipscore/build/**
+
+# ...but build/dist/ inside it IS a build artifact: render.py recreates it, and its
+# contents are byte-identical to the promoted live files in 7_ipscore/.
+7_ipscore/build/dist/

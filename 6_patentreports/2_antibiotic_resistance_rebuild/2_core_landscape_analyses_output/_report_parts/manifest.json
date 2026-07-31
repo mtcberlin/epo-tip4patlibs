@@ -1,0 +1,102 @@
+{
+ "intl_authority_totals": {
+  "order": 210,
+  "slug": "intl_authority_totals",
+  "title": "Filings by international / regional authority",
+  "note": "Counts distinct applications (filings), not families. WO/EP/EA/AP/OA.",
+  "fragment": "intl_authority_totals.fragment.html",
+  "sheets": {
+   "data": "intl_authority_totals__data.parquet"
+  }
+ },
+ "intl_authority_trend": {
+  "order": 220,
+  "slug": "intl_authority_trend",
+  "title": "WO (PCT) vs EP over time",
+  "note": "Filings per year for WO and EP, 2000–2023.",
+  "fragment": "intl_authority_trend.fragment.html",
+  "sheets": {
+   "data": "intl_authority_trend__data.parquet"
+  }
+ },
+ "national_filing_trends": {
+  "order": 230,
+  "slug": "national_filing_trends",
+  "title": "National filing trends",
+  "note": "Filings per year at the top 8 national offices, 2000–2023 (per application).",
+  "fragment": "national_filing_trends.fragment.html",
+  "sheets": {
+   "data": "national_filing_trends__data.parquet"
+  }
+ },
+ "innovation_waves": {
+  "order": 240,
+  "slug": "innovation_waves",
+  "title": "Innovation waves by technology area",
+  "note": "Families per year, split by broad technology area (grouped IPC subclasses).",
+  "fragment": "innovation_waves.fragment.html",
+  "sheets": {
+   "data": "innovation_waves__data.parquet"
+  }
+ },
+ "national_vs_international": {
+  "order": 250,
+  "slug": "national_vs_international",
+  "title": "National vs international filing strategy",
+  "note": "Distinct applications per year by route; international = EP/WO/OA/AP/EA.",
+  "fragment": "national_vs_international.fragment.html",
+  "sheets": {
+   "data": "national_vs_international__data.parquet"
+  }
+ },
+ "family_size": {
+  "order": 255,
+  "slug": "family_size",
+  "title": "Family size & global reach",
+  "note": "One docdb_family_size per family, grouped into size bands.",
+  "fragment": "family_size.fragment.html",
+  "sheets": {
+   "data": "family_size__data.parquet"
+  }
+ },
+ "top_applicants": {
+  "order": 260,
+  "slug": "top_applicants",
+  "title": "Top applicants by patent families",
+  "note": "Distinct families per applicant (psn_name), applicants only, 2000–2023.",
+  "fragment": "top_applicants.fragment.html",
+  "sheets": {
+   "data": "top_applicants__data.parquet"
+  }
+ },
+ "applicants_by_sector": {
+  "order": 270,
+  "slug": "applicants_by_sector",
+  "title": "Applicants by institutional sector",
+  "note": "Families per applicant sector (psn_sector), counted once per family-sector.",
+  "fragment": "applicants_by_sector.fragment.html",
+  "sheets": {
+   "data": "applicants_by_sector__data.parquet"
+  }
+ },
+ "grant_rate": {
+  "order": 280,
+  "slug": "grant_rate",
+  "title": "Grant rate by top applicants",
+  "note": "Granted (TLS201.granted='Y') / total applications per applicant; ≥10 applications.",
+  "fragment": "grant_rate.fragment.html",
+  "sheets": {
+   "data": "grant_rate__data.parquet"
+  }
+ },
+ "top_cited_orgs": {
+  "order": 290,
+  "slug": "top_cited_orgs",
+  "title": "Most influential organisations (forward citations)",
+  "note": "Distinct citing families per cited organisation; DOCDB family citations; organisational applicants only.",
+  "fragment": "top_cited_orgs.fragment.html",
+  "sheets": {
+   "data": "top_cited_orgs__data.parquet"
+  }
+ }
+}
