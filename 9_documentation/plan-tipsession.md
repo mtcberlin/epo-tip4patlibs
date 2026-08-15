@@ -241,9 +241,10 @@ Ticket `#PIP-127`. Work on `develop`.
 - **Attribution wording for module 8.** Riccardo has agreed to the rebuild; the sentence itself
   is still unwritten. Module 8 is our implementation of the **EPO** model and must say so, while
   modules 6 and 7 keep *created by Riccardo Priore*.
-- **Three commits on `develop` are unsigned** (`6049aeb`, `13ae900`, `216b421`) — the 1Password
-  agent was locked. Re-sign before the PR into `main` if that matters:
-  `git rebase --exec 'git commit --amend --no-edit -S' f141276`
+- ~~Unsigned commits on `develop`~~ — **done, 2026-08-15.** All four were re-signed and
+  force-pushed; `git log --format='%h %G?' f141276..develop` shows `G` on every one. The
+  pre-rewrite state is kept locally as `backup/pre-resign-develop`; delete that branch once the
+  PR into `main` has landed.
 
 ---
 
