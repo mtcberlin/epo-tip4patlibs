@@ -18,8 +18,11 @@ Author: Arne Krüger (mtc.berlin / depa.tech) · License: **EPO Internal Use**.
 | `6_patentreports/` | Landscape reports (**Riccardo Priore**) — triadic families, filing authorities, t-SNE clusters, interactive explorer. Ships **pre-executed** (see below) |
 | `7_ipscore/` | Patent valuation (**Riccardo Priore**) — EPO IPScore questionnaire → NPV; self-contained interactive HTML tools, opened via `open_html()` (jupyter-server-proxy), **never** via `IFrame` |
 | `8_ipscore_rebuild/` | 🚧 Under construction (notebooks 1, 3 and 4 of 4 — only the PATSTAT evidence layer is left) — our own rebuild of the IPScore ideas as an explained notebook chain, adding a PATSTAT evidence layer. Engine in `ipscore_kit.py`, model data in `ipscore_spec.json`, deliverable in `4_tool/`, phasing in `REBUILD_PLAN.md`; module 7 stays untouched as the working reference |
+| `9_documentation/` | Working plans that are not course material — currently `plan-tipsession.md`, the task list for the one live-TIP session module 8 still needs |
 
-The course is **modules 1–8 plus this file and `README.md`** — nothing else. Earlier
+The **course** is modules 1–8. Alongside it sit four working documents that are not course
+material: this file, `README.md`, `prep_workshop_todo.md` (the workshop-preparation log) and
+`9_documentation/` (plans that need a live TIP session or a decision). Earlier
 supporting folders (`setup/`, `harmonization/`, `ipc-extension/`, `context/`, `docs/`)
 and the BMAD agent tooling (`_bmad*`, `.claude/`, `.agent/`, `.gemini/`) were removed
 once no module referenced them any more; recover any of them from history with

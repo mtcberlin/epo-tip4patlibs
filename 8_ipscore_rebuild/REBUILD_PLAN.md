@@ -175,6 +175,10 @@ you cannot show someone an NPV before you have shown them what was assumed to ge
 
 ### Phase 3, concretely — the next thing to build
 
+> 📋 The live-TIP tasks that gate this are written up as an executable session plan:
+> **[`../9_documentation/plan-tipsession.md`](../9_documentation/plan-tipsession.md)** — five
+> tasks, ~30 minutes, with draft queries for O1 and O2 and the selection criteria for V5.
+
 `2_evidence_from_patstat.ipynb`, and it is **TIP-only**. Before it can be written, one short
 TIP session has to answer O1 and O2 (below) and settle V5 — which family from module 6's
 antibiotic-resistance corpus becomes the worked example. Then: the three *strong* questions
