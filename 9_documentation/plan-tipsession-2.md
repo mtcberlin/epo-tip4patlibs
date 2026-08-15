@@ -88,3 +88,21 @@ state is in `tls231.lapse_country`, not `event_text`.
   keep *created by Riccardo Priore*.
 - **O3 — what does a PATLIB actually get asked?** A conversation with Riccardo. Note that the
   `PGFP` renewal evidence now makes *"should I renew this?"* answerable from data.
+
+---
+
+## Leftover for whenever a TIP session happens next (not urgent)
+
+Two one-line changes were made to `4_assemble_tool.ipynb` **without re-running it**, because
+regenerating the report on this laptop would swap the embedded `plotly.js` (TIP builds 3.0.1,
+local plotly builds a newer one) — a 4.9 MB library churn for a text change. So the committed
+`4_tool/ipscore_valuation.html` still shows the *previous* footer.
+
+- **The report footer** now credits Arne Krüger and names Riccardo's NPV Target Planner as the
+  source of the scenario analysis. Re-running notebook 4 on TIP picks it up.
+- **The data workbook numbers two sheets `6 …`** — `6 evidence` and `6 sensitivity` — because
+  notebook 4 prefixes every contributed section with `6`. Cosmetic. If it is worth fixing, number
+  them by section order instead.
+
+Neither is a correctness problem, and the notebook headers (which are markdown) are already
+correct everywhere.

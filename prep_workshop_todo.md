@@ -325,9 +325,11 @@ form). Only the attribution wording still needs a sentence when module 8 ships.
       `7_ipscore/build/data/ipscore_questions_{en,it}.json` → `render.py --promote`, never the
       generated HTML.
 - [x] **Is a rebuild acceptable, and how is attribution worded?** → **Yes, explicitly welcome**
-      — he values the support. Module 8 may ship. The one thing still open is the *wording*:
-      module 8 is our implementation of the **EPO** model and must say so; modules 6 and 7 keep
-      *created by Riccardo Priore*. Settle the exact sentence when module 8 lands.
+      — he values the support. **Wording settled 2026-08-15:** *"created by Arne Krüger · model:
+      EPO IPScore 3.01 · scenario analysis after Riccardo Priore's NPV Target Planner"*, in all
+      four module-8 headers and the report footer. It names the EPO as the model's owner, keeps
+      *created by Riccardo Priore* for modules 6 and 7 only, and credits by name the one idea
+      module 8 did take from him. Full reasoning in `8_ipscore_rebuild/PROVENANCE.md`.
 - [x] **Should there be a blank English form?** → **No — pre-filled is preferred**, by both
       Arne and Riccardo: you cannot ask a workshop audience for their company's turnover, cost
       and depreciation figures on the spot, so the tool has to arrive with a worked example.
