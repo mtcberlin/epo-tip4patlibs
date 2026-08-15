@@ -17,7 +17,7 @@ Author: Arne Krüger (mtc.berlin / depa.tech) · License: **EPO Internal Use**.
 | `5_lead_generation/` | Regional lead generation — profile a region's EP/PCT applicants by portfolio depth × geographic reach, segment into lead tiers |
 | `6_patentreports/` | Landscape reports (**Riccardo Priore**) — triadic families, filing authorities, t-SNE clusters, interactive explorer. Ships **pre-executed** (see below) |
 | `7_ipscore/` | Patent valuation (**Riccardo Priore**) — EPO IPScore questionnaire → NPV; self-contained interactive HTML tools, opened via `open_html()` (jupyter-server-proxy), **never** via `IFrame` |
-| `8_ipscore_rebuild/` | 🚧 Under construction (notebook 1 of 4) — our own rebuild of the IPScore ideas as an explained notebook chain, adding a PATSTAT evidence layer. Engine in `ipscore_kit.py`, model data in `ipscore_spec.json`, phasing in `REBUILD_PLAN.md`; module 7 stays untouched as the working reference |
+| `8_ipscore_rebuild/` | 🚧 Under construction (notebooks 1, 3 and 4 of 4 — only the PATSTAT evidence layer is left) — our own rebuild of the IPScore ideas as an explained notebook chain, adding a PATSTAT evidence layer. Engine in `ipscore_kit.py`, model data in `ipscore_spec.json`, deliverable in `4_tool/`, phasing in `REBUILD_PLAN.md`; module 7 stays untouched as the working reference |
 
 The course is **modules 1–8 plus this file and `README.md`** — nothing else. Earlier
 supporting folders (`setup/`, `harmonization/`, `ipc-extension/`, `context/`, `docs/`)

@@ -45,6 +45,56 @@ largest deviation 6·10⁻¹¹, floating-point noise). The engine is verified.
 
 Committed as `f66c69f` — *Module 8 Phase 1: the engine, verified against the EPO workbook*.
 
+**2026-08-15 — Phase 2 done.** The chain now exists end to end, offline.
+
+- `4_assemble_tool.ipynb` — 21 cells, executed, no errors. Hand-scores one patent, computes the
+  profile, the eight economic parameters, the ten-year cash flow and the NPV, and assembles
+  **`4_tool/ipscore_valuation.html`** (7 sections, 3 inline charts, 4.9 MB, one embedded
+  `plotly.js`, **0 iframes, 0 external requests**) plus **`4_tool/ipscore_valuation_data.xlsx`**
+  (5 sheets). Opened with `open_html()`.
+- Two additions to `ipscore_kit.py`: **`PATSTAT_CANDIDATES`** — the eleven questions a query can
+  speak to, each with a strength (`strong` · `good` · `proxy` · `context` · `open`) and what
+  notebook 2 will source — and **`answer_table()`**, the 40-row tidy table the report is built
+  around. The acceptance test still passes.
+- **Provenance is honest and therefore empty.** All forty answers carry `judgement`; the report
+  says `0 measured · 0 informed · 40 judgement` on its front section. Notebook 2 is what changes
+  that, and the eleven reachable answers already carry a `-> notebook 2 (strength): …` note in
+  their `evidence` field — a promise, never a measurement.
+- **The launcher cell ships without output**, the same rule module 7 learned the hard way
+  (warning 9 in `prep_workshop_todo.md`): run offline, `open_html()` bakes in the *author's*
+  filesystem path and the message "jupyter-server-proxy is unavailable here", both of which are
+  wrong on TIP. Clear that one cell before every commit.
+- **The report was rendered and looked at**, in Chrome, over a local HTTP server (`file://` is
+  blocked by the extension). Three rounds of fixes came out of actually seeing it: the worked
+  example's `C3` went 4 → 5 so the cash flow covers years 1–9 instead of dying at year 5;
+  `D3`/`D4` went 3 → 4 so all six cash-flow components are alive rather than two sitting dead in
+  the legend; the radar's radial axis moved to 36° so its tick labels stop colliding with the
+  *A — Legal status* label. This closes the open item below — module 8's charts are no longer
+  unseen.
+
+**2026-08-15 — Phase 4 done.** `3_valuation_and_scenarios.ipynb` — 14 cells, executed, offline.
+
+- `kit.sensitivity()` varies each of the eight OEK answers across all five levels, one at a
+  time, and returns a `LeverResponse` per lever (swing · upside · downside · step up · step
+  down), widest first. Two charts: the **tornado**, and **what a single step is worth** — the
+  realistic version, since a client rarely moves an answer all the way to the best one.
+- The finding the module was built to show, now computed rather than asserted: **the widest
+  lever is not the one to work on.** D3 has the largest swing (1,875,011 €) but only 468,753 €
+  left to gain; **C2 has the most room (+562,830 €)**; **C3 is already at the best answer**, so
+  its entire swing is downside risk. And the tornado carries a labelled zero-width row for *the
+  other 32 answers*, which cannot move the number at all.
+- Two structural changes came with it:
+  - **`worked_example.json`** — the patent, the seven company figures and the forty scores now
+    live in one file that notebooks 3 and 4 both read. They can no longer drift, and **V5**
+    (swap in a real family from module 6's corpus) becomes an edit to that file alone.
+  - **`kit.record_section()` / `kit.load_sections()`** — the optional half of the report
+    contract, added at the moment the plan said to add it: when a second producer actually
+    existed. Notebook 3 hands over section **700**; notebook 4 slots it between the cash flow
+    (600) and the full questionnaire (900), and adds its rows to the workbook. With no
+    contribution present the assembler simply builds one section fewer.
+- The assembled report is now **8 sections, 5 inline charts, 6 workbook sheets, 0 iframes**.
+  Both new charts were rendered and reviewed in a browser.
+
 ---
 
 ## ▶️ Resume here — everything the next session needs
@@ -102,30 +152,44 @@ output can show how much of the number is evidence.
   `__pycache__/` are swallowed globally.
 - Work on `develop`, PR into `main`, SSH remotes.
 
-### Phase 2, concretely — the next thing to build
+### The report contract — settled in Phase 2, and different from module 6's
 
-A **minimal `4_assemble_tool.ipynb`**: hand-score one patent → the assembled deliverable. Small
-on purpose, so the whole chain exists end to end before notebooks 2 and 3 fill it out.
+Module 6 merges a pile of charts by an `order` number, because three notebooks scatter figures
+across three folders. A valuation cannot be assembled that way: it has a **required shape** —
+you cannot show someone an NPV before you have shown them what was assumed to get there. So:
 
-1. Decide the report contract — how notebooks 2 and 3 hand their figures and tables to
-   notebook 4. Module 6 solved this with `report_kit.record()` writing fragments plus data into
-   `<notebook>_output/`; copy the *idea*, not the code, into `ipscore_kit.py`.
-2. Assemble one self-contained HTML file — narrative, the charts, and the answer table with its
-   provenance markers — into `4_tool/ipscore_valuation.html`, plus
-   `ipscore_valuation_data.xlsx` with one sheet per step.
-3. Open it on TIP with `open_html()` (jupyter-server-proxy). **`IFrame` cannot work** — Jupyter
-   serves `/files/` under a CSP sandbox that disables JavaScript. See module 7 for the pattern.
-4. Single embedded `plotly.js`, no external requests — the constraint module 6 already proved.
+- **Notebook 4 always builds the spine itself** — verdict · patent and company · profile ·
+  data reach · the eight money answers · cash flow · all forty answers. Seven sections, fixed
+  order, always present.
+- **Notebook 2 hands over a better answer set**, not a section: the same forty answers, with
+  `provenance="measured"` and a real PATSTAT fact in `evidence` wherever a query decided the
+  score. The report shape does not change; the provenance panel stops reading `0 measured`.
+- **Notebook 3 hands over one extra section**, the sensitivity ranking. *That* is the moment to
+  add a manifest — not before. Writing merge machinery for producers that do not exist yet was
+  the one thing Phase 2 deliberately did not do.
 
-Phases 3 (evidence from PATSTAT, TIP-only) and 4 (sensitivity over the 8 OEK levers) follow;
-see "Phasing" below.
+### Phase 3, concretely — the next thing to build
+
+`2_evidence_from_patstat.ipynb`, and it is **TIP-only**. Before it can be written, one short
+TIP session has to answer O1 and O2 (below) and settle V5 — which family from module 6's
+antibiotic-resistance corpus becomes the worked example. Then: the three *strong* questions
+first (A1, A3, A5), the three *good* ones next (E1, E2, E7), the proxies last and labelled as
+proxies. `kit.PATSTAT_CANDIDATES` already names what each one sources.
+
+Phase 4 is **done** — notebook 3 was built and executed offline on 2026-08-15, ahead of
+Phase 3. Only notebook 2 is left, and only it needs TIP.
 
 ### Open items — none of them blocking
 
-- **The two charts in notebook 1 were never looked at.** No kaleido and no browser in the build
-  environment, so they are verified structurally (traces, ranges, tick labels, a validated
-  CVD-safe palette) but nobody has seen them rendered. Arne is checking on TIP.
-- **Notebook 1 ships executed** — deliberate, see the convention note under the decisions
+- **Notebook 4's three charts have been rendered and reviewed** (2026-08-15, Chrome over a
+  local HTTP server — `file://` is blocked by the extension). **Notebook 1's two charts still
+  have not been**; they remain verified only structurally. Worth one look in the same TIP
+  session as O1/O2.
+- **Notebook 1 stamps three answers `measured`** (A1, A3, A5) with hand-written evidence
+  strings. Harmless there — it illustrates the dataclass, and that notebook's deliverable is
+  the acceptance test — but it is the opposite of the standard notebook 4 now sets. Worth
+  reconciling before the release; it needs a re-run of notebook 1, so it is not free.
+- **Notebooks 1 and 4 ship executed** — deliberate, see the convention note under the decisions
   table. Reverse if module 8 should be run rather than read.
 - **O1–O3** (legal-status tables on TIP, `nb_claims` coverage, what a PATLIB is really asked)
   are still open and gate Phase 3. See the end of this file.
@@ -202,10 +266,13 @@ provenance marker: **measured · informed · judgement**.
   2_evidence_from_patstat.ipynb     ← one real patent: what PATSTAT can and cannot answer
   2_evidence_from_patstat_output/
   3_valuation_and_scenarios.ipynb   ← the valuation + which lever actually moves the NPV
-  3_valuation_and_scenarios_output/
+                                                                            ✅ built, executed
+  3_valuation_and_scenarios_output/ ← _report_parts/: section 700 for the assembler  ✅ built
+  worked_example.json               ← the one worked example both nb3 and nb4 read   ✅ built
   4_assemble_tool.ipynb             ← one self-contained HTML deliverable + one data workbook
-  4_tool/
-    ipscore_valuation.html          ← opened with open_html()
+                                                                            ✅ built, executed
+  4_tool/                                                                   ✅ built
+    ipscore_valuation.html          ← opened with open_html(); 7 sections, 0 iframes
     ipscore_valuation_data.xlsx     ← one sheet per step: answers, parameters, cash flow, sensitivity
   PROVENANCE.md  REBUILD_PLAN.md  README.md
 ```
@@ -265,12 +332,13 @@ constants.
 - **Phase 0 — scaffold + plan.** ← *done, 2026-07-24*
 - **Phase 1 — the engine and its proof.** ← *done, 2026-07-24.* Spec extracted,
   `ipscore_kit.py` written, notebook 1 executed, all three EPO test patents reproduced.
-- **Phase 2 — the deliverable.** A minimal notebook 4: one hand-scored patent → the assembled
-  HTML + workbook, opened with `open_html()` on TIP. Proves the whole chain end to end while it
-  is still small — the same trick that made module 6's MVP useful.
+- **Phase 2 — the deliverable.** ← *done, 2026-08-15.* Notebook 4: one hand-scored patent →
+  `4_tool/ipscore_valuation.html` + `ipscore_valuation_data.xlsx`, opened with `open_html()`.
+  Built and executed **offline**, and the report was rendered in a browser and reviewed.
 - **Phase 3 — the evidence layer.** Notebook 2 against PATSTAT: the six strong questions first,
   the four proxies second, each with its provenance marker. TIP-only.
-- **Phase 4 — scenarios.** Notebook 3: the sensitivity ranking over the 8 OEK levers.
+- **Phase 4 — scenarios.** ← *done, 2026-08-15.* Notebook 3: the sensitivity ranking over the
+  8 OEK levers, plus `worked_example.json` and the `record_section` contract. Offline.
 - **Phase 5 — polish.** Narrative, branded header, dry-run against the clock, and a side-by-side
   sanity check against Riccardo's tools on the same inputs (they should agree — same model).
 

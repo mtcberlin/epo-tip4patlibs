@@ -1,8 +1,10 @@
 # IPScore rebuild — what is this patent worth?
 
-> 🚧 **Under construction — notebook 1 of 4 is ready.** The workshop-ready valuation module is
-> **[`7_ipscore/`](../7_ipscore/)**; use that one for the session. This folder is where its
-> ideas get rebuilt in the course's own shape.
+> 🚧 **Under construction — three of the four notebooks are ready** (1, 3 and 4), so the chain
+> runs end to end:
+> a scored patent comes out as one self-contained HTML valuation plus a data workbook. The
+> workshop-ready valuation module is still **[`7_ipscore/`](../7_ipscore/)**; use that one for
+> the session. This folder is where its ideas get rebuilt in the course's own shape.
 
 A clean rebuild of the **ideas behind the EPO IPScore model**: a structured questionnaire that
 turns judgement about a patent into a score, a bridge from that score to economic parameters,
@@ -26,10 +28,27 @@ output. That split is the point of the module.
 |---|----------|---------|-------|-------|
 | 1 | `1_the_model.ipynb` | What the model is, and does our engine reproduce the EPO Excel exactly? | nothing — runs offline | ✅ ready |
 | 2 | `2_evidence_from_patstat.ipynb` | For one real patent: what can PATSTAT actually answer? | **TIP / PATSTAT** | planned |
-| 3 | `3_valuation_and_scenarios.ipynb` | What is it worth, and which lever moves that number most? | nothing | planned |
-| 4 | `4_assemble_tool.ipynb` | One self-contained HTML valuation + one data workbook | nothing | planned |
+| 3 | `3_valuation_and_scenarios.ipynb` | What is it worth, and which lever moves that number most? | nothing | ✅ ready |
+| 4 | `4_assemble_tool.ipynb` | One self-contained HTML valuation + one data workbook | nothing | ✅ ready |
 
-Two files carry the module: **`ipscore_spec.json`** — the model as data (40 questions, the 8
+Run notebook 4 and you get `4_tool/ipscore_valuation.html` — seven sections, three inline
+charts, one embedded copy of `plotly.js`, no iframes and no internet — plus
+`4_tool/ipscore_valuation_data.xlsx` with one sheet per step. It opens inside TIP through the
+course's shared `open_html()` helper.
+
+Because notebook 2 does not exist yet, that report scores its patent **entirely by hand** and
+says so in large type: `0 measured · 0 informed · 40 judgement`. Eleven answers are marked as
+reachable by a PATSTAT query — three of them strongly — and notebook 2 is what replaces exactly
+those with facts. The gap is the point, not an oversight.
+
+Run notebook 3 first and the report gains a **sensitivity section**: the tornado over the eight
+levers, and what exactly one better answer is worth. Its finding is the kind a client can act
+on — in the shipped example the *widest* lever is not the one worth working on, because its
+answer is already the best one on the scale.
+
+Three files carry the module: **`worked_example.json`** — the one patent, forty scores and seven
+company figures that notebooks 3 and 4 both read, so swapping in a real family is a single edit;
+**`ipscore_spec.json`** — the model as data (40 questions, the 8
 score→value tables, the EPO's three test patents) — and **`ipscore_kit.py`**, the only place
 anything is computed. Run `python ipscore_kit.py` for the acceptance test on its own.
 `tools/extract_spec_from_excel.py` re-derives the spec from the EPO workbook; it is a
