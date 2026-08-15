@@ -94,6 +94,11 @@ Committed as `f66c69f` — *Module 8 Phase 1: the engine, verified against the E
     contribution present the assembler simply builds one section fewer.
 - The assembled report is now **8 sections, 5 inline charts, 6 workbook sheets, 0 iframes**.
   Both new charts were rendered and reviewed in a browser.
+- **`3_valuation_and_scenarios_output/_report_parts/` is committed on purpose.** It is an
+  intermediate, not a deliverable, but committing it makes the shipped `ipscore_valuation.html`
+  reproducible without first re-running notebook 3. Do not "tidy" it away. It also means the
+  **run order matters** — `1 → 3 → 4` today, `1 → 2 → 3 → 4` once notebook 2 exists — and both
+  notebook 4's header and its contract cell now say so.
 
 ---
 
