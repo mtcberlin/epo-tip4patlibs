@@ -388,11 +388,71 @@ Arne exactly one notebook to run on TIP, commit outputs.
 
 ## Open questions to resolve before Phase 3
 
-- **O1 — Does TIP's PATSTAT edition carry legal-event / legal-status tables?** Decides how far
-  A1, A3 and A7 can go: with them, "still in force" and opposition history become facts; without
-  them, A3 is a nominal upper bound and A7 drops out. Check on TIP before building notebook 2.
-- **O2 — Is `nb_claims` populated** for the authorities we care about? Decides whether A4 gets
-  even a weak proxy.
+Answered on TIP, 2026-08-15 (`9_documentation/plan-tipsession.md`, PATSTAT Global Autumn 2025,
+`PatstatClient(env='PROD')`). O1, O2 and V5 are settled; Phase 3 is unblocked.
+
+- **O1 — Does TIP's PATSTAT edition carry legal-event / legal-status tables?**
+  **Yes, and richly.** `tls231_inpadoc_legal_event` and its lookup `tls803_legal_event_code` are
+  both present and populated: 141 M events over 5.5 M EP applications, current to 2026-02-13.
+  This is the best of the three outcomes — **A1, A3 and A7 all become `measured`.**
+  - **A7** is answerable outright: `26N`/`PLBE` *no opposition filed* (2.28 M applications)
+    against `26`/`PLBI` *opposition filed* (107 k) gives an EP opposition rate of ~4.5 %, which
+    matches the published EPO figure — a useful sanity check that the join is right. Outcomes
+    follow through `27O` rejected, `27A` maintained in amended form, `27W` revoked.
+    `PATSTAT_CANDIDATES["A7"]["strength"]` can move off `"open"`.
+  - **A1/A3** come from category `H` cessation (`PG25` lapsed in a contracting state, `MM4A`,
+    `MG4D`) plus `PGFP` renewal-fee payments, so "still in force, renewals paid to year N" is a
+    fact, not a nominal bound.
+  - **Two traps for notebook 2.** `event_impact` is `NULL` for all 4 332 codes, so the `+/-`
+    rights indicator is unusable — select on `event_category_code` and explicit code lists
+    instead. And `tls231` is far wider than its first twelve columns suggest: the lapsed state
+    is in **`lapse_country`/`lapse_date`/`lapse_text`**, not `event_text`, with
+    `fee_country`/`fee_renewal_year`/`fee_payment_date` and `designated_states` alongside.
+- **O2 — Is `nb_claims` populated** for the authorities we care about?
+  **The column does not exist** on `tls201_appln` in this edition (27 columns, no claims field).
+  But the question survives the column: **`tls211_pat_publn.publn_claims`** carries it, and for
+  **EP `B1` it is 100 % populated** — every filing year 2010–2022, 1.09 M granted publications,
+  mean 11.5 claims. US B-documents 43.5 %; **WO is 0 %**, as are DE/GB/FR/IT.
+  So **A4 keeps its labelled weak proxy** for the granted-EP case module 8 actually works on,
+  and it gains a benchmark to quote it against (this patent's claim count vs a typical 11.5).
+  Take the count from the **B1**, not the A-publication: A1 is only 51 % populated and is the
+  as-filed claim set, not the granted one.
 - **O3 — What does a PATLIB actually get asked?** If the real client question is "should I renew
   this?" rather than "what is it worth?", the renewal-cost side deserves more weight than
   IPScore gives it. Worth one conversation with Riccardo (see `prep_workshop_todo.md` §5).
+  *Still open* — this one needs a conversation, not a query. Note that O1's renewal-fee evidence
+  (`PGFP`, `fee_renewal_year`) now makes the renewal question answerable from data if it matters.
+
+### V5 — the worked example family
+
+**Picked: `docdb_family_id` 53398085 — Q-Linea AB, `EP3074539B1`.**
+
+| | |
+|---|---|
+| Applicant | **Q-Linea AB**, Uppsala (SE), NUTS `SE121`, `psn_sector = COMPANY` |
+| Title | *Method for detecting and characterising a microorganism* (US: *…identity and antimicrobial susceptibility…*) |
+| EP patent | **EP3074539B1**, granted 2018-01-10, 19 claims |
+| Divisional | EP3351642B1, granted 2019-09-11, 21 claims — mention it, value the parent |
+| Earliest filing | 2014-06-13 → nominal expiry 2034-06-13 |
+| Family | 10 members, granted in EP, US, JP, CN, KR, AU, CA; 30 citing families |
+
+**Why this one.** It matches every criterion in the session plan — granted EP, family of 10 across
+8 authorities, a company rather than a university, filed 2014, and a mid-size specialist (2 families
+in the corpus, against Merck's 6) rather than a giant. Two things make it better than merely
+eligible:
+
+1. **It is the patent the module already describes.** `worked_example.json` invented "a rapid
+   point-of-care test for antibiotic resistance markers, a mid-size European diagnostics company".
+   Q-Linea is a Swedish in-vitro diagnostics firm doing exactly that. The narrative survives the
+   swap from invented to real.
+2. **Its legal history teaches the point of the evidence layer.** Designated in **38 EPC states**
+   at grant, then lapsed in ~24 of them (mostly no translation filed), with renewals paid to
+   **year 11 in June 2025 in DE, SE, GB and FR only** — CH was kept to year 9 and dropped in 2024.
+   So the patent is granted, unopposed (`26N`, effective 2018-10-11) and **in force in four
+   states out of thirty-eight**. "Granted" and "in force" are not the same answer, and A1 vs A5
+   is exactly where IPScore asks you to notice that. An invented example cannot teach this.
+
+**Not yet applied.** `worked_example.json` is unchanged: swapping it rewrites the forty scores and
+therefore notebooks 3 and 4 and the committed report. That is Phase 3 work, per the session plan's
+"notebook 2 writes the rest". The financial figures stay invented in any case — turnover and cost
+structure are not in PATSTAT.

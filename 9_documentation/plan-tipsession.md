@@ -1,4 +1,20 @@
-# TIP session plan — unblock module 8 Phase 3
+# TIP session plan — unblock module 8 Phase 3 ✅ done
+
+> ## ✅ Run on 2026-08-15. All five tasks done — Phase 3 is unblocked.
+>
+> **The results are in [`results-tipsession.md`](results-tipsession.md).** The answers to O1, O2
+> and V5 are also in `8_ipscore_rebuild/REBUILD_PLAN.md` under *Open questions*, which is where
+> notebook 2 should read them from.
+>
+> | Task | | Result |
+> |---|---|---|
+> | **1 · O1** legal status | ✅ | **Best case** — legal events present *and* populated; A1, A3 and A7 all become `measured` |
+> | **2 · O2** claim counts | ✅ | `nb_claims` gone, but `tls211_pat_publn.publn_claims` is 100 % for EP B1 — A4 survives |
+> | **3 · V5** worked example | ✅ | Family `53398085` — **Q-Linea AB, `EP3074539B1`** |
+> | **4** notebook 1 charts | ✅ | Cell 9 fine; **cell 21 has two real problems**, fixable offline |
+> | **5** `open_html()` | ✅ | **Proven** — the proxy branch executes and serves the report |
+>
+> This file is kept as the record of what was asked and how the plan's SQL had to be corrected.
 
 **Why this exists.** Module 8's remaining work is one notebook — `2_evidence_from_patstat.ipynb`,
 the PATSTAT evidence layer. It cannot be written until four things are established, and all four
@@ -9,12 +25,17 @@ need a live TIP session. Everything else in module 8 is done and runs offline.
 | **Where** | EPO TIP JupyterLab, base conda env, `PatstatClient(env='PROD')` |
 | **Working dir** | `8_ipscore_rebuild/` unless a task says otherwise |
 | **Time** | ~30 minutes, five tasks |
-| **Blocks** | Phase 3 (notebook 2). Phases 1, 2 and 4 are finished and committed |
+| **Blocks** | ~~Phase 3 (notebook 2)~~ — **unblocked 2026-08-15.** Phases 1, 2 and 4 were already finished |
 | **Deadline** | Workshop is **18 September 2026** |
 
 > ⚠️ **The SQL below is untested.** It was written offline, against no database. Treat every
 > query as a draft to adapt, not as something that will run first time. The *questions* are what
 > matter; the syntax is a starting point.
+>
+> **It needed correcting in five places** — `granted` is `'Y'`/`'N'` not a boolean, `nb_claims`
+> is not on `tls201_appln`, `event_impact` is all `NULL`, the lapsed state is in `lapse_country`
+> not `event_text`, and the `UNNEST` list needed no chunking. See *Where the plan's SQL needed
+> correcting* in the results.
 
 ---
 
@@ -31,7 +52,12 @@ python tools/extract_spec_from_excel.py --check    # → "spec is up to date"
 
 ---
 
-## Task 1 · O1 — does TIP's PATSTAT carry legal-status data?
+## Task 1 · O1 — does TIP's PATSTAT carry legal-status data? ✅
+
+> **Yes, and richly.** 141 M EP events over 5.5 M applications, current to 2026-02-13 — the first
+> of the three outcomes below. **A1, A3 and A7 all become `measured`**; A7 does not drop out.
+> Two traps: `event_impact` is all `NULL`, and the lapsed state is in `lapse_country`, not
+> `event_text`. Full detail in [`results-tipsession.md`](results-tipsession.md#o1--tips-patstat-carries-legal-status-data-and-plenty-of-it).
 
 **The decision it makes.** Three questions in the IPScore questionnaire hang on this:
 
@@ -88,7 +114,12 @@ print([t for t in df["table_name"] if t.startswith(("tls23", "tls80"))])
 
 ---
 
-## Task 2 · O2 — is `nb_claims` populated?
+## Task 2 · O2 — is `nb_claims` populated? ✅
+
+> **The column does not exist** on `tls201_appln` — but the question survives it.
+> `tls211_pat_publn.publn_claims` is **100 % populated for EP `B1`** in every filing year
+> 2010–2022 (mean 11.5 claims). WO is 0 %. **A4 keeps its labelled proxy** and gains a benchmark.
+> Take the count from the `B1`, never the `A1`.
 
 **The decision it makes.** Question **A4** *breadth of claim*. Claim count is a **weak proxy** for
 claim breadth and module 8 labels it as one — but a proxy with no data is not even that. If the
@@ -118,7 +149,15 @@ showing even as a labelled proxy.
 
 ---
 
-## Task 3 · V5 — pick the worked example family
+## Task 3 · V5 — pick the worked example family ✅
+
+> **Family `53398085` — Q-Linea AB (Uppsala, SE), `EP3074539B1`**, granted 2018-01-10, 19 claims,
+> filed 2014-06-13, 10 members granted in EP/US/JP/CN/KR/AU/CA. 135 candidates were found, 95 with
+> a company applicant. Picked because Q-Linea is a real in-vitro diagnostics firm doing exactly the
+> AMR rapid testing the module already invented — and because the patent is granted, unopposed,
+> designated in **38 EPC states** and in force in **four** (DE, SE, GB, FR, renewals paid to year 11
+> in June 2025). "Granted" ≠ "in force" is the A1/A5 teaching point, with real dates.
+> `worked_example.json` is deliberately **not** yet changed — that is Phase 3 work.
 
 **The decision it makes.** Right now `8_ipscore_rebuild/worked_example.json` holds an invented
 patent, and its eight money-carrying scores were **chosen so the charts teach well**, not sampled
@@ -174,7 +213,14 @@ picked it. Notebook 2 writes the rest.
 
 ---
 
-## Task 4 · Look at notebook 1's two charts
+## Task 4 · Look at notebook 1's two charts ✅
+
+> Rendered from the committed output, without re-executing. **Cell 9 is fine** (one cosmetic nit:
+> dead space below row E). **Cell 21 has two real problems**: notebook 1 answers D3 = 3 and D4 = 3,
+> which zero out **Efficiency and Investment reduction in all ten years** while both keep their
+> legend slots; and C3 = 4 leaves **years 7–10 empty** with the liquidity line flat on zero.
+> Both are fixed by the same edit — align notebook 1's money scores with `worked_example.json`
+> (D3 = 4, D4 = 4, C3 = 5, B5 = 3). Offline work, and the same re-run the `measured` stamps need.
 
 **Why.** Nobody has ever seen them rendered. They were verified structurally — traces, ranges,
 tick labels, a CVD-safe palette — but the build environment had no kaleido and no browser.
@@ -192,7 +238,14 @@ and does not need TIP.
 
 ---
 
-## Task 5 · Prove `open_html()` works in notebook 4
+## Task 5 · Prove `open_html()` works in notebook 4 ✅
+
+> **Proven.** `jupyter_server_proxy` 4.4.0 is present, `server_base()` returned
+> `/user/…/proxy/44705/`, and the report came back **HTTP 200, 4,928,944 bytes** of valid HTML —
+> so the red **▶ Open** button renders, not the download fallback. `repo_root()` resolved correctly
+> from `8_ipscore_rebuild/`, and the `/files/` fallback survives the `/home/jovyan` symlink.
+> No regeneration was needed: the committed report already has **8 sections and 5 charts**.
+> Warning 9 confirmed — the URL bakes in the hub session id *and* an ephemeral port.
 
 **Why.** The last cell of `4_assemble_tool.ipynb` opens the report through jupyter-server-proxy.
 It is structurally correct — it walks up for `CLAUDE.md` to find the repo root, which works from
@@ -217,15 +270,22 @@ money answers, cash flow, *which lever moves the number*, all forty answers?
 
 ---
 
-## Afterwards — what to commit
+## Afterwards — what to commit ✅
 
 Only these, and only if they changed:
 
-- `8_ipscore_rebuild/1_the_model.ipynb` — **only** if you re-ran it (and then check its three
-  `measured` stamps, see below)
-- `8_ipscore_rebuild/4_assemble_tool.ipynb` — **with cell 19's output cleared**
-- `8_ipscore_rebuild/4_tool/` — if the report was regenerated on TIP
-- The answers to O1, O2 and V5 — write them into `REBUILD_PLAN.md` under *Open questions*
+- ~~`8_ipscore_rebuild/1_the_model.ipynb`~~ — **not re-run**, so untouched. The charts were
+  reviewed by reading the stored plotly JSON out of the committed notebook and drawing it to PNG
+  in a scratch directory, precisely to avoid a re-run.
+- ~~`8_ipscore_rebuild/4_assemble_tool.ipynb`~~ — **not re-run**, so cell 19 carries no baked URL
+  and nothing needed clearing.
+- ~~`8_ipscore_rebuild/4_tool/`~~ — the report was **not** regenerated; it already had its
+  8 sections and 5 charts.
+- ✅ The answers to O1, O2 and V5 — written into `REBUILD_PLAN.md` under *Open questions*.
+- ✅ [`results-tipsession.md`](results-tipsession.md) — the full session record.
+
+**Committed:** documentation only. `1_the_model.ipynb`, `4_assemble_tool.ipynb` and `4_tool/` are
+byte-identical to before the session, and `ipscore_kit.py` still passes its three EPO test patents.
 
 Ticket `#PIP-127`. Work on `develop`.
 
@@ -238,6 +298,11 @@ Ticket `#PIP-127`. Work on `develop`.
   acceptance test — but it is the opposite of the standard notebook 4 now sets, where all forty
   answers are honestly `judgement`. The last inconsistency in the module. Fixing it costs a
   notebook 1 re-run.
+  **Bundle this with the cell-21 fix from Task 4** — same re-run, and both are edits to the same
+  answer set in cell 11. Note that O1/V5 now supply *real* evidence strings for exactly these
+  three: A1 "granted 2018-01-10, no opposition (`26N`)", A3 "renewals paid to year 11 in 2025,
+  nominal expiry 2034-06-13", A5 "in force in DE, SE, GB, FR of 38 designated states". The
+  hand-written strings can become true rather than being deleted.
 - **Attribution wording for module 8.** Riccardo has agreed to the rebuild; the sentence itself
   is still unwritten. Module 8 is our implementation of the **EPO** model and must say so, while
   modules 6 and 7 keep *created by Riccardo Priore*.
@@ -245,6 +310,9 @@ Ticket `#PIP-127`. Work on `develop`.
   force-pushed; `git log --format='%h %G?' f141276..develop` shows `G` on every one. The
   pre-rewrite state is kept locally as `backup/pre-resign-develop`; delete that branch once the
   PR into `main` has landed.
+  ⚠️ **Reopened, narrowly:** the session-results commit of 2026-08-15 went in **unsigned** — the
+  1Password agent was not reachable from the TIP session (`SSH_AUTH_SOCK` unset) and the only
+  local key is a different one. Re-sign that single commit before the PR into `main`.
 
 ---
 
