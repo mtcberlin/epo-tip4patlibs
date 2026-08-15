@@ -268,6 +268,70 @@ Worth carrying into notebook 2, since the same assumptions recur:
   `SELECT * … LIMIT 1` and read the real schema rather than trusting the error.
 - The 4,172-id `IN` list was fine as `UNNEST([...])`; the plan's chunking worry was unfounded.
 
+**Added by session 2** (2026-08-15, running notebook 2 — see below):
+
+- **There is no `event_date` on `tls231`.** It has *ten* date columns —
+  `event_filing_date`, `event_publn_date`, `event_effective_date`, `ref_doc_date`,
+  `fee_payment_date`, `lapse_date`, `reinstate_date` and three `spc_*` ones — and the obvious
+  name is not among them. For "when did this event take legal effect", use
+  **`event_effective_date`**, but guard the sentinel: it holds `9999-12-31` where the date does
+  not apply, so fall back to `event_publn_date`. The pattern that works:
+  ```sql
+  MIN(CASE WHEN event_effective_date < DATE '9999-01-01'
+           THEN event_effective_date ELSE event_publn_date END)
+  ```
+  On `26N` for the worked example that yields 2018-10-11 — the date `known_facts` records —
+  where `event_publn_date` alone would have said 2018-12-19.
+- **`event_filing_date` is the sentinel on opposition rows**, so it is not a substitute.
+
+---
+
+## Session 2 — running the evidence layer
+
+`2_evidence_from_patstat.ipynb` was executed on TIP against PATSTAT PROD. **All eleven reachable
+answers now resolve; no query fails.** The chain `2 → 3 → 4` re-ran with zero cell errors, and
+`ipscore_kit.py` still reproduces its three EPO test patents.
+
+**One query had to be fixed.** A1 — the flagship, *"is it granted and was it opposed"* — died on
+`MIN(event_date)`, a column that does not exist, and reported only the generic dialect message.
+It was the one trap the previous session had not hit. With `event_effective_date` (sentinel
+guarded) it returns:
+
+> A1 · 4 → 5 · `measured` — granted, and the opposition period expired with no opposition filed
+> (`26N`, effective 2018-10-11)
+
+**What the record did to the adviser's first pass** — eleven answers checked, five moved:
+
+| Q | | guessed | record | provenance | evidence |
+|---|---|---:|---:|---|---|
+| A1 | patent status | 4 | **5** ↑ | `measured` | granted, `26N` effective 2018-10-11 |
+| A3 | term remaining | 4 | **3** ↓ | `measured` | expiry 2034-06-13 = 7.8 years; renewals to year 11 in DE, FR, GB, SE |
+| A4 | breadth of claim | 3 | **4** ↑ | `informed` | 19 claims in the B1 vs a mean of 11.5 |
+| A5 | geographical coverage | 3 | 3 | `informed` | designated 38, lapsed 34, in force DE/FR/GB/SE + 6 national grants = 10 territories |
+| A7 | legal proceedings | 3 | 3 | `informed` | 22,141 of 330,611 in C12M/C12P/C12Q/G01N/G06T opposed = 6.7 % vs the 4.5 % EP baseline |
+| E1 | securing existing markets | 4 | **5** ↑ | `informed` | 7 of 8 jurisdictions already familiar to Q-Linea |
+| E2 | winning new markets | 3 | **2** ↓ | `informed` | only JP is new |
+| E7 | core technology | 4 | 4 | `informed` | 12 of the 19 IPC-classified families share the subclass = 63 % |
+| B1 · B2 · C4 | — | — | unchanged | `judgement` | citation and neighbourhood counts attached as *context only* |
+
+A5 is worth noting as a cross-check: notebook 2 derived "designated 38, in force in DE/FR/GB/SE"
+independently of session 1, by a different route, and got the same answer.
+
+**And the number did not move.** `1,248,870 EUR → 1,248,870 EUR`, difference `+0`, with the
+`NPV effect (EUR)` column zero on every row — exactly as the plan said to check. The profile
+moved (138 → 139 points), the provenance panel moved, the valuation did not. That is the
+module's argument, now demonstrated rather than asserted.
+
+**The report** went from 8 sections to **9** (the new *"What the record actually says"* at order
+450) and from 5 charts to **6** (`fig_evidence`). Its front panel now reads
+**`2 measured · 6 informed · 32 judgement`** where it used to read `0 · 0 · 40`, and names the
+answer set: *"measured against PATSTAT for EP3074539B1 by 2_evidence_from_patstat.ipynb"*.
+
+**One wording fix.** The E-block printed *"portfolio: 25 families"* and then scored E7 against
+*"Q-LINEA's 19 families"* — two different numbers for the same portfolio, because only 19 of the
+25 carry an IPC symbol. The computation was right (you cannot classify what has no
+classification); the sentence was not. Both lines now say which population they mean.
+
 ---
 
 ## What changed in the repo

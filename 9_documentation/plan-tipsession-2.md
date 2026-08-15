@@ -1,4 +1,21 @@
-# TIP session 2 — run the evidence layer
+# TIP session 2 — run the evidence layer ✅ done
+
+> ## ✅ Run on 2026-08-15. Phase 3 is complete.
+>
+> Notebook 2 executed on PATSTAT PROD; the chain `2 → 3 → 4` re-ran with **zero cell errors**.
+> **All eleven reachable answers resolve — no query fails.**
+>
+> | Check from *"What to check as it runs"* | Result |
+> |---|---|
+> | every `measure()` line prints an answer or a reason | ✅ — **one failed and was fixed**: A1 used `MIN(event_date)`, a column `tls231` does not have |
+> | Step 9's `NPV effect (EUR)` all zeros | ✅ — `1,248,870 → 1,248,870 EUR`, difference `+0` |
+> | Step 10 writes `evidence_answers.json` | ✅ — `kit.load_answers()` reports *"measured against PATSTAT…"* |
+> | the report stops saying `0 measured · 0 informed · 40 judgement` | ✅ — now **`2 measured · 6 informed · 32 judgement`** |
+>
+> Five of the eleven answers moved (A1 ↑, A3 ↓, A4 ↑, E1 ↑, E2 ↓); the profile went 138 → 139
+> points and the valuation did not move by a cent. The report grew to **9 sections and 6 charts**.
+> Full detail, including the two new schema traps, in
+> [`results-tipsession.md`](results-tipsession.md#session-2--running-the-evidence-layer).
 
 **One task.** `8_ipscore_rebuild/2_evidence_from_patstat.ipynb` is written, stub-verified and
 committed **without outputs**. It is the only notebook in the module that needs TIP. Running it
@@ -38,22 +55,32 @@ answers.
 - **The finished report** should read something other than `0 measured · 0 informed · 40
   judgement` on its front section — that change is the entire point of the module.
 
-## Before committing
+## Before committing ✅
 
-- **Clear cell 19 of `4_assemble_tool.ipynb`** (the `open_html()` launcher). Run on TIP it bakes
-  in the hub session id and an ephemeral port. Warning 9 in `prep_workshop_todo.md`.
-- Commit `2_evidence_from_patstat.ipynb` **with** its outputs — unlike before, its stored output
-  is now the deliverable — plus `2_evidence_from_patstat_output/`, the re-run 3 and 4, and
-  `4_tool/`.
+- ✅ **Cleared cell 19 of `4_assemble_tool.ipynb`** (the `open_html()` launcher). It had indeed
+  baked in the hub session id `ASfgQo6rDwkhmZZcdZkvtH` and port `60981`. A `grep` over every
+  notebook and the report confirms no proxy URL survives anywhere.
+- ✅ Committed `2_evidence_from_patstat.ipynb` **with** its outputs, plus
+  `2_evidence_from_patstat_output/`, the re-run 3 and 4, and `4_tool/`.
 - Ticket `#PIP-127`, branch `develop`.
 
-## If the SQL breaks
+> `1_the_model.ipynb` was **not** re-run: it reads `load_worked_example()` and never
+> `load_answers()`, so the evidence layer cannot change it. Leaving it alone keeps the diff to
+> what actually moved.
+
+## If the SQL breaks ✅
 
 The queries are drafts. Fixes belong in the notebook, and anything schema-level worth
 remembering belongs in `results-tipsession.md` next to the five corrections already recorded
 there. Known traps, already handled: `granted` is `'Y'`/`'N'`; claim counts are on
 `tls211_pat_publn`, not `tls201_appln`; `tls803.event_impact` is NULL for every code; the lapsed
 state is in `tls231.lapse_country`, not `event_text`.
+
+> **It broke once, in A1.** `MIN(event_date)` — `tls231` has ten date columns and no such name,
+> and BigQuery reported only the generic *"Standard SQL dialect is currently selected"* without
+> naming the column. Fixed in the notebook with `event_effective_date`, guarded against its
+> `9999-12-31` sentinel and falling back to `event_publn_date`; recorded in
+> `results-tipsession.md`, and the notebook's own trap list now names five instead of four.
 
 ## Still open, and not TIP work
 

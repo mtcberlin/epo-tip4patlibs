@@ -1,0 +1,123 @@
+[
+ {
+  "Q": "A1",
+  "What it asks": "Patent status",
+  "Guessed": 4,
+  "Record says": 5,
+  "Moved": "UP",
+  "Provenance": "measured",
+  "Carries money": false,
+  "NPV effect (EUR)": 0.0,
+  "Evidence": "granted, and the opposition period expired with no opposition filed (26N, effective 2018-10-11)"
+ },
+ {
+  "Q": "A3",
+  "What it asks": "Patent term remaining",
+  "Guessed": 4,
+  "Record says": 3,
+  "Moved": "DOWN",
+  "Provenance": "measured",
+  "Carries money": false,
+  "NPV effect (EUR)": 0.0,
+  "Evidence": "earliest filing 2014-06-13, nominal expiry 2034-06-13 = 7.8 years left; renewals paid to year 11 in DE, FR, GB, SE"
+ },
+ {
+  "Q": "A4",
+  "What it asks": "Breadth of claim",
+  "Guessed": 3,
+  "Record says": 4,
+  "Moved": "UP",
+  "Provenance": "informed",
+  "Carries money": false,
+  "NPV effect (EUR)": 0.0,
+  "Evidence": "19 claims in the granted EP B1 vs a mean of 11.5 for granted EP - a proxy for breadth, not a measure of it"
+ },
+ {
+  "Q": "A5",
+  "What it asks": "Geographical coverage",
+  "Guessed": 3,
+  "Record says": 3,
+  "Moved": "",
+  "Provenance": "informed",
+  "Carries money": false,
+  "NPV effect (EUR)": 0.0,
+  "Evidence": "designated in 38 EPC states at grant, lapsed in 34; in force in ['DE', 'FR', 'GB', 'SE'] plus national grants in ['AU', 'CA', 'CN', 'JP', 'KR', 'US'] = 10 territories"
+ },
+ {
+  "Q": "A7",
+  "What it asks": "Legal proceedings",
+  "Guessed": 3,
+  "Record says": 3,
+  "Moved": "",
+  "Provenance": "informed",
+  "Carries money": false,
+  "NPV effect (EUR)": 0.0,
+  "Evidence": "22,141 of 330,611 granted EP patents in C12M, C12P, C12Q, G01N, G06T were opposed = 6.7% (EP baseline 4.5%) -> disputes are customary"
+ },
+ {
+  "Q": "B1",
+  "What it asks": "Unique technology",
+  "Guessed": 4,
+  "Record says": 4,
+  "Moved": "",
+  "Provenance": "judgement",
+  "Carries money": false,
+  "NPV effect (EUR)": 0.0,
+  "Evidence": "30 citing families - citations measure attention, not uniqueness. Score left as the adviser set it"
+ },
+ {
+  "Q": "B2",
+  "What it asks": "Substitute technology",
+  "Guessed": 4,
+  "Record says": 4,
+  "Moved": "",
+  "Provenance": "judgement",
+  "Carries money": false,
+  "NPV effect (EUR)": 0.0,
+  "Evidence": "30 citing families - says nothing about technical superiority. Score left as the adviser set it"
+ },
+ {
+  "Q": "C4",
+  "What it asks": "Competitive/substitute products",
+  "Guessed": 3,
+  "Record says": 3,
+  "Moved": "",
+  "Provenance": "judgement",
+  "Carries money": false,
+  "NPV effect (EUR)": 0.0,
+  "Evidence": "2,252,525 families filed 2014-2024 in C12M, C12P, C12Q, G01N, G06T - context for how crowded the field is, not an answer"
+ },
+ {
+  "Q": "E1",
+  "What it asks": "Securing existing markets",
+  "Guessed": 4,
+  "Record says": 5,
+  "Moved": "UP",
+  "Provenance": "informed",
+  "Carries money": false,
+  "NPV effect (EUR)": 0.0,
+  "Evidence": "7 of 8 jurisdictions in this family (AU, CA, CN, EP, KR, US, WO) are ones Q-LINEA had already filed in"
+ },
+ {
+  "Q": "E2",
+  "What it asks": "Winning new markets",
+  "Guessed": 3,
+  "Record says": 2,
+  "Moved": "DOWN",
+  "Provenance": "informed",
+  "Carries money": false,
+  "NPV effect (EUR)": 0.0,
+  "Evidence": "1 of 8 jurisdictions are new for Q-LINEA (JP)"
+ },
+ {
+  "Q": "E7",
+  "What it asks": "Part of core-technology areas",
+  "Guessed": 4,
+  "Record says": 4,
+  "Moved": "",
+  "Provenance": "informed",
+  "Carries money": false,
+  "NPV effect (EUR)": 0.0,
+  "Evidence": "12 of the 19 Q-LINEA families that carry an IPC symbol (out of 25 in total) are in the same subclass (C12M, C12P, C12Q) = 63%"
+ }
+]

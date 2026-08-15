@@ -28,14 +28,17 @@ output. That split is the point of the module.
 | # | Notebook | Answers | Needs | State |
 |---|----------|---------|-------|-------|
 | 1 | `1_the_model.ipynb` | What the model is, and does our engine reproduce the EPO Excel exactly? | nothing — runs offline | ✅ ready |
-| 2 | `2_evidence_from_patstat.ipynb` | For one real patent: what can PATSTAT actually answer? | **TIP / PATSTAT** | ✅ written, needs one TIP run |
+| 2 | `2_evidence_from_patstat.ipynb` | For one real patent: what can PATSTAT actually answer? | **TIP / PATSTAT** | ✅ ready — run on TIP, all 11 reachable answers resolve |
 | 3 | `3_valuation_and_scenarios.ipynb` | What is it worth, and which lever moves that number most? | nothing | ✅ ready |
 | 4 | `4_assemble_tool.ipynb` | One self-contained HTML valuation + one data workbook | nothing | ✅ ready |
 
-Run notebook 4 and you get `4_tool/ipscore_valuation.html` — seven sections, three inline
-charts, one embedded copy of `plotly.js`, no iframes and no internet — plus
-`4_tool/ipscore_valuation_data.xlsx` with one sheet per step. It opens inside TIP through the
+Run notebook 4 and you get `4_tool/ipscore_valuation.html` — **nine sections, six inline
+charts**, one embedded copy of `plotly.js`, no iframes and no internet — plus
+`4_tool/ipscore_valuation_data.xlsx`, one sheet per step. It opens inside TIP through the
 course's shared `open_html()` helper.
+
+**Run order is `1 → 2 → 3 → 4`.** Notebook 2 writes the measured answer set that 3 and 4 read;
+without it they fall back to the adviser's first pass and say so in the report.
 
 Because notebook 2 does not exist yet, that report scores its patent **entirely by hand** and
 says so in large type: `0 measured · 0 informed · 40 judgement`. Eleven answers are marked as
