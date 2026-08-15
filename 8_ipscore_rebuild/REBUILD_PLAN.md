@@ -100,6 +100,50 @@ Committed as `f66c69f` — *Module 8 Phase 1: the engine, verified against the E
   **run order matters** — `1 → 3 → 4` today, `1 → 2 → 3 → 4` once notebook 2 exists — and both
   notebook 4's header and its contract cell now say so.
 
+**2026-08-15 — Phase 3 written; V5 applied.** All four notebooks now exist.
+
+- **`2_evidence_from_patstat.ipynb`** — 24 cells, the evidence layer. It resolves the family,
+  then measures A1 (grant + opposition via `26N`/`26`/`27W`), A3 (nominal term + `PGFP`
+  renewals), A5 (designated states vs `lapse_country` vs `fee_country`, plus national grants),
+  A7 (opposition rate in the IPC neighbourhood), E1/E2/E7 (the applicant's own footprint) and
+  A4 (`tls211_pat_publn.publn_claims` from the B1). B1, B2 and C4 get their number attached as
+  **context with the marker left at `judgement`** — found data is not the same as evidence, and
+  that distinction is taught rather than glossed.
+- **It ships unexecuted**, deliberately, and this is the module's one exception to *"notebooks
+  ship executed"*: it is the only notebook that needs TIP, so nobody offline can produce its
+  outputs. Notebooks 1, 3 and 4 keep theirs.
+- **Verified offline against a stub.** `PatstatClient` was replaced with a fake returning frames
+  shaped like the real tables and filled with the TIP session's facts, and every code cell was
+  executed against it. That found six real problems — including a narrative that *asserted* A5
+  would drop when the national grants actually hold it steady. The SQL itself is still only as
+  good as the TIP session's schema notes; the Python around it is exercised.
+- **V5 applied.** `worked_example.json` now describes **EP3074539B1 / Q-Linea AB**. The forty
+  scores are unchanged on purpose — they are the adviser's *first pass*, and notebook 2's job is
+  to disagree with them. ⚠️ The financial figures are **illustrative and are not Q-Linea's
+  accounts**; `financials_note` says so and the report prints it verbatim in a callout, because
+  the applicant is a real listed company.
+
+### The finding that reframes the module
+
+`PATSTAT_CANDIDATES` ∩ `spec.oek_questions` = **∅**. The eleven questions PATSTAT can answer and
+the eight that carry money are **disjoint sets**. Measuring the record changes the profile, the
+risk map and the conversation, and changes the NPV by exactly zero. That is now the headline of
+notebook 2 and a paragraph in notebook 4's report, because it is the most useful and least
+comfortable thing module 8 has to say: *the checkable part of a patent valuation and the
+decisive part do not overlap.*
+
+### Two structural changes
+
+- **`kit.load_answers()`** returns the best answer set available plus a label saying which —
+  notebook 2's measured set from `2_evidence_from_patstat_output/evidence_answers.json` if it
+  exists, otherwise the first pass. Notebooks 3 and 4 both use it and **print the label**, so a
+  reader can tell a measured valuation from a structured opinion at a glance.
+- **Notebook 1 no longer stamps three answers `measured`.** That open item is closed by removing
+  the inconsistency rather than dressing it up: its answer set is now the same first pass as
+  `worked_example.json` (guarded by an `assert`, so the two cannot drift), all forty `judgement`,
+  and evidence enters the module in exactly one place. The re-run also fixed both chart defects
+  the TIP session found — no dead cash-flow components, no empty years.
+
 ---
 
 ## ▶️ Resume here — everything the next session needs
@@ -194,10 +238,8 @@ Phase 3. Only notebook 2 is left, and only it needs TIP.
   local HTTP server — `file://` is blocked by the extension). **Notebook 1's two charts still
   have not been**; they remain verified only structurally. Worth one look in the same TIP
   session as O1/O2.
-- **Notebook 1 stamps three answers `measured`** (A1, A3, A5) with hand-written evidence
-  strings. Harmless there — it illustrates the dataclass, and that notebook's deliverable is
-  the acceptance test — but it is the opposite of the standard notebook 4 now sets. Worth
-  reconciling before the release; it needs a re-run of notebook 1, so it is not free.
+- ~~Notebook 1 stamps three answers `measured`~~ — **resolved 2026-08-15.** Its answer set is
+  now the same first pass as `worked_example.json`, all forty `judgement`, guarded by an assert.
 - **Notebooks 1 and 4 ship executed** — deliberate, see the convention note under the decisions
   table. Reverse if module 8 should be run rather than read.
 - **O1–O3** (legal-status tables on TIP, `nb_claims` coverage, what a PATLIB is really asked)
@@ -344,8 +386,8 @@ constants.
 - **Phase 2 — the deliverable.** ← *done, 2026-08-15.* Notebook 4: one hand-scored patent →
   `4_tool/ipscore_valuation.html` + `ipscore_valuation_data.xlsx`, opened with `open_html()`.
   Built and executed **offline**, and the report was rendered in a browser and reviewed.
-- **Phase 3 — the evidence layer.** Notebook 2 against PATSTAT: the six strong questions first,
-  the four proxies second, each with its provenance marker. TIP-only.
+- **Phase 3 — the evidence layer.** ← *written 2026-08-15, awaiting one TIP run.* Notebook 2
+  exists, is stub-verified offline and ships unexecuted. Running it on TIP is the last step.
 - **Phase 4 — scenarios.** ← *done, 2026-08-15.* Notebook 3: the sensitivity ranking over the
   8 OEK levers, plus `worked_example.json` and the `record_section` contract. Offline.
 - **Phase 5 — polish.** Narrative, branded header, dry-run against the clock, and a side-by-side

@@ -46,16 +46,23 @@ PROVENANCE = ("measured", "informed", "judgement")
 #: a person still picks the level; *proxy* means the number correlates with the question
 #: without answering it (claim count is not claim breadth, citations are attention rather
 #: than superiority) and must be labelled as such wherever it is shown; *context* informs
-#: the answer without narrowing it; *open* depends on O1 — whether TIP's PATSTAT edition
-#: carries legal-event tables at all.
+#: the answer without narrowing it.
+#:
+#: Settled on TIP, 2026-08-15 (see ``9_documentation/results-tipsession.md``): the legal-event
+#: tables **are** present and populated, so A7 moved off *open* (to *good* — a query gives the
+#: opposition rate, but turning a rate into "customary" is still a person's call) and A1/A3
+#: gained the in-force half of their answer. Two traps live in that data — ``tls803.event_impact`` is NULL for all
+#: 4,332 codes, and the lapsed state sits in ``tls231.lapse_country``, not ``event_text``.
 PATSTAT_CANDIDATES: dict[str, dict[str, str]] = {
     "A1": {"strength": "strong",
-           "sources": "granted flag + publication kind codes across the family"},
+           "sources": "tls201_appln.granted ('Y'/'N') + publication kind codes, plus the "
+                      "opposition outcome from tls231 (26N none / 26 filed / 27W revoked)"},
     "A3": {"strength": "strong",
-           "sources": "earliest filing date + 20 years -> nominal remaining term "
-                      "(an upper bound; actual lapses need legal-status data)"},
+           "sources": "earliest filing date + 20 years for the nominal term, and tls231 PGFP "
+                      "renewal payments (fee_renewal_year) for how far fees are actually paid"},
     "A5": {"strength": "strong",
-           "sources": "every family member's filing authority - the actual footprint "
+           "sources": "designated_states at grant vs the states still paid for - tls231 "
+                      "lapse_country for lapses, PGFP fee_country for what is still in force "
                       "(which markets are the *relevant* ones stays judgement)"},
     "E1": {"strength": "good",
            "sources": "this family's jurisdictions against the applicant's historical footprint"},
@@ -64,15 +71,18 @@ PATSTAT_CANDIDATES: dict[str, dict[str, str]] = {
     "E7": {"strength": "good",
            "sources": "share of the applicant's own families in the same IPC subclass"},
     "A4": {"strength": "proxy",
-           "sources": "claim count and IPC breadth - breadth is not count, label it"},
+           "sources": "tls211_pat_publn.publn_claims - take it from the B1 (100% covered, mean "
+                      "11.5 for granted EP), never the A1 (51%, and those are the as-filed "
+                      "claims). WO has 0% coverage. Breadth is not count, so label it"},
     "B1": {"strength": "proxy",
            "sources": "forward citations received - attention, not uniqueness"},
     "B2": {"strength": "proxy",
            "sources": "forward citations received - attention, not technical superiority"},
     "C4": {"strength": "context",
            "sources": "size and composition of the IPC neighbourhood - context, not an answer"},
-    "A7": {"strength": "open",
-           "sources": "opposition frequency in that authority/IPC - needs legal-event tables (O1)"},
+    "A7": {"strength": "good",
+           "sources": "opposition frequency from tls231: the 26N/26 pair gives both halves of "
+                      "the fraction (EP baseline ~4.5%), and 27O/27A/27W give the outcome"},
 }
 
 #: One palette for every chart in this module, so the notebooks read as one report.
@@ -316,16 +326,64 @@ def load_worked_example(path: Path | str = EXAMPLE_PATH) -> dict:
     It lives in one file so notebooks 3 and 4 cannot drift apart, and so decision **V5**
     (swap in a real family from module 6's corpus) is an edit to that file alone.
 
-    Returns ``{"patent": dict, "financials": Financials, "scores": dict, "answers": dict}``.
+    Returns ``patent`` · ``financials`` · ``financials_note`` · ``scores`` · ``answers`` ·
+    ``known_facts``.
+
+    Two of those need a word. ``financials_note`` must be shown wherever the figures are —
+    PATSTAT holds no financial data, so they are illustrative and are **not** the real
+    applicant's accounts. ``known_facts`` is what the TIP session established about the
+    patent; notebook 2 re-derives every one of them from PATSTAT rather than reading them
+    here, and it exists so the other notebooks can describe the patent before notebook 2
+    has been run.
+
+    The ``scores`` are the adviser's **first pass**, deliberately left uncorrected. The
+    difference between them and what notebook 2 measures is the module's argument.
     """
     raw = json.loads(Path(path).read_text(encoding="utf-8"))
     scores = raw["scores"]
     return {
         "patent": raw["patent"],
         "financials": Financials(**raw["financials"]),
+        "financials_note": raw.get("financials_note", ""),
         "scores": scores,
         "answers": answers_from_scores(scores),
+        "known_facts": {k: v for k, v in raw.get("known_facts", {}).items()
+                        if not k.startswith("_")},
     }
+
+
+EVIDENCE_PATH = (Path(__file__).resolve().parent
+                 / "2_evidence_from_patstat_output" / "evidence_answers.json")
+
+
+def load_answers(
+    evidence_path: Path | str = EVIDENCE_PATH,
+    example_path: Path | str = EXAMPLE_PATH,
+) -> tuple[dict[str, Answer], str]:
+    """The best answer set available, and a label saying which one it is.
+
+    Notebook 2 writes ``evidence_answers.json`` when it runs on TIP: the same forty
+    questions, but with ``measured`` / ``informed`` provenance and a real PATSTAT fact
+    wherever a query decided or narrowed the score. If that file is there, it wins.
+
+    If it is not — the normal state until notebook 2 has been run — this falls back to the
+    adviser's first pass in ``worked_example.json``, and the label says so. Reports must
+    print the label: a valuation built on the first pass is a structured opinion, and the
+    reader has to be able to tell the two apart at a glance.
+
+    Returns ``(answers, source_label)``.
+    """
+    path = Path(evidence_path)
+    if path.exists():
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        answers = {
+            qid: Answer(a["score"], provenance=a.get("provenance", "judgement"),
+                        evidence=a.get("evidence", ""))
+            for qid, a in raw["answers"].items()
+        }
+        return answers, raw.get("label", "measured against PATSTAT by notebook 2")
+    return (load_worked_example(example_path)["answers"],
+            "the adviser's first pass - notebook 2 has not been run")
 
 
 def answer_table(answers: dict[str, Answer | int], spec: Spec | None = None) -> list[dict]:

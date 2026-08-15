@@ -1,24 +1,35 @@
 {
   "_comment": [
-    "The module's worked example: one patent, forty scores, seven company figures.",
-    "Both 3_valuation_and_scenarios and 4_assemble_tool read this file, so the example",
-    "exists once and cannot drift between them.",
+    "The module's worked example: one real patent, forty scores, seven company figures.",
+    "Notebooks 3 and 4 read this file, so the example exists once and cannot drift.",
     "",
-    "Decision V5: this stands in for a real family and is replaced by one from module 6's",
-    "antibiotic-resistance corpus when notebook 2 first meets PATSTAT. Replacing it is an",
-    "edit to this file alone.",
+    "V5 settled on TIP 2026-08-15: EP3074539B1, Q-Linea AB. Chosen out of 135 candidates in",
+    "module 6's antibiotic-resistance corpus because Q-Linea really does the AMR rapid testing",
+    "this example used to invent, and because its legal history teaches the point of the",
+    "evidence layer: granted and unopposed, designated in 38 EPC states, in force in four.",
+    "'Granted' is not 'in force'. See 9_documentation/results-tipsession.md.",
     "",
-    "The eight money-carrying scores (B5, C2, C3, C6, D1-D4) were chosen so the cash-flow",
-    "chart teaches well - the technology reaches the market early enough and lives long",
-    "enough to fill the ten-year horizon, and all six cash-flow components are non-zero.",
-    "Plausible for this kind of invention, but selected for legibility rather than sampled",
-    "from a real patent."
+    "!! THE FINANCIAL FIGURES ARE ILLUSTRATIVE AND ARE NOT Q-LINEA'S ACCOUNTS. !!",
+    "Turnover, cost structure and depreciation are not in PATSTAT and were never looked up.",
+    "They are a plausible mid-size diagnostics company, chosen so the cash-flow chart teaches",
+    "well - the technology reaches the market early enough and lives long enough to fill the",
+    "ten-year horizon with all six components non-zero. Every artifact that shows them must",
+    "say so; see 'financials_note' below, which the report prints verbatim.",
+    "",
+    "The forty scores are THE ADVISER'S FIRST PASS - what a person would write down before",
+    "checking anything. They are deliberately left uncorrected: 2_evidence_from_patstat.ipynb",
+    "measures what PATSTAT can decide and writes the corrected set to its own output folder,",
+    "and the difference between the two is the module's whole argument. Do not 'fix' a score",
+    "here because the data disagrees with it - that disagreement is the deliverable."
   ],
   "patent": {
-    "title": "Rapid point-of-care test for antibiotic resistance markers",
-    "reference": "worked example - stands in for a family from module 6's corpus (V5)",
-    "applicant": "a mid-size European diagnostics company",
-    "field": "in-vitro diagnostics / antimicrobial resistance"
+    "title": "Method for detecting and characterising a microorganism",
+    "plain_title": "Rapid identification and antibiotic-susceptibility testing of bacteria",
+    "publication": "EP3074539B1",
+    "docdb_family_id": 53398085,
+    "applicant": "Q-Linea AB, Uppsala (SE)",
+    "field": "in-vitro diagnostics / antimicrobial resistance",
+    "reference": "real family, picked from module 6's corpus on TIP 2026-08-15 (decision V5)"
   },
   "financials": {
     "turnover": 1500000,
@@ -70,5 +81,34 @@
     "E6": 4,
     "E7": 4,
     "E8": 3
+  },
+  "financials_note": "Illustrative figures for a mid-size diagnostics company - NOT Q-Linea AB's accounts. PATSTAT holds no financial data; these were chosen to make the model legible and must not be read as anything about the real company.",
+  "known_facts": {
+    "_comment": "Established on TIP 2026-08-15. Notebook 2 re-derives every one of these from PATSTAT rather than reading them here - this block exists so the other notebooks can describe the patent before notebook 2 has been run.",
+    "granted": "2018-01-10",
+    "earliest_filing": "2014-06-13",
+    "nominal_expiry": "2034-06-13",
+    "claims_b1": 19,
+    "opposition": "none filed (26N, effective 2018-10-11)",
+    "designated_states": 38,
+    "in_force_states": [
+      "DE",
+      "SE",
+      "GB",
+      "FR"
+    ],
+    "renewals_paid_to_year": 11,
+    "family_size": 10,
+    "granted_authorities": [
+      "EP",
+      "US",
+      "JP",
+      "CN",
+      "KR",
+      "AU",
+      "CA"
+    ],
+    "citing_families": 30,
+    "divisional": "EP3351642B1, granted 2019-09-11, 21 claims - mentioned, not valued"
   }
 }

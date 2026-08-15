@@ -1,6 +1,7 @@
 # IPScore rebuild — what is this patent worth?
 
-> 🚧 **Under construction — three of the four notebooks are ready** (1, 3 and 4), so the chain
+> 🚧 **All four notebooks exist.** Notebooks 1, 3 and 4 run anywhere and ship executed;
+> **notebook 2 needs one run on EPO TIP** and ships without outputs until then. The chain
 > runs end to end:
 > a scored patent comes out as one self-contained HTML valuation plus a data workbook. The
 > workshop-ready valuation module is still **[`7_ipscore/`](../7_ipscore/)**; use that one for
@@ -27,7 +28,7 @@ output. That split is the point of the module.
 | # | Notebook | Answers | Needs | State |
 |---|----------|---------|-------|-------|
 | 1 | `1_the_model.ipynb` | What the model is, and does our engine reproduce the EPO Excel exactly? | nothing — runs offline | ✅ ready |
-| 2 | `2_evidence_from_patstat.ipynb` | For one real patent: what can PATSTAT actually answer? | **TIP / PATSTAT** | planned |
+| 2 | `2_evidence_from_patstat.ipynb` | For one real patent: what can PATSTAT actually answer? | **TIP / PATSTAT** | ✅ written, needs one TIP run |
 | 3 | `3_valuation_and_scenarios.ipynb` | What is it worth, and which lever moves that number most? | nothing | ✅ ready |
 | 4 | `4_assemble_tool.ipynb` | One self-contained HTML valuation + one data workbook | nothing | ✅ ready |
 

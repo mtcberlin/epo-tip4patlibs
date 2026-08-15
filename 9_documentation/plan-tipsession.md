@@ -1,4 +1,9 @@
-# TIP session plan — unblock module 8 Phase 3 ✅ done
+# TIP session plan — unblock module 8 Phase 3
+
+> ✅ **Done, 2026-08-15.** All five tasks ran; results in
+> [`results-tipsession.md`](results-tipsession.md). Notebook 2 has since been written against
+> those answers — the one run it still needs is in
+> [`plan-tipsession-2.md`](plan-tipsession-2.md). ✅ done
 
 > ## ✅ Run on 2026-08-15. All five tasks done — Phase 3 is unblocked.
 >
