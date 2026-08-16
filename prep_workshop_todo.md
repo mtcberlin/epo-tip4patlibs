@@ -1,7 +1,7 @@
 # Workshop Preparation — open work
 
-Working notes for the **PATLIB Warsaw 2026** workshop. Goal: five topics, seven modules,
-one consistent course. Modules 6 and 7 are Riccardo Priore's contributions, reworked here;
+Working notes for the **PATLIB Warsaw workshop, 18 September 2026**. Goal: five topics, seven
+modules, one consistent course. Modules 6 and 7 are Riccardo Priore's contributions, reworked here;
 his repository (`rickypriore/patlib-sessions`) stays the upstream source.
 
 ---
@@ -15,10 +15,20 @@ notebooks and verified — **0 old paths remain in code or markdown**; every rea
 output) — its code path now points at `2_technology_network_output/` and it is created on the
 next run. Notebooks stay valid and pre-executed (outputs preserved).
 
+✅ **Resolved — the TIP re-run happened** (commit `47d30da`, *"Module 6: ship the assembled
+report from a clean 1→2→3 run"*). Re-verified 2026-08-15: **zero** old path literals in the
+three notebooks or in `report/antibiotic_resistance_report.html`, all 7 relative links in the
+report resolve to files on disk, and no `/home/jovyan/` strings remain. Nothing stale here any
+more.
+
+<details><summary>The original warning (kept for the record)</summary>
+
 ⚠️ **Still requires a TIP re-run of 1→2→3.** Stored `print()` outputs and the links baked into
 the already-generated `report/antibiotic_resistance_report.html` still show the *old* paths —
 they only refresh when the chain is re-run on TIP. Until then the code is correct but those
 committed artefacts are stale.
+
+</details>
 
 <details><summary>Original plan (for reference)</summary>
 
@@ -299,24 +309,34 @@ Two further upstream notebooks feed the *original* 13-analysis report but are no
 the NPV. The Excel → web-tool build path stays a side note, closer to his original intent.
 (The alternative — teaching the conversion recipe itself — was considered and set aside.)
 
-#### Ask Riccardo before touching his content
+#### ANSWERED · Riccardo, 2026-08-15 — all five, and four resolve to *no work*
 
-- [ ] **What does he want to show on stage?** Module 7 is currently 5 minutes of "here is a
-      valuation tool". He may have a different framing in mind — that answer decides whether a
-      rebuild is worth it at all.
-- [ ] **Are the named commercial vendors deliberate?** The help text names *Dennemeyer
-      Consulting, Dennemeyer Renewals, CPA Global, Anaqua, IAM Market, LOT Network, IPH*
-      (3 places EN, 3 IT). In EPO-branded material at a PATLIB conference that reads as
-      endorsement. Decision taken here: **neutralise EN and IT and re-render** — but only after
-      he confirms, since it changes his authored text.
-- [ ] **Should there be a blank English form?** Today `IPscore_IT.html` is the only blank
-      variant; English exists only as the pre-filled demo, so nobody can score their own patent
-      in English. `render_ipscore("en", demo_flag=False)` would produce it through the existing
-      pipeline. Decision taken here: **yes, plus a third launcher cell** — pending his answer.
-- [ ] **Is a rebuild acceptable to him, and how is attribution worded afterwards?** Modules 6
-      and 7 currently credit *created by Riccardo Priore*. A from-scratch version needs a
-      formulation both sides are happy with.
-- [ ] **Does he want the IT versions maintained?** They ship but no course notebook opens them.
+Arne put the five questions to him. Net effect: **module 7 stays exactly as it is**, and the
+two decisions this section had pre-recorded are **reversed** (no neutralisation, no blank EN
+form). Only the attribution wording still needs a sentence when module 8 ships.
+
+- [x] **What does he want to show on stage?** → **Antibiotics (module 6) and IPScore (module 7)**
+      — his two inputs. Arne's rebuilds exist so they match the rest of the material in look,
+      feel and structure; the content stays his. Both keep their slot.
+- [x] **Are the named commercial vendors deliberate?** → **Yes, they stay.** Verified
+      2026-08-15: EN names Dennemeyer 3×, CPA Global / Anaqua / IAM Market 1× each; IT adds
+      LOT Network and IPH. ⚠️ **This reverses the earlier decision** ("neutralise EN and IT and
+      re-render") — **do not touch the vendor names.** If it is ever reopened, the source is
+      `7_ipscore/build/data/ipscore_questions_{en,it}.json` → `render.py --promote`, never the
+      generated HTML.
+- [x] **Is a rebuild acceptable, and how is attribution worded?** → **Yes, explicitly welcome**
+      — he values the support. **Wording settled 2026-08-15:** *"created by Arne Krüger · model:
+      EPO IPScore 3.01 · scenario analysis after Riccardo Priore's NPV Target Planner"*, in all
+      four module-8 headers and the report footer. It names the EPO as the model's owner, keeps
+      *created by Riccardo Priore* for modules 6 and 7 only, and credits by name the one idea
+      module 8 did take from him. Full reasoning in `8_ipscore_rebuild/PROVENANCE.md`.
+- [x] **Should there be a blank English form?** → **No — pre-filled is preferred**, by both
+      Arne and Riccardo: you cannot ask a workshop audience for their company's turnover, cost
+      and depreciation figures on the spot, so the tool has to arrive with a worked example.
+      ⚠️ **This reverses the earlier decision** ("yes, plus a third launcher cell") — that cell
+      is not built. *Applies to module 8 too: its deliverable ships pre-filled.*
+- [x] **Does he want the IT versions maintained?** → **No.** English only for the course
+      (confirms V6). His IT files are his own working copies and stay untouched in the repo.
 
 #### Technical, independent of his answer
 

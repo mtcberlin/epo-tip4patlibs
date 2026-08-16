@@ -1,0 +1,98 @@
+[
+ {
+  "Question": "D3",
+  "What it asks": "Cost of production",
+  "Parameter": "production_cost_index",
+  "Now": 4,
+  "Best answer": 5,
+  "Swing": 1875010.5455192626,
+  "Upside left": 468752.63637981564,
+  "Downside risk": -1406257.909139447,
+  "One step up": 468752.63637981564,
+  "One step down": -468752.6363798155
+ },
+ {
+  "Question": "C3",
+  "What it asks": "Life expectancy",
+  "Parameter": "life_expectancy",
+  "Now": 5,
+  "Best answer": 5,
+  "Swing": 1168777.2473053862,
+  "Upside left": 0.0,
+  "Downside risk": -1168777.2473053862,
+  "One step up": NaN,
+  "One step down": -587516.7898377663
+ },
+ {
+  "Question": "D1",
+  "What it asks": "Business output maintainability",
+  "Parameter": "output_maintainable",
+  "Now": 4,
+  "Best answer": 5,
+  "Swing": 985869.6533575302,
+  "Upside left": 246467.4133393825,
+  "Downside risk": -739402.2400181477,
+  "One step up": 246467.4133393825,
+  "One step down": -246467.4133393825
+ },
+ {
+  "Question": "C2",
+  "What it asks": "Market growth rate",
+  "Parameter": "market_growth",
+  "Now": 4,
+  "Best answer": 5,
+  "Swing": 968939.0128862911,
+  "Upside left": 562830.4923603814,
+  "Downside risk": -406108.5205259097,
+  "One step up": 562830.4923603814,
+  "One step down": -182242.59914075676
+ },
+ {
+  "Question": "B5",
+  "What it asks": "Pre-commercial term of development",
+  "Parameter": "years_to_market",
+  "Now": 3,
+  "Best answer": 5,
+  "Swing": 751188.7417191007,
+  "Upside left": 85050.08736988693,
+  "Downside risk": -666138.6543492138,
+  "One step up": 64994.27666749479,
+  "One step down": -78725.69605553569
+ },
+ {
+  "Question": "C6",
+  "What it asks": "Potential extra turnover",
+  "Parameter": "extra_turnover_share",
+  "Now": 3,
+  "Best answer": 5,
+  "Swing": 174646.19866143283,
+  "Upside left": 110302.86231248407,
+  "Downside risk": -64343.33634894877,
+  "One step up": 36767.6207708281,
+  "One step down": -36767.62077082787
+ },
+ {
+  "Question": "D2",
+  "What it asks": "Future cost of development",
+  "Parameter": "development_cost_share",
+  "Now": 3,
+  "Best answer": 5,
+  "Swing": 158035.71428571432,
+  "Upside left": 40178.571428571595,
+  "Downside risk": -117857.14285714272,
+  "One step up": 29464.28571428568,
+  "One step down": -37500.0
+ },
+ {
+  "Question": "D4",
+  "What it asks": "Investment intensity",
+  "Parameter": "investment_index",
+  "Now": 4,
+  "Best answer": 5,
+  "Swing": 89391.42275821976,
+  "Upside left": 25540.406502348604,
+  "Downside risk": -63851.01625587116,
+  "One step up": 25540.406502348604,
+  "One step down": -38310.609753522556
+ }
+]

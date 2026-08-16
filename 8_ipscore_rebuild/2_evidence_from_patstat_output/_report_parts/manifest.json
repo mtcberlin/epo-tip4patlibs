@@ -1,0 +1,12 @@
+{
+ "evidence": {
+  "order": 450,
+  "slug": "evidence",
+  "title": "What the record actually says",
+  "note": "Eleven of the forty answers were checked against PATSTAT. None of them is one of the eight that carry money, so the valuation is unchanged - only the picture of the patent is.",
+  "fragment": "evidence.fragment.html",
+  "sheets": {
+   "evidence": "evidence__evidence.json"
+  }
+ }
+}

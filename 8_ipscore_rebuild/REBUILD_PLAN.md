@@ -45,6 +45,105 @@ largest deviation 6·10⁻¹¹, floating-point noise). The engine is verified.
 
 Committed as `f66c69f` — *Module 8 Phase 1: the engine, verified against the EPO workbook*.
 
+**2026-08-15 — Phase 2 done.** The chain now exists end to end, offline.
+
+- `4_assemble_tool.ipynb` — 21 cells, executed, no errors. Hand-scores one patent, computes the
+  profile, the eight economic parameters, the ten-year cash flow and the NPV, and assembles
+  **`4_tool/ipscore_valuation.html`** (7 sections, 3 inline charts, 4.9 MB, one embedded
+  `plotly.js`, **0 iframes, 0 external requests**) plus **`4_tool/ipscore_valuation_data.xlsx`**
+  (5 sheets). Opened with `open_html()`.
+- Two additions to `ipscore_kit.py`: **`PATSTAT_CANDIDATES`** — the eleven questions a query can
+  speak to, each with a strength (`strong` · `good` · `proxy` · `context` · `open`) and what
+  notebook 2 will source — and **`answer_table()`**, the 40-row tidy table the report is built
+  around. The acceptance test still passes.
+- **Provenance is honest and therefore empty.** All forty answers carry `judgement`; the report
+  says `0 measured · 0 informed · 40 judgement` on its front section. Notebook 2 is what changes
+  that, and the eleven reachable answers already carry a `-> notebook 2 (strength): …` note in
+  their `evidence` field — a promise, never a measurement.
+- **The launcher cell ships without output**, the same rule module 7 learned the hard way
+  (warning 9 in `prep_workshop_todo.md`): run offline, `open_html()` bakes in the *author's*
+  filesystem path and the message "jupyter-server-proxy is unavailable here", both of which are
+  wrong on TIP. Clear that one cell before every commit.
+- **The report was rendered and looked at**, in Chrome, over a local HTTP server (`file://` is
+  blocked by the extension). Three rounds of fixes came out of actually seeing it: the worked
+  example's `C3` went 4 → 5 so the cash flow covers years 1–9 instead of dying at year 5;
+  `D3`/`D4` went 3 → 4 so all six cash-flow components are alive rather than two sitting dead in
+  the legend; the radar's radial axis moved to 36° so its tick labels stop colliding with the
+  *A — Legal status* label. This closes the open item below — module 8's charts are no longer
+  unseen.
+
+**2026-08-15 — Phase 4 done.** `3_valuation_and_scenarios.ipynb` — 14 cells, executed, offline.
+
+- `kit.sensitivity()` varies each of the eight OEK answers across all five levels, one at a
+  time, and returns a `LeverResponse` per lever (swing · upside · downside · step up · step
+  down), widest first. Two charts: the **tornado**, and **what a single step is worth** — the
+  realistic version, since a client rarely moves an answer all the way to the best one.
+- The finding the module was built to show, now computed rather than asserted: **the widest
+  lever is not the one to work on.** D3 has the largest swing (1,875,011 €) but only 468,753 €
+  left to gain; **C2 has the most room (+562,830 €)**; **C3 is already at the best answer**, so
+  its entire swing is downside risk. And the tornado carries a labelled zero-width row for *the
+  other 32 answers*, which cannot move the number at all.
+- Two structural changes came with it:
+  - **`worked_example.json`** — the patent, the seven company figures and the forty scores now
+    live in one file that notebooks 3 and 4 both read. They can no longer drift, and **V5**
+    (swap in a real family from module 6's corpus) becomes an edit to that file alone.
+  - **`kit.record_section()` / `kit.load_sections()`** — the optional half of the report
+    contract, added at the moment the plan said to add it: when a second producer actually
+    existed. Notebook 3 hands over section **700**; notebook 4 slots it between the cash flow
+    (600) and the full questionnaire (900), and adds its rows to the workbook. With no
+    contribution present the assembler simply builds one section fewer.
+- The assembled report is now **8 sections, 5 inline charts, 6 workbook sheets, 0 iframes**.
+  Both new charts were rendered and reviewed in a browser.
+- **`3_valuation_and_scenarios_output/_report_parts/` is committed on purpose.** It is an
+  intermediate, not a deliverable, but committing it makes the shipped `ipscore_valuation.html`
+  reproducible without first re-running notebook 3. Do not "tidy" it away. It also means the
+  **run order matters** — `1 → 3 → 4` today, `1 → 2 → 3 → 4` once notebook 2 exists — and both
+  notebook 4's header and its contract cell now say so.
+
+**2026-08-15 — Phase 3 written; V5 applied.** All four notebooks now exist.
+
+- **`2_evidence_from_patstat.ipynb`** — 24 cells, the evidence layer. It resolves the family,
+  then measures A1 (grant + opposition via `26N`/`26`/`27W`), A3 (nominal term + `PGFP`
+  renewals), A5 (designated states vs `lapse_country` vs `fee_country`, plus national grants),
+  A7 (opposition rate in the IPC neighbourhood), E1/E2/E7 (the applicant's own footprint) and
+  A4 (`tls211_pat_publn.publn_claims` from the B1). B1, B2 and C4 get their number attached as
+  **context with the marker left at `judgement`** — found data is not the same as evidence, and
+  that distinction is taught rather than glossed.
+- **It ships unexecuted**, deliberately, and this is the module's one exception to *"notebooks
+  ship executed"*: it is the only notebook that needs TIP, so nobody offline can produce its
+  outputs. Notebooks 1, 3 and 4 keep theirs.
+- **Verified offline against a stub.** `PatstatClient` was replaced with a fake returning frames
+  shaped like the real tables and filled with the TIP session's facts, and every code cell was
+  executed against it. That found six real problems — including a narrative that *asserted* A5
+  would drop when the national grants actually hold it steady. The SQL itself is still only as
+  good as the TIP session's schema notes; the Python around it is exercised.
+- **V5 applied.** `worked_example.json` now describes **EP3074539B1 / Q-Linea AB**. The forty
+  scores are unchanged on purpose — they are the adviser's *first pass*, and notebook 2's job is
+  to disagree with them. ⚠️ The financial figures are **illustrative and are not Q-Linea's
+  accounts**; `financials_note` says so and the report prints it verbatim in a callout, because
+  the applicant is a real listed company.
+
+### The finding that reframes the module
+
+`PATSTAT_CANDIDATES` ∩ `spec.oek_questions` = **∅**. The eleven questions PATSTAT can answer and
+the eight that carry money are **disjoint sets**. Measuring the record changes the profile, the
+risk map and the conversation, and changes the NPV by exactly zero. That is now the headline of
+notebook 2 and a paragraph in notebook 4's report, because it is the most useful and least
+comfortable thing module 8 has to say: *the checkable part of a patent valuation and the
+decisive part do not overlap.*
+
+### Two structural changes
+
+- **`kit.load_answers()`** returns the best answer set available plus a label saying which —
+  notebook 2's measured set from `2_evidence_from_patstat_output/evidence_answers.json` if it
+  exists, otherwise the first pass. Notebooks 3 and 4 both use it and **print the label**, so a
+  reader can tell a measured valuation from a structured opinion at a glance.
+- **Notebook 1 no longer stamps three answers `measured`.** That open item is closed by removing
+  the inconsistency rather than dressing it up: its answer set is now the same first pass as
+  `worked_example.json` (guarded by an `assert`, so the two cannot drift), all forty `judgement`,
+  and evidence enters the module in exactly one place. The re-run also fixed both chart defects
+  the TIP session found — no dead cash-flow components, no empty years.
+
 ---
 
 ## ▶️ Resume here — everything the next session needs
@@ -102,30 +201,46 @@ output can show how much of the number is evidence.
   `__pycache__/` are swallowed globally.
 - Work on `develop`, PR into `main`, SSH remotes.
 
-### Phase 2, concretely — the next thing to build
+### The report contract — settled in Phase 2, and different from module 6's
 
-A **minimal `4_assemble_tool.ipynb`**: hand-score one patent → the assembled deliverable. Small
-on purpose, so the whole chain exists end to end before notebooks 2 and 3 fill it out.
+Module 6 merges a pile of charts by an `order` number, because three notebooks scatter figures
+across three folders. A valuation cannot be assembled that way: it has a **required shape** —
+you cannot show someone an NPV before you have shown them what was assumed to get there. So:
 
-1. Decide the report contract — how notebooks 2 and 3 hand their figures and tables to
-   notebook 4. Module 6 solved this with `report_kit.record()` writing fragments plus data into
-   `<notebook>_output/`; copy the *idea*, not the code, into `ipscore_kit.py`.
-2. Assemble one self-contained HTML file — narrative, the charts, and the answer table with its
-   provenance markers — into `4_tool/ipscore_valuation.html`, plus
-   `ipscore_valuation_data.xlsx` with one sheet per step.
-3. Open it on TIP with `open_html()` (jupyter-server-proxy). **`IFrame` cannot work** — Jupyter
-   serves `/files/` under a CSP sandbox that disables JavaScript. See module 7 for the pattern.
-4. Single embedded `plotly.js`, no external requests — the constraint module 6 already proved.
+- **Notebook 4 always builds the spine itself** — verdict · patent and company · profile ·
+  data reach · the eight money answers · cash flow · all forty answers. Seven sections, fixed
+  order, always present.
+- **Notebook 2 hands over a better answer set**, not a section: the same forty answers, with
+  `provenance="measured"` and a real PATSTAT fact in `evidence` wherever a query decided the
+  score. The report shape does not change; the provenance panel stops reading `0 measured`.
+- **Notebook 3 hands over one extra section**, the sensitivity ranking. *That* is the moment to
+  add a manifest — not before. Writing merge machinery for producers that do not exist yet was
+  the one thing Phase 2 deliberately did not do.
 
-Phases 3 (evidence from PATSTAT, TIP-only) and 4 (sensitivity over the 8 OEK levers) follow;
-see "Phasing" below.
+### Phase 3, concretely — the next thing to build
+
+> 📋 The live-TIP tasks that gate this are written up as an executable session plan:
+> **[`../9_documentation/plan-tipsession.md`](../9_documentation/plan-tipsession.md)** — five
+> tasks, ~30 minutes, with draft queries for O1 and O2 and the selection criteria for V5.
+
+`2_evidence_from_patstat.ipynb`, and it is **TIP-only**. Before it can be written, one short
+TIP session has to answer O1 and O2 (below) and settle V5 — which family from module 6's
+antibiotic-resistance corpus becomes the worked example. Then: the three *strong* questions
+first (A1, A3, A5), the three *good* ones next (E1, E2, E7), the proxies last and labelled as
+proxies. `kit.PATSTAT_CANDIDATES` already names what each one sources.
+
+Phase 4 is **done** — notebook 3 was built and executed offline on 2026-08-15, ahead of
+Phase 3. Only notebook 2 is left, and only it needs TIP.
 
 ### Open items — none of them blocking
 
-- **The two charts in notebook 1 were never looked at.** No kaleido and no browser in the build
-  environment, so they are verified structurally (traces, ranges, tick labels, a validated
-  CVD-safe palette) but nobody has seen them rendered. Arne is checking on TIP.
-- **Notebook 1 ships executed** — deliberate, see the convention note under the decisions
+- **Notebook 4's three charts have been rendered and reviewed** (2026-08-15, Chrome over a
+  local HTTP server — `file://` is blocked by the extension). **Notebook 1's two charts still
+  have not been**; they remain verified only structurally. Worth one look in the same TIP
+  session as O1/O2.
+- ~~Notebook 1 stamps three answers `measured`~~ — **resolved 2026-08-15.** Its answer set is
+  now the same first pass as `worked_example.json`, all forty `judgement`, guarded by an assert.
+- **Notebooks 1 and 4 ship executed** — deliberate, see the convention note under the decisions
   table. Reverse if module 8 should be run rather than read.
 - **O1–O3** (legal-status tables on TIP, `nb_claims` coverage, what a PATLIB is really asked)
   are still open and gate Phase 3. See the end of this file.
@@ -202,10 +317,13 @@ provenance marker: **measured · informed · judgement**.
   2_evidence_from_patstat.ipynb     ← one real patent: what PATSTAT can and cannot answer
   2_evidence_from_patstat_output/
   3_valuation_and_scenarios.ipynb   ← the valuation + which lever actually moves the NPV
-  3_valuation_and_scenarios_output/
+                                                                            ✅ built, executed
+  3_valuation_and_scenarios_output/ ← _report_parts/: section 700 for the assembler  ✅ built
+  worked_example.json               ← the one worked example both nb3 and nb4 read   ✅ built
   4_assemble_tool.ipynb             ← one self-contained HTML deliverable + one data workbook
-  4_tool/
-    ipscore_valuation.html          ← opened with open_html()
+                                                                            ✅ built, executed
+  4_tool/                                                                   ✅ built
+    ipscore_valuation.html          ← opened with open_html(); 7 sections, 0 iframes
     ipscore_valuation_data.xlsx     ← one sheet per step: answers, parameters, cash flow, sensitivity
   PROVENANCE.md  REBUILD_PLAN.md  README.md
 ```
@@ -265,12 +383,13 @@ constants.
 - **Phase 0 — scaffold + plan.** ← *done, 2026-07-24*
 - **Phase 1 — the engine and its proof.** ← *done, 2026-07-24.* Spec extracted,
   `ipscore_kit.py` written, notebook 1 executed, all three EPO test patents reproduced.
-- **Phase 2 — the deliverable.** A minimal notebook 4: one hand-scored patent → the assembled
-  HTML + workbook, opened with `open_html()` on TIP. Proves the whole chain end to end while it
-  is still small — the same trick that made module 6's MVP useful.
-- **Phase 3 — the evidence layer.** Notebook 2 against PATSTAT: the six strong questions first,
-  the four proxies second, each with its provenance marker. TIP-only.
-- **Phase 4 — scenarios.** Notebook 3: the sensitivity ranking over the 8 OEK levers.
+- **Phase 2 — the deliverable.** ← *done, 2026-08-15.* Notebook 4: one hand-scored patent →
+  `4_tool/ipscore_valuation.html` + `ipscore_valuation_data.xlsx`, opened with `open_html()`.
+  Built and executed **offline**, and the report was rendered in a browser and reviewed.
+- **Phase 3 — the evidence layer.** ← *written 2026-08-15, awaiting one TIP run.* Notebook 2
+  exists, is stub-verified offline and ships unexecuted. Running it on TIP is the last step.
+- **Phase 4 — scenarios.** ← *done, 2026-08-15.* Notebook 3: the sensitivity ranking over the
+  8 OEK levers, plus `worked_example.json` and the `record_section` contract. Offline.
 - **Phase 5 — polish.** Narrative, branded header, dry-run against the clock, and a side-by-side
   sanity check against Riccardo's tools on the same inputs (they should agree — same model).
 
@@ -311,11 +430,71 @@ Arne exactly one notebook to run on TIP, commit outputs.
 
 ## Open questions to resolve before Phase 3
 
-- **O1 — Does TIP's PATSTAT edition carry legal-event / legal-status tables?** Decides how far
-  A1, A3 and A7 can go: with them, "still in force" and opposition history become facts; without
-  them, A3 is a nominal upper bound and A7 drops out. Check on TIP before building notebook 2.
-- **O2 — Is `nb_claims` populated** for the authorities we care about? Decides whether A4 gets
-  even a weak proxy.
+Answered on TIP, 2026-08-15 (`9_documentation/plan-tipsession.md`, PATSTAT Global Autumn 2025,
+`PatstatClient(env='PROD')`). O1, O2 and V5 are settled; Phase 3 is unblocked.
+
+- **O1 — Does TIP's PATSTAT edition carry legal-event / legal-status tables?**
+  **Yes, and richly.** `tls231_inpadoc_legal_event` and its lookup `tls803_legal_event_code` are
+  both present and populated: 141 M events over 5.5 M EP applications, current to 2026-02-13.
+  This is the best of the three outcomes — **A1, A3 and A7 all become `measured`.**
+  - **A7** is answerable outright: `26N`/`PLBE` *no opposition filed* (2.28 M applications)
+    against `26`/`PLBI` *opposition filed* (107 k) gives an EP opposition rate of ~4.5 %, which
+    matches the published EPO figure — a useful sanity check that the join is right. Outcomes
+    follow through `27O` rejected, `27A` maintained in amended form, `27W` revoked.
+    `PATSTAT_CANDIDATES["A7"]["strength"]` can move off `"open"`.
+  - **A1/A3** come from category `H` cessation (`PG25` lapsed in a contracting state, `MM4A`,
+    `MG4D`) plus `PGFP` renewal-fee payments, so "still in force, renewals paid to year N" is a
+    fact, not a nominal bound.
+  - **Two traps for notebook 2.** `event_impact` is `NULL` for all 4 332 codes, so the `+/-`
+    rights indicator is unusable — select on `event_category_code` and explicit code lists
+    instead. And `tls231` is far wider than its first twelve columns suggest: the lapsed state
+    is in **`lapse_country`/`lapse_date`/`lapse_text`**, not `event_text`, with
+    `fee_country`/`fee_renewal_year`/`fee_payment_date` and `designated_states` alongside.
+- **O2 — Is `nb_claims` populated** for the authorities we care about?
+  **The column does not exist** on `tls201_appln` in this edition (27 columns, no claims field).
+  But the question survives the column: **`tls211_pat_publn.publn_claims`** carries it, and for
+  **EP `B1` it is 100 % populated** — every filing year 2010–2022, 1.09 M granted publications,
+  mean 11.5 claims. US B-documents 43.5 %; **WO is 0 %**, as are DE/GB/FR/IT.
+  So **A4 keeps its labelled weak proxy** for the granted-EP case module 8 actually works on,
+  and it gains a benchmark to quote it against (this patent's claim count vs a typical 11.5).
+  Take the count from the **B1**, not the A-publication: A1 is only 51 % populated and is the
+  as-filed claim set, not the granted one.
 - **O3 — What does a PATLIB actually get asked?** If the real client question is "should I renew
   this?" rather than "what is it worth?", the renewal-cost side deserves more weight than
   IPScore gives it. Worth one conversation with Riccardo (see `prep_workshop_todo.md` §5).
+  *Still open* — this one needs a conversation, not a query. Note that O1's renewal-fee evidence
+  (`PGFP`, `fee_renewal_year`) now makes the renewal question answerable from data if it matters.
+
+### V5 — the worked example family
+
+**Picked: `docdb_family_id` 53398085 — Q-Linea AB, `EP3074539B1`.**
+
+| | |
+|---|---|
+| Applicant | **Q-Linea AB**, Uppsala (SE), NUTS `SE121`, `psn_sector = COMPANY` |
+| Title | *Method for detecting and characterising a microorganism* (US: *…identity and antimicrobial susceptibility…*) |
+| EP patent | **EP3074539B1**, granted 2018-01-10, 19 claims |
+| Divisional | EP3351642B1, granted 2019-09-11, 21 claims — mention it, value the parent |
+| Earliest filing | 2014-06-13 → nominal expiry 2034-06-13 |
+| Family | 10 members, granted in EP, US, JP, CN, KR, AU, CA; 30 citing families |
+
+**Why this one.** It matches every criterion in the session plan — granted EP, family of 10 across
+8 authorities, a company rather than a university, filed 2014, and a mid-size specialist (2 families
+in the corpus, against Merck's 6) rather than a giant. Two things make it better than merely
+eligible:
+
+1. **It is the patent the module already describes.** `worked_example.json` invented "a rapid
+   point-of-care test for antibiotic resistance markers, a mid-size European diagnostics company".
+   Q-Linea is a Swedish in-vitro diagnostics firm doing exactly that. The narrative survives the
+   swap from invented to real.
+2. **Its legal history teaches the point of the evidence layer.** Designated in **38 EPC states**
+   at grant, then lapsed in ~24 of them (mostly no translation filed), with renewals paid to
+   **year 11 in June 2025 in DE, SE, GB and FR only** — CH was kept to year 9 and dropped in 2024.
+   So the patent is granted, unopposed (`26N`, effective 2018-10-11) and **in force in four
+   states out of thirty-eight**. "Granted" and "in force" are not the same answer, and A1 vs A5
+   is exactly where IPScore asks you to notice that. An invented example cannot teach this.
+
+**Not yet applied.** `worked_example.json` is unchanged: swapping it rewrites the forty scores and
+therefore notebooks 3 and 4 and the committed report. That is Phase 3 work, per the session plan's
+"notebook 2 writes the rest". The financial figures stay invented in any case — turnover and cost
+structure are not in PATSTAT.

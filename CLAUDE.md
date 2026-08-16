@@ -17,9 +17,12 @@ Author: Arne Krüger (mtc.berlin / depa.tech) · License: **EPO Internal Use**.
 | `5_lead_generation/` | Regional lead generation — profile a region's EP/PCT applicants by portfolio depth × geographic reach, segment into lead tiers |
 | `6_patentreports/` | Landscape reports (**Riccardo Priore**) — triadic families, filing authorities, t-SNE clusters, interactive explorer. Ships **pre-executed** (see below) |
 | `7_ipscore/` | Patent valuation (**Riccardo Priore**) — EPO IPScore questionnaire → NPV; self-contained interactive HTML tools, opened via `open_html()` (jupyter-server-proxy), **never** via `IFrame` |
-| `8_ipscore_rebuild/` | 🚧 Under construction (notebook 1 of 4) — our own rebuild of the IPScore ideas as an explained notebook chain, adding a PATSTAT evidence layer. Engine in `ipscore_kit.py`, model data in `ipscore_spec.json`, phasing in `REBUILD_PLAN.md`; module 7 stays untouched as the working reference |
+| `8_ipscore_rebuild/` | ✅ Complete — all four notebooks written and run on TIP; the evidence layer measures 11 of the 40 answers and the report reads `2 measured · 6 informed · 32 judgement`. Our own rebuild of the IPScore ideas as an explained notebook chain, adding a PATSTAT evidence layer. Engine in `ipscore_kit.py`, model data in `ipscore_spec.json`, deliverable in `4_tool/`, phasing in `REBUILD_PLAN.md`; module 7 stays untouched as the working reference |
+| `9_documentation/` | Working plans that are not course material — `plan-tipsession.md` (the live-TIP session module 8 needed, ✅ run 2026-08-15) and `results-tipsession.md` (what it found: O1, O2 and V5 answered, so Phase 3 is unblocked) |
 
-The course is **modules 1–8 plus this file and `README.md`** — nothing else. Earlier
+The **course** is modules 1–8. Alongside it sit four working documents that are not course
+material: this file, `README.md`, `prep_workshop_todo.md` (the workshop-preparation log) and
+`9_documentation/` (plans that need a live TIP session or a decision). Earlier
 supporting folders (`setup/`, `harmonization/`, `ipc-extension/`, `context/`, `docs/`)
 and the BMAD agent tooling (`_bmad*`, `.claude/`, `.agent/`, `.gemini/`) were removed
 once no module referenced them any more; recover any of them from history with

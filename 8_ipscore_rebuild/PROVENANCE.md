@@ -34,14 +34,30 @@ after module 8 has proven itself on TIP.
 | Plain-language help text, € benchmarks, demo narratives | **Riccardo Priore**, authored directly in his HTML | **not copied.** Module 8 writes its own |
 | The build pipeline (JSON + Jinja2 → single-file HTML), the Node syntax check, the Excel cross-check | **Riccardo Priore** (`7_ipscore/build/`) | the *method* is adopted; the code is re-authored |
 
-## Attribution, once this ships
+## Attribution — settled 2026-08-15 ✅
 
-- **IPScore is an EPO tool.** Any header, report or generated page must say so.
-- Module 8 is **our implementation of the EPO model**, authored in this repository. It does not
-  carry *created by Riccardo Priore* — that credit belongs to modules 6 and 7, to his material.
-- Riccardo is credited as the source of the **interactive adaptation and the verification
-  method** this rebuild learned from. He should see the plan before module 8 is published; the
-  questions to put to him are collected in `prep_workshop_todo.md` §5.
+Riccardo was asked and is explicitly happy with the rebuild (`prep_workshop_todo.md` §5). The
+wording below is what ships, and it is the same line in all four notebook headers and in the
+report footer:
+
+> EPO Academy Training Material · created by Arne Krüger · model: **EPO IPScore 3.01** ·
+> scenario analysis after Riccardo Priore's NPV Target Planner
+
+Three things it has to get right, and does:
+
+- **IPScore is an EPO tool.** The model — the forty questions, the eight OEK tables, the
+  cash-flow chain — is the EPO's, and every header, report and generated page says so.
+- **Module 8 is our implementation of that model**, authored in this repository. It does **not**
+  carry *created by Riccardo Priore*: that credit belongs to modules 6 and 7, to his material.
+  No line of his code and none of his help text, € benchmarks or demo narratives were copied.
+- **The one idea we did take is named.** Working *backwards* from an NPV target is his — the
+  `NPV_Target_Planner`, rebuilt here as the sensitivity analysis in notebook 3. "*after* Riccardo
+  Priore's NPV Target Planner" is the same *after X* formulation module 6 uses for reworked
+  material, so the three modules read consistently.
+
+The verification method — check against the source of truth rather than against your own previous
+output — was also learned from his `build/verify_against_excel.py`. That is a working habit rather
+than authorship, and it is credited in the lineage table above rather than in the header.
 
 ## The one hard acceptance test
 
