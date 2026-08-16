@@ -123,6 +123,10 @@ constraint module 8 fails**, and the yardstick for every module document.
 
 ### Worked pattern — module 3, filled in
 
+> **Stale.** The sketch below predates the *English throughout* decision in §6 and is kept
+> only as the reasoning trail. **`course/03_query-library.md` is authoritative** — do not
+> regenerate anything from this block.
+
 Module 3 is used as the pattern because it is the smallest, so the structure stays legible.
 Note how a thin module is *filled*, not padded: the Einleitung does real work.
 
@@ -237,21 +241,40 @@ prose in Erarbeitung, down from 8,272.
 - **Size:** 45-minute block per module for the written material; the workshop gets a compressed
   slide version of the same substance, 3 slides per module, two 45-minute blocks.
 
-**Still open — needed before run 2 finishes, not before it starts:**
+**Settled with Arne, 2026-08-16 (second round):**
 
-- **Sprache.** The repo is English throughout (`CLAUDE.md`), and the audience is PATLIB staff
-  across Europe — so English is the default assumption. Confirm, since the workshop is in Warsaw
-  and the trainer boxes might be more useful in German.
-- **Modul 8: core-only or core + extension?** The plan assumes both are written; if only the core
-  is needed for 18 September, that is 5,800 words less work.
+- **Language: English throughout**, including the trainer boxes. Consistent with the rest of the
+  repo and with an audience of PATLIB staff from across Europe.
+- **Module 8: the core path only.** `08_ipscore.md` covers notebook 1 plus a guided read of the
+  finished report, sized like every other module. The implementation walk (notebooks 2, 3 and 4)
+  is **not** written for 18 September; it is deferred to a possible supplementary document,
+  `08_ipscore_part2.md`, if a PATLIB wants to run the chain itself. That removes ~5,800 words
+  from run 2.
 
 ---
 
 ## 7 · Run 2 and run 3 — scope, and one constraint worth knowing now
 
-**Run 2 — the drafts.** Six Markdown documents in `9_documentation/course/`, one per module,
-against the §3 template. Plus `00_overview.md` carrying §2 (the overall goal and the chain).
-Text only; no rendering, no screenshots.
+**Run 2 — the drafts. ✅ Done, 2026-08-16.** Seven Markdown documents in
+`9_documentation/course/`: one per module against the §3 template, plus `00_overview.md` carrying
+§2 (the overall goal and the chain) and the course-level framing. Text only; no rendering, no
+screenshots.
+
+| File | Words | Notes |
+|---|---:|---|
+| `00_overview.md` | 1,426 | goal · chain · how to run it · what ships executed · credits |
+| `01_start-with-tip.md` | 1,878 | core path only — Claude Code sections and notebook 2 Part 2 handed over as self-study |
+| `03_query-library.md` | 1,526 | the worked pattern |
+| `04_patstat-explorer.md` | 2,006 | thin module, filled by the step-2 discussion |
+| `05_lead-generation.md` | 2,206 | notebook 1 only; 2 and 3 are extensions |
+| `06_patent-reports.md` | 2,082 | credits Riccardo Priore; written against the **rebuild**, not the reference folder |
+| `08_ipscore.md` | 2,869 | core path: notebook 1 + guided read of the report |
+
+All seven share the same heading set (Lernziel · Voraussetzungen · Teillernziele · Material ·
+Phase 1/2/3 · Where this leads · Notes for the next revision). Each ends with a **"Notes for the
+next revision"** section listing the defects found while writing — those are the repo's to-do
+list, not the course's, and they are deliberately *not* fixed in this run (see §8: the course
+material describes the modules, it does not modify them).
 
 **Run 3 — rendering.** Two targets from the same sources:
 
@@ -303,3 +326,31 @@ weak for module 5, whose whole point is the resulting lead table.
 
 Nothing under `1_`–`8_` is touched. The course material describes the modules; it does not
 modify them.
+
+---
+
+## 9 · Defects found while writing run 2
+
+Writing the course material was also a close read of the modules. These are the concrete problems
+it surfaced, collected here so they do not stay buried in seven documents. **None of them was
+fixed in run 2** — per §8, the course material describes the modules and does not modify them.
+
+| Module | Finding | Severity |
+|---|---|---|
+| **1** | `2_getting-started-with-patstat.ipynb` warns that `han_name` shows *"TECHNISCHE UNIVERSITAT MUNCHEN"* for TU Berlin. Verify against Autumn 2025 — a wrong warning teaches badly | check |
+| **1** | The same notebook names *2023–2024* as the incomplete years. On Autumn 2025 that is **2024–2025** | text fix |
+| **3** | Two leftover developer cells, *"Story 3.2 / 3.3 AC Validation"*, at the end of the interactive demo | remove |
+| **4** | Three typos in the Explorer app header: *"Integlligence"*, *"knowlegde"*, and `TIP4PATLIBs` (inconsistent casing) — it is the first slide-worthy screen in the module | text fix |
+| **4** | The Explorer app is cloned from GitHub at run time. Confirm reachability from the workshop network before 18 September | logistics |
+| **5** | The 70% / 77% NUTS-coverage figures are stated as "measured on the current edition" — confirm on Autumn 2025 or restate with the edition measured | check |
+| **4** | `CLAUDE.md` states the convention as *modules 1–5 clear outputs, 6–7 ship pre-executed*. Module 4 actually ships **7 of 7 executed** — the course material reports the measured state, so the convention line needs updating | align |
+| **6** | The rebuild's `README.md` says notebook 3 holds the technology network only; the repo `CLAUDE.md` describes module 6 as including t-SNE clusters and triadic families (that is the *reference* folder). Align them so nobody promises a chart the report does not contain | **align** |
+| **6** | Notebook 2's forward-citation cell needs BigQuery, not TIP. State it in the notebook header, not only in a cell comment | text fix |
+| **8** | `8_ipscore_rebuild/README.md` is stale: it says notebook 2 "does not exist yet" and quotes `0 measured · 0 informed · 40 judgement`. The shipped report reads **`2 measured · 6 informed · 32 judgement`** | **stale** |
+| **8** | `1_the_model.ipynb` says "four of them strongly" about the PATSTAT-reachable questions. `PATSTAT_CANDIDATES` holds **3 strong · 4 good · 3 proxy · 1 context**; the report's "three strongly" is the correct one | **wrong** |
+
+Verified figures used throughout `08_ipscore.md`, read out of the shipped report rather than from
+any README: NPV **1,248,870 EUR** over ten years at **12%**, **139 / 200** points, **−0.39**
+average risk, **+0.63** average opportunity, **2 measured · 6 informed · 32 judgement**. Largest
+upside lever **C2 · Market growth rate** (+563k); **C3 · Life expectancy** has an upside of exactly
+zero because its answer is already the best on the scale.
