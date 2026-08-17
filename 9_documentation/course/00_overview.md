@@ -79,11 +79,11 @@ Each module document is one block, timed the same way:
 
 | Phase | Time | What happens |
 |---|---:|---|
-| **Einleitung** | ≈ 7 min | The client question this module answers, and why the obvious approach fails |
-| **Erarbeitung** | ≈ 28 min | The notebooks, step by step, with the traps named before they are hit |
-| **Lernergebnis** | ≈ 10 min | What now exists, four self-check questions, and a transfer exercise for the participant's own desk |
+| **Introduction** | ≈ 7 min | The client question this module answers, and why the obvious approach fails |
+| **Working through** | ≈ 28 min | The notebooks, step by step, with the traps named before they are hit |
+| **Learning outcome** | ≈ 10 min | What now exists, four self-check questions, and a transfer exercise for the participant's own desk |
 
-Roughly 12–15 minutes of the Erarbeitung is reading; the rest is running cells and looking at
+Roughly 12–15 minutes of the working-through phase is reading; the rest is running cells and looking at
 results.
 
 **A note on module 8.** Its full material is 8,272 markdown words across four notebooks — more prose

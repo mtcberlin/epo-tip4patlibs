@@ -8,17 +8,17 @@
 
 ---
 
-## Lernziel
+## Learning objective
 
 **I know why one company appears in PATSTAT under dozens of different names, I can consolidate
 them into one defensible group, and I can state what my consolidation missed.**
 
-## Voraussetzungen
+## Prerequisites
 
 - **Module 1** — TIP is running, PATSTAT connects, and you have seen a result table.
 - **Module 3** — you know that a query is a set of decisions someone made.
 
-## Teillernziele
+## Sub-objectives
 
 By the end you can:
 
@@ -44,7 +44,7 @@ By the end you can:
 
 ---
 
-## Phase 1 · Einleitung (≈ 7 min)
+## Phase 1 · Introduction (≈ 7 min)
 
 ### The question this module answers
 
@@ -62,7 +62,7 @@ so in a way that looks like a clean, confident number.
 subsidiary, per typo. There is no "Siemens Healthineers" record to look up. Somebody has to decide
 which names are the same organisation, and that somebody is you.
 
-| | Lehr- und Lernaktivität | ⏱ |
+| | Teaching and learning activity | ⏱ |
 |---|---|---|
 | Opening | Trainer poses the portfolio-size question; room proposes an approach | 2 min |
 | Tension | Trainer shows/describes the 200-row hit list — the question has no single-row answer | 3 min |
@@ -74,7 +74,7 @@ which names are the same organisation, and that somebody is you.
 
 ---
 
-## Phase 2 · Erarbeitung (≈ 28 min)
+## Phase 2 · Working through (≈ 28 min)
 
 Notebook 1 is five steps and four queries. It ships pre-executed, so you can read ahead — but run
 it, because step 2 is *yours* to fill in.
@@ -158,7 +158,7 @@ Generator** backed by a PATSTAT MCP server — you ask in natural language and i
 
 ---
 
-## Phase 3 · Lernergebnis (≈ 10 min)
+## Phase 3 · Learning outcome (≈ 10 min)
 
 ### What now exists
 

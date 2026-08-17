@@ -8,19 +8,19 @@
 
 ---
 
-## Lernziel
+## Learning objective
 
 **I can profile the applicants of my own region from PATSTAT, segment them into lead tiers along
 portfolio depth and geographic reach, and say precisely which companies my method cannot see.**
 
-## Voraussetzungen
+## Prerequisites
 
 - **Module 1** — TIP is running, PATSTAT connects.
 - **Module 3** — you can adapt a query's parameters and judge whether a result is plausible.
 - **Module 4** — you count `docdb_family_id`, not applications, and you know that a name is not a
   company.
 
-## Teillernziele
+## Sub-objectives
 
 By the end you can:
 
@@ -49,7 +49,7 @@ By the end you can:
 
 ---
 
-## Phase 1 · Einleitung (≈ 7 min)
+## Phase 1 · Introduction (≈ 7 min)
 
 ### The question this module answers
 
@@ -70,7 +70,7 @@ But the module's real lesson is the sentence that comes with the list. Ask the r
 The answer you want is **"which companies are missing?"** — and this module can answer it, with a
 number.
 
-| | Lehr- und Lernaktivität | ⏱ |
+| | Teaching and learning activity | ⏱ |
 |---|---|---|
 | Opening | Trainer asks how the PATLIB's current contact list was built | 2 min |
 | Tension | Trainer poses the "what is missing" question — nobody's current list can answer it | 2 min |
@@ -78,7 +78,7 @@ number.
 
 ---
 
-## Phase 2 · Erarbeitung (≈ 28 min)
+## Phase 2 · Working through (≈ 28 min)
 
 Run `1_regional-leads.ipynb`. It ships with **Alsace** as the default so it works out of the box;
 you switch it to your own region in step 3.
@@ -189,7 +189,7 @@ city → region lookup.
 
 ---
 
-## Phase 3 · Lernergebnis (≈ 10 min)
+## Phase 3 · Learning outcome (≈ 10 min)
 
 ### What now exists
 

@@ -98,58 +98,58 @@ script. One file to maintain, and it is what another PATLIB could reuse.
 ```markdown
 # Module N — <title>
 
-## Lernziel            ← one sentence, from the table in §2
-## Voraussetzungen     ← which modules, which TIP state
-## Teillernziele       ← 3–5, each observable ("kann …", not "versteht …")
+## Learning objective  ← one sentence, from the table in §2
+## Prerequisites       ← which modules, which TIP state
+## Sub-objectives      ← 3–5, each observable ("can …", not "understands …")
 
-## Phase 1 · Einleitung        (≈ 7 min)
-   Warum diese Frage?  |  Lehr- und Lernaktivität  |  ⏱ Zeit
+## Phase 1 · Introduction        (≈ 7 min)
+   Why this question?  |  Teaching and learning activity  |  ⏱ Time
    > 🎓 Trainer: opening question for the room, expected wrong answers
 
-## Phase 2 · Erarbeitung       (≈ 28 min)
+## Phase 2 · Working through       (≈ 28 min)
    step | what the participant does | what they see | ⏱
    > 🎓 Trainer: where this breaks, what to do when a query is slow
-   > ⚠️ Stolperstelle: the known traps, from the repo's own warnings
+   > ⚠️ Pitfall: the known traps, from the repo's own warnings
 
-## Phase 3 · Lernergebnis      (≈ 10 min)
+## Phase 3 · Learning outcome      (≈ 10 min)
    What now exists (artifact) · self-check questions · transfer to own work
    > 🎓 Trainer: how to close, what to assign
 ```
 
-**Time budget inside 45 minutes:** Einleitung 7 · Erarbeitung 28 · Lernergebnis 10.
-Within the 28 minutes of Erarbeitung, roughly **12–15 minutes is reading** (≈ 2,200–2,700 words
+**Time budget inside 45 minutes:** introduction 7 · working through 28 · learning outcome 10.
+Within those 28 minutes of working through, roughly **12–15 minutes is reading** (≈ 2,200–2,700 words
 of notebook prose) and the rest is running cells and looking at results. **That number is the
 constraint module 8 fails**, and the yardstick for every module document.
 
 ### Worked pattern — module 3, filled in
 
-> **Stale.** The sketch below predates the *English throughout* decision in §6 and is kept
-> only as the reasoning trail. **`course/03_query-library.md` is authoritative** — do not
-> regenerate anything from this block.
+> **Stale.** The sketch below is an early draft, kept only as the reasoning trail (it was
+> written in German and has since been translated, per the *English throughout* decision in §6).
+> **`course/03_query-library.md` is authoritative** — do not regenerate anything from this block.
 
 Module 3 is used as the pattern because it is the smallest, so the structure stays legible.
-Note how a thin module is *filled*, not padded: the Einleitung does real work.
+Note how a thin module is *filled*, not padded: the introduction does real work.
 
 | | |
 |---|---|
-| **Lernziel** | Ich kann aus der Query Library eine passende Abfrage wählen, ihre Parameter anpassen und das Ergebnis lesen. |
-| **Voraussetzungen** | Modul 1 (TIP läuft, PATSTAT verbunden) |
-| **Teillernziele** | (1) kann die Frage eines Kunden einer Query-Kategorie zuordnen · (2) kann Parameter ändern, ohne SQL zu schreiben · (3) kann erkennen, wann ein Ergebnis *plausibel* ist · (4) weiß, wann eine Abfrage zu teuer wird |
+| **Learning objective** | I can pick a suitable query from the Query Library, adapt its parameters and read the result. |
+| **Prerequisites** | Module 1 (TIP running, PATSTAT connected) |
+| **Sub-objectives** | (1) can map a client's question onto a query category · (2) can change parameters without writing SQL · (3) can recognise when a result is *plausible* · (4) knows when a query becomes too expensive |
 
-**Phase 1 · Einleitung (7 min).** Open with a real question — *"Ein Kunde fragt: Wer forscht in
-Europa an Feststoffbatterien?"* Let the room propose approaches for two minutes; collect them on
+**Phase 1 · Introduction (7 min).** Open with a real question — *"A client asks: who in Europe is
+working on solid-state batteries?"* Let the room propose approaches for two minutes; collect them on
 the flipchart. **The point being made:** most proposals are keyword searches, and keyword searches
 alone give a corpus nobody can defend. That tension is what the Query Library resolves.
-*🎓 Trainer: the expected wrong answer is "Google Patents durchsuchen" — take it seriously, then
+*🎓 Trainer: the expected wrong answer is "search Google Patents" — take it seriously, then
 ask how they would prove the list is complete.*
 
-**Phase 2 · Erarbeitung (28 min).** Run `TIP_for_PATLIBs_QueryLib.ipynb`, pick the applicant
+**Phase 2 · Working through (28 min).** Run `TIP_for_PATLIBs_QueryLib.ipynb`, pick the applicant
 query, change the country and the year window, read the result. Then the interactive demo.
-*⚠️ Stolperstelle: PATSTAT PROD is not fast. A query that scans a full year takes a minute — say
+*⚠️ Pitfall: PATSTAT PROD is not fast. A query that scans a full year takes a minute — say
 so before the room decides it is broken.*
 
-**Phase 3 · Lernergebnis (10 min).** Each participant has one adapted query and one result table.
-Self-check: *"Warum liefert dieselbe Frage mit `appln_auth = 'EP'` weniger Treffer als mit
+**Phase 3 · Learning outcome (10 min).** Each participant has one adapted query and one result table.
+Self-check: *"Why does the same question return fewer hits with `appln_auth = 'EP'` than with
 `docdb_family_id`?"* Transfer: which of your own recurring client questions maps onto which query?
 
 ---
@@ -168,10 +168,10 @@ generated *from* the module documents, so there is one source of truth.
 
 Each module gets exactly three slides, mirroring the three phases:
 
-1. **Einleitung** — the client question this module answers, and why the obvious approach fails.
-2. **Erarbeitung** — *one* screenshot of the notebook doing the work, plus the link to it. Not a
+1. **Introduction** — the client question this module answers, and why the obvious approach fails.
+2. **Working through** — *one* screenshot of the notebook doing the work, plus the link to it. Not a
    method walkthrough: one picture and the three steps in the caption.
-3. **Ergebnis** — what exists afterwards (the artifact), and the one sentence to remember.
+3. **Learning outcome** — what exists afterwards (the artifact), and the one sentence to remember.
 
 Plus two frame slides: the chain diagram from §2 at the start of block A, and a closing slide.
 **20 slides total.**
@@ -200,7 +200,7 @@ written to stand alone.
 
 ### The proposal
 
-**Move the premise into the module document's Einleitung, once.** The notebooks then refer back
+**Move the premise into the module document's introduction, once.** The notebooks then refer back
 to it instead of rebuilding it. Estimated saving: **1,500–2,000 words** without losing an idea.
 
 **Define a core path and an extension.** A 45-minute block cannot cover four notebooks and
@@ -216,7 +216,7 @@ The core keeps the module's two strongest moments — *only 8 of 40 answers touc
 A participant who never opens notebook 2 still leaves with the argument.
 
 **Target: the module 8 core document sized like every other module** — ≈ 2,400 words of notebook
-prose in Erarbeitung, down from 8,272.
+prose in the working-through phase, down from 8,272.
 
 > **This is a proposal about teaching, not about the code.** Nothing in `8_ipscore_rebuild/` gets
 > deleted or rewritten. The core/extension split lives in the course document; the module stays
@@ -270,7 +270,7 @@ screenshots.
 | `06_patent-reports.md` | 2,082 | credits Riccardo Priore; written against the **rebuild**, not the reference folder |
 | `08_ipscore.md` | 2,869 | core path: notebook 1 + guided read of the report |
 
-All seven share the same heading set (Lernziel · Voraussetzungen · Teillernziele · Material ·
+All seven share the same heading set (Learning objective · Prerequisites · Sub-objectives · Material ·
 Phase 1/2/3 · Where this leads · Notes for the next revision). Each ends with a **"Notes for the
 next revision"** section listing the defects found while writing — those are the repo's to-do
 list, not the course's, and they are deliberately *not* fixed in this run (see §8: the course

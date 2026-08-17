@@ -12,19 +12,19 @@
 
 ---
 
-## Lernziel
+## Learning objective
 
 **I can define a patent corpus with a search strategy I am able to defend, run a battery of
 standard analyses over it, and assemble the result into one self-contained report a client can
 keep.**
 
-## Voraussetzungen
+## Prerequisites
 
 - **Module 1** — TIP is running, PATSTAT connects.
 - **Module 3** — you can read a query and judge a result.
 - **Module 4** — you know that an applicant name is not a company.
 
-## Teillernziele
+## Sub-objectives
 
 By the end you can:
 
@@ -60,7 +60,7 @@ By the end you can:
 
 ---
 
-## Phase 1 · Einleitung (≈ 7 min)
+## Phase 1 · Introduction (≈ 7 min)
 
 ### The question this module answers
 
@@ -85,7 +85,7 @@ The fix is not a better keyword. It is a **rule with two independent halves**: a
 a keyword **and** carry a relevant classification. Keywords bring recall; classification brings
 precision. Neither alone is defensible.
 
-| | Lehr- und Lernaktivität | ⏱ |
+| | Teaching and learning activity | ⏱ |
 |---|---|---|
 | Opening | Trainer asks for search terms for "antibiotic resistance"; collects them | 2 min |
 | Tension | Trainer names what "drug resistance" and bare acronyms actually return | 3 min |
@@ -93,7 +93,7 @@ precision. Neither alone is defensible.
 
 ---
 
-## Phase 2 · Erarbeitung (≈ 28 min)
+## Phase 2 · Working through (≈ 28 min)
 
 Four notebooks, one pipeline. **Run them in order 1 → 2 → 3 → 4** — each writes what the next
 reads.
@@ -183,7 +183,7 @@ It is opened with the course's shared `open_html()` helper.
 
 ---
 
-## Phase 3 · Lernergebnis (≈ 10 min)
+## Phase 3 · Learning outcome (≈ 10 min)
 
 ### What now exists
 

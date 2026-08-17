@@ -8,17 +8,17 @@
 
 ---
 
-## Lernziel
+## Learning objective
 
 **I can pick a ready-made PATSTAT query, adapt its parameters to my own question, and judge
 whether the result is plausible — without writing SQL.**
 
-## Voraussetzungen
+## Prerequisites
 
 - **Module 1** — TIP is running, PATSTAT connects with `PatstatClient(env='PROD')`.
 - No SQL knowledge. That is the point of this module.
 
-## Teillernziele
+## Sub-objectives
 
 By the end you can:
 
@@ -41,7 +41,7 @@ By the end you can:
 
 ---
 
-## Phase 1 · Einleitung (≈ 7 min)
+## Phase 1 · Introduction (≈ 7 min)
 
 ### The question this module answers
 
@@ -58,7 +58,7 @@ That gap is what a curated query library exists to close. Someone has already de
 tables to join, which filters are non-negotiable, and what "complete" means for each type of
 question. Your job shifts from *writing* the query to *choosing* it and *reading* it.
 
-| | Lehr- und Lernaktivität | ⏱ |
+| | Teaching and learning activity | ⏱ |
 |---|---|---|
 | Opening | Trainer poses the client question; room proposes approaches out loud | 2 min |
 | Tension | Trainer asks "how do you prove it is complete?" — the proposals fall apart | 2 min |
@@ -74,7 +74,7 @@ question. Your job shifts from *writing* the query to *choosing* it and *reading
 
 ---
 
-## Phase 2 · Erarbeitung (≈ 28 min)
+## Phase 2 · Working through (≈ 28 min)
 
 ### Step 1 — Open the library and look at what is there (8 min)
 
@@ -137,7 +137,7 @@ client, and which you would use yourself.
 
 ---
 
-## Phase 3 · Lernergebnis (≈ 10 min)
+## Phase 3 · Learning outcome (≈ 10 min)
 
 ### What now exists
 
@@ -185,5 +185,5 @@ and 5 — and it is worth keeping.
 - The two *"Story 3.x AC Validation"* cells at the end of the interactive demo are developer
   scaffolding and should be removed from the course version of the notebook.
 - Module 3 is the shortest module in the course (≈ 8 minutes of notebook content). This block
-  works because the Einleitung and the transfer exercise carry real weight — do not cut them to
+  works because the introduction and the transfer exercise carry real weight — do not cut them to
   save time.

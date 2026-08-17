@@ -8,17 +8,17 @@
 
 ---
 
-## Lernziel
+## Learning objective
 
 **I can open TIP, connect to PATSTAT, write and run my own first query — and set my environment
 up so that it survives a restart.**
 
-## Voraussetzungen
+## Prerequisites
 
 - A TIP account with JupyterLab access. Nothing else.
 - No Python, no SQL. Both are introduced here at the level you need them.
 
-## Teillernziele
+## Sub-objectives
 
 By the end you can:
 
@@ -48,7 +48,7 @@ By the end you can:
 
 ---
 
-## Phase 1 · Einleitung (≈ 7 min)
+## Phase 1 · Introduction (≈ 7 min)
 
 ### The question this module answers
 
@@ -62,7 +62,7 @@ scripts that rebuild the container every time it starts.
 
 So this module is in two halves, and the first half is not about patents at all.
 
-| | Lehr- und Lernaktivität | ⏱ |
+| | Teaching and learning activity | ⏱ |
 |---|---|---|
 | Opening | Trainer asks: *"you saved a file on TIP yesterday. Is it still there?"* — collect the guesses | 2 min |
 | Tension | Trainer names the real answer: it depends entirely on **which directory**, and nothing on the screen tells you which | 2 min |
@@ -74,7 +74,7 @@ So this module is in two halves, and the first half is not about patents at all.
 
 ---
 
-## Phase 2 · Erarbeitung (≈ 28 min)
+## Phase 2 · Working through (≈ 28 min)
 
 ### Step 1 — Learn the machine (10 min)
 
@@ -153,7 +153,7 @@ clone the training material into your own space.
 
 ---
 
-## Phase 3 · Lernergebnis (≈ 10 min)
+## Phase 3 · Learning outcome (≈ 10 min)
 
 ### What now exists
 

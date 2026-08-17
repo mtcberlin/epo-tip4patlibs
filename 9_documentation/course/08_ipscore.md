@@ -17,18 +17,18 @@
 
 ---
 
-## Lernziel
+## Learning objective
 
 **I can explain how a patent valuation is produced, run one, and say for every part of the number
 whether it is evidence or judgement.**
 
-## Voraussetzungen
+## Prerequisites
 
 - **Module 1** — TIP is running. (Notebook 1 itself runs anywhere; it needs no database.)
 - **Module 4** — you are used to marking which part of an answer was a decision you made.
 - Helpful, not required: **module 6**, whose antibiotic-resistance corpus this patent came from.
 
-## Teillernziele
+## Sub-objectives
 
 By the end you can:
 
@@ -54,7 +54,7 @@ By the end you can:
 
 ---
 
-## Phase 1 · Einleitung (≈ 7 min)
+## Phase 1 · Introduction (≈ 7 min)
 
 ### The question this module answers
 
@@ -83,7 +83,7 @@ the reason the module sits at the end of the course rather than module 6:
 
 A PATLIB, however, has PATSTAT. That is where the module goes.
 
-| | Lehr- und Lernaktivität | ⏱ |
+| | Teaching and learning activity | ⏱ |
 |---|---|---|
 | Opening | Trainer poses the valuation question; room proposes methods | 2 min |
 | Tension | Trainer states the model's premise — worth = what it lets a company earn — and that this is answerable | 2 min |
@@ -96,7 +96,7 @@ A PATLIB, however, has PATSTAT. That is where the module goes.
 
 ---
 
-## Phase 2 · Erarbeitung (≈ 28 min)
+## Phase 2 · Working through (≈ 28 min)
 
 ### Part A — The model (19 min) · `1_the_model.ipynb`
 
@@ -244,7 +244,7 @@ readings worth pointing out:
 
 ---
 
-## Phase 3 · Lernergebnis (≈ 10 min)
+## Phase 3 · Learning outcome (≈ 10 min)
 
 ### What now exists
 
