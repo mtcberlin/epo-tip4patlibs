@@ -125,7 +125,7 @@ constraint module 8 fails**, and the yardstick for every module document.
 
 > **Stale.** The sketch below is an early draft, kept only as the reasoning trail (it was
 > written in German and has since been translated, per the *English throughout* decision in §6).
-> **`course/03_query-library.md` is authoritative** — do not regenerate anything from this block.
+> **`course/source/03_query-library.md` is authoritative** — do not regenerate anything from this block.
 
 Module 3 is used as the pattern because it is the smallest, so the structure stays legible.
 Note how a thin module is *filled*, not padded: the introduction does real work.
@@ -256,7 +256,7 @@ prose in the working-through phase, down from 8,272.
 ## 7 · Run 2 and run 3 — scope, and one constraint worth knowing now
 
 **Run 2 — the drafts. ✅ Done, 2026-08-16.** Seven Markdown documents in
-`9_documentation/course/`: one per module against the §3 template, plus `00_overview.md` carrying
+`9_documentation/course/source/`: one per module against the §3 template, plus `00_overview.md` carrying
 §2 (the overall goal and the chain) and the course-level framing. Text only; no rendering, no
 screenshots.
 
@@ -314,13 +314,13 @@ weak for module 5, whose whole point is the resulting lead table.
 9_documentation/
   plan-course-material.md        ← this file
   course/
-    00_overview.md               ← §2: overall goal, the chain, how to use the material
-    01_start-with-tip.md
-    03_query-library.md
-    04_patstat-explorer.md
-    05_lead-generation.md
-    06_patent-reports.md
-    08_ipscore.md
+    00_overview.pdf              ← the handouts: what a participant is given
+    01_start-with-tip.pdf        …
+    source/                      ← what they are rendered from
+      00_overview.md             ← §2: overall goal, the chain, how to use the material
+      00_overview.yaml           ← its title-page metadata
+      01_start-with-tip.md       …
+      build_handouts.py          ← renders all seven via the mtc-pdf skill
     slides/                      ← run 3
 ```
 

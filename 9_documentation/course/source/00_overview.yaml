@@ -1,0 +1,16 @@
+# Title page and header/footer metadata for the 00_overview.md handout.
+# Rendered with the mtc-pdf skill via build_handouts.py.
+title: "Course Overview"
+subtitle: "Six modules · six 45-minute blocks"
+subtitle_accent: "TIP4PATLIBS — EPO Technology Intelligence Platform"
+author: "Arne Krüger"
+brand_subtitle: "Patent Intelligence"
+header_subtitle: "TIP4PATLIBS · the whole course"
+footer_text: "TIP4PATLIBS — EPO Internal Use"
+lang: en
+meta:
+  - ["Course", "TIP4PATLIBS — patent analytics on the EPO TIP"]
+  - ["Audience", "PATLIB staff across Europe"]
+  - ["Platform", "EPO TIP · PATSTAT Global, Autumn 2025"]
+  - ["By", "Arne Krüger — mtc.berlin"]
+  - ["Status", "17 August 2026"]

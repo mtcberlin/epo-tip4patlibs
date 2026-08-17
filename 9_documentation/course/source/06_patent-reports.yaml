@@ -1,0 +1,18 @@
+# Title page and header/footer metadata for the 06_patent-reports.md handout.
+# Rendered with the mtc-pdf skill via build_handouts.py.
+title: "Module 6 — Patent Landscape Reports"
+subtitle: "From a defensible corpus to a publishable analysis"
+subtitle_accent: "TIP4PATLIBS — EPO Technology Intelligence Platform"
+author: "Arne Krüger"
+brand_subtitle: "Patent Intelligence"
+header_subtitle: "TIP4PATLIBS · Module 6"
+footer_text: "TIP4PATLIBS — EPO Internal Use"
+lang: en
+meta:
+  - ["Course", "TIP4PATLIBS — patent analytics on the EPO TIP"]
+  - ["Audience", "PATLIB staff across Europe"]
+  - ["Format", "45-minute block"]
+  - ["Repository folder", "6_patentreports/"]
+  - ["Platform", "EPO TIP · PATSTAT Global, Autumn 2025"]
+  - ["By", "Arne Krüger — mtc.berlin"]
+  - ["Status", "17 August 2026"]

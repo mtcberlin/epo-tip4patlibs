@@ -1,0 +1,18 @@
+# Title page and header/footer metadata for the 01_start-with-tip.md handout.
+# Rendered with the mtc-pdf skill via build_handouts.py.
+title: "Module 1 — Start with TIP"
+subtitle: "The working environment: TIP, PATSTAT, your first query"
+subtitle_accent: "TIP4PATLIBS — EPO Technology Intelligence Platform"
+author: "Arne Krüger"
+brand_subtitle: "Patent Intelligence"
+header_subtitle: "TIP4PATLIBS · Module 1"
+footer_text: "TIP4PATLIBS — EPO Internal Use"
+lang: en
+meta:
+  - ["Course", "TIP4PATLIBS — patent analytics on the EPO TIP"]
+  - ["Audience", "PATLIB staff across Europe"]
+  - ["Format", "45-minute block"]
+  - ["Repository folder", "1_startwithtip/"]
+  - ["Platform", "EPO TIP · PATSTAT Global, Autumn 2025"]
+  - ["By", "Arne Krüger — mtc.berlin"]
+  - ["Status", "17 August 2026"]
