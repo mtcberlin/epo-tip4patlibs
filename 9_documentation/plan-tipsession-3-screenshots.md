@@ -41,7 +41,7 @@ The course splits on purpose, and the split decides the work:
 | Module | Code cells with output | Screenshot |
 |---|---|---|
 | 1 Start with TIP | **0 of 25** | ⏳ this session |
-| 3 Query Library | **6 of 10** | ⏳ this session — the browser is interactive, so its shot is missing |
+| 3 Query Library | **6 of 10** | ⏳ this session — the browser is an **ipywidget**: the committed notebook holds a widget reference, not a rendered state, so it cannot be cut offline |
 | 5 Lead Generation | **8 of 31** | ⏳ this session |
 | 4 PATSTAT Explorer | 7 of 7 | ✅ **done** — cut offline by `course/source/build_shots.py` |
 | 6 Patent Reports | 29 of 29 | ✅ **done** — ditto |

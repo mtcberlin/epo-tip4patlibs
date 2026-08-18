@@ -80,7 +80,9 @@ modules:
     shot:
       what: "The Query Browser with a query's SQL open"
       file: "3_querylib/TIP_for_PATLIBs_QueryLib.ipynb"
-      available: partial
+      # the browser is an ipywidget — the committed notebook holds only a widget
+      # reference, not a rendered state, so this cannot be cut offline
+      available: false
     artifact:
       - "One query adapted to a question you are actually asked, with its result table"
       - "A first feel for what a PATSTAT query costs in time"
