@@ -11,7 +11,7 @@ Screenshots: drop a PNG into `shots/` named after the module (`01.png`, `03.png`
 placeholder naming the shot it wants — and whether taking it needs a TIP run,
 because modules 1 and 5 ship with cleared outputs on purpose.
 
-    uv run --with python-pptx --with pyyaml python build_slides.py
+    uv run --with python-pptx --with pyyaml --with pillow python build_slides.py
 """
 
 from __future__ import annotations
@@ -20,6 +20,7 @@ import sys
 from pathlib import Path
 
 import yaml
+from PIL import Image
 from pptx import Presentation
 from pptx.dml.color import RGBColor
 from pptx.enum.shapes import MSO_SHAPE
@@ -224,7 +225,14 @@ def slide_work(prs, mod, blk, n, total):
     x, y = M, Inches(1.9)
     png = SHOTS / f'{mod["n"]:02d}.png'
     if png.exists():
-        s.shapes.add_picture(str(png), x, y, width=shot_w)
+        # fit inside the frame and centre — a portrait shot scaled to the frame's
+        # width would run off the bottom of the slide
+        with Image.open(png) as _im:
+            iw, ih = _im.size
+        scale = min(shot_w / iw, shot_h / ih)
+        pw, ph = int(iw * scale), int(ih * scale)
+        s.shapes.add_picture(str(png), x + (shot_w - pw) // 2,
+                             y + (shot_h - ph) // 2, width=pw, height=ph)
     else:
         avail = mod["shot"]["available"]
         tag = {True: "available offline — notebook ships executed",
