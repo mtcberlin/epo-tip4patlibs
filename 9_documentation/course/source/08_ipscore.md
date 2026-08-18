@@ -1,6 +1,6 @@
 # Module 8 — What is this patent worth?
 
-*45-minute block · TIP4PATLIBS course material · **core path***
+*45-minute block · TIP4PATLIBS course material* · **core path**
 
 > **Scope.** This block covers `1_the_model.ipynb` and a guided read of the finished valuation
 > report. The implementation chain — measuring answers against PATSTAT, the scenario analysis, and

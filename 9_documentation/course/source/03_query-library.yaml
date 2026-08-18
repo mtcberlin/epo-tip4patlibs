@@ -1,5 +1,9 @@
 # Title page and header/footer metadata for the 03_query-library.md handout.
 # Rendered with the mtc-pdf skill via build_handouts.py.
+# privat mode: no title page, no logo, no mtc brand — the handout keeps its
+# own "# Title" heading, the accent headings, tables, callouts, running
+# header and the page counter.
+mode: privat
 title: "Module 3 — The Query Library"
 subtitle: "Ask PATSTAT a question: pick, adapt, read the result"
 subtitle_accent: "TIP4PATLIBS — EPO Technology Intelligence Platform"

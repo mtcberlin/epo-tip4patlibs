@@ -8,8 +8,10 @@ title-page metadata, and rendered with the `mtc-pdf` skill into the parent
 The Markdown is written for reading on screen in a repository; a printed handout
 needs three small adjustments, made here on a copy so the sources stay untouched:
 
-1. The leading `# Title` and its italic subtitle line are dropped — the title page
-   draws them from the sidecar, so keeping them would print the title twice.
+1. The leading `# Title` and its italic subtitle line are dropped *only* when the
+   sidecar asks for a title page, which draws them itself — keeping both would
+   print the title twice. In `mode: privat` there is no title page, so the
+   heading stays and the document keeps its title.
 2. The 🎓 / ⚠️ / ⏱ markers become text labels. WeasyPrint's PDF cannot carry colour
    emoji reliably, so the skill strips them — and here they carry meaning, which
    would silently be lost ("Boxes marked  are for ...").
@@ -23,6 +25,8 @@ import re
 import subprocess
 import sys
 from pathlib import Path
+
+import yaml
 
 HERE = Path(__file__).resolve().parent   # the Markdown + YAML sources
 OUT = HERE.parent                        # the finished handouts, one level up
@@ -128,11 +132,20 @@ def unwrap_paragraphs(md_text: str) -> str:
     return "\n".join(out)
 
 
-def to_handout(md_text: str) -> str:
+def draws_title_page(cfg_path: Path) -> bool:
+    """Mirror the skill's own rule: privat mode has no title page unless forced."""
+    cfg = yaml.safe_load(cfg_path.read_text(encoding="utf-8")) or {}
+    if cfg.get("title_page") is not None:
+        return bool(cfg["title_page"])
+    return str(cfg.get("mode", "mtc")).lower() != "privat"
+
+
+def to_handout(md_text: str, *, drop_title: bool) -> str:
     body = md_text
 
-    # 1. title + italic subtitle live on the title page
-    body = re.sub(r"\A#[ \t]+[^\n]*\n+(?:\*[^\n]*\*\n+)?", "", body)
+    # 1. title + italic subtitle live on the title page — where there is one
+    if drop_title:
+        body = re.sub(r"\A#[ \t]+[^\n]*\n+(?:\*[^\n]*\*\n+)?", "", body)
 
     # 2a. the legend sentences that *name* the markers, before the markers go
     body = re.sub(r"([Bb])oxes marked 🎓", r"\1oxes labelled **Trainer**", body)
@@ -179,7 +192,10 @@ def main() -> int:
             failures.append(md.name)
             continue
         staged = STAGE / md.name
-        staged.write_text(to_handout(md.read_text(encoding="utf-8")), encoding="utf-8")
+        staged.write_text(
+            to_handout(md.read_text(encoding="utf-8"),
+                       drop_title=draws_title_page(cfg)),
+            encoding="utf-8")
         pdf = OUT / f"{md.stem}.pdf"
         cmd = [
             "uv", "run", "--quiet",
