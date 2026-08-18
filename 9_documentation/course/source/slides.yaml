@@ -1,0 +1,201 @@
+# Content for the TIP4PATLIBS workshop deck — 3 slides per module, two 45-minute
+# blocks. Rendered to ../TIP4PATLIBS_workshop.pptx by build_slides.py.
+#
+# This is the condensed version of the module documents in this folder; the
+# documents stay the source of truth. Keep it that way: if a fact changes, change
+# it in the .md first and carry it here.
+#
+# shot:  what the "Working through" slide should show. `available: false` means
+#        the notebook ships with cleared outputs, so the screenshot needs a TIP run.
+
+deck:
+  title: "TIP4PATLIBS"
+  subtitle: "Patent analytics on the EPO Technology Intelligence Platform"
+  occasion: "PATLIB Workshop · Warsaw · 18 September 2026"
+  author: "Arne Krüger · mtc.berlin"
+  goal: >-
+    A PATLIB adviser can take a real question from a real client and answer it from
+    PATSTAT on TIP — with a defensible method, a reproducible notebook and an artifact
+    the client can keep. And they can say which parts of that answer are evidence and
+    which are judgement.
+  chain:
+    skills:
+      - ["1", "Work on TIP at all", "environment, first query"]
+      - ["3", "Ask PATSTAT a question", "the query library"]
+      - ["4", "Find the right people", "applicant consolidation"]
+    applications:
+      - ["5", "Who is out there?", "region → applicants → leads"]
+      - ["6", "What does a field look like?", "corpus → analyses → report"]
+      - ["8", "What is one patent worth?", "model → evidence → valuation"]
+    note: "Each application consumes all three skills. 5, 6 and 8 are parallel, not sequential."
+
+blocks:
+  - name: "Block A — Skills"
+    minutes: 45
+    modules: [1, 3, 4]
+  - name: "Block B — Applications"
+    minutes: 45
+    modules: [5, 6, 8]
+
+modules:
+  - n: 1
+    title: "Start with TIP"
+    folder: "1_startwithtip/"
+    question: >-
+      You have been given a login to a machine you do not own, which will be reset
+      without warning, and which holds the largest patent database in the world.
+      Where do you put your work?
+    fails:
+      - "Half the room assumes everything persists, half assumes nothing does. Both are wrong."
+      - "It depends entirely on which directory — and nothing on the screen tells you which."
+      - "Nothing is deleted. It is overwritten, by the scripts that rebuild the container on every start."
+    steps:
+      - ["Learn the machine", "sections 1–5b — a factual report on your own environment", "10 min"]
+      - ["Ask PATSTAT", "Part 1, queries 1–4 — your first result table", "13 min"]
+      - ["Get your work out", "sections 9–11 — SSH key, your own copy of the material", "5 min"]
+    shot:
+      what: "Notebook 2, Query 1 — the applicant search with its result table"
+      file: "1_startwithtip/2_getting-started-with-patstat.ipynb"
+      available: false
+    artifact:
+      - "A TIP environment that survives a restart, with your settings in the right file"
+      - "One PATSTAT query you wrote yourself, answering a question you chose"
+      - "An SSH key that pushes your results off the machine"
+    takeaway: >-
+      Count families for inventions and applications for filings — and always say
+      which of the two you used.
+
+  - n: 3
+    title: "The Query Library"
+    folder: "3_querylib/"
+    question: 'A client walks in: "Who in Europe is working on solid-state batteries?"'
+    fails:
+      - "The first answer is always a keyword search. It is not wrong — it is undefendable."
+      - "Keywords miss everything phrased differently and catch everything that merely mentions the term."
+      - "Neither problem is visible in the result. You get a list, and no way to prove it is complete."
+    steps:
+      - ["Browse", "open one query's SQL — the decisions someone made for you", "8 min"]
+      - ["Adapt", "change country, window, field; run it; time it", "12 min"]
+      - ["Point and click", "the same data through the interactive demo", "8 min"]
+    shot:
+      what: "The Query Browser with a query's SQL open"
+      file: "3_querylib/TIP_for_PATLIBs_QueryLib.ipynb"
+      available: partial
+    artifact:
+      - "One query adapted to a question you are actually asked, with its result table"
+      - "A first feel for what a PATSTAT query costs in time"
+    takeaway: "An analysis you cannot open up is one you cannot defend."
+
+  - n: 4
+    title: "PATSTAT Explorer"
+    folder: "4_patstat_explorer/"
+    question: >-
+      A client asks how big Siemens Healthineers' patent portfolio is. You run a name
+      search. You get 200 rows. Which one is the answer?
+    fails:
+      - "None of them. PATSTAT does not know companies — it knows names, as typed on each application."
+      - "One entry per spelling, per country, per subsidiary, per typo. There is no record to look up."
+      - "Take the biggest row and you have undercounted the group — as a clean, confident-looking number."
+    steps:
+      - ["Find the names", "up to 200 spellings, none of them the answer", "6 min"]
+      - ["Decide", "which belong together — the step no query can do for you", "7 min"]
+      - ["Count families", "not applications — a number below the naive sum", "7 min"]
+    shot:
+      what: "The step-1 hit list — one company across many spellings"
+      file: "4_patstat_explorer/1_Applicant_consolidation_notebook.ipynb"
+      available: true
+    artifact:
+      - "One consolidated applicant group — a named list of spellings you decided belong together"
+      - "The group's family count, filing offices and technology profile"
+      - "A written note of what your consolidation missed"
+    takeaway: >-
+      Consolidation is a judgement, not a lookup. What makes the number defensible is
+      that you wrote the decision down.
+
+  - n: 5
+    title: "Regional Lead Generation"
+    folder: "5_lead_generation/"
+    question: >-
+      Your PATLIB is asked to justify its outreach budget. Which companies in your
+      region should you actually be talking to — and why those?
+    fails:
+      - "Every PATLIB has a contact list. Almost none can say how it was built."
+      - "Who walked in, who came to the last event, who somebody remembered."
+      - "The question a ranked list has to survive is not 'who is on it' but 'who is missing'."
+    steps:
+      - ["Get the NUTS codes right", "both vintages — one alone loses a third of the data", "7 min"]
+      - ["Two axes", "portfolio depth × geographic reach", "11 min"]
+      - ["Segment", "the grid, and the named shortlist you act on", "6 min"]
+    shot:
+      what: "The lead-tier grid and the named shortlist for Alsace"
+      file: "5_lead_generation/1_regional-leads.ipynb"
+      available: false
+    artifact:
+      - "A named shortlist of companies in your region — family count, depth tier, reach tier, zones"
+      - "The grid showing how your region distributes across the tiers"
+      - "One defensible sentence about what the list does not contain"
+    takeaway: >-
+      This is the EP/PCT-active subset of your region. Roughly 70% of national families
+      never take that route — say so under the table.
+
+  - n: 6
+    title: "Patent Landscape Reports"
+    folder: "6_patentreports/"
+    credit: "Landscape analyses after Riccardo Priore, Centro PATLIB, AREA Science Park"
+    question: >-
+      A regional cluster manager asks for a picture of what is happening in antibiotic
+      resistance. Where do you start?
+    fails:
+      - '"drug resistance" is dominated by cancer — an oncology landscape wearing the wrong label.'
+      - "Bare acronyms — MRSA, VRE, ESBL — are noisy and appear where the subject is not."
+      - "Neither is visible in the result: a large corpus, looking healthy, about something else."
+    steps:
+      - ["Define the corpus", "keywords AND (IPC OR CPC) — recall from one half, precision from the other", "10 min"]
+      - ["Run the battery", "13 charts: who, where, when, how it connects", "14 min"]
+      - ["Assemble", "one self-contained HTML report + one workbook", "4 min"]
+    shot:
+      what: "The assembled report in Paged mode, on the applicants-by-sector chart"
+      file: "6_patentreports/2_antibiotic_resistance_rebuild/4_report/"
+      available: true
+    artifact:
+      - "One self-contained HTML report, 13 charts, no internet needed"
+      - "One workbook carrying the data behind every chart"
+      - "A written search strategy — including its exclusions"
+    takeaway: >-
+      The analyses are generic. The corpus definition is the part that is yours, and
+      the part you have to defend.
+
+  - n: 8
+    title: "What is this patent worth?"
+    folder: "8_ipscore_rebuild/"
+    credit: "IPScore is an EPO tool; this is the course's own implementation of the 3.01 model"
+    question: >-
+      A client puts a granted European patent on the table and asks what it is worth.
+    fails:
+      - "Renewal costs, comparable licence rates, \"it depends\" — or that the question is unanswerable."
+      - "IPScore answers it: 40 questions, seven figures from the accounts, a ten-year discounted cash flow."
+      - "And then: all 40 answers come from a person. The engine is exact; its inputs are opinions."
+    steps:
+      - ["The model", "40 questions — and only 8 of them touch the money", "19 min"]
+      - ["The finished report", "NPV 1,248,870 EUR · 139/200 points · 2 measured, 6 informed, 32 judgement", "6 min"]
+      - ["The lever", "widest ≠ worth pulling: C3 has an upside of exactly zero", "3 min"]
+    shot:
+      what: "The report's verdict section — the number and the evidence split side by side"
+      file: "8_ipscore_rebuild/4_tool/ipscore_valuation.html"
+      available: true
+    artifact:
+      - "A verified implementation of the EPO IPScore model, seen from the inside"
+      - "One completed valuation of a real patent — NPV and profile"
+      - "A statement of how much of that number is evidence"
+    takeaway: >-
+      None of the 11 questions PATSTAT can check is one of the 8 that carry money.
+      What a database can check and what a valuation depends on barely overlap.
+
+closing:
+  headline: "What a participant leaves with"
+  points:
+    - "Three skills: work on TIP · ask PATSTAT · find the right people"
+    - "Three applications: a regional lead list · a landscape report · a patent valuation"
+    - "And, in every one of them, the line between evidence and judgement — drawn out loud"
+  handouts: "Seven A4 handouts, one per module, in 9_documentation/course/"
+  repo: "github.com/mtcberlin/epo-tip4patlibs"

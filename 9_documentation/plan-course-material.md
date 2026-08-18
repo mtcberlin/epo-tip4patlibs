@@ -280,9 +280,14 @@ material describes the modules, it does not modify them).
 
 - **PDF** — the `mtc-pdf` skill exists and produces branded A4 with title page and running
   header. No new tooling needed.
-- **Slides** — **no skill exists for this.** Either `python-pptx` (real `.pptx`, editable in
-  PowerPoint) or a self-contained HTML deck (matches the course's existing house style, opens in
-  any browser, but is not a `.pptx` anyone can edit). **Decide in run 3, not now.**
+- **Slides** — decided: **`python-pptx`**, a real editable `.pptx`. A draft of all 20 slides is
+  built by `course/source/build_slides.py` from `course/source/slides.yaml` into
+  `course/TIP4PATLIBS_workshop.pptx`. The YAML is the condensed form of the module documents;
+  the documents stay the source of truth.
+
+  **The screenshots are placeholders.** Each *Working through* slide carries a framed box naming
+  the shot it wants and whether taking it needs a TIP run. Drop a PNG into `course/source/shots/`
+  named `01.png`, `03.png`, … and the next build uses it in place of the placeholder.
 
 ### ⚠️ The screenshot constraint
 
