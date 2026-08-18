@@ -1,9 +1,24 @@
-# TIP session plan — unblock module 8 Phase 3
+# TIP session 1 — reconnaissance: what can PATSTAT actually answer?
+
+**What this is.** The briefing for the **first** of the module 8 TIP sessions, handed to whoever
+sat in front of TIP. It is a **reconnaissance** session: five open questions that could not be
+answered offline, because they are about what the data on TIP *contains*. Nothing was built here
+— the point was to find out what could be built.
+
+**What it is not.** It does not run any of module 8's notebooks. That is
+[`plan-tipsession-2-evidence-run.md`](plan-tipsession-2-evidence-run.md), an **execution**
+session with a single task, run the same day once these answers were in.
+
+**Read it for** the questions that were asked and the SQL as it was *drafted* — including the
+five places that draft turned out to be wrong, which is the more useful half. The findings live
+in [`results-tipsession.md`](results-tipsession.md).
+
+---
 
 > ✅ **Done, 2026-08-15.** All five tasks ran; results in
 > [`results-tipsession.md`](results-tipsession.md). Notebook 2 has since been written against
 > those answers — the one run it still needs is in
-> [`plan-tipsession-2.md`](plan-tipsession-2.md). ✅ done
+> [`plan-tipsession-2-evidence-run.md`](plan-tipsession-2-evidence-run.md). ✅ done
 
 > ## ✅ Run on 2026-08-15. All five tasks done — Phase 3 is unblocked.
 >
@@ -298,7 +313,11 @@ Ticket `#PIP-127`. Work on `develop`.
 
 ## Not part of this session, but decide before 18 September
 
-- **Notebook 1 stamps three answers `measured`** (A1, A3, A5) with hand-written evidence strings.
+> ✅ **Settled since.** The notebook 1 re-run happened — the three `measured` stamps are gone and
+> the cell-21 scores are corrected (`C3=5`, `D3=4`, `D4=4`). The module 8 attribution wording is
+> written. What remains of this list is O3, which is a conversation, not a query.
+
+- ~~**Notebook 1 stamps three answers `measured`**~~ ✅ **done.** (A1, A3, A5) with hand-written evidence strings.
   Harmless there — it illustrates the dataclass, and that notebook's deliverable is the
   acceptance test — but it is the opposite of the standard notebook 4 now sets, where all forty
   answers are honestly `judgement`. The last inconsistency in the module. Fixing it costs a
@@ -308,7 +327,7 @@ Ticket `#PIP-127`. Work on `develop`.
   three: A1 "granted 2018-01-10, no opposition (`26N`)", A3 "renewals paid to year 11 in 2025,
   nominal expiry 2034-06-13", A5 "in force in DE, SE, GB, FR of 38 designated states". The
   hand-written strings can become true rather than being deleted.
-- **Attribution wording for module 8.** Riccardo has agreed to the rebuild; the sentence itself
+- ~~**Attribution wording for module 8.**~~ ✅ **done.** Riccardo has agreed to the rebuild; the sentence itself
   is still unwritten. Module 8 is our implementation of the **EPO** model and must say so, while
   modules 6 and 7 keep *created by Riccardo Priore*.
 - ~~Unsigned commits on `develop`~~ — **done, 2026-08-15.** All four were re-signed and

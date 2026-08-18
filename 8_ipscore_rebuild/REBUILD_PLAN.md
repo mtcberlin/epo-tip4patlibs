@@ -220,7 +220,7 @@ you cannot show someone an NPV before you have shown them what was assumed to ge
 ### Phase 3, concretely — the next thing to build
 
 > 📋 The live-TIP tasks that gate this are written up as an executable session plan:
-> **[`../9_documentation/plan-tipsession.md`](../9_documentation/plan-tipsession.md)** — five
+> **[`../9_documentation/plan-tipsession-1-recon.md`](../9_documentation/plan-tipsession-1-recon.md)** — five
 > tasks, ~30 minutes, with draft queries for O1 and O2 and the selection criteria for V5.
 
 `2_evidence_from_patstat.ipynb`, and it is **TIP-only**. Before it can be written, one short
@@ -430,7 +430,7 @@ Arne exactly one notebook to run on TIP, commit outputs.
 
 ## Open questions to resolve before Phase 3
 
-Answered on TIP, 2026-08-15 (`9_documentation/plan-tipsession.md`, PATSTAT Global Autumn 2025,
+Answered on TIP, 2026-08-15 (`9_documentation/plan-tipsession-1-recon.md`, PATSTAT Global Autumn 2025,
 `PatstatClient(env='PROD')`). O1, O2 and V5 are settled; Phase 3 is unblocked.
 
 - **O1 — Does TIP's PATSTAT edition carry legal-event / legal-status tables?**

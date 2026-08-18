@@ -1,4 +1,18 @@
-# TIP session 2 — run the evidence layer ✅ done
+# TIP session 2 — execution: run the evidence layer
+
+**What this is.** The briefing for the **second** module 8 TIP session, run the same day as the
+first. It is an **execution** session: one notebook, written offline against session 1's answers
+and stub-tested, needed the one thing only TIP can give it — a real PATSTAT. No open questions,
+no exploration; a checklist and the things to watch while it ran.
+
+**What it is not.** It establishes nothing about the data. The questions were settled in
+[`plan-tipsession-1-recon.md`](plan-tipsession-1-recon.md), the reconnaissance session.
+
+**Read it for** the checklist shape — what to verify while a long notebook runs on TIP, and what
+to do when the SQL breaks mid-session. Its tail carries the items left for a **later** session,
+now collected in [`plan-tipsession-3-screenshots.md`](plan-tipsession-3-screenshots.md).
+
+---
 
 > ## ✅ Run on 2026-08-15. Phase 3 is complete.
 >
@@ -92,6 +106,10 @@ state is in `tls231.lapse_country`, not `event_text`.
 ---
 
 ## Leftover for whenever a TIP session happens next (not urgent)
+
+> ➡️ **Carried over.** Both items are now task 3 of
+> [`plan-tipsession-3-screenshots.md`](plan-tipsession-3-screenshots.md), which is the
+> brief for the next session. They are kept here as the record of why they were deferred.
 
 Two one-line changes were made to `4_assemble_tool.ipynb` **without re-running it**, because
 regenerating the report on this laptop would swap the embedded `plotly.js` (TIP builds 3.0.1,

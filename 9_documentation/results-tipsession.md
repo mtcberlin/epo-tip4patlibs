@@ -1,6 +1,6 @@
 # TIP session results — module 8 Phase 3 unblocked
 
-**Session run 2026-08-15** against the plan in [`plan-tipsession.md`](plan-tipsession.md).
+**Session run 2026-08-15** against the plan in [`plan-tipsession-1-recon.md`](plan-tipsession-1-recon.md).
 EPO TIP JupyterLab, base conda env, `PatstatClient(env='PROD')`, PATSTAT Global Autumn 2025.
 
 **All five tasks are done. Phase 3 is unblocked** — `2_evidence_from_patstat.ipynb` can now be
@@ -344,7 +344,7 @@ passes its three EPO test patents after the session.
 | File | Change |
 |---|---|
 | `8_ipscore_rebuild/REBUILD_PLAN.md` | O1, O2, V5 answered under *Open questions*; V5 section added |
-| `9_documentation/plan-tipsession.md` | Ticked off, pointing here |
+| `9_documentation/plan-tipsession-1-recon.md` | Ticked off, pointing here |
 | `9_documentation/results-tipsession.md` | This file |
 
 ---
