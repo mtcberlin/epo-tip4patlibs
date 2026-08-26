@@ -41,11 +41,11 @@ The course splits on purpose, and the split decides the work:
 | Module | Code cells with output | Screenshot |
 |---|---|---|
 | 1 Start with TIP | **0 of 25** | ⏳ this session |
-| 3 Query Library | **6 of 10** | ⏳ this session — the browser is interactive, so its shot is missing |
+| 3 Query Library | **6 of 10** | ⏳ this session — the browser is an **ipywidget**: the committed notebook holds a widget reference, not a rendered state, so it cannot be cut offline |
 | 5 Lead Generation | **8 of 31** | ⏳ this session |
-| 4 PATSTAT Explorer | 7 of 7 | ✅ can be cut from the committed notebook, no TIP needed |
-| 6 Patent Reports | 29 of 29 | ✅ ditto |
-| 8 IPScore Rebuild | 37 of 38 | ✅ ditto |
+| 4 PATSTAT Explorer | 7 of 7 | ✅ **done** — cut offline by `course/source/build_shots.py` |
+| 6 Patent Reports | 29 of 29 | ✅ **done** — ditto |
+| 8 IPScore Rebuild | 37 of 38 | ✅ **done** — ditto |
 
 Modules 1–5 clear their outputs because participants are meant to run them; 6 and 8 ship executed
 because they are read as finished reports. That convention is *why* this session exists, so
@@ -170,8 +170,8 @@ cd 9_documentation/course/source
 uv run --with python-pptx --with pyyaml python build_slides.py
 ```
 
-It prints which screenshots are still placeholders. After this session that list should hold only
-modules 4, 6 and 8 — and those can be cut from the committed notebooks without TIP.
+It prints which screenshots are still placeholders. Modules 4, 6 and 8 are already in;
+**after this session the list should be empty.**
 
 > ⚠️ **Signing.** Commits made from TIP go in **unsigned**: the 1Password agent is not reachable
 > there (`SSH_AUTH_SOCK` is unset) and the only local key is a different one. This has already
@@ -182,8 +182,10 @@ modules 4, 6 and 8 — and those can be cut from the committed notebooks without
 
 ## Not part of this session
 
-- **Screenshots for modules 4, 6 and 8** — their notebooks ship executed, so those images can be
-  cut from what is already committed. No TIP needed.
+- ~~**Screenshots for modules 4, 6 and 8**~~ ✅ **done.** Their notebooks ship executed, so the
+  images were cut from what is already committed, by `course/source/build_shots.py`. That script
+  documents the four traps it hit — chief among them that module 8's report has a dark palette and
+  headless Chrome asks for dark, and that a pandas header row cannot be counted as a `<tr>`.
 - **The handouts.** The seven A4 PDFs currently carry no screenshots. The same PNGs could be
   placed into `course/source/*.md` later; `build_handouts.py` would pick them up. Deliberately
   out of scope here — get the deck complete first.

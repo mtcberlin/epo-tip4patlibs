@@ -1,5 +1,11 @@
-# Content for the TIP4PATLIBS workshop deck — 3 slides per module, two 45-minute
-# blocks. Rendered to ../TIP4PATLIBS_workshop.pptx by build_slides.py.
+# Content for the TIP4PATLIBS workshop deck — 3 slides per module, rendered to
+# ../TIP4PATLIBS_workshop.pptx by build_slides.py.
+#
+# This is the WORKSHOP cut: 90 minutes, two speakers. One claim (install the
+# assistant, persistently) demonstrated three times at rising ambition, then two
+# use cases of Riccardo's at ten minutes each. It is deliberately NOT the course:
+# the course is six 45-minute blocks and lives in the module documents and the
+# handouts beside them. See 9_documentation/plan-workshop-warsaw.md.
 #
 # This is the condensed version of the module documents in this folder; the
 # documents stay the source of truth. Keep it that way: if a fact changes, change
@@ -10,77 +16,80 @@
 
 deck:
   title: "TIP4PATLIBS"
-  subtitle: "Patent analytics on the EPO Technology Intelligence Platform"
+  subtitle: "Install an assistant. Then ask better questions."
   occasion: "PATLIB Workshop · Warsaw · 18 September 2026"
-  author: "Arne Krüger · mtc.berlin"
+  author: "Arne Krüger · mtc.berlin  ·  Riccardo Priore · AREA Science Park"
   goal: >-
-    A PATLIB adviser can take a real question from a real client and answer it from
-    PATSTAT on TIP — with a defensible method, a reproducible notebook and an artifact
-    the client can keep. And they can say which parts of that answer are evidence and
-    which are judgement.
+    You do not have to learn SQL. You have to install something that writes it — and then
+    decide what to ask. Everything in this session is evidence for that one sentence.
   chain:
-    skills:
-      - ["1", "Work on TIP at all", "environment, first query"]
-      - ["3", "Ask PATSTAT a question", "the query library"]
-      - ["4", "Find the right people", "applicant consolidation"]
-    applications:
-      - ["5", "Who is out there?", "region → applicants → leads"]
-      - ["6", "What does a field look like?", "corpus → analyses → report"]
-      - ["8", "What is one patent worth?", "model → evidence → valuation"]
-    note: "Each application consumes all three skills. 5, 6 and 8 are parallel, not sequential."
+    left_label: "THE CLAIM"
+    left:
+      - ["", "Install the assistant, persistently", "it writes the SQL and the notebooks — you decide what to ask"]
+    right_label: "THREE EXAMPLES, RISING"
+    right:
+      - ["1", "A question already asked", "the query library"]
+      - ["2", "The same query, as an app", "PATSTAT Explorer"]
+      - ["3", "Your region, your client list", "regional leads — FR and DE"]
+    arrow: "then, three\ntimes over"
+    note: "Riccardo Priore adds two use cases of his own — 2 × 10 min"
 
 blocks:
-  - name: "Block A — Skills"
-    minutes: 45
-    modules: [1, 3, 4]
-  - name: "Block B — Applications"
-    minutes: 45
-    modules: [5, 6, 8]
+  - name: "Arne — the claim, then the ladder"
+    minutes: 53
+    modules: [1, 3, 4, 5]
+  - name: "Riccardo — two use cases"
+    minutes: 20
+    modules: [6, 8]
 
 modules:
   - n: 1
-    title: "Start with TIP"
+    title: "Install the assistant, persistently"
     folder: "1_startwithtip/"
+    minutes: "The claim · 15 min"
     question: >-
-      You have been given a login to a machine you do not own, which will be reset
-      without warning, and which holds the largest patent database in the world.
-      Where do you put your work?
+      You have a login to a machine you do not own, which is rebuilt without warning, and
+      which holds the largest patent database in the world. How do you get an assistant
+      onto it that is still there on Monday?
     fails:
-      - "Half the room assumes everything persists, half assumes nothing does. Both are wrong."
-      - "It depends entirely on which directory — and nothing on the screen tells you which."
-      - "Nothing is deleted. It is overwritten, by the scripts that rebuild the container on every start."
+      - "\"I will just install it.\" The naive install is gone by Monday — nothing was deleted, it was overwritten."
+      - "\"Then I will learn SQL instead.\" That was the barrier for twenty years. It is the part that just stopped being hard."
+      - "\"The assistant will get it wrong.\" Sometimes. Which is why the SQL it wrote stays on the screen, and you read it."
     steps:
-      - ["Learn the machine", "sections 1–5b — a factual report on your own environment", "10 min"]
-      - ["Ask PATSTAT", "Part 1, queries 1–4 — your first result table", "13 min"]
-      - ["Get your work out", "sections 9–11 — SSH key, your own copy of the material", "5 min"]
+      - ["Where your work survives", "which directory persists, which is rebuilt on every start — and why nothing on screen tells you", "5 min"]
+      - ["Install it so it persists", "notebook 1, sections 6–8: the install, the settings, the status line", "7 min"]
+      - ["Ask it for a query", "plain language in, SQL out, result table back — and you can read every line of it", "3 min"]
     shot:
-      what: "Notebook 2, Query 1 — the applicant search with its result table"
-      file: "1_startwithtip/2_getting-started-with-patstat.ipynb"
+      what: "Claude Code running in the TIP terminal — a plain-language question, the SQL it wrote, the result"
+      file: "1_startwithtip/1_getting-started-with-tip.ipynb"
       available: false
     artifact:
-      - "A TIP environment that survives a restart, with your settings in the right file"
-      - "One PATSTAT query you wrote yourself, answering a question you chose"
-      - "An SSH key that pushes your results off the machine"
+      - "An assistant that is still installed after the machine restarts"
+      - "One query you did not write — and can read"
+      - "The setup that makes it yours, not a demonstration"
     takeaway: >-
-      Count families for inventions and applications for filings — and always say
-      which of the two you used.
+      The barrier was never the database. It was the SQL — and that is precisely the part
+      you can now hand over.
 
   - n: 3
     title: "The Query Library"
     folder: "3_querylib/"
+    minutes: "Rung 1 · 8 min"
     question: 'A client walks in: "Who in Europe is working on solid-state batteries?"'
     fails:
       - "The first answer is always a keyword search. It is not wrong — it is undefendable."
       - "Keywords miss everything phrased differently and catch everything that merely mentions the term."
       - "Neither problem is visible in the result. You get a list, and no way to prove it is complete."
     steps:
-      - ["Browse", "open one query's SQL — the decisions someone made for you", "8 min"]
-      - ["Adapt", "change country, window, field; run it; time it", "12 min"]
-      - ["Point and click", "the same data through the interactive demo", "8 min"]
+      - ["Browse", "open one query's SQL — the decisions someone made for you", "3 min"]
+      - ["Adapt", "change country, window, field; run it; time it", "3 min"]
+      - ["Point and click", "the same data through the interactive demo", "2 min"]
     shot:
       what: "The Query Browser with a query's SQL open"
       file: "3_querylib/TIP_for_PATLIBs_QueryLib.ipynb"
-      available: partial
+      # the browser is an ipywidget — the committed notebook holds only a widget
+      # reference, not a rendered state, so this cannot be cut offline
+      available: false
     artifact:
       - "One query adapted to a question you are actually asked, with its result table"
       - "A first feel for what a PATSTAT query costs in time"
@@ -89,6 +98,7 @@ modules:
   - n: 4
     title: "PATSTAT Explorer"
     folder: "4_patstat_explorer/"
+    minutes: "Rung 2 · 10 min"
     question: >-
       A client asks how big Siemens Healthineers' patent portfolio is. You run a name
       search. You get 200 rows. Which one is the answer?
@@ -97,9 +107,9 @@ modules:
       - "One entry per spelling, per country, per subsidiary, per typo. There is no record to look up."
       - "Take the biggest row and you have undercounted the group — as a clean, confident-looking number."
     steps:
-      - ["Find the names", "up to 200 spellings, none of them the answer", "6 min"]
-      - ["Decide", "which belong together — the step no query can do for you", "7 min"]
-      - ["Count families", "not applications — a number below the naive sum", "7 min"]
+      - ["Find the names", "up to 200 spellings, none of them the answer", "3 min"]
+      - ["Decide", "which belong together — the step no query can do for you", "4 min"]
+      - ["Count families", "not applications — a number below the naive sum", "3 min"]
     shot:
       what: "The step-1 hit list — one company across many spellings"
       file: "4_patstat_explorer/1_Applicant_consolidation_notebook.ipynb"
@@ -115,6 +125,7 @@ modules:
   - n: 5
     title: "Regional Lead Generation"
     folder: "5_lead_generation/"
+    minutes: "Rung 3 · 15 min"
     question: >-
       Your PATLIB is asked to justify its outreach budget. Which companies in your
       region should you actually be talking to — and why those?
@@ -123,9 +134,9 @@ modules:
       - "Who walked in, who came to the last event, who somebody remembered."
       - "The question a ranked list has to survive is not 'who is on it' but 'who is missing'."
     steps:
-      - ["Get the NUTS codes right", "both vintages — one alone loses a third of the data", "7 min"]
-      - ["Two axes", "portfolio depth × geographic reach", "11 min"]
-      - ["Segment", "the grid, and the named shortlist you act on", "6 min"]
+      - ["Get the NUTS codes right", "both vintages — one alone loses a third of the data", "5 min"]
+      - ["Two axes", "portfolio depth × geographic reach", "6 min"]
+      - ["Segment", "the grid, and the named shortlist you act on", "4 min"]
     shot:
       what: "The lead-tier grid and the named shortlist for Alsace"
       file: "5_lead_generation/1_regional-leads.ipynb"
@@ -141,6 +152,7 @@ modules:
   - n: 6
     title: "Patent Landscape Reports"
     folder: "6_patentreports/"
+    minutes: "Use case 1 · 10 min"
     credit: "Landscape analyses after Riccardo Priore, Centro PATLIB, AREA Science Park"
     question: >-
       A regional cluster manager asks for a picture of what is happening in antibiotic
@@ -150,9 +162,9 @@ modules:
       - "Bare acronyms — MRSA, VRE, ESBL — are noisy and appear where the subject is not."
       - "Neither is visible in the result: a large corpus, looking healthy, about something else."
     steps:
-      - ["Define the corpus", "keywords AND (IPC OR CPC) — recall from one half, precision from the other", "10 min"]
-      - ["Run the battery", "13 charts: who, where, when, how it connects", "14 min"]
-      - ["Assemble", "one self-contained HTML report + one workbook", "4 min"]
+      - ["Define the corpus", "keywords AND (IPC OR CPC) — recall from one half, precision from the other", "3 min"]
+      - ["Run the battery", "13 charts: who, where, when, how it connects", "4 min"]
+      - ["Assemble", "one self-contained HTML report + one workbook", "3 min"]
     shot:
       what: "The assembled report in Paged mode, on the applicants-by-sector chart"
       file: "6_patentreports/2_antibiotic_resistance_rebuild/4_report/"
@@ -168,6 +180,7 @@ modules:
   - n: 8
     title: "What is this patent worth?"
     folder: "8_ipscore_rebuild/"
+    minutes: "Use case 2 · 10 min"
     credit: "IPScore is an EPO tool; this is the course's own implementation of the 3.01 model"
     question: >-
       A client puts a granted European patent on the table and asks what it is worth.
@@ -176,8 +189,8 @@ modules:
       - "IPScore answers it: 40 questions, seven figures from the accounts, a ten-year discounted cash flow."
       - "And then: all 40 answers come from a person. The engine is exact; its inputs are opinions."
     steps:
-      - ["The model", "40 questions — and only 8 of them touch the money", "19 min"]
-      - ["The finished report", "NPV 1,248,870 EUR · 139/200 points · 2 measured, 6 informed, 32 judgement", "6 min"]
+      - ["The model", "40 questions — and only 8 of them touch the money", "3 min"]
+      - ["The finished report", "NPV 1,248,870 EUR · 139/200 points · 2 measured, 6 informed, 32 judgement", "4 min"]
       - ["The lever", "widest ≠ worth pulling: C3 has an upside of exactly zero", "3 min"]
     shot:
       what: "The report's verdict section — the number and the evidence split side by side"
@@ -192,10 +205,11 @@ modules:
       What a database can check and what a valuation depends on barely overlap.
 
 closing:
-  headline: "What a participant leaves with"
+  headline: "What you leave with"
   points:
-    - "Three skills: work on TIP · ask PATSTAT · find the right people"
-    - "Three applications: a regional lead list · a landscape report · a patent valuation"
-    - "And, in every one of them, the line between evidence and judgement — drawn out loud"
-  handouts: "Seven A4 handouts, one per module, in 9_documentation/course/"
+    - "An assistant on TIP that survives the restart — and writes the SQL you were told you had to learn"
+    - "Three worked examples, in rising order of ambition: a ready question · the same query as an app · a named shortlist for your own region"
+    - "Two use cases built the same way — a landscape report, and a patent valuation"
+    - "And, in every one of them, the part no assistant does for you: deciding what to ask, and judging whether the answer holds"
+  handouts: "Seven A4 handouts — the full 45-minute version of every block you just saw — in 9_documentation/course/"
   repo: "github.com/mtcberlin/epo-tip4patlibs"

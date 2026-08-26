@@ -11,7 +11,7 @@ Screenshots: drop a PNG into `shots/` named after the module (`01.png`, `03.png`
 placeholder naming the shot it wants — and whether taking it needs a TIP run,
 because modules 1 and 5 ship with cleared outputs on purpose.
 
-    uv run --with python-pptx --with pyyaml python build_slides.py
+    uv run --with python-pptx --with pyyaml --with pillow python build_slides.py
 """
 
 from __future__ import annotations
@@ -20,6 +20,7 @@ import sys
 from pathlib import Path
 
 import yaml
+from PIL import Image
 from pptx import Presentation
 from pptx.dml.color import RGBColor
 from pptx.enum.shapes import MSO_SHAPE
@@ -128,22 +129,28 @@ def chain(slide, cfg, top):
     x_skills = M
     x_apps = M + colw + gap
     cellh, cellgap = Inches(0.76), Inches(0.15)
-    grouph = Inches(0.40) + 3 * cellh + 2 * cellgap + Inches(0.22)
+    left, right = cfg["left"], cfg["right"]
+    # the two groups are drawn the same height so their frames align, even when one
+    # side holds a single claim and the other a three-rung ladder
+    tallest = max(len(left), len(right))
+    grouph = Inches(0.40) + tallest * cellh + (tallest - 1) * cellgap + Inches(0.22)
 
-    for x, label, rows in ((x_skills, "SKILLS", cfg["skills"]),
-                           (x_apps, "APPLICATIONS", cfg["applications"])):
+    for x, label, rows in ((x_skills, cfg["left_label"], left),
+                           (x_apps, cfg["right_label"], right)):
+        # centre a short column inside the shared frame
+        pad = (tallest - len(rows)) * (cellh + cellgap) / 2
         box(slide, x, top, colw, grouph, fill=None, outline=LINE, radius=0.03)
         tf = textbox(slide, x, top + Inches(0.14), colw, Inches(0.26))
         para(tf, label, size=10, bold=True, color=ACCENT, align=PP_ALIGN.CENTER,
              first=True, space_after=0)
         for i, (num, title, sub) in enumerate(rows):
-            cy = top + Inches(0.5) + i * (cellh + cellgap)
+            cy = top + Inches(0.5) + pad + i * (cellh + cellgap)
             box(slide, x + Inches(0.22), cy, colw - Inches(0.44), cellh,
                 fill=TINT, outline=ACCENT, radius=0.12)
             tf = textbox(slide, x + Inches(0.42), cy + Inches(0.11),
                          colw - Inches(0.84), cellh - Inches(0.16))
-            para(tf, f"{num}   {title}", size=13, bold=True, first=True,
-                 space_after=1)
+            para(tf, f"{num}   {title}" if num else title, size=13, bold=True,
+                 first=True, space_after=1)
             para(tf, sub, size=10, color=MUTED, space_after=0)
 
     ax = x_skills + colw
@@ -156,7 +163,7 @@ def chain(slide, cfg, top):
     arrow.shadow.inherit = False
     tf = textbox(slide, ax + Inches(0.1), top + grouph / 2 - Inches(0.95),
                  gap - Inches(0.2), Inches(0.7))
-    para(tf, "each application\nconsumes all three", size=9, color=MUTED,
+    para(tf, cfg["arrow"], size=9, color=MUTED,
          align=PP_ALIGN.CENTER, first=True, space_after=0)
 
 
@@ -217,14 +224,22 @@ def slide_intro(prs, mod, blk, n, total):
 
 def slide_work(prs, mod, blk, n, total):
     s = blank(prs)
-    eyebrow(s, f'{blk} · Module {mod["n"]}', "Working through · ~28 min in the block")
+    eyebrow(s, f'{blk} · Module {mod["n"]}',
+            mod.get("minutes", "Working through"))
     headline(s, mod["title"], size=26)
 
     shot_w, shot_h = Inches(7.0), Inches(4.35)
     x, y = M, Inches(1.9)
     png = SHOTS / f'{mod["n"]:02d}.png'
     if png.exists():
-        s.shapes.add_picture(str(png), x, y, width=shot_w)
+        # fit inside the frame and centre — a portrait shot scaled to the frame's
+        # width would run off the bottom of the slide
+        with Image.open(png) as _im:
+            iw, ih = _im.size
+        scale = min(shot_w / iw, shot_h / ih)
+        pw, ph = int(iw * scale), int(ih * scale)
+        s.shapes.add_picture(str(png), x + (shot_w - pw) // 2,
+                             y + (shot_h - ph) // 2, width=pw, height=ph)
     else:
         avail = mod["shot"]["available"]
         tag = {True: "available offline — notebook ships executed",
