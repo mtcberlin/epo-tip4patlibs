@@ -41,11 +41,11 @@ The course splits on purpose, and the split decides the work:
 | Module | Code cells with output | Screenshot |
 |---|---|---|
 | 1 Start with TIP | **0 of 25** | ⏳ this session |
-| 3 Query Library | **6 of 10** | ⏳ this session — the browser is an **ipywidget**: the committed notebook holds a widget reference, not a rendered state, so it cannot be cut offline |
-| 5 Lead Generation | **8 of 31** | ⏳ this session |
-| 4 PATSTAT Explorer | 7 of 7 | ✅ **done** — cut offline by `course/source/build_shots.py` |
-| 6 Patent Reports | 29 of 29 | ✅ **done** — ditto |
-| 8 IPScore Rebuild | 37 of 38 | ✅ **done** — ditto |
+| 2 Query Library | **6 of 10** | ⏳ this session — the browser is an **ipywidget**: the committed notebook holds a widget reference, not a rendered state, so it cannot be cut offline |
+| 4 Lead Generation | **8 of 31** | ⏳ this session |
+| 3 PATSTAT Explorer | 7 of 7 | ✅ **done** — cut offline by `course/source/build_shots.py` |
+| 5 Patent Reports | 29 of 29 | ✅ **done** — ditto |
+| 6 IPScore Rebuild | 37 of 38 | ✅ **done** — ditto |
 
 Modules 1–4 clear their outputs because participants are meant to run them; 6 and 8 ship executed
 because they are read as finished reports. That convention is *why* this session exists, so
