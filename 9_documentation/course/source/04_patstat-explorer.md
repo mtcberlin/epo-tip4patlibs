@@ -36,7 +36,7 @@ By the end you can:
 
 | | |
 |---|---|
-| Folder | `4_patstat_explorer/` |
+| Folder | `3_patstat_explorer/` |
 | Notebooks | `1_Applicant_consolidation_notebook.ipynb` (the method, by hand) · `2_PATSTAT_Explorer_application.ipynb` (the same method as an app) |
 | Also | `3_PATSTAT_Explorer_documentation.pdf` |
 | Runs on | EPO TIP, PATSTAT PROD |

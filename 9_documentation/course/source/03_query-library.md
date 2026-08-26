@@ -35,7 +35,7 @@ By the end you can:
 
 | | |
 |---|---|
-| Folder | `3_querylib/` |
+| Folder | `2_querylib/` |
 | Notebooks | `TIP_for_PATLIBs_QueryLib.ipynb` (the browser) · `TIP_for_PATLIBs_InteractiveQueryDemo.ipynb` (point-and-click) |
 | Runs on | EPO TIP, PATSTAT PROD |
 

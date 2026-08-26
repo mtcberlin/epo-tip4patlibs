@@ -56,7 +56,7 @@ final deliverable.
 ### Target layout
 
 ```
-6_patentreports/1_antibiotic_resistance/
+5_patentreports/1_antibiotic_resistance/
 ├── 1_dataset_and_search_strategy.ipynb
 ├── 1_dataset_and_search_strategy_output/
 │     dataset.xlsx  dataset_highlighted.html  ipc_analysis.html  statistics.html
@@ -142,7 +142,7 @@ What was done:
   Both are now described as they behave. Also: the two conflicting CSP explanations merged, the
   dead `Session_Menu.ipynb` reference dropped, the verification claim made honest.
 - **Tidied.** `build/dist/` untracked (byte-identical to the live files, `render.py` recreates
-  it) and re-excluded in `.gitignore` after the `!7_ipscore/build/**` negation;
+  it) and re-excluded in `.gitignore` after the `!9_documentation/ipscore/build/**` negation;
   `Dennemeyer_HTML_Tools_Builder.ipynb` → `build_html_tools.ipynb` with its
   `/home/jovyan/Dennemeyer` assert message fixed and two empty trailing cells dropped;
   `BUILD_LOG.md` scope-noted and its file inventory corrected to what this repo actually holds;
@@ -186,11 +186,11 @@ and disappear on the next run.)*
 
 **Status (2026-07-24): route B taken, and the work has moved.** This section is no longer the
 live plan — module 6's rebuild is now tracked in
-[`6_patentreports/2_antibiotic_resistance_rebuild/REBUILD_PLAN.md`](6_patentreports/2_antibiotic_resistance_rebuild/REBUILD_PLAN.md),
+[`5_patentreports/2_antibiotic_resistance_rebuild/REBUILD_PLAN.md`](5_patentreports/2_antibiotic_resistance_rebuild/REBUILD_PLAN.md),
 which carries the session log and the locked decisions D1–D8. Where the two disagree, that
 file wins.
 
-Three folders now sit side by side in `6_patentreports/`:
+Three folders now sit side by side in `5_patentreports/`:
 
 | Folder | What it is |
 |---|---|
@@ -322,14 +322,14 @@ form). Only the attribution wording still needs a sentence when module 8 ships.
       2026-08-15: EN names Dennemeyer 3×, CPA Global / Anaqua / IAM Market 1× each; IT adds
       LOT Network and IPH. ⚠️ **This reverses the earlier decision** ("neutralise EN and IT and
       re-render") — **do not touch the vendor names.** If it is ever reopened, the source is
-      `7_ipscore/build/data/ipscore_questions_{en,it}.json` → `render.py --promote`, never the
+      `9_documentation/ipscore/build/data/ipscore_questions_{en,it}.json` → `render.py --promote`, never the
       generated HTML.
 - [x] **Is a rebuild acceptable, and how is attribution worded?** → **Yes, explicitly welcome**
       — he values the support. **Wording settled 2026-08-15:** *"created by Arne Krüger · model:
       EPO IPScore 3.01 · scenario analysis after Riccardo Priore's NPV Target Planner"*, in all
       four module-8 headers and the report footer. It names the EPO as the model's owner, keeps
       *created by Riccardo Priore* for modules 6 and 7 only, and credits by name the one idea
-      module 8 did take from him. Full reasoning in `8_ipscore_rebuild/PROVENANCE.md`.
+      module 8 did take from him. Full reasoning in `6_ipscore_rebuild/PROVENANCE.md`.
 - [x] **Should there be a blank English form?** → **No — pre-filled is preferred**, by both
       Arne and Riccardo: you cannot ask a workshop audience for their company's turnover, cost
       and depreciation figures on the spot, so the tool has to arrive with a worked example.
@@ -380,9 +380,9 @@ Things that will bite silently if forgotten. Each was verified, not assumed.
    "tidy" them by clearing or re-running without a working TIP session, or the module goes
    silently blank.
 5. **`.gitignore` has a generic `build/` rule** that already swallowed Riccardo's entire
-   IPScore pipeline once. A negated rule (`!7_ipscore/build/`) restores it — check any new
+   IPScore pipeline once. A negated rule (`!9_documentation/ipscore/build/`) restores it — check any new
    folder with a conventional name against `git check-ignore` before assuming it was committed.
-   Since 2026-07-24 a third rule re-excludes `7_ipscore/build/dist/` (regenerated output,
+   Since 2026-07-24 a third rule re-excludes `9_documentation/ipscore/build/dist/` (regenerated output,
    byte-identical to the live files). Order matters: it must stay *after* the negation.
 6. **Notebook 3's outputs are `print()` text only** — 17 stream outputs, zero rendered charts,
    because all four charts go to `write_html()`. "Pre-executed" therefore currently shows a
@@ -395,7 +395,7 @@ Things that will bite silently if forgotten. Each was verified, not assumed.
    containing the hub session id and an ephemeral port — valid only inside the session that
    produced it, dead for everyone else. Rule 4 (guest modules ship pre-executed) does *not*
    extend to launcher cells. Clear those two outputs before committing
-   `7_ipscore/1_ipscore-and-npv.ipynb`.
+   `9_documentation/ipscore/1_ipscore-and-npv.ipynb`.
 10. **Module 7: the generated HTML is never hand-edited.** Change `build/data/*.json` or the
    `.j2` template and re-render via `render.py --promote`, then re-run
    `build/verify_against_excel.py` — an Italian apostrophe in a single-quoted JS string once

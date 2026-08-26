@@ -3,11 +3,11 @@
 ## ✅ STATUS: FULLY IMPLEMENTED
 All four rounds delivered and merged to `develop` (PRs #11, #12, #13). Notebook tested live
 on EPO TIP by the author — works as intended. A copy of this plan lives in the repo at
-`5_lead_generation/docs/workshop-notebook-implementation-plan.md`.
+`4_lead_generation/docs/workshop-notebook-implementation-plan.md`.
 
 ## Context
 `epo-tip4patlibs` is EPO Academy training material for PATLIB staff. On `origin/develop`,
-the user has started a new module `5_lead_generation/` for **regional lead generation**:
+the user has started a new module `4_lead_generation/` for **regional lead generation**:
 profiling the company patent applicants based in a region along two axes — portfolio
 **depth** (families) and geographic **reach** (jurisdiction zones) — then segmenting them
 into lead-qualification tiers so a PATLIB knows which regional firms to approach.
@@ -72,9 +72,9 @@ Each analytical step = markdown (**Why**) + parameterized SQL cell + **How to re
 All SQL verified live via patstat-mcp; adapt any BigQuery-only idiom for TIP if needed.
 
 ## Critical files
-- `5_lead_generation/regional-applicant-profiling-instruction.md`
-- `5_lead_generation/1_regional-leads.ipynb`
-- Reference (read-only): `5_lead_generation/docs/*.md`, `1_startwithtip/2_getting-started-with-patstat.ipynb`
+- `4_lead_generation/regional-applicant-profiling-instruction.md`
+- `4_lead_generation/1_regional-leads.ipynb`
+- Reference (read-only): `4_lead_generation/docs/*.md`, `1_startwithtip/2_getting-started-with-patstat.ipynb`
 
 ## Verification
 - Run each SQL via `mcp__PATSTAT_MCP__execute_query` (dry-run first for cost) during
@@ -181,7 +181,7 @@ builder regeneration.
    English retained.
 
 ### Files
-- `5_lead_generation/1_regional-leads.ipynb` (targeted JSON edits)
+- `4_lead_generation/1_regional-leads.ipynb` (targeted JSON edits)
 - `README.md`
 
 ### Verification & ship

@@ -11,11 +11,11 @@ stays a side note.
 
 **Reference hierarchy**, in this order:
 
-1. **`7_ipscore/IPscore_3.01 WORKHORSE.xlsx` — the primary reference.** The EPO model itself:
+1. **`9_documentation/ipscore/IPscore_3.01 WORKHORSE.xlsx` — the primary reference.** The EPO model itself:
    questions, OEK tables, the cash-flow chain, and three test patents with Excel's own NPVs.
    When anything disagrees, the Excel wins. It is read **once**, by
    `tools/extract_spec_from_excel.py`, into `ipscore_spec.json`; no notebook opens it.
-2. **`7_ipscore/` as it stands today** — Riccardo's working tools plus `build/` and
+2. **`9_documentation/ipscore/` as it stands today** — Riccardo's working tools plus `build/` and
    `BUILD_LOG.md`. Executable ground truth for *how the model behaves*, and the record of a
    real bug found by checking against the Excel.
 
@@ -161,7 +161,7 @@ module 8 proves itself.
 ### Check that the ground is still solid
 
 ```bash
-cd 8_ipscore_rebuild
+cd 6_ipscore_rebuild
 python ipscore_kit.py                            # → 3 PASS, "All three EPO test patents reproduced."
 python tools/extract_spec_from_excel.py --check   # → "spec is up to date"
 ```
@@ -175,7 +175,7 @@ either the workbook moved or the spec was hand-edited (it never should be).
 |---|---|---|
 | `ipscore_spec.json` | The model as data: 40 questions, 5 answer texts each, the 8 OEK tables, risk/opportunity flags, the 3 EPO test patents + their NPVs | **Never by hand** — regenerate with the extractor |
 | `ipscore_kit.py` | The only place anything is computed. `load_spec` · `Answer` · `profile` · `oek_from_answers` · `Financials` · `cash_flow` · `npv` · `verify` · `PALETTE` · `CHART_LAYOUT` | yes, this is the engine |
-| `tools/extract_spec_from_excel.py` | One-off derivation from `7_ipscore/IPscore_3.01 WORKHORSE.xlsx`. Not part of the course chain | only if the spec must change |
+| `tools/extract_spec_from_excel.py` | One-off derivation from `9_documentation/ipscore/IPscore_3.01 WORKHORSE.xlsx`. Not part of the course chain | only if the spec must change |
 | `1_the_model.ipynb` | Notebook 1, executed, 27 cells. Offline | done; edit only for narrative |
 
 ### How the pieces fit (the mental model)
@@ -305,7 +305,7 @@ provenance marker: **measured · informed · judgement**.
 ## Architecture — the same four-step chain as module 6
 
 ```
-8_ipscore_rebuild/
+6_ipscore_rebuild/
   ipscore_spec.json                 ← the model as data: 40 questions, 8 OEK tables, 3 test patents
   ipscore_kit.py                    ← the one engine: profile, cash flow, NPV, provenance markers,
                                       the shared chart palette              ✅ built

@@ -11,14 +11,36 @@ Author: Arne Krüger (mtc.berlin / depa.tech) · License: **EPO Internal Use**.
 | Path | Module / purpose |
 |------|------------------|
 | `1_startwithtip/` | **Start here.** Set up Claude Code persistently (`1_getting-started-with-tip.ipynb`), then run your first PATSTAT queries (`2_getting-started-with-patstat.ipynb`) |
-| `2_legacy/` | Earlier worked end-to-end examples (Airbus filing strategy, TU Dortmund portfolio) |
-| `3_querylib/` | Query Library — ready-to-use PATSTAT queries |
-| `4_patstat_explorer/` | Applicant & technology search notebook + app |
-| `5_lead_generation/` | Regional lead generation — profile a region's EP/PCT applicants by portfolio depth × geographic reach, segment into lead tiers |
-| `6_patentreports/` | Landscape reports (**Riccardo Priore**) — triadic families, filing authorities, t-SNE clusters, interactive explorer. Ships **pre-executed** (see below) |
-| `7_ipscore/` | Patent valuation (**Riccardo Priore**) — EPO IPScore questionnaire → NPV; self-contained interactive HTML tools, opened via `open_html()` (jupyter-server-proxy), **never** via `IFrame` |
-| `8_ipscore_rebuild/` | ✅ Complete — all four notebooks written and run on TIP; the evidence layer measures 11 of the 40 answers and the report reads `2 measured · 6 informed · 32 judgement`. Our own rebuild of the IPScore ideas as an explained notebook chain, adding a PATSTAT evidence layer. Engine in `ipscore_kit.py`, model data in `ipscore_spec.json`, deliverable in `4_tool/`, phasing in `REBUILD_PLAN.md`; module 7 stays untouched as the working reference |
-| `9_documentation/` | Working documents that are not themselves course modules. **TIP sessions**, one brief per session, named for what the session was: `plan-tipsession-1-recon.md` (✅ 2026-08-15 — what can PATSTAT answer?) · `plan-tipsession-2-evidence-run.md` (✅ 2026-08-15 — run notebook 2) · `plan-tipsession-3-screenshots.md` (⏳ **open** — capture the shots modules 1, 3 and 5 cannot produce offline, before 18 September), with the findings of the first two in `results-tipsession.md`. **Workshop:** `plan-workshop-warsaw.md` — the 90-min Warsaw session (18 Sep 2026) briefed down from the course: what stays, what is cut, and how the two demos split between Arne and Riccardo. **Teaching material:** `plan-course-material.md` and `course/` — a 45-min block per module (1, 3, 4, 5, 6, 8) with learning objectives and the three phases Introduction · Working through · Learning outcome, plus a 3-slide workshop version of each. `course/` holds the rendered A4 handouts and `TIP4PATLIBS_workshop.pptx`; the Markdown, its YAML sidecars, `build_handouts.py` and `build_slides.py` live in `course/source/` |
+| `2_querylib/` | Query Library — ready-to-use PATSTAT queries |
+| `3_patstat_explorer/` | Applicant & technology search notebook + app |
+| `4_lead_generation/` | Regional lead generation — profile a region's EP/PCT applicants by portfolio depth × geographic reach, segment into lead tiers |
+| `5_patentreports/` | Landscape reports (**Riccardo Priore**) — triadic families, filing authorities, t-SNE clusters, interactive explorer. Ships **pre-executed** (see below) |
+| `6_ipscore_rebuild/` | ✅ Complete — all four notebooks written and run on TIP; the evidence layer measures 11 of the 40 answers and the report reads `2 measured · 6 informed · 32 judgement`. Our own rebuild of the IPScore ideas as an explained notebook chain, adding a PATSTAT evidence layer. Engine in `ipscore_kit.py`, model data in `ipscore_spec.json`, deliverable in `4_tool/`, phasing in `REBUILD_PLAN.md`; `9_documentation/ipscore/` stays untouched as the working reference |
+| `9_documentation/` | Working documents that are not themselves course modules — see below |
+| `9_documentation/legacy/` | Earlier worked end-to-end examples (Airbus filing strategy, TU Dortmund portfolio). Not shown in Warsaw |
+| `9_documentation/ipscore/` | Patent valuation (**Riccardo Priore**) — EPO IPScore questionnaire → NPV; self-contained interactive HTML tools, opened via `open_html()` (jupyter-server-proxy), **never** via `IFrame`. Not shown in Warsaw; module 6 is the course's own rebuild |
+
+**The folders are numbered in the workshop's running order** (renumbered 2026-08-26): the claim
+first, then the three examples of rising ambition, then Riccardo's two use cases. Two folders that
+are not shown in Warsaw — the earlier worked examples and Riccardo's imported IPScore tools — moved
+under `9_documentation/`. **Module numbers in the teaching material were *not* renumbered**: the
+handouts and slides still speak of modules 1, 3, 4, 5, 6 and 8. See `9_documentation/plan-course-material.md`.
+
+### What lives in `9_documentation/`
+**TIP sessions**, one brief per session, named for what the session was:
+`plan-tipsession-1-recon.md` (✅ 2026-08-15 — what can PATSTAT answer?) ·
+`plan-tipsession-2-evidence-run.md` (✅ 2026-08-15 — run notebook 2) ·
+`plan-tipsession-3-screenshots.md` (⏳ **open** — the shots that cannot be produced offline, before
+18 September), with the findings of the first two in `results-tipsession.md`.
+**Workshop:** `plan-workshop-warsaw.md` — the 90-min Warsaw session (18 Sep 2026): the spine, the
+running order, what is cut, and how it splits between Arne and Riccardo.
+**Teaching material:** `plan-course-material.md` and `course/` — a 45-min block per module with
+learning objectives and the three phases Introduction · Working through · Learning outcome, plus a
+3-slide workshop version of each. `course/` holds the rendered A4 handouts and three decks:
+`TIP4PATLIBS_1_Workshop_v1.pptx` (ours, generated from `slides.yaml`) and Riccardo's two
+(`…_AntibioticResistance_LiveDemo_Warsaw2026.pptx`, `…_IPScore_NotebookLogic_Explained_con_note.pptx`).
+The Markdown, its YAML sidecars, `build_handouts.py`, `build_slides.py` and `build_shots.py` live in
+`course/source/`.
 
 The **course** is modules 1–8. Alongside it sit four working documents that are not course
 material: this file, `README.md`, `prep_workshop_todo.md` (the workshop-preparation log) and
@@ -52,7 +74,7 @@ Jupyter's root — e.g. to build a `/files/` URL.
 
 ## Conventions
 - Notebooks open with the branded red **TIP4PATLIBS** header (see
-  `5_lead_generation/1_regional-leads.ipynb`) plus a short table of
+  `4_lead_generation/1_regional-leads.ipynb`) plus a short table of
   contents. Keep new notebooks visually consistent.
 - Ship a sensible default so a notebook runs out of the box (e.g. Alsace `FR42`
   in lead generation), with user-editable parameters near the top.
@@ -61,7 +83,7 @@ Jupyter's root — e.g. to build a `/files/` URL.
 - Git: SSH remotes, do work on `develop`, open PRs into `main`.
 
 ### Guest modules 6 & 7 (Riccardo Priore)
-Modules `6_patentreports/` and `7_ipscore/` are contributed material, reworked to
+Modules `5_patentreports/` and `9_documentation/ipscore/` are contributed material, reworked to
 match this course's look. Two deliberate deviations from the conventions above:
 - **They ship pre-executed** (outputs kept) — modules 1–5 clear outputs so
   participants run them; 6–7 are read as finished reports in a 90-min showcase.

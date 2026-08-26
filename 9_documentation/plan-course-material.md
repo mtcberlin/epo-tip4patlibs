@@ -8,9 +8,12 @@ same substance for the PATLIB Warsaw workshop on **18 September 2026**.
 and slides are rendered in run 3. Nothing is rendered yet, deliberately — the structure has to be
 agreed before six documents are written against it.
 
-> Module numbering follows the folders: **1** `1_startwithtip` · **3** `3_querylib` ·
-> **4** `4_patstat_explorer` · **5** `5_lead_generation` · **6** `6_patentreports` ·
-> **8** `8_ipscore_rebuild`. Modules 2 (legacy) and 7 (Riccardo's IPScore tools) are out of scope.
+> Module numbers no longer follow the folder numbers. The folders were renumbered to the
+> workshop's running order (2026-08-26), while the teaching material kept the module numbers it
+> was written with: **1** `1_startwithtip` · **3** `2_querylib` · **4** `3_patstat_explorer` ·
+> **5** `4_lead_generation` · **6** `5_patentreports` · **8** `6_ipscore_rebuild`. The former
+> modules 2 (legacy) and 7 (Riccardo's IPScore tools) are out of scope and now sit under
+> `9_documentation/`.
 
 ---
 
@@ -218,7 +221,7 @@ A participant who never opens notebook 2 still leaves with the argument.
 **Target: the module 8 core document sized like every other module** — ≈ 2,400 words of notebook
 prose in the working-through phase, down from 8,272.
 
-> **This is a proposal about teaching, not about the code.** Nothing in `8_ipscore_rebuild/` gets
+> **This is a proposal about teaching, not about the code.** Nothing in `6_ipscore_rebuild/` gets
 > deleted or rewritten. The core/extension split lives in the course document; the module stays
 > complete and the four notebooks stay as they are.
 
@@ -351,7 +354,7 @@ fixed in run 2** — per §8, the course material describes the modules and does
 | **4** | `CLAUDE.md` states the convention as *modules 1–5 clear outputs, 6–7 ship pre-executed*. Module 4 actually ships **7 of 7 executed** — the course material reports the measured state, so the convention line needs updating | align |
 | **6** | The rebuild's `README.md` says notebook 3 holds the technology network only; the repo `CLAUDE.md` describes module 6 as including t-SNE clusters and triadic families (that is the *reference* folder). Align them so nobody promises a chart the report does not contain | **align** |
 | **6** | Notebook 2's forward-citation cell needs BigQuery, not TIP. State it in the notebook header, not only in a cell comment | text fix |
-| **8** | `8_ipscore_rebuild/README.md` is stale: it says notebook 2 "does not exist yet" and quotes `0 measured · 0 informed · 40 judgement`. The shipped report reads **`2 measured · 6 informed · 32 judgement`** | **stale** |
+| **8** | `6_ipscore_rebuild/README.md` is stale: it says notebook 2 "does not exist yet" and quotes `0 measured · 0 informed · 40 judgement`. The shipped report reads **`2 measured · 6 informed · 32 judgement`** | **stale** |
 | **8** | `1_the_model.ipynb` says "four of them strongly" about the PATSTAT-reachable questions. `PATSTAT_CANDIDATES` holds **3 strong · 4 good · 3 proxy · 1 context**; the report's "three strongly" is the correct one | **wrong** |
 
 Verified figures used throughout `08_ipscore.md`, read out of the shipped report rather than from

@@ -36,7 +36,7 @@ By the end you can:
 
 | | |
 |---|---|
-| Folder | `5_lead_generation/` |
+| Folder | `4_lead_generation/` |
 | Core notebook | `1_regional-leads.ipynb` — seven steps, default region **Alsace (FR42)** |
 | Extensions | `2_national-coverage.ipynb` (the DPMA route) · `3_belgien.ipynb` — optional, not part of this block |
 | Runs on | EPO TIP, PATSTAT PROD |

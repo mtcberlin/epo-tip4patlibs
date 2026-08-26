@@ -6,7 +6,7 @@ understandable steps, from a search strategy to the finished landscape report."
 
 **Reference hierarchy (important).** The rebuild has two references, in this order:
 
-1. **The current module `6_patentreports/1_antibiotic_resistance/` — the primary reference.** Its
+1. **The current module `5_patentreports/1_antibiotic_resistance/` — the primary reference.** Its
    three notebooks **run successfully on TIP today**, end to end. However badly implemented or
    convoluted a given step may be, *it works* — it is executable ground truth for queries, data
    shapes and results. When in doubt, what the current module computes wins.
@@ -115,7 +115,7 @@ straight 1→2→3→4 chain is both simpler and more teachable.
 running reference until the rebuild reaches parity:
 
 ```
-6_patentreports/
+5_patentreports/
   1_antibiotic_resistance/                ← today's WORKING version — untouched, the reference
   2_antibiotic_resistance_rebuild/        ← the clean rebuild (this plan)
     1_dataset_and_search_strategy.ipynb   ← the corpus (same search strategy, re-authored clean)
@@ -241,7 +241,7 @@ cell.
 
 ## Phasing (so there is always a working artifact)
 
-0. **Step 0 — scaffold.** Create `6_patentreports/2_antibiotic_resistance_rebuild/` and move this
+0. **Step 0 — scaffold.** Create `5_patentreports/2_antibiotic_resistance_rebuild/` and move this
    plan into it. **Nothing is deleted** — `1_antibiotic_resistance/` keeps working untouched as the
    reference; its retirement is decided later, after the rebuild has proven itself on TIP.
 1. **Phase 1 — prove the spine.** Re-author Step 1 clean, write the Step-4 inline assembler, and

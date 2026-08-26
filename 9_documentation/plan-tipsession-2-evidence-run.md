@@ -31,13 +31,13 @@ now collected in [`plan-tipsession-3-screenshots.md`](plan-tipsession-3-screensh
 > Full detail, including the two new schema traps, in
 > [`results-tipsession.md`](results-tipsession.md#session-2--running-the-evidence-layer).
 
-**One task.** `8_ipscore_rebuild/2_evidence_from_patstat.ipynb` is written, stub-verified and
+**One task.** `6_ipscore_rebuild/2_evidence_from_patstat.ipynb` is written, stub-verified and
 committed **without outputs**. It is the only notebook in the module that needs TIP. Running it
 is the last step of Phase 3.
 
 | | |
 |---|---|
-| **Where** | EPO TIP JupyterLab, `PatstatClient(env='PROD')`, working dir `8_ipscore_rebuild/` |
+| **Where** | EPO TIP JupyterLab, `PatstatClient(env='PROD')`, working dir `6_ipscore_rebuild/` |
 | **Time** | ~20 minutes, most of it query latency |
 | **Input** | `worked_example.json` — EP3074539B1, Q-Linea AB, family `53398085` |
 | **Deadline** | Workshop **18 September 2026** |
@@ -45,7 +45,7 @@ is the last step of Phase 3.
 ## Do this
 
 ```bash
-cd 8_ipscore_rebuild
+cd 6_ipscore_rebuild
 python ipscore_kit.py                             # → 3 PASS
 python tools/extract_spec_from_excel.py --check    # → "spec is up to date"
 ```

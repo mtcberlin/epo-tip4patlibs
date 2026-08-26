@@ -2,7 +2,7 @@
   "meta": {
     "model": "EPO IPScore 3.01",
     "source_workbook": "IPscore_3.01 WORKHORSE.xlsx",
-    "extracted_by": "8_ipscore_rebuild/tools/extract_spec_from_excel.py",
+    "extracted_by": "6_ipscore_rebuild/tools/extract_spec_from_excel.py",
     "note": "Question texts, answer options and the eight OEK value tables originate from the EPO IPScore tool. Extracted once so that module 8 runs without the workbook; re-run the extractor to re-derive.",
     "scoring": {
       "scale": [

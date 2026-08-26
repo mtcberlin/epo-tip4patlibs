@@ -4,7 +4,7 @@
 > **notebook 2 needs one run on EPO TIP** and ships without outputs until then. The chain
 > runs end to end:
 > a scored patent comes out as one self-contained HTML valuation plus a data workbook. The
-> workshop-ready valuation module is still **[`7_ipscore/`](../7_ipscore/)**; use that one for
+> workshop-ready valuation module is still **[`9_documentation/ipscore/`](../9_documentation/ipscore/)**; use that one for
 > the session. This folder is where its ideas get rebuilt in the course's own shape.
 
 A clean rebuild of the **ideas behind the EPO IPScore model**: a structured questionnaire that

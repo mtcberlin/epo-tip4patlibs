@@ -26,9 +26,9 @@ answer holds.
 
 | Rung | Example | The claim it demonstrates | Who gets off here |
 |---|---|---|---|
-| **1** | **Query Library** (`3_querylib/`) | *Someone already asked your question.* Pick a query, change its parameters, read the result | Anyone. Nobody leaves empty-handed |
-| **2** | **PATSTAT Explorer** (`4_patstat_explorer/`) | *It does not have to stay a notebook.* The same SQL behind a user interface — something you hand to a colleague who will never open Jupyter | A PATLIB that wants to serve colleagues, not just itself |
-| **3** | **Regional Lead Generation** (`5_lead_generation/`) | *Your region, your client list.* Alsace (`FR42`/`FRF1`) live, and the German path through DPMA for national filings | A PATLIB with a service to sell |
+| **1** | **Query Library** (`2_querylib/`) | *Someone already asked your question.* Pick a query, change its parameters, read the result | Anyone. Nobody leaves empty-handed |
+| **2** | **PATSTAT Explorer** (`3_patstat_explorer/`) | *It does not have to stay a notebook.* The same SQL behind a user interface — something you hand to a colleague who will never open Jupyter | A PATLIB that wants to serve colleagues, not just itself |
+| **3** | **Regional Lead Generation** (`4_lead_generation/`) | *Your region, your client list.* Alsace (`FR42`/`FRF1`) live, and the German path through DPMA for national filings | A PATLIB with a service to sell |
 
 The rungs are deliberately unequal in ambition and in risk. Rung 1 is safe and short. Rung 3 is the
 one a PATLIB director remembers, because it ends in a list of named companies in their own region.
@@ -186,7 +186,7 @@ Genuinely new, and worth taking:
 - The `kit.EXAMPLE_PATH` pinning in `1_the_model` — its correct companion.
 - `0_live_demo/Main_menu.ipynb` — a nine-cell launcher; adopt the pattern, review the detail.
 
-Compared cell by cell against `8_ipscore_rebuild/`: v2 notebooks 2, 3 and 4 differ **only by empty
+Compared cell by cell against `6_ipscore_rebuild/`: v2 notebooks 2, 3 and 4 differ **only by empty
 trailing cells**; notebook 1 by the two cells named above. There is no second body of work to merge
 — take the three pieces, not the tree.
 

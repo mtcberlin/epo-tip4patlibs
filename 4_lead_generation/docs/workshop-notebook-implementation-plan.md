@@ -2,12 +2,12 @@
 
 **Status: ✅ fully implemented** (merged to `develop` via PRs #11, #12, #13). Jira: PIP-127.
 
-*Record of how the `5_lead_generation` workshop notebook and its instruction brief were
+*Record of how the `4_lead_generation` workshop notebook and its instruction brief were
 built. The methodology itself lives in the sibling docs; this file is the build log.*
 
 ## Context
 `epo-tip4patlibs` is EPO Academy training material for PATLIB staff. Module
-`5_lead_generation/` teaches **regional lead generation**: profiling the company patent
+`4_lead_generation/` teaches **regional lead generation**: profiling the company patent
 applicants based in a region along two axes — portfolio **depth** (families) and geographic
 **reach** (jurisdiction zones) — then segmenting them into lead-qualification tiers so a
 PATLIB knows which regional firms to approach.

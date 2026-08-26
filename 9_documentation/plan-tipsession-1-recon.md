@@ -23,7 +23,7 @@ in [`results-tipsession.md`](results-tipsession.md).
 > ## ✅ Run on 2026-08-15. All five tasks done — Phase 3 is unblocked.
 >
 > **The results are in [`results-tipsession.md`](results-tipsession.md).** The answers to O1, O2
-> and V5 are also in `8_ipscore_rebuild/REBUILD_PLAN.md` under *Open questions*, which is where
+> and V5 are also in `6_ipscore_rebuild/REBUILD_PLAN.md` under *Open questions*, which is where
 > notebook 2 should read them from.
 >
 > | Task | | Result |
@@ -43,7 +43,7 @@ need a live TIP session. Everything else in module 8 is done and runs offline.
 | | |
 |---|---|
 | **Where** | EPO TIP JupyterLab, base conda env, `PatstatClient(env='PROD')` |
-| **Working dir** | `8_ipscore_rebuild/` unless a task says otherwise |
+| **Working dir** | `6_ipscore_rebuild/` unless a task says otherwise |
 | **Time** | ~30 minutes, five tasks |
 | **Blocks** | ~~Phase 3 (notebook 2)~~ — **unblocked 2026-08-15.** Phases 1, 2 and 4 were already finished |
 | **Deadline** | Workshop is **18 September 2026** |
@@ -65,7 +65,7 @@ Run this first. If either line fails, stop and fix that before anything else: it
 engine or the spec drifted, and nothing downstream is trustworthy.
 
 ```bash
-cd 8_ipscore_rebuild
+cd 6_ipscore_rebuild
 python ipscore_kit.py                             # → 3 PASS, "All three EPO test patents reproduced."
 python tools/extract_spec_from_excel.py --check    # → "spec is up to date"
 ```
@@ -179,13 +179,13 @@ showing even as a labelled proxy.
 > in June 2025). "Granted" ≠ "in force" is the A1/A5 teaching point, with real dates.
 > `worked_example.json` is deliberately **not** yet changed — that is Phase 3 work.
 
-**The decision it makes.** Right now `8_ipscore_rebuild/worked_example.json` holds an invented
+**The decision it makes.** Right now `6_ipscore_rebuild/worked_example.json` holds an invented
 patent, and its eight money-carrying scores were **chosen so the charts teach well**, not sampled
 from reality. Decision **V5** says the real example comes from module 6's antibiotic-resistance
 corpus, so the two modules link up: the landscape says where a field stands, module 8 values one
 patent inside it.
 
-**The corpus** is `6_patentreports/2_antibiotic_resistance_rebuild/1_dataset_and_search_strategy_output/dataset.xlsx`
+**The corpus** is `5_patentreports/2_antibiotic_resistance_rebuild/1_dataset_and_search_strategy_output/dataset.xlsx`
 — 4,172 families, columns `docdb_family_id` and `publication_number` (696 EP, 559 WO, 219 US).
 
 **What makes a good example** — it has to exercise the evidence layer, so:
@@ -200,7 +200,7 @@ patent inside it.
 
 ```python
 families = pd.read_excel(
-    "../6_patentreports/2_antibiotic_resistance_rebuild/"
+    "../5_patentreports/2_antibiotic_resistance_rebuild/"
     "1_dataset_and_search_strategy_output/dataset.xlsx")
 ids = tuple(int(x) for x in families["docdb_family_id"].unique())
 
@@ -247,7 +247,7 @@ tick labels, a CVD-safe palette — but the build environment had no kaleido and
 Notebook 4's five charts *have* now been rendered and reviewed in a browser, and doing that
 turned up three real problems, so this is not a formality.
 
-Open `8_ipscore_rebuild/1_the_model.ipynb` and look at the two figures:
+Open `6_ipscore_rebuild/1_the_model.ipynb` and look at the two figures:
 
 1. **Cell 9** — the 40-question grid, *"Only 8 of the 40 IPScore questions reach the NPV"*
 2. **Cell 21** — the ten-year cash-flow bars
@@ -263,13 +263,13 @@ and does not need TIP.
 > **Proven.** `jupyter_server_proxy` 4.4.0 is present, `server_base()` returned
 > `/user/…/proxy/44705/`, and the report came back **HTTP 200, 4,928,944 bytes** of valid HTML —
 > so the red **▶ Open** button renders, not the download fallback. `repo_root()` resolved correctly
-> from `8_ipscore_rebuild/`, and the `/files/` fallback survives the `/home/jovyan` symlink.
+> from `6_ipscore_rebuild/`, and the `/files/` fallback survives the `/home/jovyan` symlink.
 > No regeneration was needed: the committed report already has **8 sections and 5 charts**.
 > Warning 9 confirmed — the URL bakes in the hub session id *and* an ephemeral port.
 
 **Why.** The last cell of `4_assemble_tool.ipynb` opens the report through jupyter-server-proxy.
 It is structurally correct — it walks up for `CLAUDE.md` to find the repo root, which works from
-`8_ipscore_rebuild/` — but **the proxy branch has never executed**. Offline there is no
+`6_ipscore_rebuild/` — but **the proxy branch has never executed**. Offline there is no
 jupyter-server-proxy, so it printed the download fallback instead. That is an unproven claim, not
 a finished one.
 
@@ -294,12 +294,12 @@ money answers, cash flow, *which lever moves the number*, all forty answers?
 
 Only these, and only if they changed:
 
-- ~~`8_ipscore_rebuild/1_the_model.ipynb`~~ — **not re-run**, so untouched. The charts were
+- ~~`6_ipscore_rebuild/1_the_model.ipynb`~~ — **not re-run**, so untouched. The charts were
   reviewed by reading the stored plotly JSON out of the committed notebook and drawing it to PNG
   in a scratch directory, precisely to avoid a re-run.
-- ~~`8_ipscore_rebuild/4_assemble_tool.ipynb`~~ — **not re-run**, so cell 19 carries no baked URL
+- ~~`6_ipscore_rebuild/4_assemble_tool.ipynb`~~ — **not re-run**, so cell 19 carries no baked URL
   and nothing needed clearing.
-- ~~`8_ipscore_rebuild/4_tool/`~~ — the report was **not** regenerated; it already had its
+- ~~`6_ipscore_rebuild/4_tool/`~~ — the report was **not** regenerated; it already had its
   8 sections and 5 charts.
 - ✅ The answers to O1, O2 and V5 — written into `REBUILD_PLAN.md` under *Open questions*.
 - ✅ [`results-tipsession.md`](results-tipsession.md) — the full session record.

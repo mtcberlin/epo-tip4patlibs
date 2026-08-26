@@ -43,7 +43,7 @@ By the end you can:
 
 | | |
 |---|---|
-| Folder | `6_patentreports/2_antibiotic_resistance_rebuild/` |
+| Folder | `5_patentreports/2_antibiotic_resistance_rebuild/` |
 | Notebooks | `1_dataset_and_search_strategy` · `2_core_landscape_analyses` · `3_advanced_analyses` · `4_assemble_report` |
 | Artifact | `4_report/antibiotic_resistance_report.html` + `…_report_data.xlsx` |
 | Runs on | EPO TIP, PATSTAT PROD (notebook 2's citation analysis uses BigQuery) |

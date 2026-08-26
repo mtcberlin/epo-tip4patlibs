@@ -78,7 +78,7 @@ def page(body: str, width: int | None = None) -> str:
 
 def build_04(stage: Path) -> tuple[str, int, int]:
     """Module 4 — the step-1 hit list, beside the query that produced it."""
-    nb = json.loads((REPO / "4_patstat_explorer" /
+    nb = json.loads((REPO / "3_patstat_explorer" /
                      "1_Applicant_consolidation_notebook.ipynb").read_text(encoding="utf-8"))
     cell = nb["cells"][4]
     table = "".join(next(o["data"]["text/html"] for o in cell["outputs"]
@@ -90,7 +90,7 @@ def build_04(stage: Path) -> tuple[str, int, int]:
     stage.joinpath("04.html").write_text(page(f"""
 <div class="wrap">
   <h1>Step 1 — one company, many spellings</h1>
-  <p class="sub">4_patstat_explorer/1_Applicant_consolidation_notebook.ipynb ·
+  <p class="sub">3_patstat_explorer/1_Applicant_consolidation_notebook.ipynb ·
      PATSTAT knows names, not companies</p>
   <div class="cols">
     <div class="col-l"><p class="tag">One query</p><pre>{code}</pre></div>
@@ -104,7 +104,7 @@ def build_04(stage: Path) -> tuple[str, int, int]:
 
 def build_06(stage: Path) -> tuple[str, int, int]:
     """Module 6 — one chart out of the assembled landscape report."""
-    root = REPO / "6_patentreports/2_antibiotic_resistance_rebuild"
+    root = REPO / "5_patentreports/2_antibiotic_resistance_rebuild"
     report = (root / "4_report/antibiotic_resistance_report.html").read_text(encoding="utf-8")
     lib = max(re.finditer(r"<script[^>]*>(.*?)</script>", report, re.S),
               key=lambda m: len(m.group(1))).group(1)            # see note 2
@@ -124,7 +124,7 @@ def build_06(stage: Path) -> tuple[str, int, int]:
 
 def build_08(stage: Path) -> tuple[str, int, int]:
     """Module 8 — the report's verdict, with every other section hidden."""
-    report = (REPO / "8_ipscore_rebuild/4_tool/ipscore_valuation.html").read_text(encoding="utf-8")
+    report = (REPO / "6_ipscore_rebuild/4_tool/ipscore_valuation.html").read_text(encoding="utf-8")
     hide = ("<style>section:not(#verdict){display:none!important}"
             "nav,footer,.nav,.toc{display:none!important}</style>")
     stage.joinpath("08.html").write_text(report.replace("</head>", hide + "</head>", 1),

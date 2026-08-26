@@ -2,8 +2,8 @@
 """Extract the IPScore model spec from the EPO Excel workbook — once.
 
 This script is *not* part of the notebook chain. It runs when the spec needs to be
-re-derived, reads `7_ipscore/IPscore_3.01 WORKHORSE.xlsx` and writes
-`8_ipscore_rebuild/ipscore_spec.json`. Afterwards module 8 is self-contained: no
+re-derived, reads `9_documentation/ipscore/IPscore_3.01 WORKHORSE.xlsx` and writes
+`6_ipscore_rebuild/ipscore_spec.json`. Afterwards module 8 is self-contained: no
 notebook ever opens the workbook again.
 
 What it pulls out, and from where:
@@ -41,7 +41,7 @@ HERE = Path(__file__).resolve().parent
 MODULE = HERE.parent
 REPO = MODULE.parent
 
-DEFAULT_XLSX = REPO / "7_ipscore" / "IPscore_3.01 WORKHORSE.xlsx"
+DEFAULT_XLSX = REPO / "9_documentation/ipscore" / "IPscore_3.01 WORKHORSE.xlsx"
 DEFAULT_OUT = MODULE / "ipscore_spec.json"
 
 SECTIONS = [
@@ -166,7 +166,7 @@ def build_spec(xlsx: Path) -> dict:
         "meta": {
             "model": "EPO IPScore 3.01",
             "source_workbook": "IPscore_3.01 WORKHORSE.xlsx",
-            "extracted_by": "8_ipscore_rebuild/tools/extract_spec_from_excel.py",
+            "extracted_by": "6_ipscore_rebuild/tools/extract_spec_from_excel.py",
             "note": (
                 "Question texts, answer options and the eight OEK value tables originate "
                 "from the EPO IPScore tool. Extracted once so that module 8 runs without "

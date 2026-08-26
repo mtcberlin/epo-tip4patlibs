@@ -15,7 +15,7 @@ patents reproduced"*; `extract_spec_from_excel.py --check` → *"spec is up to d
 | **4** notebook 1 charts | Rendered and reviewed. Cell 9 is fine; **cell 21 has two real problems** |
 | **5** `open_html()` | **Proven.** The proxy branch executes and serves the report |
 
-The O1, O2 and V5 answers are also written into `8_ipscore_rebuild/REBUILD_PLAN.md` under
+The O1, O2 and V5 answers are also written into `6_ipscore_rebuild/REBUILD_PLAN.md` under
 *Open questions*, which is where notebook 2 should read them from. This file is the fuller record.
 
 ---
@@ -229,18 +229,18 @@ The hand-written strings can become *true* rather than being deleted.
 
 ## Task 5 — `open_html()` is proven, and so is the warning
 
-Run from `8_ipscore_rebuild/` on TIP:
+Run from `6_ipscore_rebuild/` on TIP:
 
 ```
 repo_root()   → /home/jovyan/epo-tip4patlibs        (walks up for CLAUDE.md, as designed)
 server_base() → /user/ASfgQo6rDwkhmZZcdZkvtH/proxy/44705/
-GET …/8_ipscore_rebuild/4_tool/ipscore_valuation.html → HTTP 200, 4,928,944 bytes, valid HTML
+GET …/6_ipscore_rebuild/4_tool/ipscore_valuation.html → HTTP 200, 4,928,944 bytes, valid HTML
 ```
 
 The proxy branch **executes** — `jupyter_server_proxy` 4.4.0 is present in the base env — so the
 red **▶ Open** button renders rather than the download fallback. The `/files/` fallback URL also
 resolves correctly through the `/home/jovyan` symlink:
-`/user/…/files/epo-tip4patlibs/8_ipscore_rebuild/4_tool/ipscore_valuation.html?download=1`.
+`/user/…/files/epo-tip4patlibs/6_ipscore_rebuild/4_tool/ipscore_valuation.html?download=1`.
 
 **The committed report needed no regeneration.** It already has **8 sections and 5 charts**,
 because notebook 3's `_report_parts` are committed. Section titles match the plan exactly: the
@@ -343,7 +343,7 @@ passes its three EPO test patents after the session.
 
 | File | Change |
 |---|---|
-| `8_ipscore_rebuild/REBUILD_PLAN.md` | O1, O2, V5 answered under *Open questions*; V5 section added |
+| `6_ipscore_rebuild/REBUILD_PLAN.md` | O1, O2, V5 answered under *Open questions*; V5 section added |
 | `9_documentation/plan-tipsession-1-recon.md` | Ticked off, pointing here |
 | `9_documentation/results-tipsession.md` | This file |
 

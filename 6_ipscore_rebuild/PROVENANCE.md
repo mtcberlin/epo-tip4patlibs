@@ -16,7 +16,7 @@ It is **not** a translation of Riccardo's HTML tools into Python, and not a fork
 
 ## What it is *not* allowed to touch
 
-`7_ipscore/` stays exactly as it is — Riccardo Priore's imported material, workshop-ready,
+`9_documentation/ipscore/` stays exactly as it is — Riccardo Priore's imported material, workshop-ready,
 the **working reference**. Same rule as module 6: the rebuild lives beside the original, the
 original keeps running, and whether module 7 is ever retired is a separate decision taken
 after module 8 has proven itself on TIP.
@@ -25,14 +25,14 @@ after module 8 has proven itself on TIP.
 
 | What | Where it comes from | Status here |
 |---|---|---|
-| The 40 questions, 5 sections, 1–5 scoring | **EPO IPScore 3.01** (`7_ipscore/IPscore_3.01 WORKHORSE.xlsx`) | the model we rebuild — EPO's, not ours |
+| The 40 questions, 5 sections, 1–5 scoring | **EPO IPScore 3.01** (`9_documentation/ipscore/IPscore_3.01 WORKHORSE.xlsx`) | the model we rebuild — EPO's, not ours |
 | The 8 OEK score→value tables (B5, C2, C3, C6, D1–D4) | same Excel, *Adapted questions and answers* sheet | reused verbatim; they encode domain judgement, not arithmetic |
 | The 10-year cash-flow and NPV formula chain | same Excel, *Financial calculations* sheet | re-derived and re-implemented in Python |
 | The 3 built-in test patents and their Excel-computed NPVs | same Excel, *Financial results* sheet | **the acceptance test** — see below |
 | Risk / opportunity flags per question | same Excel | reused |
-| The idea of working *backwards* from an NPV target | **Riccardo Priore's** NPV Target Planner (`7_ipscore/NPV_Target_Planner_EN.html`) | his contribution, rebuilt as a sensitivity analysis |
+| The idea of working *backwards* from an NPV target | **Riccardo Priore's** NPV Target Planner (`9_documentation/ipscore/NPV_Target_Planner_EN.html`) | his contribution, rebuilt as a sensitivity analysis |
 | Plain-language help text, € benchmarks, demo narratives | **Riccardo Priore**, authored directly in his HTML | **not copied.** Module 8 writes its own |
-| The build pipeline (JSON + Jinja2 → single-file HTML), the Node syntax check, the Excel cross-check | **Riccardo Priore** (`7_ipscore/build/`) | the *method* is adopted; the code is re-authored |
+| The build pipeline (JSON + Jinja2 → single-file HTML), the Node syntax check, the Excel cross-check | **Riccardo Priore** (`9_documentation/ipscore/build/`) | the *method* is adopted; the code is re-authored |
 
 ## Attribution — settled 2026-08-15 ✅
 
@@ -63,7 +63,7 @@ than authorship, and it is credited in the lineage table above rather than in th
 
 The Excel carries three test patents with its own computed NPVs. Riccardo's engine reproduces
 them exactly, and getting there caught a real off-by-one bug (`avgRev`, see
-`7_ipscore/BUILD_LOG.md`). **Module 8's engine must reproduce the same three numbers before it
+`9_documentation/ipscore/BUILD_LOG.md`). **Module 8's engine must reproduce the same three numbers before it
 is allowed to compute anything else:**
 
 | Test patent | Expected NPV |
@@ -72,13 +72,13 @@ is allowed to compute anything else:**
 | Patent 2 | 4,361.2849 |
 | Patent 3 | −4,686.3598 |
 
-Verified independently on TIP on 2026-07-24 via `7_ipscore/build/verify_against_excel.py`.
+Verified independently on TIP on 2026-07-24 via `9_documentation/ipscore/build/verify_against_excel.py`.
 That script reads the Excel directly and is the pattern to copy — not the numbers, the
 *habit* of checking against the source of truth rather than against your own previous output.
 
 ## Data
 
-The Excel workbook stays where it is (`7_ipscore/IPscore_3.01 WORKHORSE.xlsx`) and module 8
+The Excel workbook stays where it is (`9_documentation/ipscore/IPscore_3.01 WORKHORSE.xlsx`) and module 8
 keeps no second copy of it. It is read **once**, by `tools/extract_spec_from_excel.py`, into
 `ipscore_spec.json`; the notebooks then run against that file alone. So the *content* of the
 questionnaire and the OEK tables remains EPO's, extracted rather than retyped, and the module

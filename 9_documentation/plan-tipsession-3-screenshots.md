@@ -76,7 +76,7 @@ point is that a participant edits one line and gets a table.
 ### 03.png — module 3
 
 > **The Query Browser with a query's SQL open.**
-> `3_querylib/TIP_for_PATLIBs_QueryLib.ipynb`
+> `2_querylib/TIP_for_PATLIBs_QueryLib.ipynb`
 
 Run both cells, pick any query, and press **View SQL** so the statement is visible. The slide's
 point is that the library can be opened up, so the SQL has to be *on screen* — a browser showing
@@ -85,7 +85,7 @@ only titles and descriptions misses it.
 ### 05.png — module 5
 
 > **The lead-tier grid and the named shortlist for Alsace.**
-> `5_lead_generation/1_regional-leads.ipynb` · **Step 6**
+> `4_lead_generation/1_regional-leads.ipynb` · **Step 6**
 
 Run steps 1–6 with the shipped Alsace default (`FR421`, `FR422`, `FRF11`, `FRF12`). Both outputs
 of step 6 matter — the depth × reach grid *and* the named shortlist underneath it. If they do not
@@ -156,9 +156,9 @@ Verify after the run:
 9_documentation/course/source/shots/01.png
 9_documentation/course/source/shots/03.png
 9_documentation/course/source/shots/05.png
-8_ipscore_rebuild/4_assemble_tool.ipynb              # re-run, cell 19 cleared
-8_ipscore_rebuild/4_tool/ipscore_valuation.html      # new footer
-8_ipscore_rebuild/4_tool/ipscore_valuation_data.xlsx
+6_ipscore_rebuild/4_assemble_tool.ipynb              # re-run, cell 19 cleared
+6_ipscore_rebuild/4_tool/ipscore_valuation.html      # new footer
+6_ipscore_rebuild/4_tool/ipscore_valuation_data.xlsx
 ```
 
 and **nothing under `1_`, `3_` or `5_`**.

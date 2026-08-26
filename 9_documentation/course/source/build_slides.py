@@ -28,7 +28,10 @@ from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 from pptx.util import Emu, Inches, Pt
 
 HERE = Path(__file__).resolve().parent
-OUT = HERE.parent / "TIP4PATLIBS_workshop.pptx"
+# NOTE: this file has been opened and saved in PowerPoint since it was last
+# generated, so it may carry hand edits that exist nowhere else. Re-running this
+# script overwrites them. Carry a content change into slides.yaml first.
+OUT = HERE.parent / "TIP4PATLIBS_1_Workshop_v1.pptx"
 SHOTS = HERE / "shots"
 
 # The course red, as worn by every notebook header — the deck sits next to those

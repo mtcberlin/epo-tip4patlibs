@@ -66,8 +66,8 @@ The numbering follows the repository folders, so two numbers are missing here on
 
 | | |
 |---|---|
-| **2** | `2_legacy/` — earlier worked end-to-end examples, superseded by modules 4–6 |
-| **7** | `7_ipscore/` — Riccardo Priore's workshop-ready IPScore tools. Not taught as a block here; module 8 is the course's own rebuild of the same model |
+| **2** | `9_documentation/legacy/` — earlier worked end-to-end examples, superseded by modules 4–6 |
+| **7** | `9_documentation/ipscore/` — Riccardo Priore's workshop-ready IPScore tools. Not taught as a block here; module 8 is the course's own rebuild of the same model |
 
 ---
 

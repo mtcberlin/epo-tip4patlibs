@@ -11,7 +11,7 @@ from pathlib import Path
 
 import jinja2
 
-ROOT = Path(__file__).resolve().parent.parent  # the module folder, 7_ipscore/
+ROOT = Path(__file__).resolve().parent.parent  # the module folder, 9_documentation/ipscore/
 BUILD = ROOT / "build"
 DATA = BUILD / "data"
 TEMPLATES = BUILD / "templates"

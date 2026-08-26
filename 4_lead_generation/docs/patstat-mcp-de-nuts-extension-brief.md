@@ -88,14 +88,14 @@ with `write_disposition="WRITE_TRUNCATE"`, plus validation queries). Steps:
 1. **PATSTAT query** (BigQuery, `patstat-mtc.patstat`) — one row per national-only German company
    `psn_id` with a representative `appln_nr`, `n_appln`, `first/last_filing_year`, `han_id`, `psn_name`.
    Reuse the CTE structure from
-   `epo-tip4patlibs/5_lead_generation/regional_leads_full_coverage_bq.ipynb` (Step 1), widened to
+   `epo-tip4patlibs/4_lead_generation/regional_leads_full_coverage_bq.ipynb` (Step 1), widened to
    `appln_filing_year BETWEEN 2017 AND 2024` and keeping only `has_nuts=0`.
 2. **Resolve** each `appln_nr` via DPMA `search/AKZ=` → PLZ. Reference implementation to vendor
-   (stdlib, ~150 lines): `epo-tip4patlibs/5_lead_generation/dpma/fetch.py`
+   (stdlib, ~150 lines): `epo-tip4patlibs/4_lead_generation/dpma/fetch.py`
    (`DpmaClient.search_aktenzeichen`), `register_parser.py` (`parse_hit_applicant`), `plz_nuts.py`
    (`map_plz`, `BUNDESLAND_BY_NUTS1`). Credentials from `DPMA_USER`/`DPMA_PASS` env (never commit).
 3. **PLZ → NUTS3** via the bundled Eurostat crosswalk
-   `epo-tip4patlibs/5_lead_generation/dpma/data/pc2025_DE_NUTS-2024_v1.0.csv` (NUTS 2024, CC-BY-SA-4.0)
+   `epo-tip4patlibs/4_lead_generation/dpma/data/pc2025_DE_NUTS-2024_v1.0.csv` (NUTS 2024, CC-BY-SA-4.0)
    — copy it into the mcp repo alongside the loader.
 4. **Local resume cache** — persist each `(appln_nr → plz)` resolution to a JSON/CSV so a re-run skips
    done work (6k+ HTTP calls; expect retries/timeouts).

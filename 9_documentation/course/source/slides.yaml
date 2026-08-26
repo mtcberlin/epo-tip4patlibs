@@ -73,7 +73,7 @@ modules:
 
   - n: 3
     title: "The Query Library"
-    folder: "3_querylib/"
+    folder: "2_querylib/"
     minutes: "Rung 1 · 8 min"
     question: 'A client walks in: "Who in Europe is working on solid-state batteries?"'
     fails:
@@ -86,7 +86,7 @@ modules:
       - ["Point and click", "the same data through the interactive demo", "2 min"]
     shot:
       what: "The Query Browser with a query's SQL open"
-      file: "3_querylib/TIP_for_PATLIBs_QueryLib.ipynb"
+      file: "2_querylib/TIP_for_PATLIBs_QueryLib.ipynb"
       # the browser is an ipywidget — the committed notebook holds only a widget
       # reference, not a rendered state, so this cannot be cut offline
       available: false
@@ -97,7 +97,7 @@ modules:
 
   - n: 4
     title: "PATSTAT Explorer"
-    folder: "4_patstat_explorer/"
+    folder: "3_patstat_explorer/"
     minutes: "Rung 2 · 10 min"
     question: >-
       A client asks how big Siemens Healthineers' patent portfolio is. You run a name
@@ -112,7 +112,7 @@ modules:
       - ["Count families", "not applications — a number below the naive sum", "3 min"]
     shot:
       what: "The step-1 hit list — one company across many spellings"
-      file: "4_patstat_explorer/1_Applicant_consolidation_notebook.ipynb"
+      file: "3_patstat_explorer/1_Applicant_consolidation_notebook.ipynb"
       available: true
     artifact:
       - "One consolidated applicant group — a named list of spellings you decided belong together"
@@ -124,7 +124,7 @@ modules:
 
   - n: 5
     title: "Regional Lead Generation"
-    folder: "5_lead_generation/"
+    folder: "4_lead_generation/"
     minutes: "Rung 3 · 15 min"
     question: >-
       Your PATLIB is asked to justify its outreach budget. Which companies in your
@@ -139,7 +139,7 @@ modules:
       - ["Segment", "the grid, and the named shortlist you act on", "4 min"]
     shot:
       what: "The lead-tier grid and the named shortlist for Alsace"
-      file: "5_lead_generation/1_regional-leads.ipynb"
+      file: "4_lead_generation/1_regional-leads.ipynb"
       available: false
     artifact:
       - "A named shortlist of companies in your region — family count, depth tier, reach tier, zones"
@@ -151,7 +151,7 @@ modules:
 
   - n: 6
     title: "Patent Landscape Reports"
-    folder: "6_patentreports/"
+    folder: "5_patentreports/"
     minutes: "Use case 1 · 10 min"
     credit: "Landscape analyses after Riccardo Priore, Centro PATLIB, AREA Science Park"
     question: >-
@@ -167,7 +167,7 @@ modules:
       - ["Assemble", "one self-contained HTML report + one workbook", "3 min"]
     shot:
       what: "The assembled report in Paged mode, on the applicants-by-sector chart"
-      file: "6_patentreports/2_antibiotic_resistance_rebuild/4_report/"
+      file: "5_patentreports/2_antibiotic_resistance_rebuild/4_report/"
       available: true
     artifact:
       - "One self-contained HTML report, 13 charts, no internet needed"
@@ -179,7 +179,7 @@ modules:
 
   - n: 8
     title: "What is this patent worth?"
-    folder: "8_ipscore_rebuild/"
+    folder: "6_ipscore_rebuild/"
     minutes: "Use case 2 · 10 min"
     credit: "IPScore is an EPO tool; this is the course's own implementation of the 3.01 model"
     question: >-
@@ -194,7 +194,7 @@ modules:
       - ["The lever", "widest ≠ worth pulling: C3 has an upside of exactly zero", "3 min"]
     shot:
       what: "The report's verdict section — the number and the evidence split side by side"
-      file: "8_ipscore_rebuild/4_tool/ipscore_valuation.html"
+      file: "6_ipscore_rebuild/4_tool/ipscore_valuation.html"
       available: true
     artifact:
       - "A verified implementation of the EPO IPScore model, seen from the inside"

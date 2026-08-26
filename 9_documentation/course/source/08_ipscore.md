@@ -46,7 +46,7 @@ By the end you can:
 
 | | |
 |---|---|
-| Folder | `8_ipscore_rebuild/` |
+| Folder | `6_ipscore_rebuild/` |
 | This block | `1_the_model.ipynb` (seven steps, runs offline) · `4_tool/ipscore_valuation.html` (the finished report) |
 | Second block | `2_evidence_from_patstat` · `3_valuation_and_scenarios` · `4_assemble_tool` — see `08_ipscore_part2.md` |
 | The engine | `ipscore_kit.py` · the model as data in `ipscore_spec.json` · the worked patent in `worked_example.json` |
@@ -299,7 +299,7 @@ That list is the honest scoping document for a valuation engagement, and it take
 
 ## Notes for the next revision
 
-- **`8_ipscore_rebuild/README.md` is stale.** It states that notebook 2 "does not exist yet" and
+- **`6_ipscore_rebuild/README.md` is stale.** It states that notebook 2 "does not exist yet" and
   that the report reads `0 measured · 0 informed · 40 judgement`. The shipped report reads
   **`2 measured · 6 informed · 32 judgement`**. Update the README — the course document deliberately
   does not touch module code.
