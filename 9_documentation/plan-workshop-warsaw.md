@@ -2,226 +2,197 @@
 
 *PATLIB Conference 2026 · Warsaw · 18 September 2026 · Arne Krüger + Riccardo Priore*
 
-> **The problem, in one line.** Nothing in the material is bad. There is roughly **three times too
-> much of it** for 90 minutes, and two people have to hand over to each other inside that. This
-> document proposes what to keep, what to shorten, and — the part that actually buys the time —
-> what to leave out entirely.
+> **The message, in one line.**
+> **You do not have to learn SQL. You have to install something that writes it — and then decide
+> what to ask.**
+
+Everything in the ninety minutes is evidence for that one sentence. Anything that is not, is a
+handout.
 
 ---
 
-## 1 · The arithmetic that proves "too much"
+## 1 · The spine, and the ladder
 
-Three finished decks exist for one 90-minute slot:
+The session is **not** a tour of six modules. It is one claim, demonstrated once and then applied
+three times at rising ambition, so that every person in the room can get off the ladder at the rung
+that matches their situation.
 
-| Deck | Slides | Covers | Source |
+**The claim (≈15 min).** Install an AI assistant persistently on TIP, so it survives the restart
+that wipes the machine. From then on it writes the SQL and the notebooks, and the PATLIB adviser
+does the part that was always the professional work: deciding what to ask, and judging whether the
+answer holds.
+
+**Then the ladder — three examples, rising:**
+
+| Rung | Example | The claim it demonstrates | Who gets off here |
 |---|---|---|---|
-| `TIP4PATLIBS_workshop.pptx` | **20** | all six course modules, 3 slides each | built from `course/source/slides.yaml` |
-| `TIP4PATLIBS_AntibioticResistance_LiveDemo_Warsaw2026.pptx` | **11** | module 6, four notebooks, run **live** | `~/Downloads`, via Riccardo |
-| `TIP4PATLIBS_IPScore_NotebookLogic_Explained_con_note.pptx` | **11** | module 8, notebooks 1→4 in depth | `~/Downloads`, via Riccardo |
-| | **42** | | |
+| **1** | **Query Library** (`3_querylib/`) | *Someone already asked your question.* Pick a query, change its parameters, read the result | Anyone. Nobody leaves empty-handed |
+| **2** | **PATSTAT Explorer** (`4_patstat_explorer/`) | *It does not have to stay a notebook.* The same SQL behind a user interface — something you hand to a colleague who will never open Jupyter | A PATLIB that wants to serve colleagues, not just itself |
+| **3** | **Regional Lead Generation** (`5_lead_generation/`) | *Your region, your client list.* Alsace (`FR42`/`FRF1`) live, and the German path through DPMA for national filings | A PATLIB with a service to sell |
 
-Forty-two slides in ninety minutes is **just over two minutes per slide with no time for anything
-else** — no live run, no questions, no handover between two speakers, no room recovering from a
-demo that stalls.
+The rungs are deliberately unequal in ambition and in risk. Rung 1 is safe and short. Rung 3 is the
+one a PATLIB director remembers, because it ends in a list of named companies in their own region.
 
-And the material does not intend to be static. The Antibiotic deck's slide 10 ("WHAT HAPPENS
-NEXT · Live in TIP") commits to running all four notebooks end to end in front of the room. The
-repository's own course text says why that cannot fit:
-
-> **PATSTAT PROD is not fast.** A query scanning a full year of filings takes tens of seconds.
-> — `9_documentation/course/source/03_query-library.md:110`
-
-Notebook 2 of the landscape chain re-queries the corpus **ten times**, once per chart. Notebook 1
-builds a corpus of 3,974 families. A full live 1→2→3→4 run is a large fraction of the whole slot,
-and it is the part most likely to fail in a conference room.
-
-**The root cause is structural, not editorial.** `slides.yaml` was written for `2 × 45 minutes`
-covering all six modules — but those six modules are the *course*, and the course is
-**6 × 45 minutes = 4.5 hours**. The deck is the whole course compressed by a factor of three. It
-feels like too much because it is.
+**Why this order matters more than the content.** Each rung answers "so what?" for a different
+person. Said out loud — *"if you stop listening after the next ten minutes, you still have
+something you can use on Monday"* — it turns a dense session into a self-service one.
 
 ---
 
-## 2 · What the mails actually say
+## 2 · The running order
 
-Source: `~/Downloads/Mails Riccardo.pdf` — one page, two mails from Riccardo, 20.08. and 25.08.2026.
-
-| Fact | Detail | Source |
+| Time | Who | What |
 |---|---|---|
-| Format still **undecided** | Live TIP demo vs. classical PowerPoint vs. a mix — "I have not yet decided" | mail 20.08. |
-| A planning meeting is **proposed, not held** | Riccardo back in the office in the week of 31.08.; wants a short online meeting to "refine what still need to be fixed and **decide in which order we present the data**" | mail 25.08. |
-| Riccardo has built a **live-demo entry point** | New folder `0_Live_demo` with `Main_menu` linking both IPScore and the Antibiotic report, plus the two decks | mail 25.08. |
-| He changed the **IPScore entry point** | A new `0_questionnaire` notebook generates an HTML questionnaire; the user saves it as JSON and uploads it. Notebooks 2–4 keep Arne's logic | mail 25.08. |
-| His stated concern about our IPScore | "very exhaustive and rather sophisticated… I am not economist so it took a while"; fears the audience finds Excel → json → notebooks uncomfortable | mail 20.08. |
-| He is willing to **share material with participants** | "I can share this material with the participants" | mail 25.08. |
-| Status caveat | He was on vacation writing; refinements expected; the questionnaire change is **not yet tested** | mail 25.08. |
+| **0–5** | Arne | The message. What TIP and PATSTAT are, for anyone new — one slide |
+| **5–20** | Arne | **The claim: install the assistant, persistently.** Why "persistently" is the whole trick — the machine is rebuilt on every start, and the naive install is gone by Monday |
+| **20–28** | Arne | **Rung 1 — Query Library.** A ready question, adapted and run |
+| **28–38** | Arne | **Rung 2 — PATSTAT Explorer.** The same query, now an app |
+| **38–53** | Arne | **Rung 3 — Regional leads, FR and DE.** Alsace live; the German national path named |
+| **53–63** | Riccardo | **Use case 1 — the landscape report** (module 6). Three slides |
+| **63–73** | Riccardo | **Use case 2 — IPScore valuation** (module 8). Three slides |
+| **73–78** | both | What you take home, and where it lives |
+| **78–90** | — | **Buffer — 12 minutes, deliberate** |
 
-**What the mails do not contain — do not assume it from them:** no date, no venue, no room or
-session format, no audience size, no agreed division of labour. The date and place come from the
-repository instead (`prep_workshop_todo.md:3` — "PATLIB Warsaw workshop, 18 September 2026";
-`slides.yaml` — "PATLIB Workshop · Warsaw · 18 September 2026").
+**On the buffer.** At `2 × 10` for Riccardo the twelve minutes survive. At `2 × 15` they are gone,
+and the session has no margin at all — for the speaker who is known to overrun. That is why
+`2 × 10` is not a preference but what ninety minutes actually contains.
 
 ---
 
-## 3 · Inventory, with a verdict
+## 3 · The gap this spine opens — and it is not the screenshots
 
-### The course material (`9_documentation/course/`)
+**The centrepiece of the session is the one part the course material deliberately parks.**
 
-| Module | What it is | 90-min verdict |
+The Claude Code installation lives in sections 6–8 of
+`1_startwithtip/1_getting-started-with-tip.ipynb`. The course document says of them:
+
+> Sections 6–8 (Claude Code) and Part 2 of notebook 2 are **excellent self-study** and are
+> explicitly handed over as such in Phase 3.
+> — `9_documentation/course/source/01_start-with-tip.md:45`
+
+That was the right call for a 45-minute teaching block where the first query had to come first. It
+is exactly the wrong call for this session, where the install *is* the argument and the queries are
+its evidence.
+
+**Consequence:** for the most important fifteen minutes of the workshop there is currently no
+prepared material — no slides written for it, no notebook section written to be *presented* rather
+than worked through, and no screenshot. The other three rungs each have a finished module behind
+them. This is the largest content gap before 18 September, ahead of the open screenshot session.
+
+**What closing it looks like** is in section 6.
+
+---
+
+## 4 · Riccardo: two use cases, twenty minutes, and a format that holds them
+
+Riccardo brings two use cases he built with AI, and both are already in this repository as reworked
+modules: the **antibiotic-resistance landscape report** (module 6) and **IPScore valuation**
+(module 8). They are his content and they stay entirely his to present.
+
+**The problem is not his material, it is the format he is presenting it in.** His two decks are
+**eleven slides each**. Eleven slides is a twenty-minute talk, twice — which is the whole session.
+Asking him to speak faster does not fix that; the slide count will win.
+
+**The fix already exists in this repository and nobody has to build it.** `build_slides.py` renders
+**exactly three slides per module** — *intro · working through · outcome* — and modules 6 and 8 are
+already written into `slides.yaml` in that shape. Three slides is about ten minutes at a
+comfortable pace.
+
+> **This is the help worth offering.** Not "please cut your deck", but: *here are your own two use
+> cases, already rendered in the session's format, three slides each.* The time-box then sits in
+> the structure rather than in a request, and it is the same structure everyone else on stage is
+> using. His eleven-slide decks — the IPScore one carrying his own speaker notes — become the
+> follow-up material, shared with participants afterwards exactly as he offered in his mail of
+> 25 August.
+
+The two decks are not wasted by this. They are the best thing to hand somebody who wants to go
+deeper, and they reach *every* participant rather than only the ones in the room.
+
+---
+
+## 5 · What is not in the room
+
+| Not presented | Why | Where it lives instead |
 |---|---|---|
-| **1 · Start with TIP** | environment, persistence, first query — 28 min of hands-on in the course | **Leave out as a block.** Keep one orientation slide. Riccardo's Antibiotic slide 2 ("BEFORE WE START — for anyone new to TIP") already does this job in a single slide |
-| **3 · Query Library** | pick a query, adapt it, read the result | **Leave out.** It is a working session, not a showcase; it needs hands on keyboards |
-| **4 · PATSTAT Explorer** | applicant consolidation — one company, forty names | **Leave out of the running order.** Name it in one sentence where it bites (inside the landscape demo, when applicant counts appear) |
-| **5 · Lead Generation** | region → applicants → lead tiers | **Leave out.** Excellent material, no demo partner on stage, and it shares no thread with the other two |
-| **6 · Patent Landscape** | corpus → analyses → report | **Keep — one of the two demos** |
-| **8 · IPScore** | model → evidence → valuation | **Keep — the other demo** |
+| Module 1's PATSTAT first-query block | Rung 1 does the same job with a better story: a question already written | Handout `01_start-with-tip.pdf`, and the notebook |
+| Module 4's applicant-consolidation depth | Rung 2 shows the app; the identity problem is named in one sentence when the numbers appear, not taught | Handout `04_patstat-explorer.pdf` |
+| Modules 6 and 8 as *Arne's* material | They are Riccardo's use cases and stay his | Handouts `06_patent-reports.pdf`, `08_ipscore.pdf` |
+| The four-notebook live landscape run | Tens of seconds per PATSTAT query, ten queries in one notebook alone, and a conference network nobody controls | Finished outputs, opened from disk |
+| Riccardo's two eleven-slide decks | No room for a second pass over the same use case | Shared with participants as follow-up |
 
-The seven A4 handouts already rendered in `9_documentation/course/` are the right home for
-everything cut. They exist, they are complete, and they are what a participant takes away.
-
-### The notebooks
-
-| Folder | Notebooks | Role on 18 September |
-|---|---|---|
-| `6_patentreports/2_antibiotic_resistance_rebuild/` | 4 (`1_dataset…` → `4_assemble_report`) | **the landscape demo** |
-| `8_ipscore_rebuild/` | 4 (`1_the_model` → `4_assemble_tool`) | **the valuation demo** |
-| `6_patentreports/1_antibiotic_resistance/`, `…_mvp/` | 7 | reference only — do not open on stage |
-| `7_ipscore/` | 2 | Riccardo's untouched original — the fallback if the rebuild misbehaves |
-| `1_`, `2_`, `3_`, `4_`, `5_` | 13 | not in this session |
+**Say the cuts out loud.** "There are four more modules and you are holding them" lands; quietly
+rushing them does not.
 
 ---
 
-## 4 · Riccardo's PR #3 — what it adds, and what to take
+## 6 · The work between now and 18 September
 
-`rickypriore/patlib-sessions` PR #3, *"Warsaw 2026: live-demo menu + IPScore and Antibiotic
-Resistance rebuilds"*, opened 25.08.2026, **260 files, +293,297 lines, still open**.
-
-**Most of it is not new.** The PR carries a **full copy of this repository** — `CLAUDE.md`,
-`README.md`, `prep_workshop_todo.md`, `5_lead_generation/`, `3_querylib/tests`,
-`9_documentation/course/` and the rest — nested under `PATLIB_Conference_2026_Warsaw/`. That
-explains the file count and is the reason the PR cannot simply be merged anywhere.
-
-**What is genuinely new — three things:**
-
-| New | What it does | Verdict |
-|---|---|---|
-| `8_ipscore_rebuild_v2/0_questionnaire.ipynb` + `0_questionnaire_tool.html` + `tools/build_questionnaire_html.py` | An HTML questionnaire the participant fills in for **their own patent**; it downloads a JSON, the notebook picks it up, and notebooks 2–4 read it. Also offers a plain "edit the values here" path, and documents that `ipywidgets` fails on TIP | **Adopt.** This is the answer to his own objection in the 20.08. mail, and it turns module 8 from a worked example into something a participant can run on their own patent |
-| The `kit.EXAMPLE_PATH` pinning in `1_the_model` | Notebook 1 always reproduces the module's shipped example even when a questionnaire has been uploaded | **Adopt** — it is the correct companion to the change above |
-| `0_live_demo/Main_menu.ipynb` | A 9-cell launcher: two topics, each with its deck and its finished HTML outcome, opened through `tip_tools.open_html()` | **Adopt the pattern**, review the detail (it opens `.pptx` through `open_html()`, which serves a binary rather than rendering it) |
-
-**Everything else in the v2 tree is a copy.** Compared cell by cell against `8_ipscore_rebuild/`,
-notebooks 2, 3 and 4 differ only by **empty trailing cells**; notebook 1 differs by the two cells
-named above. There is no second body of work to merge.
-
-**Recommendation (execution is a separate job, not this briefing's):** cherry-pick the
-questionnaire trio and the notebook-1 pinning into `8_ipscore_rebuild/` — **do not** take
-`_v2/` as a parallel folder, and do not mirror the repo copy. One module 8, not two.
-
-> **Worth saying out loud to Riccardo, kindly.** He committed to his own repository, so the work
-> is currently a 260-file PR that nobody can merge. The two genuinely new pieces are small and
-> welcome. Agreeing where new work lands — before the next round — costs one sentence now and
-> saves this every time.
-
----
-
-## 5 · The core message, before any slides
-
-The course's own goal sentence is scoped to 4.5 hours and ends on the evidence/judgement split
-that module 8 exists to deliver. A 90-minute showcase with two speakers cannot carry it. What the
-two remaining demos genuinely share is narrower, and better:
-
-> **A PATLIB can take a real client question — *what does this field look like?*, *what is this
-> patent worth?* — and answer it from PATSTAT on TIP with a method that survives being asked
-> "how do you know?"**
-
-Everything in the 90 minutes should be justifiable as evidence for that one sentence. That is the
-test for each cut below.
-
----
-
-## 6 · A 90-minute running order (a straw man for your meeting with Riccardo)
-
-| Time | Who | What | From |
+| # | Work | Why | State |
 |---|---|---|---|
-| **0–8** | Arne | The sentence above. The two questions. What TIP and PATSTAT are, for anyone new — **one slide** | Antibiotic deck slide 2 |
-| **8–35** | Riccardo | **Demo 1 — the landscape.** The search strategy live (notebook 1 only: keywords **AND** classification, and why the ambiguous acronyms are excluded), then the **finished** report opened from the repo | rebuild notebooks 1 + `4_report/` |
-| **35–40** | both | Questions, handover | — |
-| **40–67** | Arne | **Demo 2 — the valuation.** The 40 questions and the 8 that move the money; the finished valuation; the one lever worth arguing about | `8_ipscore_rebuild/`, deck slides for module 8 |
-| **67–75** | Arne | **The line.** None of the 11 questions PATSTAT can check is one of the 8 that carry money — what a database can check and what a valuation depends on barely overlap | module 8 takeaway |
-| **75–85** | both | What you take home, and where it lives: the repo, the seven handouts, the questionnaire for your own patent | handouts + `0_questionnaire` |
-| **85–90** | — | **Buffer.** Deliberate. The first demo will overrun | — |
+| **1** | **This briefing**, rewritten on the real spine | The first version inferred the split from the material instead of from Arne's intent, and had his part backwards | ✅ this document |
+| **2** | **`slides.yaml` restructured** — new message, new blocks, module 1 recut around the persistent install, modules 6 and 8 as Riccardo's three-slide pair; deck re-rendered | The current deck compresses a 6 × 45-minute course into 90 minutes. It is the whole course at triple speed | ⏳ next |
+| **3** | **Notebook introductions** — the message before the first code cell | Measured: **every** workshop notebook opens with "Setup" or "Run this cell first". The branded header names the topic; nothing states why it is worth the next ten minutes | ⏳ |
+| **4** | **Material for the install block** — the fifteen minutes that have none | Section 3 | ⏳ |
+| **5** | **The three-slide pair handed to Riccardo** | Section 4 | ⏳ needs his agreement first |
+| **6** | Handouts re-rendered, if any course document changes | `source/build_handouts.py` | ⏳ conditional |
 
-**Why this split.** Each speaker presents the material he authored: Riccardo the antibiotic
-landscape, Arne the IPScore rebuild. It also means neither has to present the other's work under
-time pressure. **This contradicts one thing Riccardo has prepared** — see the open questions.
-
----
-
-## 7 · The three decisions that actually buy the time
-
-**1 · Four modules leave the stage: 1, 3, 4 and 5.**
-They are 60% of the course deck and none of them is a demo. A showcase earns its keep by showing
-two finished things well, not six things at two minutes each. *Where they go instead:* the seven
-A4 handouts, already rendered, plus the repository. Say this out loud in the closing — "there are
-four more modules and you have them in your hand" lands better than rushing them.
-
-**2 · The live run shrinks to one notebook.**
-Not four. Notebook 1 of the landscape chain is the one worth watching, because the search strategy
-is the actual professional skill and it is the step that is invisible in a finished report — this
-is already the repository's stated position (`prep_workshop_todo.md:157`, *"show the whole chain,
-not just the last step"*). Notebooks 2–4 are shown as **their finished outputs**, opened from
-disk. *Reason:* tens of seconds per PATSTAT query, ten queries in notebook 2 alone, and a
-conference network you do not control.
-
-**3 · Riccardo's IPScore deck becomes the follow-up, not stage time.**
-Eleven slides walking notebooks 1→4 with speaker notes is genuinely good material — and it is a
-*second* pass over module 8, after Arne's. There is no room for both. *Where it goes instead:*
-shared with participants after the session, exactly as Riccardo offered in his 25.08. mail, and
-linked from `Main_menu`. It is the best thing to hand someone who wants to go deeper.
+> **Guard rail.** The **course** — six 45-minute blocks, seven handouts — stays as it is. The
+> workshop is a separate, sharper cut of the same material, not a replacement for it. Nothing in
+> this plan edits a course document in order to serve the workshop.
 
 ---
 
-## 8 · Open questions
+## 7 · Open questions
 
 ### For Arne
 
-1. **The split in section 6 overrides something Riccardo prepared.** His IPScore deck's speaker
-   notes describe it as covering "the second block of module 8 that in *your* main part you left
-   out" — he has prepared to present the IPScore chain himself. Section 6 gives module 8 to you
-   and moves his deck to follow-up. Is that the trade you want, or would you rather hand him
-   module 8 entirely and take the landscape yourself?
-2. **The screenshot session is still open and the date is close.**
-   `plan-tipsession-3-screenshots.md` is unresolved, dated "before 18 September". Until it runs,
-   a demo that stalls has **no fallback image**. Either book that TIP session or accept that the
-   live part cannot fail.
-3. **Do the questionnaire pieces come into `8_ipscore_rebuild/` before Warsaw**, or after? It is
-   the difference between "run this on your own patent tonight" and "watch me run it on mine".
-4. **Who is the audience, and how many?** Nothing in the repository or the mails says. It changes
-   whether section 6 is a demo or a hands-on.
+1. **Do all three rungs get stage time, or does the room choose?** "Je nach Interesse" can mean
+   *show all three, briefly* (the running order above) or *show one properly and name the other
+   two*. The second is stronger if the room is small enough to ask.
+2. **Audience and size** — still unrecorded anywhere. It decides whether rung 3 is a demonstration
+   or something people follow along on their own machines.
+3. **The screenshot session** (`plan-tipsession-3-screenshots.md`, open, dated before 18 September)
+   now also has to cover the install block, which has no captured material at all.
+4. **Does the questionnaire work from Riccardo's PR land before Warsaw?** It is the difference
+   between "run this on your own patent tonight" and "watch me run it on mine".
 
 ### For Riccardo
 
-1. **Live or slides — and in which order?** Still open per your 20.08. mail; the meeting you
-   proposed for the week of 31.08. is the place to settle it. Section 6 is a straw man for it.
-2. **Would you take the landscape demo and leave module 8 with Arne?** It concentrates each of us
-   on our own material, and your IPScore deck reaches participants as the follow-up instead.
-3. **Is the new `0_questionnaire` flow tested yet?** Your 25.08. mail says not. If it is to be
-   shown, it needs one full run on TIP first — including the case where the participant has not
-   filed anything.
-4. **Can the two new pieces land in `mtcberlin/epo-tip4patlibs` rather than as a 260-file PR on
-   your side?** The questionnaire and the notebook-1 pinning are small and wanted; the rest of
-   PR #3 is a copy of this repository and cannot be merged.
-5. **Who authored the two decks?** Both carry python-pptx template metadata rather than a person;
-   the IPScore one lists you as author with your speaker notes added on 19.08. Neither came from
-   this repository's `build_slides.py` — its slide vocabulary is different. Worth knowing before
-   either is re-cut.
+1. **Two slots of ten minutes, three slides each — does that work for you?** The three-slide
+   rendering of your own two use cases already exists in the repository; nothing needs rebuilding.
+2. **Your two eleven-slide decks as follow-up material for every participant** — that was your own
+   offer of 25 August, and it reaches more people than the room does.
+3. **Is the new `0_questionnaire` flow tested on TIP**, including the case where the participant
+   has not filed anything? Your mail of 25 August says not yet.
+4. **Can new work land in `mtcberlin/epo-tip4patlibs`** rather than as a 260-file pull request on
+   your side? The questionnaire and the notebook-1 pinning are small and wanted; the rest of PR #3
+   is a copy of this repository.
+
+---
+
+## Appendix · Riccardo's PR #3, unchanged from the first assessment
+
+`rickypriore/patlib-sessions` PR #3, opened 25 August 2026, **260 files, +293,297 lines, open**.
+
+Most of it is a **full copy of this repository** nested under `PATLIB_Conference_2026_Warsaw/`.
+Genuinely new, and worth taking:
+
+- `0_questionnaire.ipynb` + `0_questionnaire_tool.html` + `tools/build_questionnaire_html.py` — an
+  HTML questionnaire for the participant's **own** patent, feeding notebooks 2–4. It answers his own
+  objection of 20 August about the Excel → JSON → notebook path.
+- The `kit.EXAMPLE_PATH` pinning in `1_the_model` — its correct companion.
+- `0_live_demo/Main_menu.ipynb` — a nine-cell launcher; adopt the pattern, review the detail.
+
+Compared cell by cell against `8_ipscore_rebuild/`: v2 notebooks 2, 3 and 4 differ **only by empty
+trailing cells**; notebook 1 by the two cells named above. There is no second body of work to merge
+— take the three pieces, not the tree.
 
 ---
 
 ## Sources
 
-Everything above is from: `~/Downloads/Mails Riccardo.pdf` · the two `.pptx` in `~/Downloads`
-(text, speaker notes and file metadata) · `rickypriore/patlib-sessions` PR #3 read via `gh`
-(metadata, file list, and file contents compared cell-by-cell against this repository) ·
-`prep_workshop_todo.md` · `9_documentation/course/source/slides.yaml` and the module documents ·
-the repository's notebook folders at commit `bc7d327`.
+`~/Downloads/Mails Riccardo.pdf` (two mails, 20 and 25 August) · the two `.pptx` in `~/Downloads`
+including speaker notes and file metadata · `rickypriore/patlib-sessions` PR #3 read via `gh` ·
+`prep_workshop_todo.md` · `9_documentation/course/source/` · the notebook folders at commit
+`bc7d327`. The session's shape, the division of labour and the `2 × 10` time-box come from Arne
+directly, 26 August — not from the mails, which record none of it.
