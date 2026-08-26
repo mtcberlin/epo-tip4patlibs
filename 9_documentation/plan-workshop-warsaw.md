@@ -74,10 +74,12 @@ That was the right call for a 45-minute teaching block where the first query had
 is exactly the wrong call for this session, where the install *is* the argument and the queries are
 its evidence.
 
-**Consequence:** for the most important fifteen minutes of the workshop there is currently no
-prepared material — no slides written for it, no notebook section written to be *presented* rather
-than worked through, and no screenshot. The other three rungs each have a finished module behind
-them. This is the largest content gap before 18 September, ahead of the open screenshot session.
+**Consequence:** the most important fifteen minutes of the workshop had no prepared material at
+all, while each of the other three rungs has a finished module behind it. Two thirds of that is now
+closed — the deck carries the claim as module 1's three slides, and the notebook opens with the
+argument instead of with a setup cell. What is still missing is the **screenshot**: there is no
+captured image of the assistant writing a query on TIP, and that needs a live session on the
+machine. It is the last piece of the session's centrepiece.
 
 **What closing it looks like** is in section 6.
 
@@ -120,8 +122,9 @@ deeper, and they reach *every* participant rather than only the ones in the room
 | The four-notebook live landscape run | Tens of seconds per PATSTAT query, ten queries in one notebook alone, and a conference network nobody controls | Finished outputs, opened from disk |
 | Riccardo's two eleven-slide decks | No room for a second pass over the same use case | Shared with participants as follow-up |
 
-**Say the cuts out loud.** "There are four more modules and you are holding them" lands; quietly
-rushing them does not.
+**What is cut here is depth, not whole subjects** — all six modules still appear, but a
+45-minute block becomes eight to fifteen minutes. Say that out loud: *"you are holding the full
+version of everything you just saw"* lands, and it is true. Quietly rushing does not.
 
 ---
 
@@ -130,9 +133,9 @@ rushing them does not.
 | # | Work | Why | State |
 |---|---|---|---|
 | **1** | **This briefing**, rewritten on the real spine | The first version inferred the split from the material instead of from Arne's intent, and had his part backwards | ✅ this document |
-| **2** | **`slides.yaml` restructured** — new message, new blocks, module 1 recut around the persistent install, modules 6 and 8 as Riccardo's three-slide pair; deck re-rendered | The current deck compresses a 6 × 45-minute course into 90 minutes. It is the whole course at triple speed | ⏳ next |
-| **3** | **Notebook introductions** — the message before the first code cell | Measured: **every** workshop notebook opens with "Setup" or "Run this cell first". The branded header names the topic; nothing states why it is worth the next ten minutes | ⏳ |
-| **4** | **Material for the install block** — the fifteen minutes that have none | Section 3 | ⏳ |
+| **2** | **`slides.yaml` restructured** — new message, new blocks, module 1 recut around the persistent install, modules 6 and 8 as Riccardo's three-slide pair; deck re-rendered | The current deck compresses a 6 × 45-minute course into 90 minutes. It is the whole course at triple speed | ✅ `6215ebb` |
+| **3** | **Notebook introductions** — the message before the first code cell | Measured: **every** workshop notebook opens with "Setup" or "Run this cell first". The branded header names the topic; nothing states why it is worth the next ten minutes | ✅ `c818ebb` |
+| **4** | **Material for the install block** — the fifteen minutes that had none | Section 3 | ◐ slides and the notebook opening now cover it; **the screenshot still needs a TIP run** |
 | **5** | **The three-slide pair handed to Riccardo** | Section 4 | ⏳ needs his agreement first |
 | **6** | Handouts re-rendered, if any course document changes | `source/build_handouts.py` | ⏳ conditional |
 
