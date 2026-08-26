@@ -1,4 +1,4 @@
-# Module 6 — Patent Landscape Reports
+# Module 5 — Patent Landscape Reports
 
 *45-minute block · TIP4PATLIBS course material*
 
@@ -21,8 +21,8 @@ keep.**
 ## Prerequisites
 
 - **Module 1** — TIP is running, PATSTAT connects.
-- **Module 3** — you can read a query and judge a result.
-- **Module 4** — you know that an applicant name is not a company.
+- **Module 2** — you can read a query and judge a result.
+- **Module 3** — you know that an applicant name is not a company.
 
 ## Sub-objectives
 
@@ -49,8 +49,8 @@ By the end you can:
 | Runs on | EPO TIP, PATSTAT PROD (notebook 2's citation analysis uses BigQuery) |
 | Ships | **pre-executed** — 29 of 29 code cells, outputs kept |
 
-> ⚠️ **This module ships with its outputs, and that is deliberate.** Modules 1–5 clear their
-> outputs because participants are meant to run them. Module 6 is read as a **finished report** in
+> ⚠️ **This module ships with its outputs, and that is deliberate.** Modules 1–4 clear their
+> outputs because participants are meant to run them. Module 5 is read as a **finished report** in
 > a showcase. The outputs *are* the deliverable — never re-run the cells to "tidy" them.
 
 > 🎓 **Trainer.** The sibling folders `1_antibiotic_resistance/` (the imported reference) and
@@ -119,7 +119,7 @@ Eight steps that end in one file.
 
 > 🎓 **Trainer.** Step 5 is a decision worth naming: *one representative publication per family*,
 > preferring EP then WO then US. That is a choice, and a different preference order would give a
-> different citable number for the same invention. It is the module 4 lesson again — the
+> different citable number for the same invention. It is the module 3 lesson again — the
 > defensible part is that it was written down.
 
 ### Step 2 — The core landscape battery (10 min) · `2_core_landscape_analyses.ipynb`
@@ -227,8 +227,8 @@ part that is yours**, and it is the part you have to be able to defend.
 
 | Next | Why |
 |---|---|
-| **Module 8** — IPScore | Module 6 describes a whole field. Module 8 asks what **one patent** in it is worth — and how much of that answer is evidence. The worked example in module 8 is drawn from *this* corpus. |
-| **Module 7** — IPScore (Riccardo's tools) | The companion valuation module, outside this course block. |
+| **Module 6** — IPScore | Module 5 describes a whole field. Module 6 asks what **one patent** in it is worth — and how much of that answer is evidence. The worked example in module 6 is drawn from *this* corpus. |
+| **The IPScore reference** — IPScore (Riccardo's tools) | The companion valuation module, outside this course block. |
 
 ---
 
@@ -236,7 +236,7 @@ part that is yours**, and it is the part you have to be able to defend.
 
 - The rebuild's `README.md` states that notebook 3 holds the technology network only, and that
   temporal, citation, t-SNE, SDG and triadic analyses are "the next phase". The repository-level
-  `CLAUDE.md` describes module 6 as including t-SNE clusters and triadic families — that describes
+  `CLAUDE.md` describes module 5 as including t-SNE clusters and triadic families — that describes
   the older `1_antibiotic_resistance/` folder. **Align the two descriptions** before the workshop
   so nobody promises a chart that is not in the report.
 - The forward-citation cell's BigQuery dependency should be stated in the notebook header, not

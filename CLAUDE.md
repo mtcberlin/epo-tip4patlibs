@@ -18,13 +18,13 @@ Author: Arne Krüger (mtc.berlin / depa.tech) · License: **EPO Internal Use**.
 | `6_ipscore_rebuild/` | ✅ Complete — all four notebooks written and run on TIP; the evidence layer measures 11 of the 40 answers and the report reads `2 measured · 6 informed · 32 judgement`. Our own rebuild of the IPScore ideas as an explained notebook chain, adding a PATSTAT evidence layer. Engine in `ipscore_kit.py`, model data in `ipscore_spec.json`, deliverable in `4_tool/`, phasing in `REBUILD_PLAN.md`; `9_documentation/ipscore/` stays untouched as the working reference |
 | `9_documentation/` | Working documents that are not themselves course modules — see below |
 | `9_documentation/legacy/` | Earlier worked end-to-end examples (Airbus filing strategy, TU Dortmund portfolio). Not shown in Warsaw |
-| `9_documentation/ipscore/` | Patent valuation (**Riccardo Priore**) — EPO IPScore questionnaire → NPV; self-contained interactive HTML tools, opened via `open_html()` (jupyter-server-proxy), **never** via `IFrame`. Not shown in Warsaw; module 6 is the course's own rebuild |
+| `9_documentation/ipscore/` | Patent valuation (**Riccardo Priore**) — EPO IPScore questionnaire → NPV; self-contained interactive HTML tools, opened via `open_html()` (jupyter-server-proxy), **never** via `IFrame`. Not shown in Warsaw; module 5 is the course's own rebuild |
 
 **The folders are numbered in the workshop's running order** (renumbered 2026-08-26): the claim
 first, then the three examples of rising ambition, then Riccardo's two use cases. Two folders that
 are not shown in Warsaw — the earlier worked examples and Riccardo's imported IPScore tools — moved
 under `9_documentation/`. **Module numbers in the teaching material were *not* renumbered**: the
-handouts and slides still speak of modules 1, 3, 4, 5, 6 and 8. See `9_documentation/plan-course-material.md`.
+handouts and slides still speak of modules 1, 2, 3, 4, 5 and 6. See `9_documentation/plan-course-material.md`.
 
 ### What lives in `9_documentation/`
 **TIP sessions**, one brief per session, named for what the session was:
@@ -42,7 +42,7 @@ learning objectives and the three phases Introduction · Working through · Lear
 The Markdown, its YAML sidecars, `build_handouts.py`, `build_slides.py` and `build_shots.py` live in
 `course/source/`.
 
-The **course** is modules 1–8. Alongside it sit four working documents that are not course
+The **course** is modules 1–6. Alongside it sit four working documents that are not course
 material: this file, `README.md`, `prep_workshop_todo.md` (the workshop-preparation log) and
 `9_documentation/` (plans that need a live TIP session or a decision). Earlier
 supporting folders (`setup/`, `harmonization/`, `ipc-extension/`, `context/`, `docs/`)
@@ -82,10 +82,10 @@ Jupyter's root — e.g. to build a `/files/` URL.
   BigQuery ports and need separate credentials — not needed on TIP.
 - Git: SSH remotes, do work on `develop`, open PRs into `main`.
 
-### Guest modules 6 & 7 (Riccardo Priore)
+### Guest material (Riccardo Priore) (Riccardo Priore)
 Modules `5_patentreports/` and `9_documentation/ipscore/` are contributed material, reworked to
 match this course's look. Two deliberate deviations from the conventions above:
-- **They ship pre-executed** (outputs kept) — modules 1–5 clear outputs so
+- **They ship pre-executed** (outputs kept) — modules 1–4 clear outputs so
   participants run them; 6–7 are read as finished reports in a 90-min showcase.
 - **The header credits `created by Riccardo Priore`**, not the repo author.
 

@@ -1,6 +1,6 @@
 # Regional Lead Generation — brief for working with an AI
 
-*Module 5 of TIP4PATLIBS. This document is for **workshop participants**: paste it into an
+*Module 4 of TIP4PATLIBS. This document is for **workshop participants**: paste it into an
 AI assistant (Claude, ChatGPT, …) together with the notebook you are looking at, and the AI
 has enough context to explain, adapt, or extend what the two notebooks do. It is a
 **map of the method**, not a step list — the notebooks themselves are the runnable product.*

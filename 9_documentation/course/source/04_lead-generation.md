@@ -1,4 +1,4 @@
-# Module 5 — Regional Lead Generation
+# Module 4 — Regional Lead Generation
 
 *45-minute block · TIP4PATLIBS course material*
 
@@ -16,8 +16,8 @@ portfolio depth and geographic reach, and say precisely which companies my metho
 ## Prerequisites
 
 - **Module 1** — TIP is running, PATSTAT connects.
-- **Module 3** — you can adapt a query's parameters and judge whether a result is plausible.
-- **Module 4** — you count `docdb_family_id`, not applications, and you know that a name is not a
+- **Module 2** — you can adapt a query's parameters and judge whether a result is plausible.
+- **Module 3** — you count `docdb_family_id`, not applications, and you know that a name is not a
   company.
 
 ## Sub-objectives
@@ -174,7 +174,7 @@ city → region lookup.
 
 > ⚠️ **One more caveat before you publish a league table.** `han_name` sometimes splits one group
 > across several rows — `HAGER ELECTRO` vs `HAGER CONTROLS`, `KUHN SAS` vs `KUHN SA`. This is the
-> module 4 problem, arriving in module 5. Consolidate via `doc_std_name_id` / `psn_id` before you
+> module 3 problem, arriving in module 4. Consolidate via `doc_std_name_id` / `psn_id` before you
 > publish a ranking.
 
 | Step | What you do | What you see | ⏱ |
@@ -234,15 +234,15 @@ outreach plan, derived from the record, that you can put in front of your direct
 
 | Next | Why |
 |---|---|
-| **Module 6** — Patent Reports | Module 5 profiles a *region*. Module 6 profiles a *technology field*, and turns it into a publishable report. |
-| **Module 8** — IPScore | Your shortlist says which companies matter. Module 8 asks what a single patent of theirs is worth — and how much of that answer is evidence. |
+| **Module 5** — Patent Reports | Module 4 profiles a *region*. Module 5 profiles a *technology field*, and turns it into a publishable report. |
+| **Module 6** — IPScore | Your shortlist says which companies matter. Module 6 asks what a single patent of theirs is worth — and how much of that answer is evidence. |
 
 ---
 
 ## Notes for the next revision
 
-- Module 5 ships with **8 of 31 cells executed**, on purpose. Screenshots for the PDF and the
-  slides therefore require a separate TIP run — and unlike module 1, the point of module 5 *is*
+- Module 4 ships with **8 of 31 cells executed**, on purpose. Screenshots for the PDF and the
+  slides therefore require a separate TIP run — and unlike module 1, the point of module 4 *is*
   the resulting table, so shipping-state screenshots would be weak. Schedule the run.
 - The 70% / 77% coverage figures are stated as "measured on the current edition". Confirm they
   still hold on PATSTAT Global Autumn 2025 before the workshop, or restate them with the edition

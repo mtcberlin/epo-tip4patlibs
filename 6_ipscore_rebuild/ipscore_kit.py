@@ -1,6 +1,6 @@
-"""ipscore_kit — the one engine behind module 8.
+"""ipscore_kit — the one engine behind module 6.
 
-Everything module 8 computes lives here: the questionnaire, the score profile, the
+Everything module 6 computes lives here: the questionnaire, the score profile, the
 bridge from scores to economic parameters, and the ten-year discounted cash flow
 that ends in a Net Present Value.
 
@@ -35,7 +35,7 @@ EXAMPLE_PATH = Path(__file__).resolve().parent / "worked_example.json"
 HORIZON_YEARS = 10
 SCORE_MIN, SCORE_MAX = 1, 5
 
-#: How an answer came about. The whole point of module 8 is that these differ.
+#: How an answer came about. The whole point of module 6 is that these differ.
 PROVENANCE = ("measured", "informed", "judgement")
 
 #: The eleven questions PATSTAT can say something about — and what notebook 2 will source
@@ -218,7 +218,7 @@ def _check_score(score: int) -> int:
 class Answer:
     """One scored question — and where the score came from.
 
-    `provenance` is module 8's addition to the EPO model: *measured* means a
+    `provenance` is module 6's addition to the EPO model: *measured* means a
     PATSTAT fact decided it, *informed* means data narrowed it but a person chose,
     *judgement* means nothing but expert opinion stands behind it.
     """
@@ -324,7 +324,7 @@ def load_worked_example(path: Path | str = EXAMPLE_PATH) -> dict:
     """The module's worked example — patent, company figures and forty scores.
 
     It lives in one file so notebooks 3 and 4 cannot drift apart, and so decision **V5**
-    (swap in a real family from module 6's corpus) is an edit to that file alone.
+    (swap in a real family from module 5's corpus) is an edit to that file alone.
 
     Returns ``patent`` · ``financials`` · ``financials_note`` · ``scores`` · ``answers`` ·
     ``known_facts``.
@@ -678,7 +678,7 @@ def sensitivity(
 # Handing a section to the assembler
 # --------------------------------------------------------------------------- #
 #
-# Module 6 merges a pile of charts by an `order` number, because three notebooks scatter
+# Module 5 merges a pile of charts by an `order` number, because three notebooks scatter
 # figures across three folders. A valuation cannot be assembled that way: it has a
 # required shape, and `4_assemble_tool` builds that spine itself. What the contract below
 # adds is the *optional* part — a notebook that has something extra to say hands over one
@@ -765,7 +765,7 @@ def verify(path: Path | str = SPEC_PATH, tolerance: float = 1e-6) -> list[dict]:
     This is the gate: until all three match, nothing else this module computes is
     worth reading. Checking against the source of truth rather than against our
     own previous output is the habit that matters here — the same check, applied
-    to module 7's engine, once caught a real off-by-one bug.
+    to the IPScore reference's engine, once caught a real off-by-one bug.
     """
     results = []
     for patent in test_patents(path):

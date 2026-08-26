@@ -1,4 +1,4 @@
-# TIP session results — module 8 Phase 3 unblocked
+# TIP session results — module 6 Phase 3 unblocked
 
 **Session run 2026-08-15** against the plan in [`plan-tipsession-1-recon.md`](plan-tipsession-1-recon.md).
 EPO TIP JupyterLab, base conda env, `PatstatClient(env='PROD')`, PATSTAT Global Autumn 2025.
@@ -98,7 +98,7 @@ Coverage by publication kind, filings 2010–2022:
 
 EP `B1` coverage is **100 % in every single filing year 2010–2022** — no decay at the recent end.
 
-**So A4 keeps its labelled weak proxy** for the granted-EP case module 8 actually works on, and it
+**So A4 keeps its labelled weak proxy** for the granted-EP case module 6 actually works on, and it
 gains a benchmark to quote against: *this patent has N claims, a typical granted EP has 11.5*.
 Two rules for notebook 2:
 
@@ -111,7 +111,7 @@ Two rules for notebook 2:
 
 ## V5 — the worked example: Q-Linea AB, `EP3074539B1`
 
-Searched the module 6 corpus (4,172 families) for granted EP B1 documents in families of ≥ 5,
+Searched the module 5 corpus (4,172 families) for granted EP B1 documents in families of ≥ 5,
 filed 2012–2018, with a `psn_sector = 'COMPANY'` applicant: **135 candidate publications, 95 with
 a company applicant.** The 4,172-id list was fine as `UNNEST([...])` — no chunking needed.
 
@@ -356,8 +356,8 @@ passes its three EPO test patents after the session.
   now makes *"should I renew this?"* answerable from data if that turns out to be the real
   question.
 - **Notebook 1's `measured` stamps + the cell-21 fix** — one re-run, bundled, as above.
-- **Attribution wording for module 8** — module 8 is our implementation of the **EPO** model and
-  must say so, while modules 6 and 7 keep *created by Riccardo Priore*.
+- **Attribution wording for module 6** — module 6 is our implementation of the **EPO** model and
+  must say so, while module 5 and the IPScore reference keep *created by Riccardo Priore*.
 - **Applying V5** to `worked_example.json` — Phase 3 work, after notebook 2 exists.
 
 ## What this unblocks
@@ -367,4 +367,4 @@ passes its three EPO test patents after the session.
 `kit.PATSTAT_CANDIDATES` already names what each one sources — and A7 is no longer `"open"`.
 
 Only its **execution** needs TIP. Then the provenance panel on the report stops reading
-`0 measured · 0 informed · 40 judgement`, which is the whole point of module 8.
+`0 measured · 0 informed · 40 judgement`, which is the whole point of module 6.

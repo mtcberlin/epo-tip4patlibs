@@ -48,8 +48,8 @@ something you can use on Monday"* — it turns a dense session into a self-servi
 | **20–28** | Arne | **Rung 1 — Query Library.** A ready question, adapted and run |
 | **28–38** | Arne | **Rung 2 — PATSTAT Explorer.** The same query, now an app |
 | **38–53** | Arne | **Rung 3 — Regional leads, FR and DE.** Alsace live; the German national path named |
-| **53–63** | Riccardo | **Use case 1 — the landscape report** (module 6). Three slides |
-| **63–73** | Riccardo | **Use case 2 — IPScore valuation** (module 8). Three slides |
+| **53–63** | Riccardo | **Use case 1 — the landscape report** (module 5). Three slides |
+| **63–73** | Riccardo | **Use case 2 — IPScore valuation** (module 6). Three slides |
 | **73–78** | both | What you take home, and where it lives |
 | **78–90** | — | **Buffer — 12 minutes, deliberate** |
 
@@ -88,15 +88,15 @@ machine. It is the last piece of the session's centrepiece.
 ## 4 · Riccardo: two use cases, twenty minutes, and a format that holds them
 
 Riccardo brings two use cases he built with AI, and both are already in this repository as reworked
-modules: the **antibiotic-resistance landscape report** (module 6) and **IPScore valuation**
-(module 8). They are his content and they stay entirely his to present.
+modules: the **antibiotic-resistance landscape report** (module 5) and **IPScore valuation**
+(module 6). They are his content and they stay entirely his to present.
 
 **The problem is not his material, it is the format he is presenting it in.** His two decks are
 **eleven slides each**. Eleven slides is a twenty-minute talk, twice — which is the whole session.
 Asking him to speak faster does not fix that; the slide count will win.
 
 **The fix already exists in this repository and nobody has to build it.** `build_slides.py` renders
-**exactly three slides per module** — *intro · working through · outcome* — and modules 6 and 8 are
+**exactly three slides per module** — *intro · working through · outcome* — and modules 5 and 6 are
 already written into `slides.yaml` in that shape. Three slides is about ten minutes at a
 comfortable pace.
 
@@ -117,8 +117,8 @@ deeper, and they reach *every* participant rather than only the ones in the room
 | Not presented | Why | Where it lives instead |
 |---|---|---|
 | Module 1's PATSTAT first-query block | Rung 1 does the same job with a better story: a question already written | Handout `01_start-with-tip.pdf`, and the notebook |
-| Module 4's applicant-consolidation depth | Rung 2 shows the app; the identity problem is named in one sentence when the numbers appear, not taught | Handout `04_patstat-explorer.pdf` |
-| Modules 6 and 8 as *Arne's* material | They are Riccardo's use cases and stay his | Handouts `06_patent-reports.pdf`, `08_ipscore.pdf` |
+| Module 3's applicant-consolidation depth | Rung 2 shows the app; the identity problem is named in one sentence when the numbers appear, not taught | Handout `03_patstat-explorer.pdf` |
+| Modules 5 and 6 as *Arne's* material | They are Riccardo's use cases and stay his | Handouts `05_patent-reports.pdf`, `06_ipscore.pdf` |
 | The four-notebook live landscape run | Tens of seconds per PATSTAT query, ten queries in one notebook alone, and a conference network nobody controls | Finished outputs, opened from disk |
 | Riccardo's two eleven-slide decks | No room for a second pass over the same use case | Shared with participants as follow-up |
 
@@ -133,7 +133,7 @@ version of everything you just saw"* lands, and it is true. Quietly rushing does
 | # | Work | Why | State |
 |---|---|---|---|
 | **1** | **This briefing**, rewritten on the real spine | The first version inferred the split from the material instead of from Arne's intent, and had his part backwards | ✅ this document |
-| **2** | **`slides.yaml` restructured** — new message, new blocks, module 1 recut around the persistent install, modules 6 and 8 as Riccardo's three-slide pair; deck re-rendered | The current deck compresses a 6 × 45-minute course into 90 minutes. It is the whole course at triple speed | ✅ `6215ebb` |
+| **2** | **`slides.yaml` restructured** — new message, new blocks, module 1 recut around the persistent install, modules 5 and 6 as Riccardo's three-slide pair; deck re-rendered | The current deck compresses a 6 × 45-minute course into 90 minutes. It is the whole course at triple speed | ✅ `6215ebb` |
 | **3** | **Notebook introductions** — the message before the first code cell | Measured: **every** workshop notebook opens with "Setup" or "Run this cell first". The branded header names the topic; nothing states why it is worth the next ten minutes | ✅ `c818ebb` |
 | **4** | **Material for the install block** — the fifteen minutes that had none | Section 3 | ◐ slides and the notebook opening now cover it; **the screenshot still needs a TIP run** |
 | **5** | **The three-slide pair handed to Riccardo** | Section 4 | ⏳ needs his agreement first |

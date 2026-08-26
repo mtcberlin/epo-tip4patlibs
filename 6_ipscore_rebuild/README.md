@@ -13,7 +13,7 @@ and a ten-year discounted cash flow that ends in a Net Present Value.
 
 ## Why rebuild something that already works
 
-Module 7 is Riccardo Priore's adaptation and it works well — but it is the one module in this
+The IPScore reference (`9_documentation/ipscore/`) is Riccardo Priore's adaptation and it works well — but it was the one part of this
 course that never touches PATSTAT, and the model underneath it is **entirely subjective**: all
 40 answers come from a human, and nothing checks a single fact about the patent.
 

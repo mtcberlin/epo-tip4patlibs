@@ -1,4 +1,4 @@
-# Module 8 — Clean Rebuild Plan (IPScore: what is this patent worth?)
+# Module 6 — Clean Rebuild Plan (IPScore: what is this patent worth?)
 
 **Goal.** Not to reimplement Riccardo's HTML tools, but to rebuild **the ideas behind IPScore**
 as a teachable four-step chain a workshop audience can follow: *"here is how you get, in four
@@ -43,7 +43,7 @@ answered). Built and verified offline:
 **All three EPO test patents reproduce exactly** (329,059.4284 / 4,361.2849 / −4,686.3598;
 largest deviation 6·10⁻¹¹, floating-point noise). The engine is verified.
 
-Committed as `f66c69f` — *Module 8 Phase 1: the engine, verified against the EPO workbook*.
+Committed as `f66c69f` — *Module 6 Phase 1: the engine, verified against the EPO workbook*.
 
 **2026-08-15 — Phase 2 done.** The chain now exists end to end, offline.
 
@@ -60,7 +60,7 @@ Committed as `f66c69f` — *Module 8 Phase 1: the engine, verified against the E
   says `0 measured · 0 informed · 40 judgement` on its front section. Notebook 2 is what changes
   that, and the eleven reachable answers already carry a `-> notebook 2 (strength): …` note in
   their `evidence` field — a promise, never a measurement.
-- **The launcher cell ships without output**, the same rule module 7 learned the hard way
+- **The launcher cell ships without output**, the same rule the IPScore reference learned the hard way
   (warning 9 in `prep_workshop_todo.md`): run offline, `open_html()` bakes in the *author's*
   filesystem path and the message "jupyter-server-proxy is unavailable here", both of which are
   wrong on TIP. Clear that one cell before every commit.
@@ -69,7 +69,7 @@ Committed as `f66c69f` — *Module 8 Phase 1: the engine, verified against the E
   example's `C3` went 4 → 5 so the cash flow covers years 1–9 instead of dying at year 5;
   `D3`/`D4` went 3 → 4 so all six cash-flow components are alive rather than two sitting dead in
   the legend; the radar's radial axis moved to 36° so its tick labels stop colliding with the
-  *A — Legal status* label. This closes the open item below — module 8's charts are no longer
+  *A — Legal status* label. This closes the open item below — module 6's charts are no longer
   unseen.
 
 **2026-08-15 — Phase 4 done.** `3_valuation_and_scenarios.ipynb` — 14 cells, executed, offline.
@@ -86,7 +86,7 @@ Committed as `f66c69f` — *Module 8 Phase 1: the engine, verified against the E
 - Two structural changes came with it:
   - **`worked_example.json`** — the patent, the seven company figures and the forty scores now
     live in one file that notebooks 3 and 4 both read. They can no longer drift, and **V5**
-    (swap in a real family from module 6's corpus) becomes an edit to that file alone.
+    (swap in a real family from module 5's corpus) becomes an edit to that file alone.
   - **`kit.record_section()` / `kit.load_sections()`** — the optional half of the report
     contract, added at the moment the plan said to add it: when a second producer actually
     existed. Notebook 3 hands over section **700**; notebook 4 slots it between the cash flow
@@ -129,7 +129,7 @@ Committed as `f66c69f` — *Module 8 Phase 1: the engine, verified against the E
 the eight that carry money are **disjoint sets**. Measuring the record changes the profile, the
 risk map and the conversation, and changes the NPV by exactly zero. That is now the headline of
 notebook 2 and a paragraph in notebook 4's report, because it is the most useful and least
-comfortable thing module 8 has to say: *the checkable part of a patent valuation and the
+comfortable thing module 6 has to say: *the checkable part of a patent valuation and the
 decisive part do not overlap.*
 
 ### Two structural changes
@@ -153,10 +153,10 @@ commands, then go to "Phase 2, concretely".*
 
 ### 30-second orientation
 
-Module 8 rebuilds the **EPO IPScore** valuation model in this course's shape. The engine is
-done and provably correct; three of the four notebooks still have to be written. Module 7 is
+Module 6 rebuilds the **EPO IPScore** valuation model in this course's shape. The engine is
+done and provably correct; three of the four notebooks still have to be written. The IPScore reference is
 Riccardo Priore's working version and stays untouched — it is the workshop-ready one until
-module 8 proves itself.
+module 6 proves itself.
 
 ### Check that the ground is still solid
 
@@ -183,7 +183,7 @@ either the workbook moved or the spec was hand-edited (it never should be).
 Forty answers go in. Thirty-two of them only shape the **profile** (points per section, average
 risk, average opportunity). Eight — B5, C2, C3, C6, D1–D4 — are looked up in their OEK table
 and become **economic parameters**, which together with seven figures from the company accounts
-drive a ten-year cash flow whose discounted sum is the **NPV**. Module 8's own addition is that
+drive a ten-year cash flow whose discounted sum is the **NPV**. Module 6's own addition is that
 every `Answer` carries a provenance marker (`measured` / `informed` / `judgement`), so the
 output can show how much of the number is evidence.
 
@@ -195,15 +195,15 @@ output can show how much of the number is evidence.
   the one in `1_the_model.ipynb`.
 - **Charts use `kit.PALETTE` and `kit.CHART_LAYOUT`**, shown inline with `fig.show()` (never
   `write_html()` only — a pre-executed notebook that shows a reader nothing is the mistake
-  module 6 made). `CHART_LAYOUT` uses magic-underscore title keys, so `fig.update_layout(
+  module 5 made). `CHART_LAYOUT` uses magic-underscore title keys, so `fig.update_layout(
   **kit.CHART_LAYOUT, title="…")` works.
 - **`git check-ignore` any new folder** before assuming it is committed. `build/`, `dist/` and
   `__pycache__/` are swallowed globally.
 - Work on `develop`, PR into `main`, SSH remotes.
 
-### The report contract — settled in Phase 2, and different from module 6's
+### The report contract — settled in Phase 2, and different from module 5's
 
-Module 6 merges a pile of charts by an `order` number, because three notebooks scatter figures
+Module 5 merges a pile of charts by an `order` number, because three notebooks scatter figures
 across three folders. A valuation cannot be assembled that way: it has a **required shape** —
 you cannot show someone an NPV before you have shown them what was assumed to get there. So:
 
@@ -224,7 +224,7 @@ you cannot show someone an NPV before you have shown them what was assumed to ge
 > tasks, ~30 minutes, with draft queries for O1 and O2 and the selection criteria for V5.
 
 `2_evidence_from_patstat.ipynb`, and it is **TIP-only**. Before it can be written, one short
-TIP session has to answer O1 and O2 (below) and settle V5 — which family from module 6's
+TIP session has to answer O1 and O2 (below) and settle V5 — which family from module 5's
 antibiotic-resistance corpus becomes the worked example. Then: the three *strong* questions
 first (A1, A3, A5), the three *good* ones next (E1, E2, E7), the proxies last and labelled as
 proxies. `kit.PATSTAT_CANDIDATES` already names what each one sources.
@@ -241,7 +241,7 @@ Phase 3. Only notebook 2 is left, and only it needs TIP.
 - ~~Notebook 1 stamps three answers `measured`~~ — **resolved 2026-08-15.** Its answer set is
   now the same first pass as `worked_example.json`, all forty `judgement`, guarded by an assert.
 - **Notebooks 1 and 4 ship executed** — deliberate, see the convention note under the decisions
-  table. Reverse if module 8 should be run rather than read.
+  table. Reverse if module 6 should be run rather than read.
 - **O1–O3** (legal-status tables on TIP, `nb_claims` coverage, what a PATLIB is really asked)
   are still open and gate Phase 3. See the end of this file.
 
@@ -270,13 +270,13 @@ Phase 3. Only notebook 2 is left, and only it needs TIP.
    one-time events** in the first revenue year, not annual; revenue and the regained/efficiency
    terms use a **fractional-year factor** for partial entry and exit years.
 5. **The model is entirely subjective on input.** All 40 answers come from a human. Nothing in
-   IPScore checks a single fact about the patent. That is the gap module 8 exists to close.
+   IPScore checks a single fact about the patent. That is the gap module 6 exists to close.
 
 ---
 
 ## The one idea this rebuild adds: separate evidence from judgement
 
-Module 7 is an island — the only module in the course that never touches PATSTAT. A PATLIB,
+The IPScore reference is an island — the only part of the material that never touches PATSTAT. A PATLIB,
 however, *has* PATSTAT, and some of these 40 questions are simply matters of record.
 
 Mapped honestly against the real question set:
@@ -297,12 +297,12 @@ Mapped honestly against the real question set:
 **So: roughly six questions become evidence-based, four gain useful context, thirty stay
 expert judgement.** That ratio *is* the teaching point. A valuation is not automatable; data
 narrows the guesswork on the legal and geographic axes and nowhere else. Any tool that hides
-that is lying to its user, so module 8 shows the split in the output — every answer carries a
+that is lying to its user, so module 6 shows the split in the output — every answer carries a
 provenance marker: **measured · informed · judgement**.
 
 ---
 
-## Architecture — the same four-step chain as module 6
+## Architecture — the same four-step chain as module 5
 
 ```
 6_ipscore_rebuild/
@@ -331,7 +331,7 @@ provenance marker: **measured · informed · judgement**.
 Notebook 1 writes no output folder: it proves the engine, and nothing downstream reads its
 numbers. Notebooks 2 and 3 do feed notebook 4, so they keep the one-folder-per-notebook rule.
 
-Same conventions as module 6: one output folder per notebook, a small kit module holding the
+Same conventions as module 5: one output folder per notebook, a small kit module holding the
 contract, a final notebook that assembles, `open_html()` for the deliverable, and **a short
 plain-language markdown cell above every code cell** — it is teaching material.
 
@@ -340,7 +340,7 @@ plain-language markdown cell above every code cell** — it is teaching material
 **1 · The model.** Load the questions and OEK tables, walk through the scoring and the cash
 flow with a worked example, and end with the acceptance test: reproduce Excel's three test
 patents (329,059.4284 / 4,361.2849 / −4,686.3598). The step is also the honest-verification
-lesson module 7 already tells — here it is executable rather than narrated.
+lesson the IPScore reference already tells — here it is executable rather than narrated.
 
 **2 · Evidence from PATSTAT.** Take one real patent family, pull what the table above says is
 knowable, and pre-fill those answers with the fact behind each one attached. Everything else is
@@ -353,14 +353,14 @@ it?"*, computed rather than asserted, and honest about the fact that only 8 of 4
 move the number at all.
 
 **4 · Assemble.** Narrative + figures + the answer table with provenance markers → one
-self-contained HTML file (single embedded plotly.js, no iframes — the constraint module 6
+self-contained HTML file (single embedded plotly.js, no iframes — the constraint module 5
 already proved) plus a workbook with one sheet per step.
 
 ---
 
 ## The engine question — one source of truth (V3, V4 · settled)
 
-Riccardo's tools compute in JavaScript inside the HTML. If module 8 computed in Python *and*
+Riccardo's tools compute in JavaScript inside the HTML. If module 6 computed in Python *and*
 shipped an interactive page, the formulas would exist twice and drift.
 
 **Settled: Python is the only engine.** V4 came back *report first*, so the deliverable is a
@@ -370,7 +370,7 @@ the model's data. Interactivity is a later option, and if it ever arrives, the r
 page-side formula must pass the same acceptance test as Python.
 
 **The Excel is a source, not a dependency.** `tools/extract_spec_from_excel.py` reads the
-workbook once and writes `ipscore_spec.json`; from then on module 8 stands alone and module 7
+workbook once and writes `ipscore_spec.json`; from then on module 6 stands alone and the IPScore reference
 could be retired without breaking it. The cost of that independence is that the spec can go
 stale silently — so the extractor stays in the repo with a `--check` mode that re-derives and
 compares, and the three expected NPVs travel *inside* the spec rather than as hand-typed
@@ -395,9 +395,9 @@ constants.
 
 After Phase 2 there is a demonstrable artifact; after each later phase there still is.
 
-## Division of labour — better than module 6's
+## Division of labour — better than module 5's
 
-Module 6 could only ever be verified on TIP, because every analysis queries PATSTAT. Here
+Module 5 could only ever be verified on TIP, because every analysis queries PATSTAT. Here
 **three of the four notebooks (1, 3, 4) need no database at all** and can be authored *and
 executed* offline. Only notebook 2 is TIP-only. So the loop is: build and verify offline, hand
 Arne exactly one notebook to run on TIP, commit outputs.
@@ -408,24 +408,24 @@ Arne exactly one notebook to run on TIP, commit outputs.
 
 | # | Question | Decision |
 |---|---|---|
-| **V1** | Structure? | ✅ **Four-step chain** mirroring module 6 (model → evidence → scenarios → assemble), one output folder per notebook that produces data, an `ipscore_kit.py` contract. |
-| **V2** | What is rebuilt? | ✅ **The EPO model**, re-implemented in Python from the Excel. Riccardo's help text, € benchmarks and demo narratives are **not** copied — module 8 writes its own. |
-| **V3** | Where does the engine live? | ✅ **Changed from the original proposal.** The Excel is read **once** by `tools/extract_spec_from_excel.py` into `ipscore_spec.json`; no notebook opens the workbook, and module 8 does not depend on module 7 at runtime. Python is the single engine. |
+| **V1** | Structure? | ✅ **Four-step chain** mirroring module 5 (model → evidence → scenarios → assemble), one output folder per notebook that produces data, an `ipscore_kit.py` contract. |
+| **V2** | What is rebuilt? | ✅ **The EPO model**, re-implemented in Python from the Excel. Riccardo's help text, € benchmarks and demo narratives are **not** copied — module 6 writes its own. |
+| **V3** | Where does the engine live? | ✅ **Changed from the original proposal.** The Excel is read **once** by `tools/extract_spec_from_excel.py` into `ipscore_spec.json`; no notebook opens the workbook, and module 6 does not depend on the IPScore reference at runtime. Python is the single engine. |
 | **V4** | Interactive tool or computed report? | ✅ **Report first.** One engine, no formulas in two languages. Interactivity only if the workshop turns out to need it. |
-| **V5** | Which patent is the worked example? | ✅ **A family from module 6's antibiotic-resistance corpus**, so the course links up: the landscape says where a field stands, module 8 values one patent inside it. Picked in Phase 3, when notebook 2 meets PATSTAT. |
+| **V5** | Which patent is the worked example? | ✅ **A family from module 5's antibiotic-resistance corpus**, so the course links up: the landscape says where a field stands, module 6 values one patent inside it. Picked in Phase 3, when notebook 2 meets PATSTAT. |
 | **V6** | Languages? | ✅ **English only.** The Italian versions stay Riccardo's; we do not take on translations. |
-| **V7** | Relationship to module 7? | ✅ **Module 7 stays untouched and workshop-ready.** Module 8 is a sibling, not a replacement. Retirement (or merge) decided only after module 8 proves itself on TIP. |
+| **V7** | Relationship to the IPScore reference? | ✅ **The IPScore reference stays untouched and workshop-ready.** Module 6 is a sibling, not a replacement. Retirement (or merge) decided only after module 6 proves itself on TIP. |
 | **V8** | Scope of the evidence layer? | ✅ **The six strong questions + four labelled proxies**, never more. Every answer in the output carries measured / informed / judgement. |
 | **V9** | Numbering — a top-level `8_`? | ✅ As instructed. Marked *under construction* in `README.md` until Phase 2 lands. |
 
 ### Two conventions this module sets, worth a second look before the release
 
-- **Notebook 1 ships executed.** Modules 1–5 clear outputs so participants run them; modules 6
+- **Notebook 1 ships executed.** Modules 1–4 clear outputs so participants run them; modules 6
   and 7 ship pre-executed because they are read as reports. Notebook 1 is a *proof* — the
   stored output is the evidence that the engine matches the EPO — so it keeps its outputs.
-  Reverse this if module 8 is meant to be run rather than read.
+  Reverse this if module 6 is meant to be run rather than read.
 - **`tools/` rather than `build/`.** `build/` is ignored globally by `.gitignore`, the same
-  trap module 7 had to work around with a negation rule. Any new folder gets a
+  trap the IPScore reference had to work around with a negation rule. Any new folder gets a
   `git check-ignore` before it is assumed committed.
 
 ## Open questions to resolve before Phase 3
@@ -455,7 +455,7 @@ Answered on TIP, 2026-08-15 (`9_documentation/plan-tipsession-1-recon.md`, PATST
   But the question survives the column: **`tls211_pat_publn.publn_claims`** carries it, and for
   **EP `B1` it is 100 % populated** — every filing year 2010–2022, 1.09 M granted publications,
   mean 11.5 claims. US B-documents 43.5 %; **WO is 0 %**, as are DE/GB/FR/IT.
-  So **A4 keeps its labelled weak proxy** for the granted-EP case module 8 actually works on,
+  So **A4 keeps its labelled weak proxy** for the granted-EP case module 6 actually works on,
   and it gains a benchmark to quote it against (this patent's claim count vs a typical 11.5).
   Take the count from the **B1**, not the A-publication: A1 is only 51 % populated and is the
   as-filed claim set, not the granted one.

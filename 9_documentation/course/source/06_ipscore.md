@@ -1,10 +1,10 @@
-# Module 8 — What is this patent worth?
+# Module 6 — What is this patent worth?
 
 *45-minute block · TIP4PATLIBS course material* · **core path**
 
 > **Scope.** This block covers `1_the_model.ipynb` and a guided read of the finished valuation
 > report. The implementation chain — measuring answers against PATSTAT, the scenario analysis, and
-> assembling the tool — is a second block, deferred to `08_ipscore_part2.md`. You leave this block
+> assembling the tool — is a second block, deferred to `06_ipscore_part2.md`. You leave this block
 > with the argument, not with the code.
 
 > **How to read this document.** The running text addresses **you, the participant**.
@@ -12,7 +12,7 @@
 > have caught people before.
 
 > **IPScore is an EPO tool.** This module is the course's own implementation of the IPScore 3.01
-> model, verified against the EPO's workbook. Module 7 is Riccardo Priore's adaptation of the same
+> model, verified against the EPO's workbook. The IPScore reference is Riccardo Priore's adaptation of the same
 > tool and carries his credit.
 
 ---
@@ -25,8 +25,8 @@ whether it is evidence or judgement.**
 ## Prerequisites
 
 - **Module 1** — TIP is running. (Notebook 1 itself runs anywhere; it needs no database.)
-- **Module 4** — you are used to marking which part of an answer was a decision you made.
-- Helpful, not required: **module 6**, whose antibiotic-resistance corpus this patent came from.
+- **Module 3** — you are used to marking which part of an answer was a decision you made.
+- Helpful, not required: **module 5**, whose antibiotic-resistance corpus this patent came from.
 
 ## Sub-objectives
 
@@ -48,7 +48,7 @@ By the end you can:
 |---|---|
 | Folder | `6_ipscore_rebuild/` |
 | This block | `1_the_model.ipynb` (seven steps, runs offline) · `4_tool/ipscore_valuation.html` (the finished report) |
-| Second block | `2_evidence_from_patstat` · `3_valuation_and_scenarios` · `4_assemble_tool` — see `08_ipscore_part2.md` |
+| Second block | `2_evidence_from_patstat` · `3_valuation_and_scenarios` · `4_assemble_tool` — see `06_ipscore_part2.md` |
 | The engine | `ipscore_kit.py` · the model as data in `ipscore_spec.json` · the worked patent in `worked_example.json` |
 | Ships | pre-executed |
 
@@ -74,7 +74,7 @@ model returns two things: a **profile** — where this patent is strong and wher
 and a **number**, the Net Present Value of the technology it protects.
 
 This block opens that machine and shows every wheel. And it ends somewhere uncomfortable, which is
-the reason the module sits at the end of the course rather than module 6:
+the reason the module sits at the end of the course rather than module 5:
 
 > **The engine is exact. Its inputs are opinions.** All 40 answers come from a person. Nothing in
 > IPScore checks a single fact about the patent — not whether it is granted, not how long it runs,
@@ -137,8 +137,8 @@ technology), **C6** (extra turnover), and **D1–D4** (the four finance question
 **Step 3 · The profile and the provenance markers (4 min).** The notebook now scores a **real
 patent**: `EP3074539B1`, *"Method for detecting and characterising a microorganism"*, held by
 **Q-Linea AB** of Uppsala — rapid identification and antibiotic-susceptibility testing of bacteria,
-picked out of **module 6's corpus**. The two modules describe the same field: module 6 maps where
-antimicrobial-resistance research stands, module 8 values one patent inside it.
+picked out of **module 5's corpus**. The two modules describe the same field: module 5 maps where
+antimicrobial-resistance research stands, module 6 values one patent inside it.
 
 The 40 answers shipped here are **an adviser's first pass** — what a person writes down in a first
 session with a client, before checking anything.
@@ -189,7 +189,7 @@ awkward: one lands just above zero, one below it.
 
 > **This is the transferable lesson of the module, and it has nothing to do with patents: check
 > against the source of truth, not against your own previous output.** Applied to the engine in
-> module 7, this exact check once caught a real off-by-one bug that two demo cases had happily
+> the IPScore reference, this exact check once caught a real off-by-one bug that two demo cases had happily
 > hidden.
 
 ### Part B — Read the finished report (9 min) · `4_tool/ipscore_valuation.html`
@@ -283,7 +283,7 @@ That list is the honest scoping document for a valuation engagement, and it take
 
 > 🎓 **Trainer.** Close by naming what was deliberately left out. The chain that *measures* answers
 > against PATSTAT, runs the scenarios and assembles the report is a second 45-minute block
-> (`08_ipscore_part2.md`) for PATLIBs that want to run it themselves. Nothing in this block is
+> (`06_ipscore_part2.md`) for PATLIBs that want to run it themselves. Nothing in this block is
 > incomplete without it — a participant who never opens notebook 2 still leaves with the argument.
 
 ---
@@ -292,8 +292,8 @@ That list is the honest scoping document for a valuation engagement, and it take
 
 | Next | Why |
 |---|---|
-| **Module 7** — IPScore (Riccardo Priore) | The workshop-ready valuation tools, and the module to use for a live client session. |
-| **`08_ipscore_part2.md`** | The implementation: measuring answers against PATSTAT, sensitivity, and building the report. |
+| **The IPScore reference** — IPScore (Riccardo Priore) | The workshop-ready valuation tools, and the module to use for a live client session. |
+| **`06_ipscore_part2.md`** | The implementation: measuring answers against PATSTAT, sensitivity, and building the report. |
 
 ---
 
@@ -306,6 +306,6 @@ That list is the honest scoping document for a valuation engagement, and it take
 - **`1_the_model.ipynb` says "four of them strongly"** about the PATSTAT-reachable questions.
   `PATSTAT_CANDIDATES` actually holds **3 strong, 4 good, 3 proxy, 1 context**. The report says
   "three strongly" and is correct. Fix the notebook.
-- Module 8's full material is 8,272 markdown words — more prose than modules 1, 3, 4 and 6
+- Module 6's full material is 8,272 markdown words — more prose than modules 1, 2, 3 and 5
   combined. The core/extension split above is what makes it teachable; **do not quietly re-expand
   this document** to cover notebooks 2–4.

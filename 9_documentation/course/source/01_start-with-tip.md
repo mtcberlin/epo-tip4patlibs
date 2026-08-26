@@ -185,7 +185,7 @@ module refines it.
 >   line. Genuinely useful, entirely optional, and better done alone than in a room.
 > - **Part 2 of notebook 2** profiles an institution end to end — name variants, portfolio size,
 >   timeline, one family under the microscope, filing strategy, technology fields. It is the
->   natural evening exercise, and it is the direct precursor to module 4.
+>   natural evening exercise, and it is the direct precursor to module 3.
 
 ---
 
@@ -193,8 +193,8 @@ module refines it.
 
 | Next | Why |
 |---|---|
-| **Module 3** — The Query Library | You have now written a query by hand. Module 3 is about *choosing* one that somebody has already made defensible — and knowing when to do which. |
-| **Module 4** — PATSTAT Explorer | Part 2 · Query 1 of notebook 2 shows you that one institution has many names. Module 4 is what you do about it. |
+| **Module 2** — The Query Library | You have now written a query by hand. Module 2 is about *choosing* one that somebody has already made defensible — and knowing when to do which. |
+| **Module 3** — PATSTAT Explorer | Part 2 · Query 1 of notebook 2 shows you that one institution has many names. Module 3 is what you do about it. |
 
 ---
 

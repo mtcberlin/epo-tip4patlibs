@@ -1,4 +1,4 @@
-# Module 6 — Clean Rebuild Plan (Antibiotic Resistance landscape report)
+# Module 5 — Clean Rebuild Plan (Antibiotic Resistance landscape report)
 
 **Goal (Arne's steer):** *not* to fix Riccardo's complicated steps, but to build a **clean,
 teachable pipeline** that a workshop audience can follow — "here is how you get, in four

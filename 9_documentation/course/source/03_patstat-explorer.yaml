@@ -1,11 +1,11 @@
-# Title page and header/footer metadata for the 03_query-library.md handout.
+# Title page and header/footer metadata for the 03_patstat-explorer.md handout.
 # Rendered with the mtc-pdf skill via build_handouts.py.
 # privat mode: no title page, no logo, no mtc brand — the handout keeps its
 # own "# Title" heading, the accent headings, tables, callouts, running
 # header and the page counter.
 mode: privat
-title: "Module 3 — The Query Library"
-subtitle: "Ask PATSTAT a question: pick, adapt, read the result"
+title: "Module 3 — PATSTAT Explorer"
+subtitle: "Who is this company, really? Applicant identity and consolidation"
 subtitle_accent: "TIP4PATLIBS — EPO Technology Intelligence Platform"
 author: "Arne Krüger"
 brand_subtitle: "Patent Intelligence"
@@ -16,7 +16,7 @@ meta:
   - ["Course", "TIP4PATLIBS — patent analytics on the EPO TIP"]
   - ["Audience", "PATLIB staff across Europe"]
   - ["Format", "45-minute block"]
-  - ["Repository folder", "2_querylib/"]
+  - ["Repository folder", "3_patstat_explorer/"]
   - ["Platform", "EPO TIP · PATSTAT Global, Autumn 2025"]
   - ["By", "Arne Krüger — mtc.berlin"]
   - ["Status", "17 August 2026"]

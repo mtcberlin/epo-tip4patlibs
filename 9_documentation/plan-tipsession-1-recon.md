@@ -1,11 +1,11 @@
 # TIP session 1 — reconnaissance: what can PATSTAT actually answer?
 
-**What this is.** The briefing for the **first** of the module 8 TIP sessions, handed to whoever
+**What this is.** The briefing for the **first** of the module 6 TIP sessions, handed to whoever
 sat in front of TIP. It is a **reconnaissance** session: five open questions that could not be
 answered offline, because they are about what the data on TIP *contains*. Nothing was built here
 — the point was to find out what could be built.
 
-**What it is not.** It does not run any of module 8's notebooks. That is
+**What it is not.** It does not run any of module 6's notebooks. That is
 [`plan-tipsession-2-evidence-run.md`](plan-tipsession-2-evidence-run.md), an **execution**
 session with a single task, run the same day once these answers were in.
 
@@ -36,9 +36,9 @@ in [`results-tipsession.md`](results-tipsession.md).
 >
 > This file is kept as the record of what was asked and how the plan's SQL had to be corrected.
 
-**Why this exists.** Module 8's remaining work is one notebook — `2_evidence_from_patstat.ipynb`,
+**Why this exists.** Module 6's remaining work is one notebook — `2_evidence_from_patstat.ipynb`,
 the PATSTAT evidence layer. It cannot be written until four things are established, and all four
-need a live TIP session. Everything else in module 8 is done and runs offline.
+need a live TIP session. Everything else in module 6 is done and runs offline.
 
 | | |
 |---|---|
@@ -142,7 +142,7 @@ print([t for t in df["table_name"] if t.startswith(("tls23", "tls80"))])
 > Take the count from the `B1`, never the `A1`.
 
 **The decision it makes.** Question **A4** *breadth of claim*. Claim count is a **weak proxy** for
-claim breadth and module 8 labels it as one — but a proxy with no data is not even that. If the
+claim breadth and module 6 labels it as one — but a proxy with no data is not even that. If the
 column is empty for EP and WO, A4 drops out and stays pure judgement.
 
 ```python
@@ -162,7 +162,7 @@ pd.DataFrame(patstat.sql_query(sql, use_legacy_sql=False))
 
 If `nb_claims` does not exist on `tls201_appln` in this edition, the query errors on the column
 name — that itself is the answer. Note the coverage **per authority**: EP and WO are the ones
-module 8 cares about, since the worked example is an EP-first family.
+module 6 cares about, since the worked example is an EP-first family.
 
 **Record:** coverage percentage for EP and WO. Rule of thumb — below ~50 % for EP, A4 is not worth
 showing even as a labelled proxy.
@@ -181,8 +181,8 @@ showing even as a labelled proxy.
 
 **The decision it makes.** Right now `6_ipscore_rebuild/worked_example.json` holds an invented
 patent, and its eight money-carrying scores were **chosen so the charts teach well**, not sampled
-from reality. Decision **V5** says the real example comes from module 6's antibiotic-resistance
-corpus, so the two modules link up: the landscape says where a field stands, module 8 values one
+from reality. Decision **V5** says the real example comes from module 5's antibiotic-resistance
+corpus, so the two modules link up: the landscape says where a field stands, module 6 values one
 patent inside it.
 
 **The corpus** is `5_patentreports/2_antibiotic_resistance_rebuild/1_dataset_and_search_strategy_output/dataset.xlsx`
@@ -286,7 +286,7 @@ money answers, cash flow, *which lever moves the number*, all forty answers?
 > 🚨 **Clear that cell's output before committing.** Run on TIP, `open_html()` bakes a URL
 > containing the hub session id and an ephemeral port into the notebook — dead for everyone else.
 > Run offline it bakes in the author's filesystem path. Either way it must not ship. This is
-> warning 9 in `prep_workshop_todo.md`, the one module 7 learned the hard way.
+> warning 9 in `prep_workshop_todo.md`, the one the IPScore reference learned the hard way.
 
 ---
 
@@ -314,7 +314,7 @@ Ticket `#PIP-127`. Work on `develop`.
 ## Not part of this session, but decide before 18 September
 
 > ✅ **Settled since.** The notebook 1 re-run happened — the three `measured` stamps are gone and
-> the cell-21 scores are corrected (`C3=5`, `D3=4`, `D4=4`). The module 8 attribution wording is
+> the cell-21 scores are corrected (`C3=5`, `D3=4`, `D4=4`). The module 6 attribution wording is
 > written. What remains of this list is O3, which is a conversation, not a query.
 
 - ~~**Notebook 1 stamps three answers `measured`**~~ ✅ **done.** (A1, A3, A5) with hand-written evidence strings.
@@ -327,9 +327,9 @@ Ticket `#PIP-127`. Work on `develop`.
   three: A1 "granted 2018-01-10, no opposition (`26N`)", A3 "renewals paid to year 11 in 2025,
   nominal expiry 2034-06-13", A5 "in force in DE, SE, GB, FR of 38 designated states". The
   hand-written strings can become true rather than being deleted.
-- ~~**Attribution wording for module 8.**~~ ✅ **done.** Riccardo has agreed to the rebuild; the sentence itself
-  is still unwritten. Module 8 is our implementation of the **EPO** model and must say so, while
-  modules 6 and 7 keep *created by Riccardo Priore*.
+- ~~**Attribution wording for module 6.**~~ ✅ **done.** Riccardo has agreed to the rebuild; the sentence itself
+  is still unwritten. Module 6 is our implementation of the **EPO** model and must say so, while
+  module 5 and the IPScore reference keep *created by Riccardo Priore*.
 - ~~Unsigned commits on `develop`~~ — **done, 2026-08-15.** All four were re-signed and
   force-pushed; `git log --format='%h %G?' f141276..develop` shows `G` on every one. The
   pre-rewrite state is kept locally as `backup/pre-resign-develop`; delete that branch once the
@@ -347,4 +347,4 @@ three *strong* questions first (A1, A3, A5), the three *good* ones next (E1, E2,
 last and labelled as proxies. `kit.PATSTAT_CANDIDATES` already names what each one sources.
 
 Only its **execution** needs TIP. Then the provenance panel on the report stops reading
-`0 measured · 0 informed · 40 judgement` — which is the whole point of module 8.
+`0 measured · 0 informed · 40 judgement` — which is the whole point of module 6.

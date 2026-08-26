@@ -37,10 +37,10 @@ deck:
 blocks:
   - name: "Arne — the claim, then the ladder"
     minutes: 53
-    modules: [1, 3, 4, 5]
+    modules: [1, 2, 3, 4]
   - name: "Riccardo — two use cases"
     minutes: 20
-    modules: [6, 8]
+    modules: [5, 6]
 
 modules:
   - n: 1
@@ -71,7 +71,7 @@ modules:
       The barrier was never the database. It was the SQL — and that is precisely the part
       you can now hand over.
 
-  - n: 3
+  - n: 2
     title: "The Query Library"
     folder: "2_querylib/"
     minutes: "Rung 1 · 8 min"
@@ -95,7 +95,7 @@ modules:
       - "A first feel for what a PATSTAT query costs in time"
     takeaway: "An analysis you cannot open up is one you cannot defend."
 
-  - n: 4
+  - n: 3
     title: "PATSTAT Explorer"
     folder: "3_patstat_explorer/"
     minutes: "Rung 2 · 10 min"
@@ -122,7 +122,7 @@ modules:
       Consolidation is a judgement, not a lookup. What makes the number defensible is
       that you wrote the decision down.
 
-  - n: 5
+  - n: 4
     title: "Regional Lead Generation"
     folder: "4_lead_generation/"
     minutes: "Rung 3 · 15 min"
@@ -149,7 +149,7 @@ modules:
       This is the EP/PCT-active subset of your region. Roughly 70% of national families
       never take that route — say so under the table.
 
-  - n: 6
+  - n: 5
     title: "Patent Landscape Reports"
     folder: "5_patentreports/"
     minutes: "Use case 1 · 10 min"
@@ -177,7 +177,7 @@ modules:
       The analyses are generic. The corpus definition is the part that is yours, and
       the part you have to defend.
 
-  - n: 8
+  - n: 6
     title: "What is this patent worth?"
     folder: "6_ipscore_rebuild/"
     minutes: "Use case 2 · 10 min"

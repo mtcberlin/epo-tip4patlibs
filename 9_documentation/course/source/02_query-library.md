@@ -1,4 +1,4 @@
-# Module 3 — The Query Library
+# Module 2 — The Query Library
 
 *45-minute block · TIP4PATLIBS course material*
 
@@ -94,7 +94,7 @@ comes from a statement you could inspect, hand to a colleague, or argue about.
 
 > 🎓 **Trainer.** This is the moment worth slowing down for. The difference between a tool and a
 > black box is whether you can open it. Say it out loud: *an analysis you cannot open up is one
-> you cannot defend.* The same sentence returns in modules 4 and 8.
+> you cannot defend.* The same sentence returns in modules 3 and 6.
 
 ### Step 2 — Adapt one query to your own question (12 min)
 
@@ -152,22 +152,22 @@ Answer these before moving on. If one is unclear, go back to the query that rais
    years?"* — and which would you use for *"who are the biggest filers in this technology?"*
 2. **Why does the same question return fewer rows** when you filter `appln_auth = 'EP'` than when
    you count `docdb_family_id`? *(Because one counts filings at one office, the other counts
-   inventions wherever they were filed. Module 4 makes this the centre of the lesson.)*
+   inventions wherever they were filed. Module 3 makes this the centre of the lesson.)*
 3. **You widened the year window from 5 to 20 years and the query is still running after three
    minutes.** Broken, or working? *(Working. Narrow it, get the answer, then widen deliberately.)*
 4. **A client asks which of two companies has the "better" portfolio.** Can the library answer
    that? *(No. It can measure size, reach and technology mix. "Better" is a judgement — and
-   module 8 is about exactly that boundary.)*
+   module 6 is about exactly that boundary.)*
 
 ### Transfer to your own work
 
 Write down the **three questions you are asked most often** at your PATLIB desk. For each, note
-which library query comes closest, and what is missing. That list is your agenda for modules 4
-and 5 — and it is worth keeping.
+which library query comes closest, and what is missing. That list is your agenda for modules 3
+and 4 — and it is worth keeping.
 
 > 🎓 **Trainer.** Close by collecting two or three of those questions from the room. If one of
-> them is *"who around here is patenting?"*, you have your bridge into module 5. If it is *"is
-> this company big or small in IP?"*, that is module 4.
+> them is *"who around here is patenting?"*, you have your bridge into module 4. If it is *"is
+> this company big or small in IP?"*, that is module 3.
 
 ---
 
@@ -175,8 +175,8 @@ and 5 — and it is worth keeping.
 
 | Next | Why |
 |---|---|
-| **Module 4** — PATSTAT Explorer | The library counts *names*. Module 4 shows why one company is forty different names, and how to consolidate them. |
-| **Module 5** — Lead Generation | The first full application: a region's applicants, ranked and segmented. |
+| **Module 3** — PATSTAT Explorer | The library counts *names*. Module 3 shows why one company is forty different names, and how to consolidate them. |
+| **Module 4** — Lead Generation | The first full application: a region's applicants, ranked and segmented. |
 
 ---
 
@@ -184,6 +184,6 @@ and 5 — and it is worth keeping.
 
 - The two *"Story 3.x AC Validation"* cells at the end of the interactive demo are developer
   scaffolding and should be removed from the course version of the notebook.
-- Module 3 is the shortest module in the course (≈ 8 minutes of notebook content). This block
+- Module 2 is the shortest module in the course (≈ 8 minutes of notebook content). This block
   works because the introduction and the transfer exercise carry real weight — do not cut them to
   save time.

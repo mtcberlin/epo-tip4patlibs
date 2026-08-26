@@ -1,11 +1,11 @@
-# Title page and header/footer metadata for the 05_lead-generation.md handout.
+# Title page and header/footer metadata for the 05_patent-reports.md handout.
 # Rendered with the mtc-pdf skill via build_handouts.py.
 # privat mode: no title page, no logo, no mtc brand — the handout keeps its
 # own "# Title" heading, the accent headings, tables, callouts, running
 # header and the page counter.
 mode: privat
-title: "Module 5 — Regional Lead Generation"
-subtitle: "Profile a region's applicants and segment them into lead tiers"
+title: "Module 5 — Patent Landscape Reports"
+subtitle: "From a defensible corpus to a publishable analysis"
 subtitle_accent: "TIP4PATLIBS — EPO Technology Intelligence Platform"
 author: "Arne Krüger"
 brand_subtitle: "Patent Intelligence"
@@ -16,7 +16,7 @@ meta:
   - ["Course", "TIP4PATLIBS — patent analytics on the EPO TIP"]
   - ["Audience", "PATLIB staff across Europe"]
   - ["Format", "45-minute block"]
-  - ["Repository folder", "4_lead_generation/"]
+  - ["Repository folder", "5_patentreports/"]
   - ["Platform", "EPO TIP · PATSTAT Global, Autumn 2025"]
   - ["By", "Arne Krüger — mtc.berlin"]
   - ["Status", "17 August 2026"]

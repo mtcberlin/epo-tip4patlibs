@@ -1,4 +1,4 @@
-# Module 4 — PATSTAT Explorer: who is this company, really?
+# Module 3 — PATSTAT Explorer: who is this company, really?
 
 *45-minute block · TIP4PATLIBS course material*
 
@@ -16,7 +16,7 @@ them into one defensible group, and I can state what my consolidation missed.**
 ## Prerequisites
 
 - **Module 1** — TIP is running, PATSTAT connects, and you have seen a result table.
-- **Module 3** — you know that a query is a set of decisions someone made.
+- **Module 2** — you know that a query is a set of decisions someone made.
 
 ## Sub-objectives
 
@@ -68,8 +68,8 @@ which names are the same organisation, and that somebody is you.
 | Tension | Trainer shows/describes the 200-row hit list — the question has no single-row answer | 3 min |
 | Framing | Trainer names the module's claim: **consolidation is a judgement, and it has to be written down** | 2 min |
 
-> 🎓 **Trainer.** Module 3's closing sentence returns here: *an analysis you cannot open up is one
-> you cannot defend.* Module 4 adds the harder half — some of what you open up turns out to be a
+> 🎓 **Trainer.** Module 2's closing sentence returns here: *an analysis you cannot open up is one
+> you cannot defend.* Module 3 adds the harder half — some of what you open up turns out to be a
 > decision you made, not a fact you found. Say it in those words; it is the hinge of the course.
 
 ---
@@ -208,15 +208,15 @@ above saying what it means *for that organisation*.
 
 | Next | Why |
 |---|---|
-| **Module 5** — Lead Generation | The same family-counting logic applied to a whole *region* instead of a single company. |
-| **Module 6** — Patent Reports | Applicant consolidation is one section of a landscape report; module 6 builds the rest around it. |
-| **Module 8** — IPScore | Module 4 taught you to mark which parts of an answer are judgement. Module 8 makes that marking the output. |
+| **Module 4** — Lead Generation | The same family-counting logic applied to a whole *region* instead of a single company. |
+| **Module 5** — Patent Reports | Applicant consolidation is one section of a landscape report; module 5 builds the rest around it. |
+| **Module 6** — IPScore | Module 3 taught you to mark which parts of an answer are judgement. Module 6 makes that marking the output. |
 
 ---
 
 ## Notes for the next revision
 
-- Module 4 is one of the two thin modules (≈ 10 minutes of notebook content). This block works
+- Module 3 is one of the two thin modules (≈ 10 minutes of notebook content). This block works
   because steps 2 and 5 carry real discussion weight — do not cut the discussion to save time.
 - The header of `2_PATSTAT_Explorer_application.ipynb` contains three typos:
   *"Integlligence"*, *"knowlegde"*, and *"TIP4PATLIBs"* (inconsistent capitalisation against the

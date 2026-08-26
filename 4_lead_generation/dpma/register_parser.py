@@ -1,6 +1,6 @@
 """Parse DPMAconnect Plus register records (ST.36 XML) into applicant rows.
 
-Workshop helper for module 5 (Lead Generation). It turns the ``getRegisterInfo``
+Workshop helper for module 4 (Lead Generation). It turns the ``getRegisterInfo``
 response of the DPMAregister patent/utility-model service into flat, tabular
 applicant records — the German national-office address data that PATSTAT is
 missing for the ~70 % of DE filings that never take the EP/PCT route (see

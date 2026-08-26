@@ -31,10 +31,10 @@ inside TIP's own JupyterLab.
 
 ### Two things worth knowing
 
-- **Modules 1–5 ship with cleared outputs** — you run them. **Modules 6 and 7 ship
+- **Modules 1–4 ship with cleared outputs** — you run them. **module 5 and the IPScore reference ship
   pre-executed**: they are guest contributions by Riccardo Priore, read as finished reports in
   a showcase session. The stored outputs *are* the deliverable, so don't re-run them to tidy up.
-- **Module 7 needs no PATSTAT, no database and no internet.** The IPScore tools are
+- **The IPScore reference needs no PATSTAT, no database and no internet.** The IPScore tools are
   self-contained HTML — a spreadsheet model turned into a web page. Useful when you want to
   demonstrate something without depending on a live connection.
 

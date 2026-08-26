@@ -1,4 +1,4 @@
-"""DPMAconnect Plus helpers for module 5 (Lead Generation).
+"""DPMAconnect Plus helpers for module 4 (Lead Generation).
 
 Recover the national-only German applicant addresses that PATSTAT is missing
 (NUTS is assigned on the EP/PCT route only) from the DPMA patent/utility-model

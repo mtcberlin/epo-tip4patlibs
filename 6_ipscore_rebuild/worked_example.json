@@ -4,7 +4,7 @@
     "Notebooks 3 and 4 read this file, so the example exists once and cannot drift.",
     "",
     "V5 settled on TIP 2026-08-15: EP3074539B1, Q-Linea AB. Chosen out of 135 candidates in",
-    "module 6's antibiotic-resistance corpus because Q-Linea really does the AMR rapid testing",
+    "module 5's antibiotic-resistance corpus because Q-Linea really does the AMR rapid testing",
     "this example used to invent, and because its legal history teaches the point of the",
     "evidence layer: granted and unopposed, designated in 38 EPC states, in force in four.",
     "'Granted' is not 'in force'. See 9_documentation/results-tipsession.md.",
@@ -29,7 +29,7 @@
     "docdb_family_id": 53398085,
     "applicant": "Q-Linea AB, Uppsala (SE)",
     "field": "in-vitro diagnostics / antimicrobial resistance",
-    "reference": "real family, picked from module 6's corpus on TIP 2026-08-15 (decision V5)"
+    "reference": "real family, picked from module 5's corpus on TIP 2026-08-15 (decision V5)"
   },
   "financials": {
     "turnover": 1500000,

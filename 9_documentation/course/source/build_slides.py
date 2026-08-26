@@ -9,7 +9,7 @@ condensed form, and this file only lays it out.
 Screenshots: drop a PNG into `shots/` named after the module (`01.png`, `03.png`,
 …) and the "Working through" slide uses it. Until then the slide carries a framed
 placeholder naming the shot it wants — and whether taking it needs a TIP run,
-because modules 1 and 5 ship with cleared outputs on purpose.
+because modules 1 and 4 ship with cleared outputs on purpose.
 
     uv run --with python-pptx --with pyyaml --with pillow python build_slides.py
 """

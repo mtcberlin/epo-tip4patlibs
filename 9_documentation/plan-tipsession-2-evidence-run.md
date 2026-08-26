@@ -1,6 +1,6 @@
 # TIP session 2 — execution: run the evidence layer
 
-**What this is.** The briefing for the **second** module 8 TIP session, run the same day as the
+**What this is.** The briefing for the **second** module 6 TIP session, run the same day as the
 first. It is an **execution** session: one notebook, written offline against session 1's answers
 and stub-tested, needed the one thing only TIP can give it — a real PATSTAT. No open questions,
 no exploration; a checklist and the things to watch while it ran.
@@ -98,7 +98,7 @@ state is in `tls231.lapse_country`, not `event_text`.
 
 ## Still open, and not TIP work
 
-- **Attribution wording for module 8** — our implementation of the **EPO** model; modules 6 and 7
+- **Attribution wording for module 6** — our implementation of the **EPO** model; module 5 and the IPScore reference
   keep *created by Riccardo Priore*.
 - **O3 — what does a PATLIB actually get asked?** A conversation with Riccardo. Note that the
   `PGFP` renewal evidence now makes *"should I renew this?"* answerable from data.

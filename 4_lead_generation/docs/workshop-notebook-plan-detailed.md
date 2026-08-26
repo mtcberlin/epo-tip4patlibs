@@ -173,7 +173,7 @@ builder regeneration.
    `.head(20)` and a one-liner filter example (`df_leads[df_leads.depth_tier.eq('large') &
    df_leads.reach_tier.eq('global')]`). Update the segmentation "How to read this" cell to
    point at `df_leads` instead of "combine Step 4 and 5 manually".
-2. **README:** fix the module-5 row description (currently copy-pasted from module 4) →
+2. **README:** fix the module-5 row description (currently copy-pasted from module 3) →
    regional lead generation (depth × reach → lead tiers).
 3. **DE anchor (notebook, Try-it-yourself → Germany):** add expected Saxony numbers
    (287 companies / 920 families, NOVALED 155) as a known-good check for a live DE demo.
