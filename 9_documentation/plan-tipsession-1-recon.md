@@ -249,7 +249,7 @@ turned up three real problems, so this is not a formality.
 
 Open `6_ipscore_rebuild/1_the_model.ipynb` and look at the two figures:
 
-1. **Cell 9** — the 40-question grid, *"Only 8 of the 40 IPScore questions reach the NPV"*
+1. **Cell 9** — the 40-question grid, *"Only 8 of the IPScore questions reach the NPV"*
 2. **Cell 21** — the ten-year cash-flow bars
 
 **Check for:** overlapping tick labels, a legend covering the plot, bars clipped at the axis,

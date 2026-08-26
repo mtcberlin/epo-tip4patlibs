@@ -25,11 +25,11 @@ Reading time is markdown words ÷ 180 wpm plus ~25 s per code cell to read and r
 | Module | notebooks | cells | code cells | lines of code | md words | ≈ working time |
 |---|---:|---:|---:|---:|---:|---:|
 | 1 Start with TIP | 2 | 60 | 25 | 525 | 2,602 | **24 min** |
-| 3 Query Library | 2 | 20 | 10 | 477 | 643 | **8 min** |
-| 4 PATSTAT Explorer | 2 | 18 | 7 | 112 | 1,300 | **10 min** |
-| 5 Lead Generation | 3 | 72 | 31 | 643 | 3,895 | **34 min** |
-| 6 Patent Reports | 4 | 66 | 29 | 703 | 2,788 | **27 min** |
-| **8 IPScore Rebuild** | 4 | 87 | 38 | **1,130** | **8,272** | **61 min** |
+| 2 Query Library | 2 | 20 | 10 | 477 | 643 | **8 min** |
+| 3 PATSTAT Explorer | 2 | 18 | 7 | 112 | 1,300 | **10 min** |
+| 4 Lead Generation | 3 | 72 | 31 | 643 | 3,895 | **34 min** |
+| 5 Patent Reports | 4 | 66 | 29 | 703 | 2,788 | **27 min** |
+| **6 IPScore Rebuild** | 4 | 87 | 38 | **1,130** | **8,272** | **61 min** |
 | **total** | **17** | **323** | **140** | **3,590** | **19,500** | **≈ 2 h 45** |
 
 Two things follow immediately, and they drive the rest of this plan:
@@ -299,11 +299,11 @@ Screenshots come from executed notebook outputs. The modules do not ship the sam
 | Module | executed cells | screenshots available offline? |
 |---|---|---|
 | 1 Start with TIP | 0 of 25 | ❌ **needs a TIP run** |
-| 3 Query Library | 6 of 10 | ⚠️ partial |
-| 4 PATSTAT Explorer | 7 of 7 | ✅ |
-| 5 Lead Generation | 8 of 31 | ❌ **needs a TIP run** |
-| 6 Patent Reports | 29 of 29 | ✅ |
-| 8 IPScore Rebuild | 37 of 38 | ✅ |
+| 2 Query Library | 6 of 10 | ⚠️ partial |
+| 3 PATSTAT Explorer | 7 of 7 | ✅ |
+| 4 Lead Generation | 8 of 31 | ❌ **needs a TIP run** |
+| 5 Patent Reports | 29 of 29 | ✅ |
+| 6 IPScore Rebuild | 37 of 38 | ✅ |
 
 Modules 1–4 ship with cleared outputs **on purpose** — participants are meant to run them. So the
 screenshots for modules 1 and 4 (and part of 3) require someone to run those notebooks on TIP and

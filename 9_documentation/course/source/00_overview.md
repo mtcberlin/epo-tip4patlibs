@@ -130,11 +130,11 @@ This matters for reading ahead, and it is not an accident.
 | Module | Executed cells | Why |
 |---|---|---|
 | 1 Start with TIP | 0 of 25 | You are meant to run it — it configures *your* environment |
-| 3 Query Library | 6 of 10 | Partly interactive; the browser has to be run |
-| 4 PATSTAT Explorer | 7 of 7 | Read it before you run it |
-| 5 Lead Generation | 8 of 31 | You are meant to run it for **your own** region |
-| 6 Patent Reports | 29 of 29 | Read as a **finished report** — the outputs *are* the deliverable |
-| 8 IPScore Rebuild | 37 of 38 | Read as a finished valuation |
+| 2 Query Library | 6 of 10 | Partly interactive; the browser has to be run |
+| 3 PATSTAT Explorer | 7 of 7 | Read it before you run it |
+| 4 Lead Generation | 8 of 31 | You are meant to run it for **your own** region |
+| 5 Patent Reports | 29 of 29 | Read as a **finished report** — the outputs *are* the deliverable |
+| 6 IPScore Rebuild | 37 of 38 | Read as a finished valuation |
 
 > ⚠️ Modules 5 and 6 must **never** be re-run to "tidy" their outputs. For module 5 in particular
 > the committed outputs are contributed material.
