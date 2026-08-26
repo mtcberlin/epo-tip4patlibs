@@ -1,16 +1,19 @@
-# Plan — course material for modules 1, 3, 4, 5, 6 and 8
+# Plan — course material for modules 1, 2, 3, 4, 5 and 6
 
 **What this is.** A plan for turning six modules of notebooks into teachable course material:
 a **45-minute block per module** as a written document, and a **condensed slide version** of the
-same substance for the PATLIB Warsaw workshop on **18 September 2026**.
+same substance for the PATLIB Warsaw workshop on **17 September 2026**.
 
 **This run produces the plan only.** The material itself is drafted in run 2 as Markdown; PDFs
 and slides are rendered in run 3. Nothing is rendered yet, deliberately — the structure has to be
 agreed before six documents are written against it.
 
-> Module numbering follows the folders: **1** `1_startwithtip` · **3** `3_querylib` ·
-> **4** `4_patstat_explorer` · **5** `5_lead_generation` · **6** `6_patentreports` ·
-> **8** `8_ipscore_rebuild`. Modules 2 (legacy) and 7 (Riccardo's IPScore tools) are out of scope.
+> Module numbers no longer follow the folder numbers. The folders were renumbered to the
+> workshop's running order (2026-08-26), while the teaching material kept the module numbers it
+> was written with: **1** `1_startwithtip` · **3** `2_querylib` · **4** `3_patstat_explorer` ·
+> **5** `4_lead_generation` · **6** `5_patentreports` · **8** `6_ipscore_rebuild`. The former
+> modules 2 (legacy) and 7 (Riccardo's IPScore tools) are out of scope and now sit under
+> `9_documentation/`.
 
 ---
 
@@ -31,11 +34,11 @@ Reading time is markdown words ÷ 180 wpm plus ~25 s per code cell to read and r
 
 Two things follow immediately, and they drive the rest of this plan:
 
-- **Module 8 is the problem, and by a wider margin than it feels.** Its 8,272 words are *more
-  prose than modules 1, 3, 4 and 6 combined* (7,333), and it carries a third of all the code in
+- **Module 6 is the problem, and by a wider margin than it feels.** Its 8,272 words are *more
+  prose than modules 1, 2, 3 and 5 combined* (7,333), and it carries a third of all the code in
   the course. At 61 minutes it does not fit a 45-minute block — not by trimming, only by
   restructuring. Section 5 proposes how.
-- **Modules 3 and 4 are the opposite problem.** At 8 and 10 minutes they are too thin to fill a
+- **Modules 2 and 3 are the opposite problem.** At 8 and 10 minutes they are too thin to fill a
   block on their own; their documents will have to *add* framing, exercises and context rather
   than summarise.
 
@@ -51,8 +54,8 @@ Two things follow immediately, and they drive the rest of this plan:
 > client can keep. And they can say **which parts of that answer are evidence and which are
 > judgement.**
 
-That last clause is what separates this course from a tool demonstration, and it is why module 8
-sits at the end rather than module 6.
+That last clause is what separates this course from a tool demonstration, and it is why module 6
+sits at the end rather than module 5.
 
 ### The chain — what each module assumes and adds
 
@@ -82,7 +85,7 @@ applications each consume all three skills.
 | **6** | 1, 3, 4 | a publishable analysis | *I can define a corpus and turn it into a landscape report with a defensible search strategy.* |
 | **8** | 1, 3, 4 | the evidence/judgement split | *I can value a patent, and state exactly how much of that number is checkable.* |
 
-**Modules 5, 6 and 8 are parallel, not sequential.** A PATLIB that never does valuations can stop
+**Modules 4, 5 and 6 are parallel, not sequential.** A PATLIB that never does valuations can stop
 after 6. Say this in the material: it lowers the barrier and it is true.
 
 ---
@@ -119,15 +122,15 @@ script. One file to maintain, and it is what another PATLIB could reuse.
 **Time budget inside 45 minutes:** introduction 7 · working through 28 · learning outcome 10.
 Within those 28 minutes of working through, roughly **12–15 minutes is reading** (≈ 2,200–2,700 words
 of notebook prose) and the rest is running cells and looking at results. **That number is the
-constraint module 8 fails**, and the yardstick for every module document.
+constraint module 6 fails**, and the yardstick for every module document.
 
-### Worked pattern — module 3, filled in
+### Worked pattern — module 2, filled in
 
 > **Stale.** The sketch below is an early draft, kept only as the reasoning trail (it was
 > written in German and has since been translated, per the *English throughout* decision in §6).
-> **`course/source/03_query-library.md` is authoritative** — do not regenerate anything from this block.
+> **`course/source/02_query-library.md` is authoritative** — do not regenerate anything from this block.
 
-Module 3 is used as the pattern because it is the smallest, so the structure stays legible.
+Module 2 is used as the pattern because it is the smallest, so the structure stays legible.
 Note how a thin module is *filled*, not padded: the introduction does real work.
 
 | | |
@@ -182,7 +185,7 @@ condense what has not been articulated.
 
 ---
 
-## 5 · Module 8 — the restructuring proposal
+## 5 · Module 6 — the restructuring proposal
 
 ### What is actually wrong
 
@@ -215,10 +218,10 @@ The core keeps the module's two strongest moments — *only 8 of 40 answers touc
 *the eleven answers data can check are none of those eight* — and drops the implementation walk.
 A participant who never opens notebook 2 still leaves with the argument.
 
-**Target: the module 8 core document sized like every other module** — ≈ 2,400 words of notebook
+**Target: the module 6 core document sized like every other module** — ≈ 2,400 words of notebook
 prose in the working-through phase, down from 8,272.
 
-> **This is a proposal about teaching, not about the code.** Nothing in `8_ipscore_rebuild/` gets
+> **This is a proposal about teaching, not about the code.** Nothing in `6_ipscore_rebuild/` gets
 > deleted or rewritten. The core/extension split lives in the course document; the module stays
 > complete and the four notebooks stay as they are.
 
@@ -228,10 +231,10 @@ prose in the working-through phase, down from 8,272.
 
 **Taken here — say so, do not re-open:**
 
-- **Module 6 uses `2_antibiotic_resistance_rebuild/`** — the current clean build, four notebooks.
+- **Module 5 uses `2_antibiotic_resistance_rebuild/`** — the current clean build, four notebooks.
   Not `1_antibiotic_resistance/` (the imported reference) and not the frozen MVP.
-- **Module 5 uses `1_regional-leads.ipynb` as the core.** `2_national-coverage` (DPMA route) and
-  `3_belgien` become optional extensions — otherwise module 5 is 34 minutes.
+- **Module 4 uses `1_regional-leads.ipynb` as the core.** `2_national-coverage` (DPMA route) and
+  `3_belgien` become optional extensions — otherwise module 4 is 34 minutes.
 - **One Markdown source per module**, dual-track, from which both PDF and slides are rendered.
 - **Modules 2 and 7 are out of scope**, as instructed.
 
@@ -245,10 +248,10 @@ prose in the working-through phase, down from 8,272.
 
 - **Language: English throughout**, including the trainer boxes. Consistent with the rest of the
   repo and with an audience of PATLIB staff from across Europe.
-- **Module 8: the core path only.** `08_ipscore.md` covers notebook 1 plus a guided read of the
+- **Module 6: the core path only.** `06_ipscore.md` covers notebook 1 plus a guided read of the
   finished report, sized like every other module. The implementation walk (notebooks 2, 3 and 4)
-  is **not** written for 18 September; it is deferred to a possible supplementary document,
-  `08_ipscore_part2.md`, if a PATLIB wants to run the chain itself. That removes ~5,800 words
+  is **not** written for 17 September; it is deferred to a possible supplementary document,
+  `06_ipscore_part2.md`, if a PATLIB wants to run the chain itself. That removes ~5,800 words
   from run 2.
 
 ---
@@ -264,11 +267,11 @@ screenshots.
 |---|---:|---|
 | `00_overview.md` | 1,426 | goal · chain · how to run it · what ships executed · credits |
 | `01_start-with-tip.md` | 1,878 | core path only — Claude Code sections and notebook 2 Part 2 handed over as self-study |
-| `03_query-library.md` | 1,526 | the worked pattern |
-| `04_patstat-explorer.md` | 2,006 | thin module, filled by the step-2 discussion |
-| `05_lead-generation.md` | 2,206 | notebook 1 only; 2 and 3 are extensions |
-| `06_patent-reports.md` | 2,082 | credits Riccardo Priore; written against the **rebuild**, not the reference folder |
-| `08_ipscore.md` | 2,869 | core path: notebook 1 + guided read of the report |
+| `02_query-library.md` | 1,526 | the worked pattern |
+| `03_patstat-explorer.md` | 2,006 | thin module, filled by the step-2 discussion |
+| `04_lead-generation.md` | 2,206 | notebook 1 only; 2 and 3 are extensions |
+| `05_patent-reports.md` | 2,082 | credits Riccardo Priore; written against the **rebuild**, not the reference folder |
+| `06_ipscore.md` | 2,869 | core path: notebook 1 + guided read of the report |
 
 All seven share the same heading set (Learning objective · Prerequisites · Sub-objectives · Material ·
 Phase 1/2/3 · Where this leads · Notes for the next revision). Each ends with a **"Notes for the
@@ -302,14 +305,14 @@ Screenshots come from executed notebook outputs. The modules do not ship the sam
 | 6 Patent Reports | 29 of 29 | ✅ |
 | 8 IPScore Rebuild | 37 of 38 | ✅ |
 
-Modules 1–5 ship with cleared outputs **on purpose** — participants are meant to run them. So the
-screenshots for modules 1 and 5 (and part of 3) require someone to run those notebooks on TIP and
-capture the output, and that is a **separate TIP session** to schedule before 18 September.
-Modules 4, 6 and 8 are free.
+Modules 1–4 ship with cleared outputs **on purpose** — participants are meant to run them. So the
+screenshots for modules 1 and 4 (and part of 3) require someone to run those notebooks on TIP and
+capture the output, and that is a **separate TIP session** to schedule before 17 September.
+Modules 3, 5 and 6 are free.
 
 The alternative for 1 and 5 is screenshots of the *notebook as it ships* — code and explanation
 with empty output cells — which is honest for module 1 (whose subject is the environment) but
-weak for module 5, whose whole point is the resulting lead table.
+weak for module 4, whose whole point is the resulting lead table.
 
 ---
 
@@ -346,15 +349,15 @@ fixed in run 2** — per §8, the course material describes the modules and does
 | **1** | The same notebook names *2023–2024* as the incomplete years. On Autumn 2025 that is **2024–2025** | text fix |
 | **3** | Two leftover developer cells, *"Story 3.2 / 3.3 AC Validation"*, at the end of the interactive demo | remove |
 | **4** | Three typos in the Explorer app header: *"Integlligence"*, *"knowlegde"*, and `TIP4PATLIBs` (inconsistent casing) — it is the first slide-worthy screen in the module | text fix |
-| **4** | The Explorer app is cloned from GitHub at run time. Confirm reachability from the workshop network before 18 September | logistics |
+| **4** | The Explorer app is cloned from GitHub at run time. Confirm reachability from the workshop network before 17 September | logistics |
 | **5** | The 70% / 77% NUTS-coverage figures are stated as "measured on the current edition" — confirm on Autumn 2025 or restate with the edition measured | check |
-| **4** | `CLAUDE.md` states the convention as *modules 1–5 clear outputs, 6–7 ship pre-executed*. Module 4 actually ships **7 of 7 executed** — the course material reports the measured state, so the convention line needs updating | align |
-| **6** | The rebuild's `README.md` says notebook 3 holds the technology network only; the repo `CLAUDE.md` describes module 6 as including t-SNE clusters and triadic families (that is the *reference* folder). Align them so nobody promises a chart the report does not contain | **align** |
+| **4** | `CLAUDE.md` states the convention as *modules 1–4 clear outputs, 6–7 ship pre-executed*. Module 3 actually ships **7 of 7 executed** — the course material reports the measured state, so the convention line needs updating | align |
+| **6** | The rebuild's `README.md` says notebook 3 holds the technology network only; the repo `CLAUDE.md` describes module 5 as including t-SNE clusters and triadic families (that is the *reference* folder). Align them so nobody promises a chart the report does not contain | **align** |
 | **6** | Notebook 2's forward-citation cell needs BigQuery, not TIP. State it in the notebook header, not only in a cell comment | text fix |
-| **8** | `8_ipscore_rebuild/README.md` is stale: it says notebook 2 "does not exist yet" and quotes `0 measured · 0 informed · 40 judgement`. The shipped report reads **`2 measured · 6 informed · 32 judgement`** | **stale** |
+| **8** | `6_ipscore_rebuild/README.md` is stale: it says notebook 2 "does not exist yet" and quotes `0 measured · 0 informed · 40 judgement`. The shipped report reads **`2 measured · 6 informed · 32 judgement`** | **stale** |
 | **8** | `1_the_model.ipynb` says "four of them strongly" about the PATSTAT-reachable questions. `PATSTAT_CANDIDATES` holds **3 strong · 4 good · 3 proxy · 1 context**; the report's "three strongly" is the correct one | **wrong** |
 
-Verified figures used throughout `08_ipscore.md`, read out of the shipped report rather than from
+Verified figures used throughout `06_ipscore.md`, read out of the shipped report rather than from
 any README: NPV **1,248,870 EUR** over ten years at **12%**, **139 / 200** points, **−0.39**
 average risk, **+0.63** average opportunity, **2 measured · 6 informed · 32 judgement**. Largest
 upside lever **C2 · Market growth rate** (+563k); **C3 · Life expectancy** has an upside of exactly

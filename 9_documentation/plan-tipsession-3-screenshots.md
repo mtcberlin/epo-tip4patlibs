@@ -6,7 +6,7 @@ images back into the repo. Nothing is investigated and nothing is built — sess
 that. This one exists because three of the course's own notebooks cannot be screenshotted from a
 laptop, by design.
 
-**What it is not.** It is not module 8 work. Module 8 is complete; one cosmetic re-run rides
+**What it is not.** It is not module 6 work. Module 6 is complete; one cosmetic re-run rides
 along as task 3 because it needs TIP and nothing else does.
 
 **Read it for** the shot list. Each image has a slide waiting for it and a filename it must have,
@@ -16,8 +16,8 @@ so the deck picks it up on the next build with no further editing.
 
 > ## ⏳ Not yet run.
 >
-> **Blocks:** the workshop deck's *Working through* slides for modules 1, 3 and 5 — currently
-> framed placeholders. **Deadline: the workshop is 18 September 2026.**
+> **Blocks:** the workshop deck's *Working through* slides for modules 1, 2 and 4 — currently
+> framed placeholders. **Deadline: the workshop is 17 September 2026.**
 >
 > | Task | | Needs TIP because |
 > |---|---|---|
@@ -28,8 +28,8 @@ so the deck picks it up on the next build with no further editing.
 | | |
 |---|---|
 | **Where** | EPO TIP JupyterLab, base conda env, `PatstatClient(env='PROD')` |
-| **Time** | ~50 minutes — most of it query latency in module 5 |
-| **Deadline** | Workshop **18 September 2026** |
+| **Time** | ~50 minutes — most of it query latency in module 4 |
+| **Deadline** | Workshop **17 September 2026** |
 | **Predecessors** | [session 1](plan-tipsession-1-recon.md) · [session 2](plan-tipsession-2-evidence-run.md) · findings in [`results-tipsession.md`](results-tipsession.md) |
 
 ---
@@ -47,7 +47,7 @@ The course splits on purpose, and the split decides the work:
 | 6 Patent Reports | 29 of 29 | ✅ **done** — ditto |
 | 8 IPScore Rebuild | 37 of 38 | ✅ **done** — ditto |
 
-Modules 1–5 clear their outputs because participants are meant to run them; 6 and 8 ship executed
+Modules 1–4 clear their outputs because participants are meant to run them; 6 and 8 ship executed
 because they are read as finished reports. That convention is *why* this session exists, so
 do not "fix" it — see task 2.
 
@@ -73,19 +73,19 @@ point is that a participant edits one line and gets a table.
 
 *Sections 6–8 of notebook 1 (the Claude Code install) are not needed. Do not run them.*
 
-### 03.png — module 3
+### 03.png — module 2
 
 > **The Query Browser with a query's SQL open.**
-> `3_querylib/TIP_for_PATLIBs_QueryLib.ipynb`
+> `2_querylib/TIP_for_PATLIBs_QueryLib.ipynb`
 
 Run both cells, pick any query, and press **View SQL** so the statement is visible. The slide's
 point is that the library can be opened up, so the SQL has to be *on screen* — a browser showing
 only titles and descriptions misses it.
 
-### 05.png — module 5
+### 05.png — module 4
 
 > **The lead-tier grid and the named shortlist for Alsace.**
-> `5_lead_generation/1_regional-leads.ipynb` · **Step 6**
+> `4_lead_generation/1_regional-leads.ipynb` · **Step 6**
 
 Run steps 1–6 with the shipped Alsace default (`FR421`, `FR422`, `FRF11`, `FRF12`). Both outputs
 of step 6 matter — the depth × reach grid *and* the named shortlist underneath it. If they do not
@@ -100,7 +100,7 @@ whole argument.
 
 ## Task 2 · Put the notebooks back the way they shipped
 
-> ⚠️ **This is the one way this session can do damage.** Running modules 1, 3 and 5 fills them
+> ⚠️ **This is the one way this session can do damage.** Running modules 1, 2 and 4 fills them
 > with outputs. Committing them in that state breaks the course convention — participants are
 > supposed to receive empty notebooks and run them.
 
@@ -122,7 +122,7 @@ If a notebook still shows a diff after clearing, it is execution counts or metad
 
 ---
 
-## Task 3 · Re-run `4_assemble_tool.ipynb` (module 8, cosmetic)
+## Task 3 · Re-run `4_assemble_tool.ipynb` (module 6, cosmetic)
 
 Two one-line edits were made to notebook 4 in August and never rendered, because re-running it
 off TIP swaps the embedded `plotly.js` — TIP builds 3.0.1, a laptop builds a newer one — which is
@@ -156,9 +156,9 @@ Verify after the run:
 9_documentation/course/source/shots/01.png
 9_documentation/course/source/shots/03.png
 9_documentation/course/source/shots/05.png
-8_ipscore_rebuild/4_assemble_tool.ipynb              # re-run, cell 19 cleared
-8_ipscore_rebuild/4_tool/ipscore_valuation.html      # new footer
-8_ipscore_rebuild/4_tool/ipscore_valuation_data.xlsx
+6_ipscore_rebuild/4_assemble_tool.ipynb              # re-run, cell 19 cleared
+6_ipscore_rebuild/4_tool/ipscore_valuation.html      # new footer
+6_ipscore_rebuild/4_tool/ipscore_valuation_data.xlsx
 ```
 
 and **nothing under `1_`, `3_` or `5_`**.
@@ -170,7 +170,7 @@ cd 9_documentation/course/source
 uv run --with python-pptx --with pyyaml python build_slides.py
 ```
 
-It prints which screenshots are still placeholders. Modules 4, 6 and 8 are already in;
+It prints which screenshots are still placeholders. Modules 3, 5 and 6 are already in;
 **after this session the list should be empty.**
 
 > ⚠️ **Signing.** Commits made from TIP go in **unsigned**: the 1Password agent is not reachable
@@ -182,9 +182,9 @@ It prints which screenshots are still placeholders. Modules 4, 6 and 8 are alrea
 
 ## Not part of this session
 
-- ~~**Screenshots for modules 4, 6 and 8**~~ ✅ **done.** Their notebooks ship executed, so the
+- ~~**Screenshots for modules 3, 5 and 6**~~ ✅ **done.** Their notebooks ship executed, so the
   images were cut from what is already committed, by `course/source/build_shots.py`. That script
-  documents the four traps it hit — chief among them that module 8's report has a dark palette and
+  documents the four traps it hit — chief among them that module 6's report has a dark palette and
   headless Chrome asks for dark, and that a pandas header row cannot be counted as a `<tr>`.
 - **The handouts.** The seven A4 PDFs currently carry no screenshots. The same PNGs could be
   placed into `course/source/*.md` later; `build_handouts.py` would pick them up. Deliberately

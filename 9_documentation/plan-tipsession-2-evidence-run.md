@@ -1,6 +1,6 @@
 # TIP session 2 — execution: run the evidence layer
 
-**What this is.** The briefing for the **second** module 8 TIP session, run the same day as the
+**What this is.** The briefing for the **second** module 6 TIP session, run the same day as the
 first. It is an **execution** session: one notebook, written offline against session 1's answers
 and stub-tested, needed the one thing only TIP can give it — a real PATSTAT. No open questions,
 no exploration; a checklist and the things to watch while it ran.
@@ -31,21 +31,21 @@ now collected in [`plan-tipsession-3-screenshots.md`](plan-tipsession-3-screensh
 > Full detail, including the two new schema traps, in
 > [`results-tipsession.md`](results-tipsession.md#session-2--running-the-evidence-layer).
 
-**One task.** `8_ipscore_rebuild/2_evidence_from_patstat.ipynb` is written, stub-verified and
+**One task.** `6_ipscore_rebuild/2_evidence_from_patstat.ipynb` is written, stub-verified and
 committed **without outputs**. It is the only notebook in the module that needs TIP. Running it
 is the last step of Phase 3.
 
 | | |
 |---|---|
-| **Where** | EPO TIP JupyterLab, `PatstatClient(env='PROD')`, working dir `8_ipscore_rebuild/` |
+| **Where** | EPO TIP JupyterLab, `PatstatClient(env='PROD')`, working dir `6_ipscore_rebuild/` |
 | **Time** | ~20 minutes, most of it query latency |
 | **Input** | `worked_example.json` — EP3074539B1, Q-Linea AB, family `53398085` |
-| **Deadline** | Workshop **18 September 2026** |
+| **Deadline** | Workshop **17 September 2026** |
 
 ## Do this
 
 ```bash
-cd 8_ipscore_rebuild
+cd 6_ipscore_rebuild
 python ipscore_kit.py                             # → 3 PASS
 python tools/extract_spec_from_excel.py --check    # → "spec is up to date"
 ```
@@ -98,7 +98,7 @@ state is in `tls231.lapse_country`, not `event_text`.
 
 ## Still open, and not TIP work
 
-- **Attribution wording for module 8** — our implementation of the **EPO** model; modules 6 and 7
+- **Attribution wording for module 6** — our implementation of the **EPO** model; module 5 and the IPScore reference
   keep *created by Riccardo Priore*.
 - **O3 — what does a PATLIB actually get asked?** A conversation with Riccardo. Note that the
   `PGFP` renewal evidence now makes *"should I renew this?"* answerable from data.

@@ -1,11 +1,11 @@
 # TIP session 1 — reconnaissance: what can PATSTAT actually answer?
 
-**What this is.** The briefing for the **first** of the module 8 TIP sessions, handed to whoever
+**What this is.** The briefing for the **first** of the module 6 TIP sessions, handed to whoever
 sat in front of TIP. It is a **reconnaissance** session: five open questions that could not be
 answered offline, because they are about what the data on TIP *contains*. Nothing was built here
 — the point was to find out what could be built.
 
-**What it is not.** It does not run any of module 8's notebooks. That is
+**What it is not.** It does not run any of module 6's notebooks. That is
 [`plan-tipsession-2-evidence-run.md`](plan-tipsession-2-evidence-run.md), an **execution**
 session with a single task, run the same day once these answers were in.
 
@@ -23,7 +23,7 @@ in [`results-tipsession.md`](results-tipsession.md).
 > ## ✅ Run on 2026-08-15. All five tasks done — Phase 3 is unblocked.
 >
 > **The results are in [`results-tipsession.md`](results-tipsession.md).** The answers to O1, O2
-> and V5 are also in `8_ipscore_rebuild/REBUILD_PLAN.md` under *Open questions*, which is where
+> and V5 are also in `6_ipscore_rebuild/REBUILD_PLAN.md` under *Open questions*, which is where
 > notebook 2 should read them from.
 >
 > | Task | | Result |
@@ -36,17 +36,17 @@ in [`results-tipsession.md`](results-tipsession.md).
 >
 > This file is kept as the record of what was asked and how the plan's SQL had to be corrected.
 
-**Why this exists.** Module 8's remaining work is one notebook — `2_evidence_from_patstat.ipynb`,
+**Why this exists.** Module 6's remaining work is one notebook — `2_evidence_from_patstat.ipynb`,
 the PATSTAT evidence layer. It cannot be written until four things are established, and all four
-need a live TIP session. Everything else in module 8 is done and runs offline.
+need a live TIP session. Everything else in module 6 is done and runs offline.
 
 | | |
 |---|---|
 | **Where** | EPO TIP JupyterLab, base conda env, `PatstatClient(env='PROD')` |
-| **Working dir** | `8_ipscore_rebuild/` unless a task says otherwise |
+| **Working dir** | `6_ipscore_rebuild/` unless a task says otherwise |
 | **Time** | ~30 minutes, five tasks |
 | **Blocks** | ~~Phase 3 (notebook 2)~~ — **unblocked 2026-08-15.** Phases 1, 2 and 4 were already finished |
-| **Deadline** | Workshop is **18 September 2026** |
+| **Deadline** | Workshop is **17 September 2026** |
 
 > ⚠️ **The SQL below is untested.** It was written offline, against no database. Treat every
 > query as a draft to adapt, not as something that will run first time. The *questions* are what
@@ -65,7 +65,7 @@ Run this first. If either line fails, stop and fix that before anything else: it
 engine or the spec drifted, and nothing downstream is trustworthy.
 
 ```bash
-cd 8_ipscore_rebuild
+cd 6_ipscore_rebuild
 python ipscore_kit.py                             # → 3 PASS, "All three EPO test patents reproduced."
 python tools/extract_spec_from_excel.py --check    # → "spec is up to date"
 ```
@@ -142,7 +142,7 @@ print([t for t in df["table_name"] if t.startswith(("tls23", "tls80"))])
 > Take the count from the `B1`, never the `A1`.
 
 **The decision it makes.** Question **A4** *breadth of claim*. Claim count is a **weak proxy** for
-claim breadth and module 8 labels it as one — but a proxy with no data is not even that. If the
+claim breadth and module 6 labels it as one — but a proxy with no data is not even that. If the
 column is empty for EP and WO, A4 drops out and stays pure judgement.
 
 ```python
@@ -162,7 +162,7 @@ pd.DataFrame(patstat.sql_query(sql, use_legacy_sql=False))
 
 If `nb_claims` does not exist on `tls201_appln` in this edition, the query errors on the column
 name — that itself is the answer. Note the coverage **per authority**: EP and WO are the ones
-module 8 cares about, since the worked example is an EP-first family.
+module 6 cares about, since the worked example is an EP-first family.
 
 **Record:** coverage percentage for EP and WO. Rule of thumb — below ~50 % for EP, A4 is not worth
 showing even as a labelled proxy.
@@ -179,13 +179,13 @@ showing even as a labelled proxy.
 > in June 2025). "Granted" ≠ "in force" is the A1/A5 teaching point, with real dates.
 > `worked_example.json` is deliberately **not** yet changed — that is Phase 3 work.
 
-**The decision it makes.** Right now `8_ipscore_rebuild/worked_example.json` holds an invented
+**The decision it makes.** Right now `6_ipscore_rebuild/worked_example.json` holds an invented
 patent, and its eight money-carrying scores were **chosen so the charts teach well**, not sampled
-from reality. Decision **V5** says the real example comes from module 6's antibiotic-resistance
-corpus, so the two modules link up: the landscape says where a field stands, module 8 values one
+from reality. Decision **V5** says the real example comes from module 5's antibiotic-resistance
+corpus, so the two modules link up: the landscape says where a field stands, module 6 values one
 patent inside it.
 
-**The corpus** is `6_patentreports/2_antibiotic_resistance_rebuild/1_dataset_and_search_strategy_output/dataset.xlsx`
+**The corpus** is `5_patentreports/2_antibiotic_resistance_rebuild/1_dataset_and_search_strategy_output/dataset.xlsx`
 — 4,172 families, columns `docdb_family_id` and `publication_number` (696 EP, 559 WO, 219 US).
 
 **What makes a good example** — it has to exercise the evidence layer, so:
@@ -200,7 +200,7 @@ patent inside it.
 
 ```python
 families = pd.read_excel(
-    "../6_patentreports/2_antibiotic_resistance_rebuild/"
+    "../5_patentreports/2_antibiotic_resistance_rebuild/"
     "1_dataset_and_search_strategy_output/dataset.xlsx")
 ids = tuple(int(x) for x in families["docdb_family_id"].unique())
 
@@ -247,7 +247,7 @@ tick labels, a CVD-safe palette — but the build environment had no kaleido and
 Notebook 4's five charts *have* now been rendered and reviewed in a browser, and doing that
 turned up three real problems, so this is not a formality.
 
-Open `8_ipscore_rebuild/1_the_model.ipynb` and look at the two figures:
+Open `6_ipscore_rebuild/1_the_model.ipynb` and look at the two figures:
 
 1. **Cell 9** — the 40-question grid, *"Only 8 of the 40 IPScore questions reach the NPV"*
 2. **Cell 21** — the ten-year cash-flow bars
@@ -263,13 +263,13 @@ and does not need TIP.
 > **Proven.** `jupyter_server_proxy` 4.4.0 is present, `server_base()` returned
 > `/user/…/proxy/44705/`, and the report came back **HTTP 200, 4,928,944 bytes** of valid HTML —
 > so the red **▶ Open** button renders, not the download fallback. `repo_root()` resolved correctly
-> from `8_ipscore_rebuild/`, and the `/files/` fallback survives the `/home/jovyan` symlink.
+> from `6_ipscore_rebuild/`, and the `/files/` fallback survives the `/home/jovyan` symlink.
 > No regeneration was needed: the committed report already has **8 sections and 5 charts**.
 > Warning 9 confirmed — the URL bakes in the hub session id *and* an ephemeral port.
 
 **Why.** The last cell of `4_assemble_tool.ipynb` opens the report through jupyter-server-proxy.
 It is structurally correct — it walks up for `CLAUDE.md` to find the repo root, which works from
-`8_ipscore_rebuild/` — but **the proxy branch has never executed**. Offline there is no
+`6_ipscore_rebuild/` — but **the proxy branch has never executed**. Offline there is no
 jupyter-server-proxy, so it printed the download fallback instead. That is an unproven claim, not
 a finished one.
 
@@ -286,7 +286,7 @@ money answers, cash flow, *which lever moves the number*, all forty answers?
 > 🚨 **Clear that cell's output before committing.** Run on TIP, `open_html()` bakes a URL
 > containing the hub session id and an ephemeral port into the notebook — dead for everyone else.
 > Run offline it bakes in the author's filesystem path. Either way it must not ship. This is
-> warning 9 in `prep_workshop_todo.md`, the one module 7 learned the hard way.
+> warning 9 in `prep_workshop_todo.md`, the one the IPScore reference learned the hard way.
 
 ---
 
@@ -294,12 +294,12 @@ money answers, cash flow, *which lever moves the number*, all forty answers?
 
 Only these, and only if they changed:
 
-- ~~`8_ipscore_rebuild/1_the_model.ipynb`~~ — **not re-run**, so untouched. The charts were
+- ~~`6_ipscore_rebuild/1_the_model.ipynb`~~ — **not re-run**, so untouched. The charts were
   reviewed by reading the stored plotly JSON out of the committed notebook and drawing it to PNG
   in a scratch directory, precisely to avoid a re-run.
-- ~~`8_ipscore_rebuild/4_assemble_tool.ipynb`~~ — **not re-run**, so cell 19 carries no baked URL
+- ~~`6_ipscore_rebuild/4_assemble_tool.ipynb`~~ — **not re-run**, so cell 19 carries no baked URL
   and nothing needed clearing.
-- ~~`8_ipscore_rebuild/4_tool/`~~ — the report was **not** regenerated; it already had its
+- ~~`6_ipscore_rebuild/4_tool/`~~ — the report was **not** regenerated; it already had its
   8 sections and 5 charts.
 - ✅ The answers to O1, O2 and V5 — written into `REBUILD_PLAN.md` under *Open questions*.
 - ✅ [`results-tipsession.md`](results-tipsession.md) — the full session record.
@@ -311,10 +311,10 @@ Ticket `#PIP-127`. Work on `develop`.
 
 ---
 
-## Not part of this session, but decide before 18 September
+## Not part of this session, but decide before 17 September
 
 > ✅ **Settled since.** The notebook 1 re-run happened — the three `measured` stamps are gone and
-> the cell-21 scores are corrected (`C3=5`, `D3=4`, `D4=4`). The module 8 attribution wording is
+> the cell-21 scores are corrected (`C3=5`, `D3=4`, `D4=4`). The module 6 attribution wording is
 > written. What remains of this list is O3, which is a conversation, not a query.
 
 - ~~**Notebook 1 stamps three answers `measured`**~~ ✅ **done.** (A1, A3, A5) with hand-written evidence strings.
@@ -327,9 +327,9 @@ Ticket `#PIP-127`. Work on `develop`.
   three: A1 "granted 2018-01-10, no opposition (`26N`)", A3 "renewals paid to year 11 in 2025,
   nominal expiry 2034-06-13", A5 "in force in DE, SE, GB, FR of 38 designated states". The
   hand-written strings can become true rather than being deleted.
-- ~~**Attribution wording for module 8.**~~ ✅ **done.** Riccardo has agreed to the rebuild; the sentence itself
-  is still unwritten. Module 8 is our implementation of the **EPO** model and must say so, while
-  modules 6 and 7 keep *created by Riccardo Priore*.
+- ~~**Attribution wording for module 6.**~~ ✅ **done.** Riccardo has agreed to the rebuild; the sentence itself
+  is still unwritten. Module 6 is our implementation of the **EPO** model and must say so, while
+  module 5 and the IPScore reference keep *created by Riccardo Priore*.
 - ~~Unsigned commits on `develop`~~ — **done, 2026-08-15.** All four were re-signed and
   force-pushed; `git log --format='%h %G?' f141276..develop` shows `G` on every one. The
   pre-rewrite state is kept locally as `backup/pre-resign-develop`; delete that branch once the
@@ -347,4 +347,4 @@ three *strong* questions first (A1, A3, A5), the three *good* ones next (E1, E2,
 last and labelled as proxies. `kit.PATSTAT_CANDIDATES` already names what each one sources.
 
 Only its **execution** needs TIP. Then the provenance panel on the report stops reading
-`0 measured · 0 informed · 40 judgement` — which is the whole point of module 8.
+`0 measured · 0 informed · 40 judgement` — which is the whole point of module 6.

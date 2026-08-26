@@ -1,12 +1,12 @@
 # Workshop Preparation — open work
 
-Working notes for the **PATLIB Warsaw workshop, 18 September 2026**. Goal: five topics, seven
-modules, one consistent course. Modules 6 and 7 are Riccardo Priore's contributions, reworked here;
+Working notes for the **PATLIB Warsaw workshop, 17 September 2026**. Goal: five topics, seven
+modules, one consistent course. module 5 and the IPScore reference are Riccardo Priore's contributions, reworked here;
 his repository (`rickypriore/patlib-sessions`) stays the upstream source.
 
 ---
 
-## DONE · Module 6 file reorganisation (executed 2026-07-23, variant B)
+## DONE · Module 5 file reorganisation (executed 2026-07-23, variant B)
 
 Executed as decided: variant B, `0_inputs/`, MODERNIZED dropped, reorg first. One output
 folder per notebook, prefix stripped. All 39 code-path references rewritten across the three
@@ -15,7 +15,7 @@ notebooks and verified — **0 old paths remain in code or markdown**; every rea
 output) — its code path now points at `2_technology_network_output/` and it is created on the
 next run. Notebooks stay valid and pre-executed (outputs preserved).
 
-✅ **Resolved — the TIP re-run happened** (commit `47d30da`, *"Module 6: ship the assembled
+✅ **Resolved — the TIP re-run happened** (commit `47d30da`, *"Module 5: ship the assembled
 report from a clean 1→2→3 run"*). Re-verified 2026-08-15: **zero** old path literals in the
 three notebooks or in `report/antibiotic_resistance_report.html`, all 7 relative links in the
 report resolve to files on disk, and no `/home/jovyan/` strings remain. Nothing stale here any
@@ -32,7 +32,7 @@ committed artefacts are stale.
 
 <details><summary>Original plan (for reference)</summary>
 
-## PLAN · Module 6 file reorganisation (proposed — awaiting go)
+## PLAN · Module 5 file reorganisation (proposed — awaiting go)
 
 **Problem.** The `output_*` folders are named after Riccardo's *old flat notebooks*
 (`Patent_Analysis_CLEAN`, `Network_Analysis`, `Triadic_Families`, `tSNE_Analysis_NEW`), which no
@@ -56,7 +56,7 @@ final deliverable.
 ### Target layout
 
 ```
-6_patentreports/1_antibiotic_resistance/
+5_patentreports/1_antibiotic_resistance/
 ├── 1_dataset_and_search_strategy.ipynb
 ├── 1_dataset_and_search_strategy_output/
 │     dataset.xlsx  dataset_highlighted.html  ipc_analysis.html  statistics.html
@@ -121,9 +121,9 @@ path in code), then re-run on TIP.
 
 ---
 
-## DONE · Module 7 preparation (executed 2026-07-24)
+## DONE · The IPScore reference preparation (executed 2026-07-24)
 
-Module 7 is **demo-ready**. It is the one module that needs no PATSTAT, no database and no
+The IPScore reference is **demo-ready**. It is the one module that needs no PATSTAT, no database and no
 internet: five self-contained HTML tools (an Excel model turned into a web page), launched
 inside TIP through `open_html()` / jupyter-server-proxy. Verified on TIP that day:
 `build/verify_against_excel.py` passes — all 3 Excel test patents (329,059.4284 / 4,361.2849 /
@@ -142,7 +142,7 @@ What was done:
   Both are now described as they behave. Also: the two conflicting CSP explanations merged, the
   dead `Session_Menu.ipynb` reference dropped, the verification claim made honest.
 - **Tidied.** `build/dist/` untracked (byte-identical to the live files, `render.py` recreates
-  it) and re-excluded in `.gitignore` after the `!7_ipscore/build/**` negation;
+  it) and re-excluded in `.gitignore` after the `!9_documentation/ipscore/build/**` negation;
   `Dennemeyer_HTML_Tools_Builder.ipynb` → `build_html_tools.ipynb` with its
   `/home/jovyan/Dennemeyer` assert message fixed and two empty trailing cells dropped;
   `BUILD_LOG.md` scope-noted and its file inventory corrected to what this repo actually holds;
@@ -162,7 +162,7 @@ explaining. **We disagree, deliberately.** For a PATLIB audience the interesting
 treats as prerequisites: **the search strategy is the actual professional skill**, and it was
 the one thing invisible in the imported material.
 
-Hence module 6 is now a three-part chain, each part feeding the next:
+Hence module 5 is now a three-part chain, each part feeding the next:
 
 | Notebook | Answers | Produces |
 |---|---|---|
@@ -185,12 +185,12 @@ and disappear on the next run.)*
 > reconstruct the assembly from what is already in the repo. Everything needed is there.
 
 **Status (2026-07-24): route B taken, and the work has moved.** This section is no longer the
-live plan — module 6's rebuild is now tracked in
-[`6_patentreports/2_antibiotic_resistance_rebuild/REBUILD_PLAN.md`](6_patentreports/2_antibiotic_resistance_rebuild/REBUILD_PLAN.md),
+live plan — module 5's rebuild is now tracked in
+[`5_patentreports/2_antibiotic_resistance_rebuild/REBUILD_PLAN.md`](5_patentreports/2_antibiotic_resistance_rebuild/REBUILD_PLAN.md),
 which carries the session log and the locked decisions D1–D8. Where the two disagree, that
 file wins.
 
-Three folders now sit side by side in `6_patentreports/`:
+Three folders now sit side by side in `5_patentreports/`:
 
 | Folder | What it is |
 |---|---|
@@ -249,7 +249,7 @@ and **we already have the recipes documented at code level** from his Fuel Cells
 | Most influential orgs (13) | Recipe 3 — `func.count(func.distinct(docdb_family_id))` |
 | Geographic patterns (2) | Recipe 1 — `groupby(appln_auth, year)`, choropleth |
 
-Route B makes module 6 **fully reproducible from a PATSTAT query**, which is the entire point of
+Route B makes module 5 **fully reproducible from a PATSTAT query**, which is the entire point of
 showing the chain. It is more work, but it is exactly the work that turns the module from a
 display piece into a teaching artifact.
 
@@ -280,7 +280,7 @@ The point of the rework: Riccardo's model writes standalone HTML you must downlo
 |---|---|---|---|
 | 1 | Plotly charts | `fig.show()` inline | ⬜ 4 charts in notebook 3 still write-only |
 | 2 | Tables | `itables` inline instead of hand-built DataTables HTML | ⬜ blocked: is `itables` on TIP? |
-| 3 | Finished HTML tools | serve via `jupyter-server-proxy` (`tip_tools`) | ✅ done in module 7 |
+| 3 | Finished HTML tools | serve via `jupyter-server-proxy` (`tip_tools`) | ✅ done in the IPScore reference |
 | 4 | Real apps | launcher pattern (PATSTAT Explorer) | ✅ established |
 
 **Key constraint (verified on TIP):** an `IFrame` cannot work. JupyterLab resolves relative
@@ -302,39 +302,39 @@ Two further upstream notebooks feed the *original* 13-analysis report but are no
       deliberate correctness choice (the separate t-SNE run yields *different* clusters:
       3,840 vs 3,585 families). Importing it would need that discrepancy explained, not hidden.
 
-### 5. Module 7 — open points, and what to ask Riccardo
+### 5. The IPScore reference — open points, and what to ask Riccardo
 
-**Direction, if module 7 gets the same MVP → Rebuild treatment as module 6:** the story stays
+**Direction, if the IPScore reference gets the same MVP → Rebuild treatment as module 5:** the story stays
 **patent valuation as content** — what a patent is worth, where it is weak, which action moves
 the NPV. The Excel → web-tool build path stays a side note, closer to his original intent.
 (The alternative — teaching the conversion recipe itself — was considered and set aside.)
 
 #### ANSWERED · Riccardo, 2026-08-15 — all five, and four resolve to *no work*
 
-Arne put the five questions to him. Net effect: **module 7 stays exactly as it is**, and the
+Arne put the five questions to him. Net effect: **the IPScore reference stays exactly as it is**, and the
 two decisions this section had pre-recorded are **reversed** (no neutralisation, no blank EN
-form). Only the attribution wording still needs a sentence when module 8 ships.
+form). Only the attribution wording still needs a sentence when module 6 ships.
 
-- [x] **What does he want to show on stage?** → **Antibiotics (module 6) and IPScore (module 7)**
+- [x] **What does he want to show on stage?** → **Antibiotics (module 5) and IPScore (the IPScore reference)**
       — his two inputs. Arne's rebuilds exist so they match the rest of the material in look,
       feel and structure; the content stays his. Both keep their slot.
 - [x] **Are the named commercial vendors deliberate?** → **Yes, they stay.** Verified
       2026-08-15: EN names Dennemeyer 3×, CPA Global / Anaqua / IAM Market 1× each; IT adds
       LOT Network and IPH. ⚠️ **This reverses the earlier decision** ("neutralise EN and IT and
       re-render") — **do not touch the vendor names.** If it is ever reopened, the source is
-      `7_ipscore/build/data/ipscore_questions_{en,it}.json` → `render.py --promote`, never the
+      `9_documentation/ipscore/build/data/ipscore_questions_{en,it}.json` → `render.py --promote`, never the
       generated HTML.
 - [x] **Is a rebuild acceptable, and how is attribution worded?** → **Yes, explicitly welcome**
       — he values the support. **Wording settled 2026-08-15:** *"created by Arne Krüger · model:
       EPO IPScore 3.01 · scenario analysis after Riccardo Priore's NPV Target Planner"*, in all
       four module-8 headers and the report footer. It names the EPO as the model's owner, keeps
-      *created by Riccardo Priore* for modules 6 and 7 only, and credits by name the one idea
-      module 8 did take from him. Full reasoning in `8_ipscore_rebuild/PROVENANCE.md`.
+      *created by Riccardo Priore* for module 5 and the IPScore reference only, and credits by name the one idea
+      module 6 did take from him. Full reasoning in `6_ipscore_rebuild/PROVENANCE.md`.
 - [x] **Should there be a blank English form?** → **No — pre-filled is preferred**, by both
       Arne and Riccardo: you cannot ask a workshop audience for their company's turnover, cost
       and depreciation figures on the spot, so the tool has to arrive with a worked example.
       ⚠️ **This reverses the earlier decision** ("yes, plus a third launcher cell") — that cell
-      is not built. *Applies to module 8 too: its deliverable ships pre-filled.*
+      is not built. *Applies to module 6 too: its deliverable ships pre-filled.*
 - [x] **Does he want the IT versions maintained?** → **No.** English only for the course
       (confirms V6). His IT files are his own working copies and stay untouched in the repo.
 
@@ -350,7 +350,7 @@ form). Only the attribution wording still needs a sentence when module 8 ships.
       should move into `build/` (needs its `Path.cwd()/"build"` assumption adjusted).
 
 ### 6. Before the release
-- [ ] Dry-run all five topics against the clock (~8 min each). Module 7 has no query latency —
+- [ ] Dry-run all five topics against the clock (~8 min each). The IPScore reference has no query latency —
       it is the safe slot if the schedule slips.
 - [ ] Re-sync with upstream (`git fetch` in `rickypriore/patlib-sessions`) — he commits actively.
 - [ ] Release `develop` → `main`, then send Riccardo the link to both reworked modules,
@@ -360,7 +360,7 @@ form). Only the attribution wording still needs a sentence when module 8 ships.
 
 ---
 
-## Warnings — read before touching modules 6 and 7
+## Warnings — read before touching module 5 and the IPScore reference
 
 Things that will bite silently if forgotten. Each was verified, not assumed.
 
@@ -380,9 +380,9 @@ Things that will bite silently if forgotten. Each was verified, not assumed.
    "tidy" them by clearing or re-running without a working TIP session, or the module goes
    silently blank.
 5. **`.gitignore` has a generic `build/` rule** that already swallowed Riccardo's entire
-   IPScore pipeline once. A negated rule (`!7_ipscore/build/`) restores it — check any new
+   IPScore pipeline once. A negated rule (`!9_documentation/ipscore/build/`) restores it — check any new
    folder with a conventional name against `git check-ignore` before assuming it was committed.
-   Since 2026-07-24 a third rule re-excludes `7_ipscore/build/dist/` (regenerated output,
+   Since 2026-07-24 a third rule re-excludes `9_documentation/ipscore/build/dist/` (regenerated output,
    byte-identical to the live files). Order matters: it must stay *after* the negation.
 6. **Notebook 3's outputs are `print()` text only** — 17 stream outputs, zero rendered charts,
    because all four charts go to `write_html()`. "Pre-executed" therefore currently shows a
@@ -391,12 +391,12 @@ Things that will bite silently if forgotten. Each was verified, not assumed.
    not in code. They clear on the next TIP run — do not hand-edit them out of the JSON.
 8. **Riccardo commits actively** (three substantive commits in two days). Re-sync before any
    large rework, and never edit his upstream files in place — his repo stays canonical.
-9. **Module 7: never commit the launcher cells with outputs.** `open_html()` emits a URL
+9. **The IPScore reference: never commit the launcher cells with outputs.** `open_html()` emits a URL
    containing the hub session id and an ephemeral port — valid only inside the session that
    produced it, dead for everyone else. Rule 4 (guest modules ship pre-executed) does *not*
    extend to launcher cells. Clear those two outputs before committing
-   `7_ipscore/1_ipscore-and-npv.ipynb`.
-10. **Module 7: the generated HTML is never hand-edited.** Change `build/data/*.json` or the
+   `9_documentation/ipscore/1_ipscore-and-npv.ipynb`.
+10. **The IPScore reference: the generated HTML is never hand-edited.** Change `build/data/*.json` or the
    `.j2` template and re-render via `render.py --promote`, then re-run
    `build/verify_against_excel.py` — an Italian apostrophe in a single-quoted JS string once
    killed an entire page silently, which is why the pipeline exists at all.
@@ -405,6 +405,6 @@ Things that will bite silently if forgotten. Each was verified, not assumed.
 
 - Full analysis of Riccardo's repository: `_docu/` on branch `herrkrueger` in
   `rickypriore/patlib-sessions` (local only — the remote branch was deleted).
-- Attribution: IPScore is an **EPO tool**, ASP adaptation. Modules 6 & 7 credit
+- Attribution: IPScore is an **EPO tool**, ASP adaptation. module 5 and the IPScore reference credit
   *created by Riccardo Priore*.
 - Guest-module conventions (pre-executed outputs, authorship in header): see `CLAUDE.md`.

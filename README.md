@@ -9,14 +9,14 @@ inside TIP's own JupyterLab.
 | Course | Folder | Description |
 |--------|--------|-------------|
 | 1 Start with TIP | `1_startwithtip/` | Set up Claude Code persistently on TIP, then get hands-on with your first PATSTAT queries (company & institution search) |
-| 2 Legacy | `2_legacy/` | Earlier worked end-to-end analysis notebooks (Airbus filing strategy, TU Dortmund portfolio) |
-| 3 Query Library | `3_querylib/` | Learning PATSTAT and patent analytics with ready-to-use queries that answer the questions PATLIB staff and their audience ask |
-| 4 PATSTAT Explorer | `4_patstat_explorer/` | Course material and notebook + app for applicant and technology search within PATSTAT |
-| 5 Lead Generation | `5_lead_generation/` | Regional lead generation: profiling the EP/PCT-active company applicants of a region by portfolio depth and geographic reach, and segmenting them into lead tiers |
-| 6 Patent Reports | `6_patentreports/` | Turning a patent dataset into a publishable landscape report — triadic families, filing authorities, technology clusters, interactive explorer *(by Riccardo Priore)* |
-| 7 IPScore | `7_ipscore/` | Patent valuation: the EPO IPScore questionnaire and its Net Present Value model, as interactive tools *(by Riccardo Priore)* |
-| 8 IPScore Rebuild | `8_ipscore_rebuild/` | Rebuilding the ideas behind IPScore as an explained notebook chain — and separating what PATSTAT can prove about a patent from what stays expert judgement. Worked example: `EP3074539B1`, Q-Linea AB |
-| *(not a module)* | `9_documentation/` | Working plans, one per TIP session — `plan-tipsession-1-recon.md` (✅), `plan-tipsession-2-evidence-run.md` (✅), `plan-tipsession-3-screenshots.md` (⏳ open, needed before 18 September) — plus `results-tipsession.md` and the course material in `plan-course-material.md` + `course/` |
+| 2 Legacy | `9_documentation/legacy/` | Earlier worked end-to-end analysis notebooks (Airbus filing strategy, TU Dortmund portfolio) |
+| 3 Query Library | `2_querylib/` | Learning PATSTAT and patent analytics with ready-to-use queries that answer the questions PATLIB staff and their audience ask |
+| 4 PATSTAT Explorer | `3_patstat_explorer/` | Course material and notebook + app for applicant and technology search within PATSTAT |
+| 5 Lead Generation | `4_lead_generation/` | Regional lead generation: profiling the EP/PCT-active company applicants of a region by portfolio depth and geographic reach, and segmenting them into lead tiers |
+| 6 Patent Reports | `5_patentreports/` | Turning a patent dataset into a publishable landscape report — triadic families, filing authorities, technology clusters, interactive explorer *(by Riccardo Priore)* |
+| 7 IPScore | `9_documentation/ipscore/` | Patent valuation: the EPO IPScore questionnaire and its Net Present Value model, as interactive tools *(by Riccardo Priore)* |
+| 8 IPScore Rebuild | `6_ipscore_rebuild/` | Rebuilding the ideas behind IPScore as an explained notebook chain — and separating what PATSTAT can prove about a patent from what stays expert judgement. Worked example: `EP3074539B1`, Q-Linea AB |
+| *(not a module)* | `9_documentation/` | Working plans, one per TIP session — `plan-tipsession-1-recon.md` (✅), `plan-tipsession-2-evidence-run.md` (✅), `plan-tipsession-3-screenshots.md` (⏳ open, needed before 17 September) — plus `results-tipsession.md` and the course material in `plan-course-material.md` + `course/` |
 
 ## Quick Start
 
@@ -31,10 +31,10 @@ inside TIP's own JupyterLab.
 
 ### Two things worth knowing
 
-- **Modules 1–5 ship with cleared outputs** — you run them. **Modules 6 and 7 ship
+- **Modules 1–4 ship with cleared outputs** — you run them. **module 5 and the IPScore reference ship
   pre-executed**: they are guest contributions by Riccardo Priore, read as finished reports in
   a showcase session. The stored outputs *are* the deliverable, so don't re-run them to tidy up.
-- **Module 7 needs no PATSTAT, no database and no internet.** The IPScore tools are
+- **The IPScore reference needs no PATSTAT, no database and no internet.** The IPScore tools are
   self-contained HTML — a spreadsheet model turned into a web page. Useful when you want to
   demonstrate something without depending on a live connection.
 

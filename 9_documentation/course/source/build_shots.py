@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Cut the workshop deck's screenshots from what the repository already contains.
 
-Modules 4, 6 and 8 ship executed, so their images need no TIP session: this
+Modules 3, 5 and 6 ship executed, so their images need no TIP session: this
 script rebuilds each one as a small standalone page, photographs it with headless
-Chrome and crops it to its content. Modules 1, 3 and 5 ship with cleared outputs
+Chrome and crops it to its content. Modules 1, 2 and 4 ship with cleared outputs
 on purpose and cannot be done here — see plan-tipsession-3-screenshots.md.
 
     uv run --with pillow python build_shots.py
@@ -12,16 +12,16 @@ Output lands in shots/NN.png, which is exactly where build_slides.py looks.
 
 Four things here are not obvious and each one cost a wrong image first time:
 
-1. **Light mode.** Module 8's report carries a dark palette behind
+1. **Light mode.** Module 6's report carries a dark palette behind
    `prefers-color-scheme`. Headless Chrome answers *dark*, so the report renders
    its dark theme — and a forced white background then leaves near-white
    headings on white. `preferredColorScheme=1` picks light and settles it.
 2. **Plotly has to come from somewhere.** A recorded chart fragment is only a
-   div plus a `Plotly.newPlot` call. The library is extracted out of module 6's
+   div plus a `Plotly.newPlot` call. The library is extracted out of module 5's
    own assembled report, so the chart is drawn by the same build that produced it.
 3. **A pandas header row is not a `<tr>` you can count.** `to_html` writes the
    header as `<tr style="text-align: right;">`, so slicing `<tr>` matches drops
-   the first *data* row — in module 4 that is the 1265-family row the whole
+   the first *data* row — in module 3 that is the 1265-family row the whole
    module is about. Slice inside `<tbody>` instead.
 4. **Crop to content.** A fixed window leaves half a page of white, and
    build_slides.py fits the image into its frame, so the white would be scaled
@@ -77,8 +77,8 @@ def page(body: str, width: int | None = None) -> str:
 
 
 def build_04(stage: Path) -> tuple[str, int, int]:
-    """Module 4 — the step-1 hit list, beside the query that produced it."""
-    nb = json.loads((REPO / "4_patstat_explorer" /
+    """Module 3 — the step-1 hit list, beside the query that produced it."""
+    nb = json.loads((REPO / "3_patstat_explorer" /
                      "1_Applicant_consolidation_notebook.ipynb").read_text(encoding="utf-8"))
     cell = nb["cells"][4]
     table = "".join(next(o["data"]["text/html"] for o in cell["outputs"]
@@ -90,7 +90,7 @@ def build_04(stage: Path) -> tuple[str, int, int]:
     stage.joinpath("04.html").write_text(page(f"""
 <div class="wrap">
   <h1>Step 1 — one company, many spellings</h1>
-  <p class="sub">4_patstat_explorer/1_Applicant_consolidation_notebook.ipynb ·
+  <p class="sub">3_patstat_explorer/1_Applicant_consolidation_notebook.ipynb ·
      PATSTAT knows names, not companies</p>
   <div class="cols">
     <div class="col-l"><p class="tag">One query</p><pre>{code}</pre></div>
@@ -99,12 +99,12 @@ def build_04(stage: Path) -> tuple[str, int, int]:
       and you report 1265 for a group that files far more.</p></div>
   </div>
 </div>""", width=1560), encoding="utf-8")
-    return "04", 1700, 1000
+    return "03", 1700, 1000
 
 
 def build_06(stage: Path) -> tuple[str, int, int]:
-    """Module 6 — one chart out of the assembled landscape report."""
-    root = REPO / "6_patentreports/2_antibiotic_resistance_rebuild"
+    """Module 5 — one chart out of the assembled landscape report."""
+    root = REPO / "5_patentreports/2_antibiotic_resistance_rebuild"
     report = (root / "4_report/antibiotic_resistance_report.html").read_text(encoding="utf-8")
     lib = max(re.finditer(r"<script[^>]*>(.*?)</script>", report, re.S),
               key=lambda m: len(m.group(1))).group(1)            # see note 2
@@ -119,17 +119,17 @@ def build_06(stage: Path) -> tuple[str, int, int]:
      2_core_landscape_analyses.ipynb, step 10</p>
   {frag}
 </div>"""), encoding="utf-8")
-    return "06", 1600, 800
+    return "05", 1600, 800
 
 
 def build_08(stage: Path) -> tuple[str, int, int]:
-    """Module 8 — the report's verdict, with every other section hidden."""
-    report = (REPO / "8_ipscore_rebuild/4_tool/ipscore_valuation.html").read_text(encoding="utf-8")
+    """Module 6 — the report's verdict, with every other section hidden."""
+    report = (REPO / "6_ipscore_rebuild/4_tool/ipscore_valuation.html").read_text(encoding="utf-8")
     hide = ("<style>section:not(#verdict){display:none!important}"
             "nav,footer,.nav,.toc{display:none!important}</style>")
     stage.joinpath("08.html").write_text(report.replace("</head>", hide + "</head>", 1),
                                          encoding="utf-8")
-    return "08", 1600, 1000
+    return "06", 1600, 1000
 
 
 def shoot(stage: Path, name: str, w: int, h: int, port: int) -> Path:
@@ -179,7 +179,7 @@ def main() -> int:
     finally:
         shutil.rmtree(stage, ignore_errors=True)
 
-    missing = [n for n in ("01", "03", "05") if not (SHOTS / f"{n}.png").exists()]
+    missing = [n for n in ("01", "02", "04") if not (SHOTS / f"{n}.png").exists()]
     if missing:
         print(f"   still missing: {', '.join(missing)} — those need a TIP session "
               f"(plan-tipsession-3-screenshots.md)")
