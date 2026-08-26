@@ -40,7 +40,7 @@ is the last step of Phase 3.
 | **Where** | EPO TIP JupyterLab, `PatstatClient(env='PROD')`, working dir `6_ipscore_rebuild/` |
 | **Time** | ~20 minutes, most of it query latency |
 | **Input** | `worked_example.json` — EP3074539B1, Q-Linea AB, family `53398085` |
-| **Deadline** | Workshop **18 September 2026** |
+| **Deadline** | Workshop **17 September 2026** |
 
 ## Do this
 

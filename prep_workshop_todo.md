@@ -1,6 +1,6 @@
 # Workshop Preparation — open work
 
-Working notes for the **PATLIB Warsaw workshop, 18 September 2026**. Goal: five topics, seven
+Working notes for the **PATLIB Warsaw workshop, 17 September 2026**. Goal: five topics, seven
 modules, one consistent course. module 5 and the IPScore reference are Riccardo Priore's contributions, reworked here;
 his repository (`rickypriore/patlib-sessions`) stays the upstream source.
 

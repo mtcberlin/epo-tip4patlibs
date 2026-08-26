@@ -31,8 +31,8 @@ handouts and slides still speak of modules 1, 2, 3, 4, 5 and 6. See `9_documenta
 `plan-tipsession-1-recon.md` (✅ 2026-08-15 — what can PATSTAT answer?) ·
 `plan-tipsession-2-evidence-run.md` (✅ 2026-08-15 — run notebook 2) ·
 `plan-tipsession-3-screenshots.md` (⏳ **open** — the shots that cannot be produced offline, before
-18 September), with the findings of the first two in `results-tipsession.md`.
-**Workshop:** `plan-workshop-warsaw.md` — the 90-min Warsaw session (18 Sep 2026): the spine, the
+17 September), with the findings of the first two in `results-tipsession.md`.
+**Workshop:** `plan-workshop-warsaw.md` — the 90-min Warsaw session (17 Sep 2026): the spine, the
 running order, what is cut, and how it splits between Arne and Riccardo.
 **Teaching material:** `plan-course-material.md` and `course/` — a 45-min block per module with
 learning objectives and the three phases Introduction · Working through · Learning outcome, plus a

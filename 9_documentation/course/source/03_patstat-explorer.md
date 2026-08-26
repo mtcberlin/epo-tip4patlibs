@@ -222,5 +222,5 @@ above saying what it means *for that organisation*.
   *"Integlligence"*, *"knowlegde"*, and *"TIP4PATLIBs"* (inconsistent capitalisation against the
   rest of the course). Fix before the workshop — it is the first slide-worthy screen in the module.
 - The Explorer app is cloned from a public GitHub repository at run time. Confirm it is reachable
-  from the workshop network **before** 18 September, and have the documentation PDF ready as a
+  from the workshop network **before** 17 September, and have the documentation PDF ready as a
   fallback.

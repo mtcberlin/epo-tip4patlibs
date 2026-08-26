@@ -16,7 +16,7 @@ inside TIP's own JupyterLab.
 | 6 Patent Reports | `5_patentreports/` | Turning a patent dataset into a publishable landscape report — triadic families, filing authorities, technology clusters, interactive explorer *(by Riccardo Priore)* |
 | 7 IPScore | `9_documentation/ipscore/` | Patent valuation: the EPO IPScore questionnaire and its Net Present Value model, as interactive tools *(by Riccardo Priore)* |
 | 8 IPScore Rebuild | `6_ipscore_rebuild/` | Rebuilding the ideas behind IPScore as an explained notebook chain — and separating what PATSTAT can prove about a patent from what stays expert judgement. Worked example: `EP3074539B1`, Q-Linea AB |
-| *(not a module)* | `9_documentation/` | Working plans, one per TIP session — `plan-tipsession-1-recon.md` (✅), `plan-tipsession-2-evidence-run.md` (✅), `plan-tipsession-3-screenshots.md` (⏳ open, needed before 18 September) — plus `results-tipsession.md` and the course material in `plan-course-material.md` + `course/` |
+| *(not a module)* | `9_documentation/` | Working plans, one per TIP session — `plan-tipsession-1-recon.md` (✅), `plan-tipsession-2-evidence-run.md` (✅), `plan-tipsession-3-screenshots.md` (⏳ open, needed before 17 September) — plus `results-tipsession.md` and the course material in `plan-course-material.md` + `course/` |
 
 ## Quick Start
 

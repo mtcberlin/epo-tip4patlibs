@@ -46,7 +46,7 @@ need a live TIP session. Everything else in module 6 is done and runs offline.
 | **Working dir** | `6_ipscore_rebuild/` unless a task says otherwise |
 | **Time** | ~30 minutes, five tasks |
 | **Blocks** | ~~Phase 3 (notebook 2)~~ — **unblocked 2026-08-15.** Phases 1, 2 and 4 were already finished |
-| **Deadline** | Workshop is **18 September 2026** |
+| **Deadline** | Workshop is **17 September 2026** |
 
 > ⚠️ **The SQL below is untested.** It was written offline, against no database. Treat every
 > query as a draft to adapt, not as something that will run first time. The *questions* are what
@@ -311,7 +311,7 @@ Ticket `#PIP-127`. Work on `develop`.
 
 ---
 
-## Not part of this session, but decide before 18 September
+## Not part of this session, but decide before 17 September
 
 > ✅ **Settled since.** The notebook 1 re-run happened — the three `measured` stamps are gone and
 > the cell-21 scores are corrected (`C3=5`, `D3=4`, `D4=4`). The module 6 attribution wording is

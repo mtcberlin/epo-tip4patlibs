@@ -17,7 +17,7 @@ so the deck picks it up on the next build with no further editing.
 > ## ⏳ Not yet run.
 >
 > **Blocks:** the workshop deck's *Working through* slides for modules 1, 2 and 4 — currently
-> framed placeholders. **Deadline: the workshop is 18 September 2026.**
+> framed placeholders. **Deadline: the workshop is 17 September 2026.**
 >
 > | Task | | Needs TIP because |
 > |---|---|---|
@@ -29,7 +29,7 @@ so the deck picks it up on the next build with no further editing.
 |---|---|
 | **Where** | EPO TIP JupyterLab, base conda env, `PatstatClient(env='PROD')` |
 | **Time** | ~50 minutes — most of it query latency in module 4 |
-| **Deadline** | Workshop **18 September 2026** |
+| **Deadline** | Workshop **17 September 2026** |
 | **Predecessors** | [session 1](plan-tipsession-1-recon.md) · [session 2](plan-tipsession-2-evidence-run.md) · findings in [`results-tipsession.md`](results-tipsession.md) |
 
 ---

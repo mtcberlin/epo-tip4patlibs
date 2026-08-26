@@ -2,7 +2,7 @@
 
 **What this is.** A plan for turning six modules of notebooks into teachable course material:
 a **45-minute block per module** as a written document, and a **condensed slide version** of the
-same substance for the PATLIB Warsaw workshop on **18 September 2026**.
+same substance for the PATLIB Warsaw workshop on **17 September 2026**.
 
 **This run produces the plan only.** The material itself is drafted in run 2 as Markdown; PDFs
 and slides are rendered in run 3. Nothing is rendered yet, deliberately — the structure has to be
@@ -250,7 +250,7 @@ prose in the working-through phase, down from 8,272.
   repo and with an audience of PATLIB staff from across Europe.
 - **Module 6: the core path only.** `06_ipscore.md` covers notebook 1 plus a guided read of the
   finished report, sized like every other module. The implementation walk (notebooks 2, 3 and 4)
-  is **not** written for 18 September; it is deferred to a possible supplementary document,
+  is **not** written for 17 September; it is deferred to a possible supplementary document,
   `06_ipscore_part2.md`, if a PATLIB wants to run the chain itself. That removes ~5,800 words
   from run 2.
 
@@ -307,7 +307,7 @@ Screenshots come from executed notebook outputs. The modules do not ship the sam
 
 Modules 1–4 ship with cleared outputs **on purpose** — participants are meant to run them. So the
 screenshots for modules 1 and 4 (and part of 3) require someone to run those notebooks on TIP and
-capture the output, and that is a **separate TIP session** to schedule before 18 September.
+capture the output, and that is a **separate TIP session** to schedule before 17 September.
 Modules 3, 5 and 6 are free.
 
 The alternative for 1 and 5 is screenshots of the *notebook as it ships* — code and explanation
@@ -349,7 +349,7 @@ fixed in run 2** — per §8, the course material describes the modules and does
 | **1** | The same notebook names *2023–2024* as the incomplete years. On Autumn 2025 that is **2024–2025** | text fix |
 | **3** | Two leftover developer cells, *"Story 3.2 / 3.3 AC Validation"*, at the end of the interactive demo | remove |
 | **4** | Three typos in the Explorer app header: *"Integlligence"*, *"knowlegde"*, and `TIP4PATLIBs` (inconsistent casing) — it is the first slide-worthy screen in the module | text fix |
-| **4** | The Explorer app is cloned from GitHub at run time. Confirm reachability from the workshop network before 18 September | logistics |
+| **4** | The Explorer app is cloned from GitHub at run time. Confirm reachability from the workshop network before 17 September | logistics |
 | **5** | The 70% / 77% NUTS-coverage figures are stated as "measured on the current edition" — confirm on Autumn 2025 or restate with the edition measured | check |
 | **4** | `CLAUDE.md` states the convention as *modules 1–4 clear outputs, 6–7 ship pre-executed*. Module 3 actually ships **7 of 7 executed** — the course material reports the measured state, so the convention line needs updating | align |
 | **6** | The rebuild's `README.md` says notebook 3 holds the technology network only; the repo `CLAUDE.md` describes module 5 as including t-SNE clusters and triadic families (that is the *reference* folder). Align them so nobody promises a chart the report does not contain | **align** |

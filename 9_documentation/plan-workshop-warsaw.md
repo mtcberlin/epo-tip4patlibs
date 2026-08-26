@@ -1,6 +1,6 @@
 # Warsaw, 90 minutes — a briefing
 
-*PATLIB Conference 2026 · Warsaw · 18 September 2026 · Arne Krüger + Riccardo Priore*
+*PATLIB Conference 2026 · Warsaw · 17 September 2026 · Arne Krüger + Riccardo Priore*
 
 > **The message, in one line.**
 > **You do not have to learn SQL. You have to install something that writes it — and then decide
@@ -128,7 +128,7 @@ version of everything you just saw"* lands, and it is true. Quietly rushing does
 
 ---
 
-## 6 · The work between now and 18 September
+## 6 · The work between now and 17 September
 
 | # | Work | Why | State |
 |---|---|---|---|
@@ -154,7 +154,7 @@ version of everything you just saw"* lands, and it is true. Quietly rushing does
    two*. The second is stronger if the room is small enough to ask.
 2. **Audience and size** — still unrecorded anywhere. It decides whether rung 3 is a demonstration
    or something people follow along on their own machines.
-3. **The screenshot session** (`plan-tipsession-3-screenshots.md`, open, dated before 18 September)
+3. **The screenshot session** (`plan-tipsession-3-screenshots.md`, open, dated before 17 September)
    now also has to cover the install block, which has no captured material at all.
 4. **Does the questionnaire work from Riccardo's PR land before Warsaw?** It is the difference
    between "run this on your own patent tonight" and "watch me run it on mine".
