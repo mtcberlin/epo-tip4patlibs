@@ -1,0 +1,12 @@
+{
+ "sensitivity": {
+  "order": 700,
+  "slug": "sensitivity",
+  "title": "Which lever actually moves the number?",
+  "note": "One answer varied at a time, everything else held still. The other 32 questions have a swing of exactly zero.",
+  "fragment": "sensitivity.fragment.html",
+  "sheets": {
+   "sensitivity": "sensitivity__sensitivity.json"
+  }
+ }
+}
