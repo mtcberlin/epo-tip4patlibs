@@ -1,0 +1,22 @@
+{
+ "families_over_time": {
+  "order": 110,
+  "slug": "families_over_time",
+  "title": "Patent families over time",
+  "note": "One representative year (earliest filing) per family, 2000 onwards.",
+  "fragment": "families_over_time.fragment.html",
+  "sheets": {
+   "data": "families_over_time__data.parquet"
+  }
+ },
+ "top_ipc_classes": {
+  "order": 120,
+  "slug": "top_ipc_classes",
+  "title": "Leading technology areas (IPC classes)",
+  "note": "Count of IPC records at 4-character class level; a family carries several.",
+  "fragment": "top_ipc_classes.fragment.html",
+  "sheets": {
+   "data": "top_ipc_classes__data.parquet"
+  }
+ }
+}

@@ -86,7 +86,7 @@ modules:
       - ["Point and click", "the same data through the interactive demo", "2 min"]
     shot:
       what: "The Query Browser with a query's SQL open"
-      file: "2_querylib/TIP_for_PATLIBs_QueryLib.ipynb"
+      file: "2_querylib/1_query-library.ipynb"
       # the browser is an ipywidget — the committed notebook holds only a widget
       # reference, not a rendered state, so this cannot be cut offline
       available: false
@@ -112,7 +112,7 @@ modules:
       - ["Count families", "not applications — a number below the naive sum", "3 min"]
     shot:
       what: "The step-1 hit list — one company across many spellings"
-      file: "3_patstat_explorer/1_Applicant_consolidation_notebook.ipynb"
+      file: "3_patstat_explorer/1_applicant-consolidation.ipynb"
       available: true
     artifact:
       - "One consolidated applicant group — a named list of spellings you decided belong together"
@@ -167,7 +167,7 @@ modules:
       - ["Assemble", "one self-contained HTML report + one workbook", "3 min"]
     shot:
       what: "The assembled report in Paged mode, on the applicants-by-sector chart"
-      file: "5_patentreports/2_antibiotic_resistance_rebuild/4_report/"
+      file: "5_patentreports/antibiotic_resistance/4_report/"
       available: true
     artifact:
       - "One self-contained HTML report, 13 charts, no internet needed"

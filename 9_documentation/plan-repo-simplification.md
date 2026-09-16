@@ -1,6 +1,6 @@
 # Plan · Simplify the repository for PATLIB beginners
 
-**Branch:** `cleanup/simplify-for-patlib-beginners` · **Status:** draft, awaiting decisions
+**Branch:** `cleanup/simplify-for-patlib-beginners` · **Status:** ✅ executed 2026-09-16
 **Spec:** `9_documentation/course/TIP4PATLIBS_1_Workshop_v3.pdf` — 18 slides, six modules
 
 > **Intent.** A PATLIB colleague who has never used TIP opens this repository and has to
@@ -229,7 +229,35 @@ That last row is the point of question 2. Deleting 101 MB of HTML changes what a
 
 ---
 
-## 6 · Questions for Arne
+## 6 · Decisions taken, 2026-09-16
+
+| | Question | Answer |
+|---|---|---|
+| Q1 | Module 6 and the questionnaire | **Merge.** Questionnaire into `6_ipscore_rebuild/`, `7_ipscore_demo/` retired |
+| Q2 | Which problem | **Readability only.** No history rewrite; the clone stays 344 MiB |
+| Q3 | Riccardo's original | **Delete both** superseded report versions |
+| Q4 | Ticket and timing | **`#PIP-135`, execute now** |
+
+### What changed against the plan while executing
+
+Two corrections, both found by testing rather than reading:
+
+1. **`4_lead_generation/dpma/` had to stay in the module.** The plan classified it as
+   research material. It is not: `2_national-coverage.ipynb` does `from dpma.plz_nuts
+   import …` and locates the package by walking **up** from the notebook, so the package
+   must be an ancestor. Moved out, then moved back. Only `docs/` left the module.
+2. **The `.py` files in `2_querylib/` were not renamed.** They import `epo.tipdata`, which
+   exists only on TIP, so an import rename could not be verified here and its tests cannot
+   run on this machine. `tip4patlibs_core.py` and `TIP_for_PATLIBs_QueryLib_core.py` are
+   *different* modules — an analysis toolkit and the query-library UI — not duplicates, so
+   both stay. Renaming them is a TIP-side job with the tests runnable. **Still open.**
+
+### Also still open
+
+- `9_documentation/ipscore/build_html_tools.ipynb` references `../IPscore_IT.html`, which
+  does not resolve. Pre-existing, in generated guest material, untouched here.
+
+## 7 · Original questions for Arne
 
 **Q1 · Module 6 and the questionnaire.** The deck says module 6 *is* `6_ipscore_rebuild/`
 and promises the questionnaire. Merge Riccardo's three files into module 6 and retire
@@ -252,7 +280,7 @@ before the workshop, or is the branch parked until after 17 September?
 
 ---
 
-## 7 · Explicitly out of scope
+## 8 · Explicitly out of scope
 
 - Rewriting notebook content, cells, charts or explanatory text
 - Renaming the six module folders (constraint 3)

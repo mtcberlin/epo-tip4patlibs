@@ -104,7 +104,7 @@ def build_04(stage: Path) -> tuple[str, int, int]:
 
 def build_06(stage: Path) -> tuple[str, int, int]:
     """Module 5 — one chart out of the assembled landscape report."""
-    root = REPO / "5_patentreports/2_antibiotic_resistance_rebuild"
+    root = REPO / "5_patentreports/antibiotic_resistance"
     report = (root / "4_report/antibiotic_resistance_report.html").read_text(encoding="utf-8")
     lib = max(re.finditer(r"<script[^>]*>(.*?)</script>", report, re.S),
               key=lambda m: len(m.group(1))).group(1)            # see note 2

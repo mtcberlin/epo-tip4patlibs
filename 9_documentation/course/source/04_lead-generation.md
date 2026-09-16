@@ -38,7 +38,7 @@ By the end you can:
 |---|---|
 | Folder | `4_lead_generation/` |
 | Core notebook | `1_regional-leads.ipynb` — seven steps, default region **Alsace (FR42)** |
-| Extensions | `2_national-coverage.ipynb` (the DPMA route) · `3_belgien.ipynb` — optional, not part of this block |
+| Extensions | `2_national-coverage.ipynb` (the DPMA route) — optional, not part of this block |
 | Runs on | EPO TIP, PATSTAT PROD |
 | Ships | with most outputs cleared (8 of 31 cells) — you are meant to run it |
 
@@ -223,7 +223,6 @@ outreach plan, derived from the record, that you can put in front of your direct
 > EP/PCT-only view:
 > - **`2_national-coverage.ipynb`** — the DPMA route, for German regions where the national-only
 >   tail matters.
-> - **`3_belgien.ipynb`** — a second worked region.
 >
 > Also hand over the known-good check: **Saxony (`DED`, 2017–2022) returns 287 companies / 920
 > families, led by NOVALED GMBH (155).** If someone's region swap matches that, they did it right.

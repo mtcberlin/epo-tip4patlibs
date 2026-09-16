@@ -31,6 +31,13 @@ from typing import Iterable
 
 SPEC_PATH = Path(__file__).resolve().parent / "ipscore_spec.json"
 EXAMPLE_PATH = Path(__file__).resolve().parent / "worked_example.json"
+#: Written by 0_questionnaire.ipynb's interactive form. Same shape as ``worked_example.json``
+#: (``patent`` · ``financials`` · ``financials_note`` · ``scores``); as soon as it exists it
+#: is the module's base example for notebooks 2, 3 and 4 - see :func:`load_worked_example`.
+#: Notebook 1 pins to ``EXAMPLE_PATH`` explicitly and never sees this file, so it always
+#: reproduces the shipped case regardless of what has been saved here.
+QUESTIONNAIRE_PATH = (Path(__file__).resolve().parent
+                      / "0_questionnaire_output" / "questionnaire.json")
 
 HORIZON_YEARS = 10
 SCORE_MIN, SCORE_MAX = 1, 5
@@ -320,25 +327,31 @@ def answers_from_scores(
     return out
 
 
-def load_worked_example(path: Path | str = EXAMPLE_PATH) -> dict:
-    """The module's worked example — patent, company figures and forty scores.
+def load_worked_example(path: Path | str | None = None) -> dict:
+    """The module's base example — patent, company figures and forty scores.
 
-    It lives in one file so notebooks 3 and 4 cannot drift apart, and so decision **V5**
-    (swap in a real family from module 5's corpus) is an edit to that file alone.
+    ``0_questionnaire.ipynb``'s interactive form writes :data:`QUESTIONNAIRE_PATH`; as soon
+    as that file exists this prefers it over the shipped ``worked_example.json``, the same
+    way :func:`load_answers` prefers notebook 2's measured set over the first pass.
+    Notebooks 2, 3 and 4 all call this with no argument, so typing new answers into
+    notebook 0 reaches them without editing a line of 2, 3 or 4. Notebook 1 pins to
+    ``EXAMPLE_PATH`` explicitly instead, so it always reproduces the shipped case. Pass
+    ``path`` explicitly to pin one source (used by ``tools/`` scripts and tests).
 
     Returns ``patent`` · ``financials`` · ``financials_note`` · ``scores`` · ``answers`` ·
     ``known_facts``.
 
     Two of those need a word. ``financials_note`` must be shown wherever the figures are —
     PATSTAT holds no financial data, so they are illustrative and are **not** the real
-    applicant's accounts. ``known_facts`` is what the TIP session established about the
-    patent; notebook 2 re-derives every one of them from PATSTAT rather than reading them
-    here, and it exists so the other notebooks can describe the patent before notebook 2
-    has been run.
+    applicant's accounts. ``known_facts`` is what a TIP session established about the
+    *shipped* patent; notebook 2 re-derives every one of them from PATSTAT rather than
+    reading them here, so it is absent once a new questionnaire has been saved.
 
     The ``scores`` are the adviser's **first pass**, deliberately left uncorrected. The
     difference between them and what notebook 2 measures is the module's argument.
     """
+    if path is None:
+        path = QUESTIONNAIRE_PATH if QUESTIONNAIRE_PATH.exists() else EXAMPLE_PATH
     raw = json.loads(Path(path).read_text(encoding="utf-8"))
     scores = raw["scores"]
     return {
