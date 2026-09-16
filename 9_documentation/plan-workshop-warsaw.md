@@ -190,6 +190,33 @@ Compared cell by cell against `6_ipscore_rebuild/`: v2 notebooks 2, 3 and 4 diff
 trailing cells**; notebook 1 by the two cells named above. There is no second body of work to merge
 — take the three pieces, not the tree.
 
+### What was actually done, 16 September 2026 — the tree, not the three pieces
+
+The appendix above is kept as written, because its analysis held up: re-checked cell by cell on
+16 September against `6_ipscore_rebuild/`, v2's notebooks 2, 3 and 4 still differ only by empty
+trailing cells, and notebook 1 only by the two cells named. The **decision**, however, went the
+other way on the morning of the workshop.
+
+`8_ipscore_rebuild_v2` was imported whole, as `7_ipscore_demo/`
+(`rickypriore/patlib-sessions@2a434f02`), and `6_ipscore_rebuild/` was left alone apart from one
+wording fix. Module 6 did **not** take the questionnaire or the `EXAMPLE_PATH` pinning.
+
+Why the tree won on the day:
+
+- **It is a snapshot of what was demonstrated**, kept diffable against Riccardo's repository,
+  which is the same rule `5_patentreports/` follows.
+- **Module 6 keeps behaving exactly as documented.** Its `load_worked_example()` still reads
+  `worked_example.json` and nothing else, so the evidence layer's `2 measured · 6 informed ·
+  32 judgement` read-out cannot be changed by anyone running a questionnaire.
+- **It was hours before the session.** Adding a feature to the maintained module was the larger
+  change, and the smaller one was enough to present from.
+
+This is deliberately the cheaper decision, not the better one, and the appendix's recommendation
+is still the better end state. **Open, for after Warsaw:** bring the questionnaire and its
+`EXAMPLE_PATH` companion into `6_ipscore_rebuild/` properly — noting that the redirect of
+notebooks 2–4 onto the participant's own patent is the *intent* of the feature, not a side effect
+— and then decide whether `7_ipscore_demo/` is retired or kept as the demo snapshot.
+
 ---
 
 ## Sources
