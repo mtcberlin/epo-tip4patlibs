@@ -37,7 +37,7 @@ handouts and slides still speak of modules 1, 2, 3, 4, 5 and 6. See `9_documenta
 running order, what is cut, and how it splits between Arne and Riccardo.
 **Teaching material:** `plan-course-material.md` and `course/` — a 45-min block per module with
 learning objectives and the three phases Introduction · Working through · Learning outcome, plus a
-3-slide workshop version of each. `course/` holds the rendered A4 handouts and three decks:
+3-slide workshop version of each. `course/` also holds `TIP4PATLIBS_LiveDemo_Menu.ipynb`, the presenter's launcher for the live demo — it opens every notebook, finished result and deck from one page, and lives here because it is presentation layer rather than course work. `course/` holds the rendered A4 handouts and three decks:
 `TIP4PATLIBS_1_Workshop_v1.pptx` (ours, generated from `slides.yaml`) and Riccardo's two
 (`…_AntibioticResistance_LiveDemo_Warsaw2026.pptx`, `…_IPScore_NotebookLogic_Explained_con_note.pptx`).
 The Markdown, its YAML sidecars, `build_handouts.py`, `build_slides.py` and `build_shots.py` live in
