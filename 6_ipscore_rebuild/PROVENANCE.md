@@ -4,6 +4,32 @@
 in [`REBUILD_PLAN.md`](REBUILD_PLAN.md); this file records where the ideas come from and who
 owns what, so attribution stays clean.
 
+## The questionnaire — imported from Riccardo Priore, 2026-09-16
+
+`0_questionnaire.ipynb`, `0_questionnaire_tool.html` and `tools/build_questionnaire_html.py`
+are **his**, not ours, and are the one part of this module that was not authored here.
+
+| | |
+|---|---|
+| **Upstream repo** | `rickypriore/patlib-sessions` (private) |
+| **Branch / commit** | `warsaw-live-demo-merge` · `2a434f02` (2026-08-25) |
+| **Upstream path** | `8_ipscore_rebuild_v2/` |
+
+That folder is itself a fork of **this** module, taken at `caacba5` before the 2026-08-26
+renumbering, with the questionnaire added on top. So the lineage runs out and back again:
+our engine, his form.
+
+**What it changes.** The form writes `0_questionnaire_output/questionnaire.json`, and
+`ipscore_kit.load_worked_example()` prefers that file over the shipped
+`worked_example.json` — so notebooks 2, 3 and 4 value **the participant's own patent** once
+the form has been filled in. That redirect is the point of the feature, not a side effect.
+Notebook 1 pins `kit.EXAMPLE_PATH` explicitly and therefore always reproduces the shipped
+Q-Linea case, whatever has been saved.
+
+Only the `QUESTIONNAIRE_PATH` constant and the `load_worked_example()` preference were
+ported into this module's `ipscore_kit.py`; the rest of his copy was behind ours and was
+not taken. Verified after the port: the worked example still returns **NPV 1,248,869.90**.
+
 ## What this module is
 
 A **clean rebuild of the ideas behind IPScore** — a structured questionnaire that turns

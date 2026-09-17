@@ -1,0 +1,13 @@
+{
+ "technology_cooccurrence_network": {
+  "order": 310,
+  "slug": "technology_cooccurrence_network",
+  "title": "Technology co-occurrence network",
+  "note": "IPC fields (8-char) on shared applications; nodes ≥50 families, edges ≥5 co-occurrences.",
+  "fragment": "technology_cooccurrence_network.fragment.html",
+  "sheets": {
+   "nodes": "technology_cooccurrence_network__nodes.parquet",
+   "edges": "technology_cooccurrence_network__edges.parquet"
+  }
+ }
+}

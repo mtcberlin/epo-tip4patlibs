@@ -43,7 +43,7 @@ By the end you can:
 
 | | |
 |---|---|
-| Folder | `5_patentreports/2_antibiotic_resistance_rebuild/` |
+| Folder | `5_patentreports/antibiotic_resistance/` |
 | Notebooks | `1_dataset_and_search_strategy` · `2_core_landscape_analyses` · `3_advanced_analyses` · `4_assemble_report` |
 | Artifact | `4_report/antibiotic_resistance_report.html` + `…_report_data.xlsx` |
 | Runs on | EPO TIP, PATSTAT PROD (notebook 2's citation analysis uses BigQuery) |
@@ -53,9 +53,9 @@ By the end you can:
 > outputs because participants are meant to run them. Module 5 is read as a **finished report** in
 > a showcase. The outputs *are* the deliverable — never re-run the cells to "tidy" them.
 
-> 🎓 **Trainer.** The sibling folders `1_antibiotic_resistance/` (the imported reference) and
-> `2_antibiotic_resistance_mvp/` (the frozen MVP) are **not** course material. Use the rebuild.
-> If someone asks about t-SNE clusters or triadic families, those live in the reference folder and
+> 🎓 **Trainer.** `antibiotic_resistance/` is the only report folder; the imported reference and
+> the frozen MVP were removed on 16 September 2026 and are recoverable from git history.
+> If someone asks about t-SNE clusters or triadic families, those were in the reference folder and
 > are a future phase of the rebuild — say so rather than improvising.
 
 ---
@@ -236,8 +236,8 @@ part that is yours**, and it is the part you have to be able to defend.
 
 - The rebuild's `README.md` states that notebook 3 holds the technology network only, and that
   temporal, citation, t-SNE, SDG and triadic analyses are "the next phase". The repository-level
-  `CLAUDE.md` describes module 5 as including t-SNE clusters and triadic families — that describes
-  the older `1_antibiotic_resistance/` folder. **Align the two descriptions** before the workshop
-  so nobody promises a chart that is not in the report.
+  `CLAUDE.md` described module 5 as including t-SNE clusters and triadic families — that described
+  the removed `1_antibiotic_resistance/` folder, and CLAUDE.md was corrected on 16 September 2026.
+  Do not promise a chart that is not in the report.
 - The forward-citation cell's BigQuery dependency should be stated in the notebook header, not
   only in the cell comment — a participant who tries to re-run notebook 2 on TIP alone will hit it.

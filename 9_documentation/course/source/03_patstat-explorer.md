@@ -37,8 +37,8 @@ By the end you can:
 | | |
 |---|---|
 | Folder | `3_patstat_explorer/` |
-| Notebooks | `1_Applicant_consolidation_notebook.ipynb` (the method, by hand) · `2_PATSTAT_Explorer_application.ipynb` (the same method as an app) |
-| Also | `3_PATSTAT_Explorer_documentation.pdf` |
+| Notebooks | `1_applicant-consolidation.ipynb` (the method, by hand) · `2_explorer-app.ipynb` (the same method as an app) |
+| Also | `3_explorer-documentation.pdf` |
 | Runs on | EPO TIP, PATSTAT PROD |
 | Ships | pre-executed (7 of 7 code cells) — you can read it before you run it |
 
@@ -131,7 +131,7 @@ work on?** (CPC cut to subclass level, e.g. `A61B`).
 
 ### Step 5 — The same method, as an application (3 min)
 
-Open `2_PATSTAT_Explorer_application.ipynb` and run its single cell. It clones (or updates) the
+Open `2_explorer-app.ipynb` and run its single cell. It clones (or updates) the
 Explorer app from GitHub and starts it. **First launch takes 1–2 minutes** while it downloads and
 installs; later starts take about ten seconds. To stop it, restart the server.
 
@@ -218,7 +218,7 @@ above saying what it means *for that organisation*.
 
 - Module 3 is one of the two thin modules (≈ 10 minutes of notebook content). This block works
   because steps 2 and 5 carry real discussion weight — do not cut the discussion to save time.
-- The header of `2_PATSTAT_Explorer_application.ipynb` contains three typos:
+- The header of `2_explorer-app.ipynb` contains three typos:
   *"Integlligence"*, *"knowlegde"*, and *"TIP4PATLIBs"* (inconsistent capitalisation against the
   rest of the course). Fix before the workshop — it is the first slide-worthy screen in the module.
 - The Explorer app is cloned from a public GitHub repository at run time. Confirm it is reachable

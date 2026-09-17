@@ -1,43 +1,74 @@
-# TIP4PATLIBs
+# TIP4PATLIBS
 
-Course material for PATLIB staff in Europe, to get the most out of the **EPO Technology
-Intelligence Platform (TIP)** for patent analytics. Every notebook is meant to be opened and run
-inside TIP's own JupyterLab.
+Course material for PATLIB staff across Europe, for getting real work out of the **EPO
+Technology Intelligence Platform (TIP)**. Every notebook is meant to be opened and run
+top-to-bottom inside TIP's own JupyterLab — no installation, and a sensible default so it
+works before you change anything.
 
-## Content
+> **You do not have to learn SQL. You have to install something that writes it — and then
+> decide what to ask.**
 
-| Course | Folder | Description |
-|--------|--------|-------------|
-| 1 Start with TIP | `1_startwithtip/` | Set up Claude Code persistently on TIP, then get hands-on with your first PATSTAT queries (company & institution search) |
-| Legacy | `9_documentation/legacy/` | Earlier worked end-to-end analysis notebooks (Airbus filing strategy, TU Dortmund portfolio) |
-| 2 Query Library | `2_querylib/` | Learning PATSTAT and patent analytics with ready-to-use queries that answer the questions PATLIB staff and their audience ask |
-| 3 PATSTAT Explorer | `3_patstat_explorer/` | Course material and notebook + app for applicant and technology search within PATSTAT |
-| 4 Lead Generation | `4_lead_generation/` | Regional lead generation: profiling the EP/PCT-active company applicants of a region by portfolio depth and geographic reach, and segmenting them into lead tiers |
-| 5 Patent Reports | `5_patentreports/` | Turning a patent dataset into a publishable landscape report — triadic families, filing authorities, technology clusters, interactive explorer *(by Riccardo Priore)* |
-| IPScore | `9_documentation/ipscore/` | Patent valuation: the EPO IPScore questionnaire and its Net Present Value model, as interactive tools *(by Riccardo Priore)* |
-| 6 IPScore Rebuild | `6_ipscore_rebuild/` | Rebuilding the ideas behind IPScore as an explained notebook chain — and separating what PATSTAT can prove about a patent from what stays expert judgement. Worked example: `EP3074539B1`, Q-Linea AB |
-| *(not a module)* | `9_documentation/` | Working plans, one per TIP session — `plan-tipsession-1-recon.md` (✅), `plan-tipsession-2-evidence-run.md` (✅), `plan-tipsession-3-screenshots.md` (⏳ open, needed before 17 September) — plus `results-tipsession.md` and the course material in `plan-course-material.md` + `course/` |
+## Start here
 
-## Quick Start
+**`1_startwithtip/1_getting-started-with-tip.ipynb`** — it sets up an AI assistant that is
+still there after TIP rebuilds your machine. Everything else assumes you have done that.
 
-1. **Open this repository inside TIP.** Everything is written for TIP's JupyterLab and the
-   base conda environment — no extra installation.
-2. **Start with `1_startwithtip/1_getting-started-with-tip.ipynb`.** It explains what survives a
-   restart on TIP and sets up Claude Code and Git/SSH persistently.
-3. **Then `1_startwithtip/2_getting-started-with-patstat.ipynb`** for your first PATSTAT queries.
-   Connection is always `PatstatClient(env='PROD')` — PATSTAT Global, Autumn 2025.
-4. **Pick a module.** Each folder stands on its own and ships a sensible default (e.g. Alsace
-   `FR42` in lead generation), so it runs top-to-bottom before you change anything.
+## The six modules
 
-### Two things worth knowing
+Read left to right: one claim, three examples of rising ambition, two full use cases.
 
-- **Modules 1–4 ship with cleared outputs** — you run them. **module 5 and the IPScore reference ship
-  pre-executed**: they are guest contributions by Riccardo Priore, read as finished reports in
-  a showcase session. The stored outputs *are* the deliverable, so don't re-run them to tidy up.
-- **The IPScore reference needs no PATSTAT, no database and no internet.** The IPScore tools are
-  self-contained HTML — a spreadsheet model turned into a web page. Useful when you want to
-  demonstrate something without depending on a live connection.
+### The claim
+
+| | Module | What it answers |
+|---|---|---|
+| **1** | [`1_startwithtip/`](1_startwithtip/) | You have a login to a machine you do not own, rebuilt without warning. How do you get an assistant onto it that is still there next session? |
+
+### Three examples
+
+| | Module | What it answers |
+|---|---|---|
+| **2** | [`2_querylib/`](2_querylib/) | *"Who in Europe is working on solid-state batteries?"* — a ready query you adapt, and what it costs in time |
+| **3** | [`3_patstat_explorer/`](3_patstat_explorer/) | *"How big is Siemens Healthineers' portfolio?"* — a name search returns 200 rows; which one is the answer? Then the same search as an app |
+| **4** | [`4_lead_generation/`](4_lead_generation/) | *"Which companies in your region should you be talking to?"* — a named shortlist for your own region, and what it leaves out |
+
+### Two use cases
+
+| | Module | What it answers |
+|---|---|---|
+| **5** | [`5_patentreports/`](5_patentreports/) | *"What is happening in antibiotic resistance?"* — a publishable landscape report, and the search strategy that defined its corpus *(Riccardo Priore)* |
+| **6** | [`6_ipscore_rebuild/`](6_ipscore_rebuild/) | *"What is this patent worth?"* — the EPO IPScore model end to end, and how much of the number is evidence rather than judgement |
+
+## How to run them
+
+Connect to PATSTAT the same way everywhere — PATSTAT Global, Autumn 2025:
+
+```python
+from epo.tipdata.patstat import PatstatClient
+patstat = PatstatClient(env='PROD')
+```
+
+**Modules 1–4 ship with cleared outputs** — you run them yourself. **Modules 5 and 6 ship
+pre-executed**, and are read as finished reports. Their stored outputs *are* the
+deliverable, so please do not re-run the cells to tidy them.
+
+## Handouts and slides
+
+`9_documentation/course/` holds the full 45-minute written version of every module as an A4
+PDF, the workshop deck, and `TIP4PATLIBS_LiveDemo_Menu.ipynb` — a launcher that opens every
+notebook, report and deck from one page.
+
+## Not course material
+
+Kept for reference, not part of the six modules:
+
+| Path | What it is |
+|---|---|
+| `9_documentation/` | Plans, session notes and the course sources |
+| `9_documentation/ipscore/` | Riccardo Priore's original IPScore HTML tools — and the EPO workbook module 6 reads its model from |
+| `9_documentation/legacy/` | Earlier worked examples (Airbus, TU Dortmund, Belgium) |
+| `9_documentation/lead-generation-research/` | DPMA interface specs and implementation notes behind module 4 |
 
 ## License
 
-EPO Internal Use
+EPO Internal Use · Author: Arne Krüger (mtc.berlin / depa.tech) ·
+Modules 5 and 6 after material by Riccardo Priore (Centro PATLIB, AREA Science Park)

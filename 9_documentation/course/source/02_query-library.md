@@ -36,7 +36,7 @@ By the end you can:
 | | |
 |---|---|
 | Folder | `2_querylib/` |
-| Notebooks | `TIP_for_PATLIBs_QueryLib.ipynb` (the browser) · `TIP_for_PATLIBs_InteractiveQueryDemo.ipynb` (point-and-click) |
+| Notebooks | `1_query-library.ipynb` (the browser) · `2_interactive-demo.ipynb` (point-and-click) |
 | Runs on | EPO TIP, PATSTAT PROD |
 
 ---
@@ -78,7 +78,7 @@ question. Your job shifts from *writing* the query to *choosing* it and *reading
 
 ### Step 1 — Open the library and look at what is there (8 min)
 
-Run `TIP_for_PATLIBs_QueryLib.ipynb` top to bottom. It has only two cells: a setup cell that
+Run `1_query-library.ipynb` top to bottom. It has only two cells: a setup cell that
 initialises the registry, and the **Query Browser**.
 
 In the browser:
@@ -114,7 +114,7 @@ Two rules while you do this:
 
 ### Step 3 — The interactive demo (8 min)
 
-Open `TIP_for_PATLIBs_InteractiveQueryDemo.ipynb` and run the first cell to load the components.
+Open `2_interactive-demo.ipynb` and run the first cell to load the components.
 Then use the **Selection** controls — jurisdiction, region, technology field or custom IPC/CPC,
 date range — and read the **Results**: a table and a chart, no code touched.
 
