@@ -1,42 +1,53 @@
 # TIP4PATLIBS
 
 Course material for PATLIB staff across Europe, for getting real work out of the **EPO
-Technology Intelligence Platform (TIP)**. Every notebook is meant to be opened and run
-top-to-bottom inside TIP's own JupyterLab — no installation, and a sensible default so it
-works before you change anything.
+Technology Intelligence Platform (TIP)**. Every notebook runs top-to-bottom inside TIP's own
+JupyterLab, with a sensible default so it works before you change anything.
 
 > **You do not have to learn SQL. You have to install something that writes it — and then
 > decide what to ask.**
 
-## Start here
+## Start here — one command
 
-**`1_startwithtip/1_getting-started-with-tip.ipynb`** — it sets up an AI assistant that is
-still there after TIP rebuilds your machine. Everything else assumes you have done that.
+Open a terminal in TIP and paste:
 
-## The six modules
+```bash
+curl -fsSL https://raw.githubusercontent.com/mtcberlin/epo-tip4patlibs/main/install.sh | bash
+```
 
-Read left to right: one claim, three examples of rising ambition, two full use cases.
+That installs an AI coding assistant that **survives a TIP restart**, configures it for this
+environment, and clones this repository into `~/epo-tip4patlibs`. Run it again any time —
+after TIP rebuilds your machine it repairs the setup and updates the material.
 
-### The claim
+Prefer to read before running? Same thing in three steps:
 
-| | Module | What it answers |
-|---|---|---|
-| **1** | [`1_startwithtip/`](1_startwithtip/) | You have a login to a machine you do not own, rebuilt without warning. How do you get an assistant onto it that is still there next session? |
+```bash
+curl -fsSL https://raw.githubusercontent.com/mtcberlin/epo-tip4patlibs/main/install.sh -o install.sh
+less install.sh
+bash install.sh
+```
 
-### Three examples
+Then open **`TIP4PATLIBS_LiveDemo_Menu.ipynb`** — it opens every notebook, report and slide
+deck from one page.
+
+## The modules
+
+Rising ambition from top to bottom: three worked examples, then two full use cases.
 
 | | Module | What it answers |
 |---|---|---|
 | **2** | [`2_querylib/`](2_querylib/) | *"Who in Europe is working on solid-state batteries?"* — a ready query you adapt, and what it costs in time |
 | **3** | [`3_patstat_explorer/`](3_patstat_explorer/) | *"How big is Siemens Healthineers' portfolio?"* — a name search returns 200 rows; which one is the answer? Then the same search as an app |
-| **4** | [`4_lead_generation/`](4_lead_generation/) | *"Which companies in your region should you be talking to?"* — a named shortlist for your own region, and what it leaves out |
+| **4** | [`4_lead_generation/`](4_lead_generation/) | *"Which companies in your region should you be talking to?"* — a named shortlist for your region, and what it leaves out |
+| **5** | [`5_patentreports/`](5_patentreports/) | *"What is happening in antibiotic resistance?"* — a publishable landscape report, and the search strategy behind its corpus *(Riccardo Priore)* |
+| **6** | [`6_ipscore/`](6_ipscore/) | *"What is this patent worth?"* — the EPO IPScore model end to end, and how much of the number is evidence rather than judgement |
 
-### Two use cases
+Each module folder is **self-contained**: its notebooks, its data, its slide deck and its own
+copy of `tip_tools.py`. Nothing reaches across folders, so you can open one and work in it.
 
-| | Module | What it answers |
-|---|---|---|
-| **5** | [`5_patentreports/`](5_patentreports/) | *"What is happening in antibiotic resistance?"* — a publishable landscape report, and the search strategy that defined its corpus *(Riccardo Priore)* |
-| **6** | [`6_ipscore_rebuild/`](6_ipscore_rebuild/) | *"What is this patent worth?"* — the EPO IPScore model end to end, and how much of the number is evidence rather than judgement |
+Numbering starts at 2 because the old module 1 — *setting up TIP* — is now `install.sh`. Its
+notebooks are kept in `9_misc/legacy/startwithtip/` if you want to see what the script does
+and why.
 
 ## How to run them
 
@@ -47,26 +58,21 @@ from epo.tipdata.patstat import PatstatClient
 patstat = PatstatClient(env='PROD')
 ```
 
-**Modules 1–4 ship with cleared outputs** — you run them yourself. **Modules 5 and 6 ship
-pre-executed**, and are read as finished reports. Their stored outputs *are* the
-deliverable, so please do not re-run the cells to tidy them.
+**Modules 2–4 ship with cleared outputs** — you run them yourself. **Modules 5 and 6 ship
+pre-executed** and are read as finished reports; their stored outputs *are* the deliverable,
+so please do not re-run the cells to tidy them.
 
-## Handouts and slides
-
-`9_documentation/course/` holds the full 45-minute written version of every module as an A4
-PDF, the workshop deck, and `TIP4PATLIBS_LiveDemo_Menu.ipynb` — a launcher that opens every
-notebook, report and deck from one page.
-
-## Not course material
-
-Kept for reference, not part of the six modules:
+## Also in the repository
 
 | Path | What it is |
 |---|---|
-| `9_documentation/` | Plans, session notes and the course sources |
-| `9_documentation/ipscore/` | Riccardo Priore's original IPScore HTML tools — and the EPO workbook module 6 reads its model from |
-| `9_documentation/legacy/` | Earlier worked examples (Airbus, TU Dortmund, Belgium) |
-| `9_documentation/lead-generation-research/` | DPMA interface specs and implementation notes behind module 4 |
+| `1_handouts/` | The full 45-minute written version of every module, as A4 PDFs, plus the sources they are built from |
+| `TIP4PATLIBS_1_Workshop_v4.pdf` | The workshop deck |
+| `TIP4PATLIBS_LiveDemo_Menu.ipynb` | Launcher — every notebook, report and deck from one page |
+| `9_misc/plan/` | Planning documents and session notes |
+| `9_misc/legacy/` | Earlier worked examples, and the original TIP-setup notebooks |
+| `9_misc/ipscore/` | Riccardo Priore's original IPScore HTML tools — and the EPO workbook module 6 reads its model from |
+| `9_misc/lead-generation-research/` | DPMA interface specs and implementation notes behind module 4 |
 
 ## License
 
