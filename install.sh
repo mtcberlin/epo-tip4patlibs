@@ -138,7 +138,7 @@ ${GRN}${BLD}Done.${OFF}
 
   ${BLD}1.${OFF} Open a new terminal, or run:  ${DIM}source ~/.bash_aliases${OFF}
   ${BLD}2.${OFF} Start the assistant:          ${DIM}cd ${DEST} && claude${OFF}
-  ${BLD}3.${OFF} Open ${DIM}TIP4PATLIBS_LiveDemo_Menu.ipynb${OFF} in JupyterLab for every module.
+  ${BLD}3.${OFF} Open a module folder in JupyterLab — ${DIM}2_querylib${OFF} is a good start.
 
   ${DIM}Run this script again any time — after a TIP restart it repairs the setup,
   and it updates the course material instead of cloning it twice.${OFF}

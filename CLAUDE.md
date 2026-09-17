@@ -16,9 +16,8 @@ can be opened and worked in on its own.
 | Path | Module / purpose |
 |------|------------------|
 | `install.sh` | **Start here.** One command replaces the old setup notebook: npm prefix, Claude Code, TIP context, status line, course dependencies, clone. Idempotent — safe to re-run after a TIP rebuild. Reads `CLAUDE.md.template` and `statusline-command.sh.template` from the repo root |
-| `TIP4PATLIBS_LiveDemo_Menu.ipynb` | Launcher — opens every notebook, report and deck from one page. At root because it indexes both use-case modules, so it belongs in neither |
 | `TIP4PATLIBS_1_Workshop_v4.pdf` | The workshop deck |
-| `tip_tools.py` | `open_html()` — serves an HTML artifact through jupyter-server-proxy, **never** via `IFrame`. **Four byte-identical copies** (root, `5_patentreports/antibiotic_resistance/`, `6_ipscore/`, `9_misc/ipscore/`) so each folder imports it in one line. Change one, change all four — the file header lists them |
+| `<module>/tip_tools.py` | `open_html()` — serves an HTML artifact through jupyter-server-proxy, **never** via `IFrame`. **Three byte-identical copies** (`5_patentreports/antibiotic_resistance/`, `6_ipscore/`, `9_misc/ipscore/`) so each folder imports it in one line. Change one, change all three — the file header lists them |
 | `1_handouts/` | The 45-minute written version of each module as A4 PDFs, plus `source/` (Markdown, YAML sidecars, `build_handouts.py`, `build_slides.py`, `build_shots.py`) |
 | `2_querylib/` | Query Library — ready-to-use PATSTAT queries. Two engines, not duplicates: `TIP_for_PATLIBs_QueryLib_core.py` (the query-library UI) and `tip4patlibs_core.py` (analysis and charting) |
 | `3_patstat_explorer/` | Applicant & technology search, notebook + app |

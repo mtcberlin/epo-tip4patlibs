@@ -27,8 +27,8 @@ less install.sh
 bash install.sh
 ```
 
-Then open **`TIP4PATLIBS_LiveDemo_Menu.ipynb`** — it opens every notebook, report and slide
-deck from one page.
+Then open any module folder below and run its notebooks in order. Modules 5 and 6 show
+their finished report at the end with one click.
 
 ## The modules
 
@@ -68,7 +68,6 @@ so please do not re-run the cells to tidy them.
 |---|---|
 | `1_handouts/` | The full 45-minute written version of every module, as A4 PDFs, plus the sources they are built from |
 | `TIP4PATLIBS_1_Workshop_v4.pdf` | The workshop deck |
-| `TIP4PATLIBS_LiveDemo_Menu.ipynb` | Launcher — every notebook, report and deck from one page |
 | `9_misc/plan/` | Planning documents and session notes |
 | `9_misc/legacy/` | Earlier worked examples, and the original TIP-setup notebooks |
 | `9_misc/ipscore/` | Riccardo Priore's original IPScore HTML tools — and the EPO workbook module 6 reads its model from |

@@ -3,16 +3,15 @@ inside EPO TIP so that it actually works.
 
     from tip_tools import open_html
 
-A copy of this file lives in every folder whose notebooks need it, so each module
-stays self-contained and the import is one line with no sys.path juggling. The
-copies are byte-identical on purpose.
+A copy lives in every folder whose notebooks need it, so each module stays
+self-contained and the import is one line with no sys.path juggling. The copies
+are byte-identical on purpose.
 
-  ./tip_tools.py                                  (the live-demo menu)
   5_patentreports/antibiotic_resistance/tip_tools.py
   6_ipscore/tip_tools.py
   9_misc/ipscore/tip_tools.py
 
-**Change one, change all four.**
+**Change one, change all three.**
 
 
 from __future__ import annotations
