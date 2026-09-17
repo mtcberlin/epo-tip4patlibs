@@ -10,8 +10,8 @@ agreed before six documents are written against it.
 
 > Module numbers no longer follow the folder numbers. The folders were renumbered to the
 > workshop's running order (2026-08-26), while the teaching material kept the module numbers it
-> was written with: **1** `1_startwithtip` · **3** `2_querylib` · **4** `3_patstat_explorer` ·
-> **5** `4_lead_generation` · **6** `5_patentreports` · **8** `6_ipscore_rebuild`. The former
+> was written with: **1** `1_startwithtip` · **3** `1_querylib` · **4** `2_patstat_explorer` ·
+> **5** `3_lead_generation` · **6** `4_patentreports` · **8** `5_ipscore_rebuild`. The former
 > modules 2 (legacy) and 7 (Riccardo's IPScore tools) are out of scope and now sit under
 > `9_documentation/`.
 
@@ -221,7 +221,7 @@ A participant who never opens notebook 2 still leaves with the argument.
 **Target: the module 6 core document sized like every other module** — ≈ 2,400 words of notebook
 prose in the working-through phase, down from 8,272.
 
-> **This is a proposal about teaching, not about the code.** Nothing in `6_ipscore_rebuild/` gets
+> **This is a proposal about teaching, not about the code.** Nothing in `5_ipscore_rebuild/` gets
 > deleted or rewritten. The core/extension split lives in the course document; the module stays
 > complete and the four notebooks stay as they are.
 
@@ -248,10 +248,10 @@ prose in the working-through phase, down from 8,272.
 
 - **Language: English throughout**, including the trainer boxes. Consistent with the rest of the
   repo and with an audience of PATLIB staff from across Europe.
-- **Module 6: the core path only.** `06_ipscore.md` covers notebook 1 plus a guided read of the
+- **Module 6: the core path only.** `05_ipscore.md` covers notebook 1 plus a guided read of the
   finished report, sized like every other module. The implementation walk (notebooks 2, 3 and 4)
   is **not** written for 17 September; it is deferred to a possible supplementary document,
-  `06_ipscore_part2.md`, if a PATLIB wants to run the chain itself. That removes ~5,800 words
+  `05_ipscore_part2.md`, if a PATLIB wants to run the chain itself. That removes ~5,800 words
   from run 2.
 
 ---
@@ -271,7 +271,7 @@ screenshots.
 | `03_patstat-explorer.md` | 2,006 | thin module, filled by the step-2 discussion |
 | `04_lead-generation.md` | 2,206 | notebook 1 only; 2 and 3 are extensions |
 | `05_patent-reports.md` | 2,082 | credits Riccardo Priore; written against the **rebuild**, not the reference folder |
-| `06_ipscore.md` | 2,869 | core path: notebook 1 + guided read of the report |
+| `05_ipscore.md` | 2,869 | core path: notebook 1 + guided read of the report |
 
 All seven share the same heading set (Learning objective · Prerequisites · Sub-objectives · Material ·
 Phase 1/2/3 · Where this leads · Notes for the next revision). Each ends with a **"Notes for the
@@ -354,10 +354,10 @@ fixed in run 2** — per §8, the course material describes the modules and does
 | **4** | `CLAUDE.md` states the convention as *modules 1–4 clear outputs, 6–7 ship pre-executed*. Module 3 actually ships **7 of 7 executed** — the course material reports the measured state, so the convention line needs updating | align |
 | **6** | The rebuild's `README.md` says notebook 3 holds the technology network only; the repo `CLAUDE.md` describes module 5 as including t-SNE clusters and triadic families (that is the *reference* folder). Align them so nobody promises a chart the report does not contain | **align** |
 | **6** | Notebook 2's forward-citation cell needs BigQuery, not TIP. State it in the notebook header, not only in a cell comment | text fix |
-| **8** | `6_ipscore_rebuild/README.md` is stale: it says notebook 2 "does not exist yet" and quotes `0 measured · 0 informed · 40 judgement`. The shipped report reads **`2 measured · 6 informed · 32 judgement`** | **stale** |
+| **8** | `5_ipscore_rebuild/README.md` is stale: it says notebook 2 "does not exist yet" and quotes `0 measured · 0 informed · 40 judgement`. The shipped report reads **`2 measured · 6 informed · 32 judgement`** | **stale** |
 | **8** | `1_the_model.ipynb` says "four of them strongly" about the PATSTAT-reachable questions. `PATSTAT_CANDIDATES` holds **3 strong · 4 good · 3 proxy · 1 context**; the report's "three strongly" is the correct one | **wrong** |
 
-Verified figures used throughout `06_ipscore.md`, read out of the shipped report rather than from
+Verified figures used throughout `05_ipscore.md`, read out of the shipped report rather than from
 any README: NPV **1,248,870 EUR** over ten years at **12%**, **139 / 200** points, **−0.39**
 average risk, **+0.63** average opportunity, **2 measured · 6 informed · 32 judgement**. Largest
 upside lever **C2 · Market growth rate** (+563k); **C3 · Life expectancy** has an upside of exactly

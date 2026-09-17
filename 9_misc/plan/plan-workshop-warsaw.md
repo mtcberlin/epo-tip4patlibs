@@ -26,9 +26,9 @@ answer holds.
 
 | Rung | Example | The claim it demonstrates | Who gets off here |
 |---|---|---|---|
-| **1** | **Query Library** (`2_querylib/`) | *Someone already asked your question.* Pick a query, change its parameters, read the result | Anyone. Nobody leaves empty-handed |
-| **2** | **PATSTAT Explorer** (`3_patstat_explorer/`) | *It does not have to stay a notebook.* The same SQL behind a user interface — something you hand to a colleague who will never open Jupyter | A PATLIB that wants to serve colleagues, not just itself |
-| **3** | **Regional Lead Generation** (`4_lead_generation/`) | *Your region, your client list.* Alsace (`FR42`/`FRF1`) live, and the German path through DPMA for national filings | A PATLIB with a service to sell |
+| **1** | **Query Library** (`1_querylib/`) | *Someone already asked your question.* Pick a query, change its parameters, read the result | Anyone. Nobody leaves empty-handed |
+| **2** | **PATSTAT Explorer** (`2_patstat_explorer/`) | *It does not have to stay a notebook.* The same SQL behind a user interface — something you hand to a colleague who will never open Jupyter | A PATLIB that wants to serve colleagues, not just itself |
+| **3** | **Regional Lead Generation** (`3_lead_generation/`) | *Your region, your client list.* Alsace (`FR42`/`FRF1`) live, and the German path through DPMA for national filings | A PATLIB with a service to sell |
 
 The rungs are deliberately unequal in ambition and in risk. Rung 1 is safe and short. Rung 3 is the
 one a PATLIB director remembers, because it ends in a list of named companies in their own region.
@@ -118,7 +118,7 @@ deeper, and they reach *every* participant rather than only the ones in the room
 |---|---|---|
 | Module 1's PATSTAT first-query block | Rung 1 does the same job with a better story: a question already written | Handout `01_start-with-tip.pdf`, and the notebook |
 | Module 3's applicant-consolidation depth | Rung 2 shows the app; the identity problem is named in one sentence when the numbers appear, not taught | Handout `03_patstat-explorer.pdf` |
-| Modules 5 and 6 as *Arne's* material | They are Riccardo's use cases and stay his | Handouts `05_patent-reports.pdf`, `06_ipscore.pdf` |
+| Modules 5 and 6 as *Arne's* material | They are Riccardo's use cases and stay his | Handouts `05_patent-reports.pdf`, `05_ipscore.pdf` |
 | The four-notebook live landscape run | Tens of seconds per PATSTAT query, ten queries in one notebook alone, and a conference network nobody controls | Finished outputs, opened from disk |
 | Riccardo's two eleven-slide decks | No room for a second pass over the same use case | Shared with participants as follow-up |
 
@@ -186,25 +186,25 @@ Genuinely new, and worth taking:
 - The `kit.EXAMPLE_PATH` pinning in `1_the_model` — its correct companion.
 - `0_live_demo/Main_menu.ipynb` — a nine-cell launcher; adopt the pattern, review the detail.
 
-Compared cell by cell against `6_ipscore_rebuild/`: v2 notebooks 2, 3 and 4 differ **only by empty
+Compared cell by cell against `5_ipscore_rebuild/`: v2 notebooks 2, 3 and 4 differ **only by empty
 trailing cells**; notebook 1 by the two cells named above. There is no second body of work to merge
 — take the three pieces, not the tree.
 
 ### What was actually done, 16 September 2026 — the tree, not the three pieces
 
 The appendix above is kept as written, because its analysis held up: re-checked cell by cell on
-16 September against `6_ipscore_rebuild/`, v2's notebooks 2, 3 and 4 still differ only by empty
+16 September against `5_ipscore_rebuild/`, v2's notebooks 2, 3 and 4 still differ only by empty
 trailing cells, and notebook 1 only by the two cells named. The **decision**, however, went the
 other way on the morning of the workshop.
 
 `8_ipscore_rebuild_v2` was imported whole, as `7_ipscore_demo/`
-(`rickypriore/patlib-sessions@2a434f02`), and `6_ipscore_rebuild/` was left alone apart from one
+(`rickypriore/patlib-sessions@2a434f02`), and `5_ipscore_rebuild/` was left alone apart from one
 wording fix. Module 6 did **not** take the questionnaire or the `EXAMPLE_PATH` pinning.
 
 Why the tree won on the day:
 
 - **It is a snapshot of what was demonstrated**, kept diffable against Riccardo's repository,
-  which is the same rule `5_patentreports/` follows.
+  which is the same rule `4_patentreports/` follows.
 - **Module 6 keeps behaving exactly as documented.** Its `load_worked_example()` still reads
   `worked_example.json` and nothing else, so the evidence layer's `2 measured · 6 informed ·
   32 judgement` read-out cannot be changed by anyone running a questionnaire.
@@ -213,7 +213,7 @@ Why the tree won on the day:
 
 This is deliberately the cheaper decision, not the better one, and the appendix's recommendation
 is still the better end state. **Open, for after Warsaw:** bring the questionnaire and its
-`EXAMPLE_PATH` companion into `6_ipscore_rebuild/` properly — noting that the redirect of
+`EXAMPLE_PATH` companion into `5_ipscore_rebuild/` properly — noting that the redirect of
 notebooks 2–4 onto the participant's own patent is the *intent* of the feature, not a side effect
 — and then decide whether `7_ipscore_demo/` is retired or kept as the demo snapshot.
 

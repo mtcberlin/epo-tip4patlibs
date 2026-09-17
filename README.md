@@ -27,27 +27,30 @@ less install.sh
 bash install.sh
 ```
 
-Then open any module folder below and run its notebooks in order. Modules 5 and 6 show
-their finished report at the end with one click.
+Then open any module folder below. **Every notebook ships executed, with its code folded
+away**, so you see the explanation and the result without running anything. Click the folded
+bar above a result to see the code that produced it.
 
 ## The modules
 
 Rising ambition from top to bottom: three worked examples, then two full use cases.
 
+Each opens executed, with the code folded away.
+
 | | Module | What it answers |
 |---|---|---|
-| **2** | [`2_querylib/`](2_querylib/) | *"Who in Europe is working on solid-state batteries?"* — a ready query you adapt, and what it costs in time |
-| **3** | [`3_patstat_explorer/`](3_patstat_explorer/) | *"How big is Siemens Healthineers' portfolio?"* — a name search returns 200 rows; which one is the answer? Then the same search as an app |
-| **4** | [`4_lead_generation/`](4_lead_generation/) | *"Which companies in your region should you be talking to?"* — a named shortlist for your region, and what it leaves out |
-| **5** | [`5_patentreports/`](5_patentreports/) | *"What is happening in antibiotic resistance?"* — a publishable landscape report, and the search strategy behind its corpus *(Riccardo Priore)* |
-| **6** | [`6_ipscore/`](6_ipscore/) | *"What is this patent worth?"* — the EPO IPScore model end to end, and how much of the number is evidence rather than judgement |
+| **1** | [`1_querylib/`](1_querylib/) | *"Who in Europe is working on solid-state batteries?"* — a ready query you adapt, and what it costs in time |
+| **2** | [`2_patstat_explorer/`](2_patstat_explorer/) | *"How big is Siemens Healthineers' portfolio?"* — a name search returns 200 rows; which one is the answer? Then the same search as an app |
+| **3** | [`3_lead_generation/`](3_lead_generation/) | *"Which companies in your region should you be talking to?"* — a named shortlist for your region, and what it leaves out |
+| **4** | [`4_patentreports/`](4_patentreports/) | *"What is happening in antibiotic resistance?"* — a publishable landscape report, and the search strategy behind its corpus *(Riccardo Priore)* |
+| **5** | [`5_ipscore/`](5_ipscore/) | *"What is this patent worth?"* — the EPO IPScore model end to end, and how much of the number is evidence rather than judgement |
 
 Each module folder is **self-contained**: its notebooks, its data, its slide deck and its own
 copy of `tip_tools.py`. Nothing reaches across folders, so you can open one and work in it.
 
-Numbering starts at 2 because the old module 1 — *setting up TIP* — is now `install.sh`. Its
-notebooks are kept in `9_misc/legacy/startwithtip/` if you want to see what the script does
-and why.
+The old *setting up TIP* module is now `install.sh`, so the five modules are numbered 1 to 5
+and the folder names match. Its notebooks are kept in `9_misc/legacy/startwithtip/` if you want
+to see what the script does and why.
 
 ## How to run them
 
@@ -58,15 +61,18 @@ from epo.tipdata.patstat import PatstatClient
 patstat = PatstatClient(env='PROD')
 ```
 
-**Modules 2–4 ship with cleared outputs** — you run them yourself. **Modules 5 and 6 ship
-pre-executed** and are read as finished reports; their stored outputs *are* the deliverable,
-so please do not re-run the cells to tidy them.
+**Every module ships executed with its code folded away.** You can read all five without
+running a cell. To work through one yourself, use *Kernel → Restart Kernel and Run All Cells* —
+the stored results then serve as the reference you compare against.
+
+Modules 4 and 5 are guest material from Riccardo Priore; their stored outputs *are* the
+deliverable, so please do not re-run them to tidy them up.
 
 ## Also in the repository
 
 | Path | What it is |
 |---|---|
-| `1_handouts/` | The full 45-minute written version of every module, as A4 PDFs, plus the sources they are built from |
+| `9_misc/handouts/` | The full 45-minute written version of every module, as A4 PDFs, plus the sources they are built from |
 | `TIP4PATLIBS_1_Workshop_v4.pdf` | The workshop deck |
 | `9_misc/plan/` | Planning documents and session notes |
 | `9_misc/legacy/` | Earlier worked examples, and the original TIP-setup notebooks |
@@ -76,4 +82,4 @@ so please do not re-run the cells to tidy them.
 ## License
 
 EPO Internal Use · Author: Arne Krüger (mtc.berlin / depa.tech) ·
-Modules 5 and 6 after material by Riccardo Priore (Centro PATLIB, AREA Science Park)
+Modules 4 and 5 after material by Riccardo Priore (Centro PATLIB, AREA Science Park)

@@ -22,11 +22,11 @@ The v3 deck is the authority. Six modules, each with a folder printed in the sli
 | # | Module | Folder in the deck | Who |
 |---|--------|--------------------|-----|
 | 1 | Install the assistant, persistently | `1_startwithtip/` | Arne |
-| 2 | The Query Library | `2_querylib/` | Arne |
-| 3 | PATSTAT Explorer | `3_patstat_explorer/` | Arne |
-| 4 | Regional Lead Generation | `4_lead_generation/` | Arne |
-| 5 | Patent landscape reports | `5_patentreports/` | Riccardo |
-| 6 | What is this patent worth? | `6_ipscore_rebuild/` | Riccardo |
+| 2 | The Query Library | `1_querylib/` | Arne |
+| 3 | PATSTAT Explorer | `2_patstat_explorer/` | Arne |
+| 4 | Regional Lead Generation | `3_lead_generation/` | Arne |
+| 5 | Patent landscape reports | `4_patentreports/` | Riccardo |
+| 6 | What is this patent worth? | `5_ipscore_rebuild/` | Riccardo |
 
 Plus `9_documentation/course/` for the seven handouts (slide 18).
 
@@ -41,10 +41,10 @@ That does not mean delete — it means it does not belong in a course module fol
 
 ## 2 · The decision that shapes everything else
 
-**Slide 16 names folder `6_ipscore_rebuild/` and promises "the questionnaire and the NPV
+**Slide 16 names folder `5_ipscore_rebuild/` and promises "the questionnaire and the NPV
 for one granted European patent."**
 
-`6_ipscore_rebuild/` has no questionnaire. `0_questionnaire.ipynb` lives in
+`5_ipscore_rebuild/` has no questionnaire. `0_questionnaire.ipynb` lives in
 `7_ipscore_demo/`, imported this morning — and **no slide mentions `7_ipscore_demo/` at
 all.** The deck resolves, in the opposite direction, the question left open a few hours
 earlier in `plan-workshop-warsaw.md`.
@@ -60,7 +60,7 @@ The analysis is already done and still holds:
 - The redirect of notebooks 2–4 onto the participant's own patent is **the point of the
   feature**, as `plan-workshop-warsaw.md` says plainly.
 
-**Proposed:** bring the three files plus the `EXAMPLE_PATH` pin into `6_ipscore_rebuild/`,
+**Proposed:** bring the three files plus the `EXAMPLE_PATH` pin into `5_ipscore_rebuild/`,
 and retire `7_ipscore_demo/`. Module 6 then matches its slide, and the course has one
 IPScore module instead of two nearly identical ones.
 
@@ -76,11 +76,11 @@ duplicate stays and the repo keeps two 5-notebook chains that differ by 48 lines
 | Folder | Files | Size | In the deck? |
 |---|---|---|---|
 | `1_startwithtip/` | 5 | 92 K | ✅ module 1 |
-| `2_querylib/` | 12 | 496 K | ✅ module 2 |
-| `3_patstat_explorer/` | 3 | 1.5 M | ✅ module 3 |
-| `4_lead_generation/` | 26 | 976 K | ✅ module 4 |
-| `5_patentreports/` | 94 | **108 M** | ✅ module 5 — but see below |
-| `6_ipscore_rebuild/` | 20 | 5.1 M | ✅ module 6 |
+| `1_querylib/` | 12 | 496 K | ✅ module 2 |
+| `2_patstat_explorer/` | 3 | 1.5 M | ✅ module 3 |
+| `3_lead_generation/` | 26 | 976 K | ✅ module 4 |
+| `4_patentreports/` | 94 | **108 M** | ✅ module 5 — but see below |
+| `5_ipscore_rebuild/` | 20 | 5.1 M | ✅ module 6 |
 | `7_ipscore_demo/` | 20 | 5.8 M | ❌ no slide |
 | `9_documentation/` | 81 | 5.2 M | partly — `course/` only |
 
@@ -100,10 +100,10 @@ It is Riccardo's original import; `PROVENANCE.md` names his repo canonical.
 
 | What | Where | Why it is noise |
 |---|---|---|
-| Belgium notebook | `4_lead_generation/3_belgien.ipynb` | German filename, no slide; the deck's "same run for a German region" is `2_national-coverage.ipynb` (DPMA ×37) |
-| DPMA research kit | `4_lead_generation/dpma/` (9 files) | Parser, sample XML, a `.zip`, NUTS CSV — build material, not a course step |
-| Interface specs & briefs | `4_lead_generation/docs/` (13 files) | DPMAconnect spec PDF, implementation plans, comparison notes — working papers |
-| Unit tests | `2_querylib/tests/` (7 files) | Correct to have, wrong to meet as a beginner |
+| Belgium notebook | `3_lead_generation/3_belgien.ipynb` | German filename, no slide; the deck's "same run for a German region" is `2_national-coverage.ipynb` (DPMA ×37) |
+| DPMA research kit | `3_lead_generation/dpma/` (9 files) | Parser, sample XML, a `.zip`, NUTS CSV — build material, not a course step |
+| Interface specs & briefs | `3_lead_generation/docs/` (13 files) | DPMAconnect spec PDF, implementation plans, comparison notes — working papers |
+| Unit tests | `1_querylib/tests/` (7 files) | Correct to have, wrong to meet as a beginner |
 | Legacy examples | `9_documentation/legacy/` (5 files, 740 K) | Airbus / TU Dortmund; CLAUDE.md already says "not shown in Warsaw" |
 | Workshop log | `prep_workshop_todo.md` (410 lines) | Preparation log at the repo root, beside the course |
 
@@ -112,10 +112,10 @@ It is Riccardo's original import; `PROVENANCE.md` names his repo canonical.
 Every module numbers its notebooks `1_`, `2_`, `3_` — **except module 2**:
 
 ```
-2_querylib/TIP_for_PATLIBs_QueryLib.ipynb              <- no number
-2_querylib/TIP_for_PATLIBs_InteractiveQueryDemo.ipynb  <- no number
-2_querylib/TIP_for_PATLIBs_QueryLib_core.py
-2_querylib/tip4patlibs_core.py                         <- third spelling of the same name
+1_querylib/TIP_for_PATLIBs_QueryLib.ipynb              <- no number
+1_querylib/TIP_for_PATLIBs_InteractiveQueryDemo.ipynb  <- no number
+1_querylib/TIP_for_PATLIBs_QueryLib_core.py
+1_querylib/tip4patlibs_core.py                         <- third spelling of the same name
 ```
 
 Three spellings of the product name in one folder (`TIP_for_PATLIBs`, `tip4patlibs`,
@@ -133,11 +133,11 @@ pre-executed because *the outputs are the deliverable*.
 
 | Notebook | State | Should be |
 |---|---|---|
-| `2_querylib/TIP_for_PATLIBs_QueryLib.ipynb` | 2 of 4 cells | clear |
-| `2_querylib/…InteractiveQueryDemo.ipynb` | 4 of 6 | clear |
-| `3_patstat_explorer/1_Applicant_consolidation…` | 6 of 6 | clear |
-| `3_patstat_explorer/2_PATSTAT_Explorer_application` | 1 of 1 | clear |
-| `4_lead_generation/2_national-coverage.ipynb` | 8 of 9 | clear |
+| `1_querylib/TIP_for_PATLIBs_QueryLib.ipynb` | 2 of 4 cells | clear |
+| `1_querylib/…InteractiveQueryDemo.ipynb` | 4 of 6 | clear |
+| `2_patstat_explorer/1_Applicant_consolidation…` | 6 of 6 | clear |
+| `2_patstat_explorer/2_PATSTAT_Explorer_application` | 1 of 1 | clear |
+| `3_lead_generation/2_national-coverage.ipynb` | 8 of 9 | clear |
 
 Modules 5 and 6 are **out of scope** here — guest material ships executed, by rule.
 
@@ -147,7 +147,7 @@ Modules 5 and 6 are **out of scope** here — guest material ships executed, by 
 
 ### A · Retire the duplicate IPScore module *(depends on question 1)*
 Move `0_questionnaire.ipynb`, `0_questionnaire_tool.html`,
-`tools/build_questionnaire_html.py` and the `EXAMPLE_PATH` pin into `6_ipscore_rebuild/`.
+`tools/build_questionnaire_html.py` and the `EXAMPLE_PATH` pin into `5_ipscore_rebuild/`.
 Delete `7_ipscore_demo/`, recording the upstream commit in module 6's `PROVENANCE.md`.
 **−20 files, −5.8 MB, −5 notebooks.**
 
@@ -160,12 +160,12 @@ Remove `1_antibiotic_resistance/` and `2_antibiotic_resistance_mvp/`.
 Not deleted — moved to `9_documentation/`, which is already where non-course material
 lives:
 
-- `4_lead_generation/docs/` → `9_documentation/lead-generation-research/`
-- `4_lead_generation/dpma/` → `9_documentation/lead-generation-research/dpma/`
-- `4_lead_generation/3_belgien.ipynb` → `9_documentation/legacy/`
+- `3_lead_generation/docs/` → `9_documentation/lead-generation-research/`
+- `3_lead_generation/dpma/` → `9_documentation/lead-generation-research/dpma/`
+- `3_lead_generation/3_belgien.ipynb` → `9_documentation/legacy/`
 - `prep_workshop_todo.md` → `9_documentation/`
 
-`2_querylib/tests/` **stays** — tests belong with their code; they are simply not numbered
+`1_querylib/tests/` **stays** — tests belong with their code; they are simply not numbered
 and not in anyone's way.
 
 ### D · One naming scheme, applied everywhere
@@ -209,7 +209,7 @@ That last row is the point of question 2. Deleting 101 MB of HTML changes what a
 ## 5 · Constraints and acceptance tests
 
 1. **The live-demo menu must stay at 15/15.** `TIP4PATLIBS_LiveDemo_Menu.ipynb` links into
-   `7_ipscore_demo/` and `5_patentreports/2_antibiotic_resistance_rebuild/`. Every rename
+   `7_ipscore_demo/` and `4_patentreports/2_antibiotic_resistance_rebuild/`. Every rename
    and deletion carries a link fix; the 15/15 resolver check is the test.
 2. **The handouts hard-code 14 notebook filenames and every folder name.** Renaming
    invalidates the seven rendered PDFs. They must be rebuilt from
@@ -233,7 +233,7 @@ That last row is the point of question 2. Deleting 101 MB of HTML changes what a
 
 | | Question | Answer |
 |---|---|---|
-| Q1 | Module 6 and the questionnaire | **Merge.** Questionnaire into `6_ipscore_rebuild/`, `7_ipscore_demo/` retired |
+| Q1 | Module 6 and the questionnaire | **Merge.** Questionnaire into `5_ipscore_rebuild/`, `7_ipscore_demo/` retired |
 | Q2 | Which problem | **Readability only.** No history rewrite; the clone stays 344 MiB |
 | Q3 | Riccardo's original | **Delete both** superseded report versions |
 | Q4 | Ticket and timing | **`#PIP-135`, execute now** |
@@ -242,11 +242,11 @@ That last row is the point of question 2. Deleting 101 MB of HTML changes what a
 
 Two corrections, both found by testing rather than reading:
 
-1. **`4_lead_generation/dpma/` had to stay in the module.** The plan classified it as
+1. **`3_lead_generation/dpma/` had to stay in the module.** The plan classified it as
    research material. It is not: `2_national-coverage.ipynb` does `from dpma.plz_nuts
    import …` and locates the package by walking **up** from the notebook, so the package
    must be an ancestor. Moved out, then moved back. Only `docs/` left the module.
-2. **The `.py` files in `2_querylib/` were not renamed.** They import `epo.tipdata`, which
+2. **The `.py` files in `1_querylib/` were not renamed.** They import `epo.tipdata`, which
    exists only on TIP, so an import rename could not be verified here and its tests cannot
    run on this machine. `tip4patlibs_core.py` and `TIP_for_PATLIBs_QueryLib_core.py` are
    *different* modules — an analysis toolkit and the query-library UI — not duplicates, so
@@ -259,7 +259,7 @@ Two corrections, both found by testing rather than reading:
 
 ## 7 · Original questions for Arne
 
-**Q1 · Module 6 and the questionnaire.** The deck says module 6 *is* `6_ipscore_rebuild/`
+**Q1 · Module 6 and the questionnaire.** The deck says module 6 *is* `5_ipscore_rebuild/`
 and promises the questionnaire. Merge Riccardo's three files into module 6 and retire
 `7_ipscore_demo/` — or keep both and accept two near-identical modules?
 
@@ -271,7 +271,7 @@ history rewrite changes it, and that means re-signing every commit and force-pus
 `main` that took two merges today. Which of the two is the actual pain? If it is both,
 the rewrite is a separate job with its own plan, not a step in this one.
 
-**Q3 · Deleting Riccardo's original.** `5_patentreports/1_antibiotic_resistance/` is 95 MB
+**Q3 · Deleting Riccardo's original.** `4_patentreports/1_antibiotic_resistance/` is 95 MB
 and 75 % of the repo. It is *his* import, `PROVENANCE.md` names his repo canonical, and he
 presents from module 5 tomorrow. Delete it, or leave module 5 alone until after Warsaw?
 

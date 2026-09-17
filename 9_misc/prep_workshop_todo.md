@@ -56,7 +56,7 @@ final deliverable.
 ### Target layout
 
 ```
-5_patentreports/1_antibiotic_resistance/
+4_patentreports/1_antibiotic_resistance/
 ├── 1_dataset_and_search_strategy.ipynb
 ├── 1_dataset_and_search_strategy_output/
 │     dataset.xlsx  dataset_highlighted.html  ipc_analysis.html  statistics.html
@@ -186,11 +186,11 @@ and disappear on the next run.)*
 
 **Status (2026-07-24): route B taken, and the work has moved.** This section is no longer the
 live plan — module 5's rebuild is now tracked in
-[`5_patentreports/2_antibiotic_resistance_rebuild/REBUILD_PLAN.md`](5_patentreports/2_antibiotic_resistance_rebuild/REBUILD_PLAN.md),
+[`4_patentreports/2_antibiotic_resistance_rebuild/REBUILD_PLAN.md`](4_patentreports/2_antibiotic_resistance_rebuild/REBUILD_PLAN.md),
 which carries the session log and the locked decisions D1–D8. Where the two disagree, that
 file wins.
 
-Three folders now sit side by side in `5_patentreports/`:
+Three folders now sit side by side in `4_patentreports/`:
 
 | Folder | What it is |
 |---|---|
@@ -329,7 +329,7 @@ form). Only the attribution wording still needs a sentence when module 6 ships.
       EPO IPScore 3.01 · scenario analysis after Riccardo Priore's NPV Target Planner"*, in all
       four module-8 headers and the report footer. It names the EPO as the model's owner, keeps
       *created by Riccardo Priore* for module 5 and the IPScore reference only, and credits by name the one idea
-      module 6 did take from him. Full reasoning in `6_ipscore_rebuild/PROVENANCE.md`.
+      module 6 did take from him. Full reasoning in `5_ipscore_rebuild/PROVENANCE.md`.
 - [x] **Should there be a blank English form?** → **No — pre-filled is preferred**, by both
       Arne and Riccardo: you cannot ask a workshop audience for their company's turnover, cost
       and depreciation figures on the spot, so the tool has to arrive with a worked example.

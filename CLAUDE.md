@@ -17,25 +17,26 @@ can be opened and worked in on its own.
 |------|------------------|
 | `install.sh` | **Start here.** One command replaces the old setup notebook: npm prefix, Claude Code, TIP context, status line, course dependencies, clone. Idempotent — safe to re-run after a TIP rebuild. Reads `CLAUDE.md.template` and `statusline-command.sh.template` from the repo root |
 | `TIP4PATLIBS_1_Workshop_v4.pdf` | The workshop deck |
-| `<module>/tip_tools.py` | `open_html()` — serves an HTML artifact through jupyter-server-proxy, **never** via `IFrame`. **Three byte-identical copies** (`5_patentreports/antibiotic_resistance/`, `6_ipscore/`, `9_misc/ipscore/`) so each folder imports it in one line. Change one, change all three — the file header lists them |
-| `1_handouts/` | The 45-minute written version of each module as A4 PDFs, plus `source/` (Markdown, YAML sidecars, `build_handouts.py`, `build_slides.py`, `build_shots.py`) |
-| `2_querylib/` | Query Library — ready-to-use PATSTAT queries. Two engines, not duplicates: `TIP_for_PATLIBs_QueryLib_core.py` (the query-library UI) and `tip4patlibs_core.py` (analysis and charting) |
-| `3_patstat_explorer/` | Applicant & technology search, notebook + app |
-| `4_lead_generation/` | Regional lead generation. `dpma/` **must stay inside the module**: `2_national-coverage.ipynb` locates it by walking *up* from the notebook, so it has to be an ancestor |
-| `5_patentreports/` | Landscape reports (**Riccardo Priore**) — `antibiotic_resistance/` plus his demo deck. Ships **pre-executed** (see below) |
-| `6_ipscore/` | ✅ Complete — the course's own rebuild of the IPScore ideas with a PATSTAT evidence layer measuring 11 of the 40 answers (`2 measured · 6 informed · 32 judgement`). Starts at `0_questionnaire.ipynb`, Riccardo Priore's form (imported from `rickypriore/patlib-sessions@2a434f02`): it writes `0_questionnaire_output/questionnaire.json`, which `load_worked_example()` prefers over `worked_example.json` for notebooks 2–4, so a participant can value their own patent. Notebook 1 pins `kit.EXAMPLE_PATH` so it always reproduces the shipped case. Engine `ipscore_kit.py`, model data `ipscore_spec.json`, deliverable `4_tool/` |
+| `<module>/tip_tools.py` | `open_html()` — serves an HTML artifact through jupyter-server-proxy, **never** via `IFrame`. **Three byte-identical copies** (`4_patentreports/antibiotic_resistance/`, `5_ipscore/`, `9_misc/ipscore/`) so each folder imports it in one line. Change one, change all three — the file header lists them |
+| `9_misc/handouts/` | The 45-minute written version of each module as A4 PDFs, plus `source/` (Markdown, YAML sidecars, `build_handouts.py`, `build_slides.py`, `build_shots.py`) |
+| `1_querylib/` | Query Library — ready-to-use PATSTAT queries. Two engines, not duplicates: `TIP_for_PATLIBs_QueryLib_core.py` (the query-library UI) and `tip4patlibs_core.py` (analysis and charting) |
+| `2_patstat_explorer/` | Applicant & technology search, notebook + app |
+| `3_lead_generation/` | Regional lead generation. `dpma/` **must stay inside the module**: `2_national-coverage.ipynb` locates it by walking *up* from the notebook, so it has to be an ancestor |
+| `4_patentreports/` | Landscape reports (**Riccardo Priore**) — `antibiotic_resistance/` plus his demo deck. Ships **pre-executed** (see below) |
+| `5_ipscore/` | ✅ Complete — the course's own rebuild of the IPScore ideas with a PATSTAT evidence layer measuring 11 of the 40 answers (`2 measured · 6 informed · 32 judgement`). Starts at `0_questionnaire.ipynb`, Riccardo Priore's form (imported from `rickypriore/patlib-sessions@2a434f02`): it writes `0_questionnaire_output/questionnaire.json`, which `load_worked_example()` prefers over `worked_example.json` for notebooks 2–4, so a participant can value their own patent. Notebook 1 pins `kit.EXAMPLE_PATH` so it always reproduces the shipped case. Engine `ipscore_kit.py`, model data `ipscore_spec.json`, deliverable `4_tool/` |
 | `9_misc/` | Everything that is not a course module — see below |
 
-**Numbering starts at 2.** The old module 1 (*setting up TIP*) became `install.sh`; its notebooks
-are archived in `9_misc/legacy/startwithtip/`. `1_handouts/` holds the slot, since it sorts first
-and is what a participant reaches for next. The teaching material still speaks of modules 1–6.
+**The five modules are numbered 1–5 and the folder names match** (renumbered 2026-09-17). The old
+module 1 (*setting up TIP*) became `install.sh` and its notebooks are archived in
+`9_misc/legacy/startwithtip/`; the handouts moved to `9_misc/handouts/` because they are not a module.
+The handout files are still named `01_`…`06_` internally — their headings carry the current numbers.
 
 ### What lives in `9_misc/`
 | Path | What |
 |---|---|
 | `9_misc/plan/` | Session briefs and planning: `plan-tipsession-1-recon.md` (✅) · `plan-tipsession-2-evidence-run.md` (✅) · `plan-tipsession-3-screenshots.md` · `plan-workshop-warsaw.md` · `plan-course-material.md` · `results-tipsession.md` |
 | `9_misc/legacy/` | Earlier worked examples (Airbus, TU Dortmund, Belgium) and `startwithtip/` — the original setup notebooks that `install.sh` replaced |
-| `9_misc/ipscore/` | Patent valuation (**Riccardo Priore**) — the IPScore/NPV HTML tools, **and** `IPscore_3.01 WORKHORSE.xlsx`, which `6_ipscore/tools/extract_spec_from_excel.py` reads as the source of truth. Its `build/` pipeline is protected by an explicit negation in `.gitignore` — the generic `build/` rule would otherwise silently untrack it, which is exactly what happened during the 2026-09-17 move |
+| `9_misc/ipscore/` | Patent valuation (**Riccardo Priore**) — the IPScore/NPV HTML tools, **and** `IPscore_3.01 WORKHORSE.xlsx`, which `5_ipscore/tools/extract_spec_from_excel.py` reads as the source of truth. Its `build/` pipeline is protected by an explicit negation in `.gitignore` — the generic `build/` rule would otherwise silently untrack it, which is exactly what happened during the 2026-09-17 move |
 | `9_misc/lead-generation-research/` | DPMAconnect interface specs, NUTS notes and implementation briefs behind module 4 |
 | `9_misc/prep_workshop_todo.md`, `9_misc/plan-repo-simplification.md` | Working logs |
 
@@ -68,7 +69,7 @@ Jupyter's root — e.g. to build a `/files/` URL.
 
 ## Conventions
 - Notebooks open with the branded red **TIP4PATLIBS** header (see
-  `4_lead_generation/1_regional-leads.ipynb`) plus a short table of
+  `3_lead_generation/1_regional-leads.ipynb`) plus a short table of
   contents. Keep new notebooks visually consistent.
 - Ship a sensible default so a notebook runs out of the box (e.g. Alsace `FR42`
   in lead generation), with user-editable parameters near the top.
@@ -77,10 +78,11 @@ Jupyter's root — e.g. to build a `/files/` URL.
 - Git: SSH remotes, do work on `develop`, open PRs into `main`.
 
 ### Guest material (Riccardo Priore)
-`5_patentreports/` and `9_misc/ipscore/` are contributed material, reworked to
+`4_patentreports/` and `9_misc/ipscore/` are contributed material, reworked to
 match this course's look. Two deliberate deviations from the conventions above:
-- **They ship pre-executed** (outputs kept) — modules 2–4 clear outputs so
-  participants run them; 5 and 6 are read as finished reports in a 90-min showcase.
+- **Everything ships pre-executed with code folded away** (`metadata.jupyter.source_hidden`),
+  so a participant sees explanation and result without running or reading code. Guest material
+  additionally must never be re-run — the outputs *are* the deliverable.
 - **The header credits `created by Riccardo Priore`**, not the repo author.
 
 Never re-run or re-generate their code cells to "tidy" them — the outputs *are* the
