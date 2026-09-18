@@ -2,7 +2,10 @@
 #
 # TIP4PATLIBS — one-command setup for EPO TIP
 #
-#   curl -fsSL https://raw.githubusercontent.com/mtcberlin/epo-tip4patlibs/main/install.sh | bash
+#   curl -fsSL https://tip.depa.tech/install | bash
+#
+# tip.depa.tech is a redirect (nginx on the depa.tech Coolify server) to this file on
+# the main branch: raw.githubusercontent.com/mtcberlin/epo-tip4patlibs/main/install.sh
 #
 # Installs an AI coding assistant that survives a TIP restart, then clones the
 # course material. Safe to run again after TIP rebuilds your machine — every step
