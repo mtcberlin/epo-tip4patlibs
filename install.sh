@@ -128,7 +128,7 @@ step "Installing course dependencies"
 if python3 -c 'import pycountry' 2>/dev/null; then
     skip "pycountry already present"
 else
-    python3 -m pip install --user --quiet pycountry && ok "pycountry (module 5's world map)"
+    python3 -m pip install --user --quiet pycountry && ok "pycountry (module 4's world map)"
 fi
 
 # ── Done ─────────────────────────────────────────────────────────────────────

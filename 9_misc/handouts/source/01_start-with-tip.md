@@ -1,4 +1,4 @@
-# Module 1 — Start with TIP
+# Setup — Start with TIP
 
 *45-minute block · TIP4PATLIBS course material*
 
@@ -190,7 +190,7 @@ module refines it.
 >   line. Genuinely useful, entirely optional, and better done alone than in a room.
 > - **Part 2 of notebook 2** profiles an institution end to end — name variants, portfolio size,
 >   timeline, one family under the microscope, filing strategy, technology fields. It is the
->   natural evening exercise, and it is the direct precursor to module 3.
+>   natural evening exercise, and it is the direct precursor to module 2.
 
 ---
 
@@ -198,8 +198,8 @@ module refines it.
 
 | Next | Why |
 |---|---|
-| **Module 2** — The Query Library | You have now written a query by hand. Module 2 is about *choosing* one that somebody has already made defensible — and knowing when to do which. |
-| **Module 3** — PATSTAT Explorer | Part 2 · Query 1 of notebook 2 shows you that one institution has many names. Module 3 is what you do about it. |
+| **Module 1** — The Query Library | You have now written a query by hand. Module 1 is about *choosing* one that somebody has already made defensible — and knowing when to do which. |
+| **Module 2** — PATSTAT Explorer | Part 2 · Query 1 of notebook 2 shows you that one institution has many names. Module 2 is what you do about it. |
 
 ---
 
@@ -210,5 +210,5 @@ module refines it.
   workshop — the harmonisation may have been corrected, and a wrong warning teaches badly.
 - Notebook 2 notes that the most recent two years are incomplete and names *2023–2024*. On
   PATSTAT Global Autumn 2025 the incomplete years are **2024–2025**. Update the text.
-- Module 1 ships with **0 of 25 cells executed**, on purpose. Screenshots for the PDF and the
+- Setup ships with **0 of 25 cells executed**, on purpose. Screenshots for the PDF and the
   slides therefore require a separate TIP run.

@@ -1,4 +1,4 @@
-# Module 2 — The Query Library
+# Module 1 — The Query Library
 
 *45-minute block · TIP4PATLIBS course material*
 
@@ -15,7 +15,7 @@ whether the result is plausible — without writing SQL.**
 
 ## Prerequisites
 
-- **Module 1** — TIP is running, PATSTAT connects with `PatstatClient(env='PROD')`.
+- **Setup** — TIP is running, PATSTAT connects with `PatstatClient(env='PROD')`.
 - No SQL knowledge. That is the point of this module.
 
 ## Sub-objectives
@@ -152,12 +152,12 @@ Answer these before moving on. If one is unclear, go back to the query that rais
    years?"* — and which would you use for *"who are the biggest filers in this technology?"*
 2. **Why does the same question return fewer rows** when you filter `appln_auth = 'EP'` than when
    you count `docdb_family_id`? *(Because one counts filings at one office, the other counts
-   inventions wherever they were filed. Module 3 makes this the centre of the lesson.)*
+   inventions wherever they were filed. Module 2 makes this the centre of the lesson.)*
 3. **You widened the year window from 5 to 20 years and the query is still running after three
    minutes.** Broken, or working? *(Working. Narrow it, get the answer, then widen deliberately.)*
 4. **A client asks which of two companies has the "better" portfolio.** Can the library answer
    that? *(No. It can measure size, reach and technology mix. "Better" is a judgement — and
-   module 6 is about exactly that boundary.)*
+   module 5 is about exactly that boundary.)*
 
 ### Transfer to your own work
 
@@ -166,8 +166,8 @@ which library query comes closest, and what is missing. That list is your agenda
 and 4 — and it is worth keeping.
 
 > 🎓 **Trainer.** Close by collecting two or three of those questions from the room. If one of
-> them is *"who around here is patenting?"*, you have your bridge into module 4. If it is *"is
-> this company big or small in IP?"*, that is module 3.
+> them is *"who around here is patenting?"*, you have your bridge into module 3. If it is *"is
+> this company big or small in IP?"*, that is module 2.
 
 ---
 
@@ -175,8 +175,8 @@ and 4 — and it is worth keeping.
 
 | Next | Why |
 |---|---|
-| **Module 3** — PATSTAT Explorer | The library counts *names*. Module 3 shows why one company is forty different names, and how to consolidate them. |
-| **Module 4** — Lead Generation | The first full application: a region's applicants, ranked and segmented. |
+| **Module 2** — PATSTAT Explorer | The library counts *names*. Module 2 shows why one company is forty different names, and how to consolidate them. |
+| **Module 3** — Lead Generation | The first full application: a region's applicants, ranked and segmented. |
 
 ---
 
@@ -184,6 +184,6 @@ and 4 — and it is worth keeping.
 
 - The two *"Story 3.x AC Validation"* cells at the end of the interactive demo are developer
   scaffolding and should be removed from the course version of the notebook.
-- Module 2 is the shortest module in the course (≈ 8 minutes of notebook content). This block
+- Module 1 is the shortest module in the course (≈ 8 minutes of notebook content). This block
   works because the introduction and the transfer exercise carry real weight — do not cut them to
   save time.

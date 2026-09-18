@@ -61,7 +61,7 @@ Committed as `f66c69f` — *Module 6 Phase 1: the engine, verified against the E
   that, and the eleven reachable answers already carry a `-> notebook 2 (strength): …` note in
   their `evidence` field — a promise, never a measurement.
 - **The launcher cell ships without output**, the same rule the IPScore reference learned the hard way
-  (warning 9 in `prep_workshop_todo.md`): run offline, `open_html()` bakes in the *author's*
+  (warning 9 in `9_misc/plan/archive/prep_workshop_todo.md`): run offline, `open_html()` bakes in the *author's*
   filesystem path and the message "jupyter-server-proxy is unavailable here", both of which are
   wrong on TIP. Clear that one cell before every commit.
 - **The report was rendered and looked at**, in Chrome, over a local HTTP server (`file://` is
@@ -220,7 +220,7 @@ you cannot show someone an NPV before you have shown them what was assumed to ge
 ### Phase 3, concretely — the next thing to build
 
 > 📋 The live-TIP tasks that gate this are written up as an executable session plan:
-> **[`../9_documentation/plan-tipsession-1-recon.md`](../9_documentation/plan-tipsession-1-recon.md)** — five
+> **[`../9_misc/plan/archive/plan-tipsession-1-recon.md`](../9_misc/plan/archive/plan-tipsession-1-recon.md)** — five
 > tasks, ~30 minutes, with draft queries for O1 and O2 and the selection criteria for V5.
 
 `2_evidence_from_patstat.ipynb`, and it is **TIP-only**. Before it can be written, one short
@@ -430,7 +430,7 @@ Arne exactly one notebook to run on TIP, commit outputs.
 
 ## Open questions to resolve before Phase 3
 
-Answered on TIP, 2026-08-15 (`9_documentation/plan-tipsession-1-recon.md`, PATSTAT Global Autumn 2025,
+Answered on TIP, 2026-08-15 (`9_misc/plan/archive/plan-tipsession-1-recon.md`, PATSTAT Global Autumn 2025,
 `PatstatClient(env='PROD')`). O1, O2 and V5 are settled; Phase 3 is unblocked.
 
 - **O1 — Does TIP's PATSTAT edition carry legal-event / legal-status tables?**
@@ -461,7 +461,7 @@ Answered on TIP, 2026-08-15 (`9_documentation/plan-tipsession-1-recon.md`, PATST
   as-filed claim set, not the granted one.
 - **O3 — What does a PATLIB actually get asked?** If the real client question is "should I renew
   this?" rather than "what is it worth?", the renewal-cost side deserves more weight than
-  IPScore gives it. Worth one conversation with Riccardo (see `prep_workshop_todo.md` §5).
+  IPScore gives it. Worth one conversation with Riccardo (see `9_misc/plan/archive/prep_workshop_todo.md` §5).
   *Still open* — this one needs a conversation, not a query. Note that O1's renewal-fee evidence
   (`PGFP`, `fee_renewal_year`) now makes the renewal question answerable from data if it matters.
 

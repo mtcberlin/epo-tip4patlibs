@@ -30,7 +30,7 @@ so the deck picks it up on the next build with no further editing.
 | **Where** | EPO TIP JupyterLab, base conda env, `PatstatClient(env='PROD')` |
 | **Time** | ~50 minutes — most of it query latency in module 4 |
 | **Deadline** | Workshop **17 September 2026** |
-| **Predecessors** | [session 1](plan-tipsession-1-recon.md) · [session 2](plan-tipsession-2-evidence-run.md) · findings in [`results-tipsession.md`](results-tipsession.md) |
+| **Predecessors** | [session 1](archive/plan-tipsession-1-recon.md) · [session 2](archive/plan-tipsession-2-evidence-run.md) · findings in [`results-tipsession.md`](results-tipsession.md) |
 
 ---
 

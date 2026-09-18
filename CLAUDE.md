@@ -38,7 +38,7 @@ The handout files are still named `01_`…`06_` internally — their headings ca
 | `9_misc/legacy/` | Earlier worked examples (Airbus, TU Dortmund, Belgium) and `startwithtip/` — the original setup notebooks that `install.sh` replaced |
 | `9_misc/ipscore/` | Patent valuation (**Riccardo Priore**) — the IPScore/NPV HTML tools, **and** `IPscore_3.01 WORKHORSE.xlsx`, which `5_ipscore/tools/extract_spec_from_excel.py` reads as the source of truth. Its `build/` pipeline is protected by an explicit negation in `.gitignore` — the generic `build/` rule would otherwise silently untrack it, which is exactly what happened during the 2026-09-17 move |
 | `9_misc/lead-generation-research/` | DPMAconnect interface specs, NUTS notes and implementation briefs behind module 4 |
-| `9_misc/prep_workshop_todo.md`, `9_misc/plan-repo-simplification.md` | Working logs |
+| `9_misc/plan/archive/prep_workshop_todo.md`, `9_misc/plan/archive/plan-repo-simplification.md` | Working logs |
 
 Earlier supporting folders (`setup/`, `harmonization/`, `ipc-extension/`, `context/`, `docs/`) and
 the BMAD agent tooling (`_bmad*`, `.claude/`, `.agent/`, `.gemini/`) were removed once no module

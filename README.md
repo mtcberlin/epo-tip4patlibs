@@ -27,9 +27,10 @@ less install.sh
 bash install.sh
 ```
 
-Then open any module folder below. **Every notebook ships executed, with its code folded
-away**, so you see the explanation and the result without running anything. Click the folded
-bar above a result to see the code that produced it.
+Then open any module folder below. **The notebooks ship executed, with their code folded
+away**, so you see the explanation and the result without running anything. Click a folded bar
+to see the code behind a result. The few cells you are meant to change — your search term,
+your region — stay open.
 
 ## The modules
 
@@ -61,9 +62,13 @@ from epo.tipdata.patstat import PatstatClient
 patstat = PatstatClient(env='PROD')
 ```
 
-**Every module ships executed with its code folded away.** You can read all five without
-running a cell. To work through one yourself, use *Kernel → Restart Kernel and Run All Cells* —
+**The notebooks ship executed with their code folded away**, so all five can be read without
+running a cell. To work through one yourself, use *Kernel → Restart Kernel and Run All Cells*;
 the stored results then serve as the reference you compare against.
+
+One exception: **`3_lead_generation/1_regional-leads.ipynb` ships empty on purpose** — its whole
+point is that you enter *your own* region, so there is no result worth storing. Set `COUNTRY`
+and `NUTS_CODES` in the two open cells and run it.
 
 Modules 4 and 5 are guest material from Riccardo Priore; their stored outputs *are* the
 deliverable, so please do not re-run them to tidy them up.

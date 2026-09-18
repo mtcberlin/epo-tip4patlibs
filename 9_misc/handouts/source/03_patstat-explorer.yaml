@@ -4,12 +4,12 @@
 # own "# Title" heading, the accent headings, tables, callouts, running
 # header and the page counter.
 mode: privat
-title: "Module 3 — PATSTAT Explorer"
+title: "Module 2 — PATSTAT Explorer"
 subtitle: "Who is this company, really? Applicant identity and consolidation"
 subtitle_accent: "TIP4PATLIBS — EPO Technology Intelligence Platform"
 author: "Arne Krüger"
 brand_subtitle: "Patent Intelligence"
-header_subtitle: "TIP4PATLIBS · Module 3"
+header_subtitle: "TIP4PATLIBS · Module 2"
 footer_text: "TIP4PATLIBS — EPO Internal Use"
 lang: en
 meta:

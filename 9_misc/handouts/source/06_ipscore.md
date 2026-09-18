@@ -1,4 +1,4 @@
-# Module 6 — What is this patent worth?
+# Module 5 — What is this patent worth?
 
 *45-minute block · TIP4PATLIBS course material* · **core path**
 
@@ -24,9 +24,9 @@ whether it is evidence or judgement.**
 
 ## Prerequisites
 
-- **Module 1** — TIP is running. (Notebook 1 itself runs anywhere; it needs no database.)
-- **Module 3** — you are used to marking which part of an answer was a decision you made.
-- Helpful, not required: **module 5**, whose antibiotic-resistance corpus this patent came from.
+- **Setup** — TIP is running. (Notebook 1 itself runs anywhere; it needs no database.)
+- **Module 2** — you are used to marking which part of an answer was a decision you made.
+- Helpful, not required: **module 4**, whose antibiotic-resistance corpus this patent came from.
 
 ## Sub-objectives
 
@@ -74,7 +74,7 @@ model returns two things: a **profile** — where this patent is strong and wher
 and a **number**, the Net Present Value of the technology it protects.
 
 This block opens that machine and shows every wheel. And it ends somewhere uncomfortable, which is
-the reason the module sits at the end of the course rather than module 5:
+the reason the module sits at the end of the course rather than module 4:
 
 > **The engine is exact. Its inputs are opinions.** All 40 answers come from a person. Nothing in
 > IPScore checks a single fact about the patent — not whether it is granted, not how long it runs,
@@ -137,8 +137,8 @@ technology), **C6** (extra turnover), and **D1–D4** (the four finance question
 **Step 3 · The profile and the provenance markers (4 min).** The notebook now scores a **real
 patent**: `EP3074539B1`, *"Method for detecting and characterising a microorganism"*, held by
 **Q-Linea AB** of Uppsala — rapid identification and antibiotic-susceptibility testing of bacteria,
-picked out of **module 5's corpus**. The two modules describe the same field: module 5 maps where
-antimicrobial-resistance research stands, module 6 values one patent inside it.
+picked out of **module 4's corpus**. The two modules describe the same field: module 4 maps where
+antimicrobial-resistance research stands, module 5 values one patent inside it.
 
 The 40 answers shipped here are **an adviser's first pass** — what a person writes down in a first
 session with a client, before checking anything.
@@ -306,6 +306,6 @@ That list is the honest scoping document for a valuation engagement, and it take
 - **`1_the_model.ipynb` says "four of them strongly"** about the PATSTAT-reachable questions.
   `PATSTAT_CANDIDATES` actually holds **3 strong, 4 good, 3 proxy, 1 context**. The report says
   "three strongly" and is correct. Fix the notebook.
-- Module 6's full material is 8,272 markdown words — more prose than modules 1, 2, 3 and 5
+- Module 5's full material is 8,272 markdown words — more prose than modules 1, 2, 3 and 5
   combined. The core/extension split above is what makes it teachable; **do not quietly re-expand
   this document** to cover notebooks 2–4.
