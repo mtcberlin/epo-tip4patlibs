@@ -97,7 +97,7 @@ Keep it that way — the offering is about patent intelligence, not about AI too
 One command in a TIP terminal:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/mtcberlin/epo-tip4patlibs/main/install.sh | bash
+curl -fsSL https://tip.depa.tech/install | bash
 ```
 
 It installs an assistant that survives a TIP restart, configures it, and clones the course

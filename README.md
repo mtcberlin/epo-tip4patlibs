@@ -12,7 +12,7 @@ JupyterLab, with a sensible default so it works before you change anything.
 Open a terminal in TIP and paste:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/mtcberlin/epo-tip4patlibs/main/install.sh | bash
+curl -fsSL https://tip.depa.tech/install | bash
 ```
 
 That installs an AI coding assistant that **survives a TIP restart**, configures it for this
@@ -22,7 +22,7 @@ after TIP rebuilds your machine it repairs the setup and updates the material.
 Prefer to read before running? Same thing in three steps:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/mtcberlin/epo-tip4patlibs/main/install.sh -o install.sh
+curl -fsSL https://tip.depa.tech/install -o install.sh
 less install.sh
 bash install.sh
 ```
