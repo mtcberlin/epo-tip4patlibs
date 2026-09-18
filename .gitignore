@@ -62,12 +62,12 @@ ENV/
 
 # Riccardo IPScore build pipeline: source material (templates + data + scripts),
 # NOT a build artifact. Must survive the generic build/ rule above.
-!9_documentation/ipscore/build/
-!9_documentation/ipscore/build/**
+!9_misc/ipscore/build/
+!9_misc/ipscore/build/**
 
 # ...but build/dist/ inside it IS a build artifact: render.py recreates it, and its
 # contents are byte-identical to the promoted live files in 9_documentation/ipscore/.
-9_documentation/ipscore/build/dist/
+9_misc/ipscore/build/dist/
 
 # Office lock/owner files (PowerPoint writes these next to an open deck)
 ~$*
