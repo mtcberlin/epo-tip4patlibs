@@ -43,11 +43,33 @@ command -v jq >/dev/null || warn "jq missing — the Claude status line needs it
 # ── 1. npm prefix that survives a restart ────────────────────────────────────
 step "Making npm installs persistent"
 mkdir -p "$NPM_PREFIX"
-if npm config get prefix 2>/dev/null | grep -q "$NPM_PREFIX"; then
+# Compare resolved paths: on TIP /home/<user> is a symlink to /home/jovyan, so the
+# same directory can arrive as two different strings.
+same_dir() { [ "$(cd "$1" 2>/dev/null && pwd -P)" = "$(cd "$2" 2>/dev/null && pwd -P)" ]; }
+# Read ~/.npmrc directly rather than asking npm: newer npm refuses to report the
+# prefix at all when ~/.npmrc is both the user and the project config (cwd = home).
+npmrc_prefix() {
+    # No ~/.npmrc yet is the normal case for a new participant - and under
+    # `set -o pipefail` a failing sed here would end the whole script silently.
+    [ -f "$HOME/.npmrc" ] || return 0
+    sed -n 's/^[[:space:]]*prefix[[:space:]]*=[[:space:]]*//p' "$HOME/.npmrc" \
+        | tail -1 | sed "s|^~|$HOME|"
+}
+recorded="$(npmrc_prefix)"
+if [ -n "$recorded" ] && same_dir "$recorded" "$NPM_PREFIX"; then
     skip "npm prefix already points at ~/.npm-global"
 else
-    npm config set prefix "$NPM_PREFIX"
-    ok "npm prefix → ~/.npm-global"
+    # Best effort: this only makes *later* manual `npm install -g` land in
+    # ~/.npm-global. Claude Code itself is installed with --prefix below, so it does
+    # not depend on this succeeding - a stray .npmrc in the working directory can
+    # block it, and npm then prints an error but still exits 0.
+    npm config set prefix "$NPM_PREFIX" --location=user >/dev/null 2>&1 || true
+    recorded="$(npmrc_prefix)"
+    if [ -n "$recorded" ] && same_dir "$recorded" "$NPM_PREFIX"; then
+        ok "npm prefix → ~/.npm-global"
+    else
+        warn "could not record the npm prefix in ~/.npmrc (another .npmrc overrides it) — Claude Code is installed to ~/.npm-global regardless"
+    fi
 fi
 
 touch "$HOME/.bash_aliases"
@@ -61,11 +83,14 @@ export PATH="$NPM_PREFIX/bin:$PATH"
 
 # ── 2. Claude Code ───────────────────────────────────────────────────────────
 step "Installing Claude Code"
-if command -v claude >/dev/null; then
-    skip "already installed ($(claude --version 2>/dev/null | head -1)) — updating"
+CLAUDE_BIN="$NPM_PREFIX/bin/claude"
+if [ -x "$CLAUDE_BIN" ]; then
+    skip "already installed ($("$CLAUDE_BIN" --version 2>/dev/null | head -1)) — updating"
 fi
-npm install -g @anthropic-ai/claude-code --silent
-ok "claude → $(command -v claude)"
+# --prefix pins the location explicitly, whatever any .npmrc says.
+npm install -g --prefix "$NPM_PREFIX" @anthropic-ai/claude-code --silent
+[ -x "$CLAUDE_BIN" ] || die "Claude Code did not land in ~/.npm-global/bin — see the npm output above."
+ok "claude → $CLAUDE_BIN"
 
 # ── 3. The course material ───────────────────────────────────────────────────
 step "Fetching the course material"
