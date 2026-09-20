@@ -71,3 +71,12 @@ ENV/
 
 # Office lock/owner files (PowerPoint writes these next to an open deck)
 ~$*
+
+# A participant's own IPScore answers: 0_questionnaire.ipynb reads the upload folder and
+# writes the output one. Personal input, and load_worked_example() treats the output as a
+# local override of the shipped worked_example.json — never commit either.
+5_ipscore/0_questionnaire_upload/
+5_ipscore/0_questionnaire_output/
+
+# ...and the build/ negation above re-includes everything under it, __pycache__ included.
+9_misc/ipscore/build/**/__pycache__/

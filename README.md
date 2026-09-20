@@ -81,8 +81,8 @@ deliverable, so please do not re-run them to tidy them up.
 | `TIP4PATLIBS_1_Workshop_v4.pdf` | The workshop deck |
 | `9_misc/plan/` | Planning documents and session notes |
 | `9_misc/legacy/` | Earlier worked examples, and the original TIP-setup notebooks |
-| `9_misc/ipscore/` | Riccardo Priore's original IPScore HTML tools — and the EPO workbook module 6 reads its model from |
-| `9_misc/lead-generation-research/` | DPMA interface specs and implementation notes behind module 4 |
+| `9_misc/ipscore/` | Riccardo Priore's original IPScore HTML tools — and the EPO workbook module 5 reads its model from |
+| `9_misc/lead-generation-research/` | DPMA interface specs and implementation notes behind module 3 |
 
 ## License
 

@@ -156,7 +156,7 @@ Mention both as *"if you want to go further"*, not as prerequisites.
 | What | Where |
 |---|---|
 | The five modules | `1_querylib/` … `5_ipscore/` |
-| Workshop deck (19 slides, as delivered) | `9_misc/handouts/source/TIP4PATLIBS_1_Workshop_v4.pptx` |
+| Workshop deck (20 slides; 19 were shown in Warsaw, the install slide came after) | `9_misc/handouts/source/TIP4PATLIBS_1_Workshop_v4.pptx` |
 | 45-minute written version per module | `9_misc/handouts/*.pdf` |
 | Installer | `install.sh` |
 | How the Warsaw session was planned | `9_misc/plan/archive/plan-workshop-warsaw.md` |

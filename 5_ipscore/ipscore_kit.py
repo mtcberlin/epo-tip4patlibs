@@ -1,6 +1,6 @@
-"""ipscore_kit — the one engine behind module 6.
+"""ipscore_kit — the one engine behind module 5.
 
-Everything module 6 computes lives here: the questionnaire, the score profile, the
+Everything module 5 computes lives here: the questionnaire, the score profile, the
 bridge from scores to economic parameters, and the ten-year discounted cash flow
 that ends in a Net Present Value.
 
@@ -42,7 +42,7 @@ QUESTIONNAIRE_PATH = (Path(__file__).resolve().parent
 HORIZON_YEARS = 10
 SCORE_MIN, SCORE_MAX = 1, 5
 
-#: How an answer came about. The whole point of module 6 is that these differ.
+#: How an answer came about. The whole point of module 5 is that these differ.
 PROVENANCE = ("measured", "informed", "judgement")
 
 #: The eleven questions PATSTAT can say something about — and what notebook 2 will source
@@ -225,7 +225,7 @@ def _check_score(score: int) -> int:
 class Answer:
     """One scored question — and where the score came from.
 
-    `provenance` is module 6's addition to the EPO model: *measured* means a
+    `provenance` is module 5's addition to the EPO model: *measured* means a
     PATSTAT fact decided it, *informed* means data narrowed it but a person chose,
     *judgement* means nothing but expert opinion stands behind it.
     """
@@ -363,6 +363,61 @@ def load_worked_example(path: Path | str | None = None) -> dict:
         "known_facts": {k: v for k, v in raw.get("known_facts", {}).items()
                         if not k.startswith("_")},
     }
+
+
+def save_questionnaire(
+    patent: dict,
+    financials: dict,
+    scores: dict[str, int],
+    financials_note: str = "",
+    spec: Spec | None = None,
+    path: Path | str = QUESTIONNAIRE_PATH,
+) -> Path:
+    """Persist one interactively-answered questionnaire for notebooks 2–4 to read.
+
+    Called by ``0_questionnaire.ipynb``. Validates all 40 questions are present and in
+    range and that the seven financial figures are complete, then writes the same shape as
+    ``worked_example.json`` (``patent`` · ``financials`` · ``financials_note`` · ``scores``
+    — no ``known_facts``, which only a TIP session on the *actual* chosen patent can
+    establish, so it is left to notebook 2). Nothing in notebooks 2, 3 or 4 needs to change:
+    :func:`load_worked_example` prefers this file over the shipped example as soon as it
+    exists, and all three call it with no argument. Notebook 1 pins to the shipped example
+    explicitly and never sees this file.
+    """
+    spec = spec or load_spec()
+    missing = set(spec.by_id) - set(scores)
+    if missing:
+        raise ValueError(f"missing answers: {sorted(missing)}")
+    extra = set(scores) - set(spec.by_id)
+    if extra:
+        raise ValueError(f"not IPScore questions: {sorted(extra)}")
+    for score in scores.values():
+        _check_score(score)
+    Financials(**financials)  # raises TypeError if a figure is missing
+
+    required_patent = {"title", "plain_title", "publication", "docdb_family_id",
+                        "applicant", "field"}
+    missing_patent = required_patent - set(patent)
+    if missing_patent:
+        raise ValueError(f"missing patent fields: {sorted(missing_patent)}")
+
+    payload = {
+        "_comment": [
+            "Saved by 0_questionnaire.ipynb.",
+            "Overrides worked_example.json for load_worked_example() - see ipscore_kit.py.",
+        ],
+        "patent": patent,
+        "financials": financials,
+        "financials_note": financials_note,
+        "scores": {qid: scores[qid]
+                   for qid in sorted(scores, key=lambda x: (x[0], int(x[1:])))},
+    }
+    out = Path(path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    return out
+
+
 
 
 EVIDENCE_PATH = (Path(__file__).resolve().parent
