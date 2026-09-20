@@ -12,7 +12,7 @@ are byte-identical on purpose.
   9_misc/ipscore/tip_tools.py
 
 **Change one, change all three.**
-
+"""
 
 from __future__ import annotations
 
