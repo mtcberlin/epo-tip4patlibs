@@ -1,5 +1,8 @@
 # Plan — course material for modules 1, 2, 3, 4, 5 and 6
 
+> **Numbering note.** Written before the renumbering of 17 September 2026. The old *module 1* (setting up TIP) is now `install.sh`, and old modules **2–6** are today's **1–5**: `1_querylib` · `2_patstat_explorer` · `3_lead_generation` · `4_patentreports` · `5_ipscore`. The text below is left as it was written.
+
+
 **What this is.** A plan for turning six modules of notebooks into teachable course material:
 a **45-minute block per module** as a written document, and a **condensed slide version** of the
 same substance for the PATLIB Warsaw workshop on **17 September 2026**.

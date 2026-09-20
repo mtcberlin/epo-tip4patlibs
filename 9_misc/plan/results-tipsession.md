@@ -1,5 +1,8 @@
 # TIP session results — module 6 Phase 3 unblocked
 
+> **Numbering note.** Written before the renumbering of 17 September 2026. The old *module 1* (setting up TIP) is now `install.sh`, and old modules **2–6** are today's **1–5**: `1_querylib` · `2_patstat_explorer` · `3_lead_generation` · `4_patentreports` · `5_ipscore`. The text below is left as it was written.
+
+
 **Session run 2026-08-15** against the plan in [`plan-tipsession-1-recon.md`](archive/plan-tipsession-1-recon.md).
 EPO TIP JupyterLab, base conda env, `PatstatClient(env='PROD')`, PATSTAT Global Autumn 2025.
 

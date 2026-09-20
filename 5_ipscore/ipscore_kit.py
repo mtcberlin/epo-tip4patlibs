@@ -1,6 +1,6 @@
-"""ipscore_kit — the one engine behind module 6.
+"""ipscore_kit — the one engine behind module 5.
 
-Everything module 6 computes lives here: the questionnaire, the score profile, the
+Everything module 5 computes lives here: the questionnaire, the score profile, the
 bridge from scores to economic parameters, and the ten-year discounted cash flow
 that ends in a Net Present Value.
 
@@ -42,7 +42,7 @@ QUESTIONNAIRE_PATH = (Path(__file__).resolve().parent
 HORIZON_YEARS = 10
 SCORE_MIN, SCORE_MAX = 1, 5
 
-#: How an answer came about. The whole point of module 6 is that these differ.
+#: How an answer came about. The whole point of module 5 is that these differ.
 PROVENANCE = ("measured", "informed", "judgement")
 
 #: The eleven questions PATSTAT can say something about — and what notebook 2 will source
@@ -225,7 +225,7 @@ def _check_score(score: int) -> int:
 class Answer:
     """One scored question — and where the score came from.
 
-    `provenance` is module 6's addition to the EPO model: *measured* means a
+    `provenance` is module 5's addition to the EPO model: *measured* means a
     PATSTAT fact decided it, *informed* means data narrowed it but a person chose,
     *judgement* means nothing but expert opinion stands behind it.
     """

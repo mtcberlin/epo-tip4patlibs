@@ -1,5 +1,8 @@
 # Module 5 — Clean Rebuild Plan (Antibiotic Resistance landscape report)
 
+> **Numbering note.** Written before the renumbering of 17 September 2026. The old *module 1* (setting up TIP) is now `install.sh`, and old modules **2–6** are today's **1–5**: `1_querylib` · `2_patstat_explorer` · `3_lead_generation` · `4_patentreports` · `5_ipscore`. The text below is left as it was written.
+
+
 **Goal (Arne's steer):** *not* to fix Riccardo's complicated steps, but to build a **clean,
 teachable pipeline** that a workshop audience can follow — "here is how you get, in four
 understandable steps, from a search strategy to the finished landscape report."

@@ -3,7 +3,7 @@
 
 This script is *not* part of the notebook chain. It runs when the spec needs to be
 re-derived, reads `9_misc/ipscore/IPscore_3.01 WORKHORSE.xlsx` and writes
-`5_ipscore/ipscore_spec.json`. Afterwards module 6 is self-contained: no
+`5_ipscore/ipscore_spec.json`. Afterwards module 5 is self-contained: no
 notebook ever opens the workbook again.
 
 What it pulls out, and from where:
@@ -169,7 +169,7 @@ def build_spec(xlsx: Path) -> dict:
             "extracted_by": "5_ipscore/tools/extract_spec_from_excel.py",
             "note": (
                 "Question texts, answer options and the eight OEK value tables originate "
-                "from the EPO IPScore tool. Extracted once so that module 6 runs without "
+                "from the EPO IPScore tool. Extracted once so that module 5 runs without "
                 "the workbook; re-run the extractor to re-derive."
             ),
             "scoring": {

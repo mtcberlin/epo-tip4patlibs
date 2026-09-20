@@ -1,5 +1,8 @@
 # Provenance — Module 6 (IPScore rebuild)
 
+> **Numbering note.** Written before the renumbering of 17 September 2026. The old *module 1* (setting up TIP) is now `install.sh`, and old modules **2–6** are today's **1–5**: `1_querylib` · `2_patstat_explorer` · `3_lead_generation` · `4_patentreports` · `5_ipscore`. The text below is left as it was written.
+
+
 **Status: Phase 1 complete** — the engine and notebook 1 exist and are verified. The plan lives
 in [`REBUILD_PLAN.md`](REBUILD_PLAN.md); this file records where the ideas come from and who
 owns what, so attribution stays clean.

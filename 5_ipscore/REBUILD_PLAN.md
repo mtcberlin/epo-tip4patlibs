@@ -1,5 +1,8 @@
 # Module 6 — Clean Rebuild Plan (IPScore: what is this patent worth?)
 
+> **Numbering note.** Written before the renumbering of 17 September 2026. The old *module 1* (setting up TIP) is now `install.sh`, and old modules **2–6** are today's **1–5**: `1_querylib` · `2_patstat_explorer` · `3_lead_generation` · `4_patentreports` · `5_ipscore`. The text below is left as it was written.
+
+
 **Goal.** Not to reimplement Riccardo's HTML tools, but to rebuild **the ideas behind IPScore**
 as a teachable four-step chain a workshop audience can follow: *"here is how you get, in four
 understandable steps, from a patent number to a defensible number — and here is exactly how

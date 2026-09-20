@@ -1,5 +1,8 @@
 # TIP session 3 — capture: the screenshots the workshop material is missing
 
+> **Numbering note.** Written before the renumbering of 17 September 2026. The old *module 1* (setting up TIP) is now `install.sh`, and old modules **2–6** are today's **1–5**: `1_querylib` · `2_patstat_explorer` · `3_lead_generation` · `4_patentreports` · `5_ipscore`. The text below is left as it was written.
+
+
 **What this is.** The briefing for the **third** TIP session. It is a **capture** session: run
 three notebooks that ship deliberately unexecuted, photograph what they produce, and bring the
 images back into the repo. Nothing is investigated and nothing is built — sessions 1 and 2 did
