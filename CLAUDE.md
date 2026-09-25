@@ -34,7 +34,7 @@ The handout files are still named `01_`…`06_` internally — their headings ca
 ### What lives in `9_misc/`
 | Path | What |
 |---|---|
-| `9_misc/plan/` | Session briefs and planning — see its own `README.md`. Open: `offering-tip-presentation-and-workshop.md` · `plan-tipsession-3-screenshots.md`. Reference: `plan-course-material.md` · `results-tipsession.md`. The finished ones (the Warsaw plan, TIP sessions 1 and 2, the simplification log) are in `archive/` |
+| `9_misc/plan/` | Session briefs and planning — see its own `README.md`. Open: `open-items.md` (what is outstanding, and what is deliberately not) · `offering-tip-presentation-and-workshop.md` · `plan-tipsession-3-screenshots.md`. Reference: `plan-course-material.md` · `results-tipsession.md`. The finished ones (the Warsaw plan, TIP sessions 1 and 2, the simplification log) are in `archive/` |
 | `9_misc/legacy/` | Earlier worked examples (Airbus, TU Dortmund, Belgium) and `startwithtip/` — the original setup notebooks that `install.sh` replaced |
 | `9_misc/ipscore/` | Patent valuation (**Riccardo Priore**) — the IPScore/NPV HTML tools, **and** `IPscore_3.01 WORKHORSE.xlsx`, which `5_ipscore/tools/extract_spec_from_excel.py` reads as the source of truth. Its `build/` pipeline is protected by an explicit negation in `.gitignore` — the generic `build/` rule would otherwise silently untrack it, which is exactly what happened during the 2026-09-17 move |
 | `9_misc/lead-generation-research/` | DPMAconnect interface specs, NUTS notes and implementation briefs behind module 3 |
