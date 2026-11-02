@@ -7,6 +7,14 @@ JupyterLab.
 
 Author: Arne Krüger (mtc.berlin / depa.tech) · License: **EPO Internal Use**.
 
+## Working with Arne
+- He says what he wants or what bothers him; you solve the how and show the result: a screenshot,
+  the URL, a short report. Don't ask him about files, commands or options, only about taste,
+  content and decisions.
+- When a wish is vague, build one bold interpretation, show it, and offer to dial it up or down.
+- Invite big wishes; half a sentence is a good brief. When he dictates small details, do them,
+  then zoom out once and offer a bigger swing.
+
 ## Repository layout
 
 Restructured 2026-09-17: **every module folder is self-contained** — its notebooks, its data,
