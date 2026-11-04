@@ -102,27 +102,35 @@ li .bar i { display: block; height: 100%; width: 0; background: var(--tip-red); 
 </div></div>
 
 <script>
-// Each beat: screenshot, focus point (fx, fy as share of the image), zoom from/to, and the caption.
-// Every figure is read off the screenshot it sits on.
+// Each beat: one or more screenshots (frames switch at `at` seconds into the beat), a focus point
+// (fx, fy as share of the image), zoom from/to, its length, and the caption with its start time.
+// Every figure is read off the screenshot it sits on. live-* frames were taken in TIP on 4 Nov 2026.
 const BEATS = [
-  { src: "shots/consolidate.png", fx: .55, fy: .20, z0: 1.00, z1: 1.12, fig: "146 <em>→</em> 1", txt: "Siemens name variants grouped into one portfolio: 361,456 families" },
-  { src: "shots/technology.png",  fx: .50, fy: .30, z0: 1.00, z1: 1.16, fig: "H01M", txt: "Battery filings 1990–2024, and who leads: LG Energy Solution, 11,731 families" },
-  { src: "shots/network.png",     fx: .50, fy: .62, z0: 1.15, z1: 1.45, fig: "30 partners", txt: "Siemens' co-applicants, from Siemens Energy to Fraunhofer" },
-  { src: "shots/citations.png",   fx: .55, fy: .60, z0: 1.10, z1: 1.32, fig: "Who cites whom", txt: "Siemens → turbine technology (F01D) → General Electric" },
-  { src: "shots/countries.png",   fx: .50, fy: .45, z0: 1.05, z1: 1.20, fig: "CN · DE · JP · KR · US", txt: "Cables and conductors (H01B): five filing trends side by side" },
-  { src: "shots/ai.png",          fx: .45, fy: .25, z0: 1.12, z1: 1.30, fig: "Question → SQL", txt: "Claude writes and runs the PATSTAT query for you" },
+  { dur: 6.4, fx: .34, fx1: .50, fy: .16, z0: 1.45, z1: 1.00, capAt: 3.3,
+    frames: [["shots/live-1-empty.jpg", 0], ["shots/live-2-sie.jpg", .7], ["shots/live-3-siemens.jpg", 1.1],
+             ["shots/live-4-results.jpg", 1.6], ["shots/live-5-selected.jpg", 3.0], ["shots/live-6-trend.jpg", 4.7]],
+    fig: "146 <em>→</em> 1", txt: "Siemens name variants grouped into one portfolio: 363,777 families" },
+  { dur: 3.4, frames: [["shots/technology.png", 0]],  fx: .50, fy: .30, z0: 1.00, z1: 1.16, fig: "H01M", txt: "Battery filings 1990–2024, and who leads: LG Energy Solution, 11,731 families" },
+  { dur: 3.4, frames: [["shots/live-network.jpg", 0]], fx: .50, fy: .50, z0: 1.05, z1: 1.30, fig: "30 partners", txt: "Siemens' co-applicants, from Siemens Energy to Fraunhofer" },
+  { dur: 3.4, frames: [["shots/citations.png", 0]],   fx: .55, fy: .60, z0: 1.10, z1: 1.32, fig: "Who cites whom", txt: "Siemens → turbine technology (F01D) → General Electric" },
+  { dur: 3.4, frames: [["shots/countries.png", 0]],   fx: .50, fy: .45, z0: 1.05, z1: 1.20, fig: "CN · DE · JP · KR · US", txt: "Cables and conductors (H01B): five filing trends side by side" },
+  { dur: 3.4, frames: [["shots/ai.png", 0]],          fx: .45, fy: .25, z0: 1.12, z1: 1.30, fig: "Question → SQL", txt: "Claude writes and runs the PATSTAT query for you" },
 ];
-const BEAT = 3.6, FADE = 0.55, TOTAL = BEATS.length * BEAT;   // 21.6 s loop
+const FADE = 0.55;
+let acc = 0; BEATS.forEach(b => { b.start = acc; acc += b.dur; });
+const TOTAL = acc;                      // 23.4 s loop
+window.TEASER_TOTAL = TOTAL;
 
 const view = document.getElementById("view");
 const items = [...document.querySelectorAll("#list li")];
 const shots = BEATS.map(b => {
   const d = document.createElement("div"); d.className = "shot";
-  const img = new Image(); img.src = b.src; img.alt = b.txt; d.appendChild(img);
+  const imgs = b.frames.map(([src]) => { const img = new Image(); img.src = src; img.alt = b.txt; d.appendChild(img); return img; });
   const c = document.createElement("div"); c.className = "caption";
   c.innerHTML = `<div class="fig">${b.fig}</div><div class="txt">${b.txt}</div>`;
-  d.appendChild(c); view.appendChild(d); return { d, img, c };
+  d.appendChild(c); view.appendChild(d); return { d, imgs, c };
 });
+const allImgs = shots.flatMap(s => s.imgs);
 
 const ease = x => x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3) / 2;
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
@@ -131,22 +139,27 @@ function render(t) {
   t = ((t % TOTAL) + TOTAL) % TOTAL;
   const W = view.clientWidth, H = view.clientHeight;
   BEATS.forEach((b, i) => {
-    const start = i * BEAT;
-    let local = t - start; if (local < -FADE) local += TOTAL;     // wrap: beat 0 fades in at the loop end
-    const fadeIn = clamp((local + FADE) / FADE), fadeOut = clamp((BEAT - local) / FADE);
-    const op = Math.min(fadeIn, fadeOut);
+    let local = t - b.start; if (local < -FADE) local += TOTAL;   // wrap: beat 0 fades in at the loop end
+    if (local > TOTAL - FADE) local -= TOTAL;
+    const op = Math.min(clamp((local + FADE) / FADE), clamp((b.dur - local) / FADE));
     const s = shots[i]; s.d.style.opacity = op;
-    const p = ease(clamp((local + FADE) / (BEAT + FADE)));
+    const p = ease(clamp((local + FADE) / (b.dur + FADE)));
     const z = b.z0 + (b.z1 - b.z0) * p;
-    const iw = W * z, ih = iw * (s.img.naturalHeight || 1000) / (s.img.naturalWidth || 1340);
-    const x = clamp(W / 2 - b.fx * iw, W - iw, 0), y = clamp(H / 2 - b.fy * ih, Math.min(0, H - ih), 0);
-    s.img.style.width = iw + "px"; s.img.style.transform = `translate(${x}px, ${y}px)`;
-    const cIn = clamp((local - 0.35) / 0.4), cOut = clamp((BEAT - 0.25 - local) / 0.3);
+    const fx = b.fx1 != null ? b.fx + (b.fx1 - b.fx) * p : b.fx;
+    let cur = 0; b.frames.forEach(([, at], k) => { if (local >= at) cur = k; });
+    s.imgs.forEach((img, k) => {
+      const iw = W * z, ih = iw * (img.naturalHeight || 900) / (img.naturalWidth || 1320);
+      const x = clamp(W / 2 - fx * iw, W - iw, 0), y = clamp(H / 2 - b.fy * ih, Math.min(0, H - ih), 0);
+      img.style.width = iw + "px"; img.style.transform = `translate(${x}px, ${y}px)`;
+      img.style.opacity = k === cur ? 1 : 0;
+    });
+    const capAt = b.capAt ?? 0.35;
+    const cIn = clamp((local - capAt) / 0.4), cOut = clamp((b.dur - 0.25 - local) / 0.3);
     s.c.style.opacity = Math.min(cIn, cOut);
     s.c.style.transform = `translateY(${(1 - ease(cIn)) * 18}px)`;
-    const on = local >= 0 && local < BEAT;
+    const on = local >= 0 && local < b.dur - 1e-6;
     items[i].classList.toggle("on", on);
-    items[i].querySelector(".bar i").style.width = on ? (local / BEAT * 100) + "%" : "0";
+    items[i].querySelector(".bar i").style.width = on ? (local / b.dur * 100) + "%" : "0";
   });
 }
 
@@ -155,21 +168,20 @@ function fit() {
   const w = document.getElementById("fit").clientWidth;
   document.getElementById("slide").style.transform = `scale(${w / 1920})`;
 }
+const ready = Promise.all(allImgs.map(img => img.decode().catch(() => {})));
 const q = new URLSearchParams(location.search);
 if (q.has("t")) {                       // capture mode: render one still frame at time t (seconds)
   document.body.classList.add("capture");
-  Promise.all(shots.map(s => s.img.decode().catch(() => {}))).then(() => {
-    render(parseFloat(q.get("t"))); document.title = "ready";
-  });
+  ready.then(() => { render(parseFloat(q.get("t"))); document.title = "ready"; });
 } else {
   addEventListener("resize", fit); fit();
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const t0 = performance.now();
-  Promise.all(shots.map(s => s.img.decode().catch(() => {}))).then(() => {
-    if (reduce) { render(0.8); return; }
+  ready.then(() => {
+    if (reduce) { render(4.0); return; }
     const loop = now => { render((now - t0) / 1000); requestAnimationFrame(loop); };
     requestAnimationFrame(loop);
   });
-  render(0.8);
+  render(0.3);
 }
 </script>
