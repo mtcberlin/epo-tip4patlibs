@@ -1,11 +1,27 @@
+<div align="center">
+
 # TIP4PATLIBS
 
-Course material for PATLIB staff across Europe, for getting real work out of the **EPO
-Technology Intelligence Platform (TIP)**. Every notebook runs top-to-bottom inside TIP's own
-JupyterLab, with a sensible default so it works before you change anything.
+**Patent analytics on the EPO Technology Intelligence Platform — for PATLIB staff across Europe**
+
+<a href="9_misc/marketing/tip-explorer-teaser/tip-explorer-teaser.mp4"><img src="9_misc/marketing/tip-explorer-teaser/tip-explorer-teaser-still.png" alt="The TIP Explorer: 146 Siemens name variants grouped into one portfolio" width="820"></a>
+
+<sub>Five modules · runs inside TIP · free and public · PATSTAT Global, Autumn 2025</sub>
+
+</div>
+
+Every notebook runs top to bottom inside TIP's own JupyterLab, with a sensible default so it
+works before you change anything.
 
 > **You do not have to learn SQL. You have to install something that writes it — and then
 > decide what to ask.**
+
+## Built in the PATLIB TIP Working Group
+
+This course grew out of the PATLIB TIP Working Group. We developed it together with
+**Jens Hoheisel** (InnoWi, PATLIB Bremen) and **Riccardo Priore** (Centro PATLIB, AREA Science
+Park, Trieste), and first gave it at the PATLIB Conference 2026 in Warsaw. Riccardo contributed
+modules 4 and 5.
 
 ## Start here — one command
 
@@ -72,6 +88,28 @@ and `NUTS_CODES` in the two open cells and run it.
 
 Modules 4 and 5 are guest material from Riccardo Priore; their stored outputs *are* the
 deliverable, so please do not re-run them to tidy them up.
+
+## Learn it with us, online
+
+We give this course remotely, in English or German, for PATLIBs and their teams.
+
+| | Format | What happens |
+|---|---|---|
+| **Introduction** | about 50 minutes | *We show you.* What TIP can answer and what it takes to get a first result: all five modules live, each with its result on screen. Nothing to prepare. |
+| **Training** | 2 hours, hands-on | *You run it, on your own TIP.* We set the course up in each participant's TIP with one command, then work through the modules on your own region, company or question. Each participant needs their own EPO TIP account. |
+
+Ask for a date or a format that fits your team:
+
+<table>
+<tr>
+<td width="190" align="center"><b>Arne Krüger</b><br><sub>mtc.berlin · depa.tech</sub></td>
+<td>
+Author of the course and the TIP Explorer<br>
+<a href="https://calendly.com/herrkrueger/patent-intelligence?utm_source=github&amp;utm_medium=readme&amp;utm_campaign=tip4patlibs"><b>Book a call →</b></a> &nbsp;·&nbsp;
+<a href="https://www.linkedin.com/in/herrkrueger/">LinkedIn</a>
+</td>
+</tr>
+</table>
 
 ## Also in the repository
 
