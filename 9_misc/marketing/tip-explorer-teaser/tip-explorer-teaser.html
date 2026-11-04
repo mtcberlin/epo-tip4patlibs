@@ -1,0 +1,175 @@
+<title>TIP Explorer Teaser</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: a fixed 1920x1080 slide, scaled to fit. Left: claim + six capabilities as a live index.
+   Right: the real app in a browser frame, one screen per capability. Bottom: the next step. */
+:root {
+  --paper: #fbfaf8;      /* slide ground, warm white like a printed handout */
+  --ink: #1b1d22;        /* text */
+  --muted: #5d6170;      /* secondary text */
+  --rule: #e4e1dc;       /* hairlines, frame */
+  --tip-red: #be0f05;    /* the TIP4PATLIBS red */
+  --stage: #ecebe7;      /* behind the app window */
+  --display: "Bricolage Grotesque", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  --body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+html, body { height: 100%; }
+body {
+  background: var(--stage); color: var(--ink); font-family: var(--body);
+  display: grid; place-items: center; overflow: hidden;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 16px;
+}
+body.capture { padding: 0; margin: 0; background: var(--paper); }
+#fit { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; position: relative; }
+body.capture #fit { width: 1920px; height: 1080px; aspect-ratio: auto; }
+#slide {
+  position: absolute; top: 0; left: 0; width: 1920px; height: 1080px; transform-origin: 0 0;
+  background: var(--paper); display: grid;
+  grid-template-columns: 640px 1fr; grid-template-rows: 1fr 116px;
+  box-shadow: 0 2px 30px rgb(0 0 0 / .12); overflow: hidden;
+}
+body.capture #slide { box-shadow: none; }
+
+/* left column */
+.lede { padding: 86px 40px 0 96px; display: flex; flex-direction: column; gap: 22px; }
+.kicker { font: 600 20px/1 var(--body); letter-spacing: .16em; text-transform: uppercase; color: var(--tip-red); }
+h1 { margin: 0; font: 800 112px/0.92 var(--display); letter-spacing: -.035em; text-wrap: balance; }
+.claim { margin: 0; font: 400 30px/1.32 var(--body); color: var(--muted); max-width: 30ch; }
+ol { list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 4px; }
+li { position: relative; padding: 13px 0 13px 26px; font: 500 27px/1.2 var(--body); color: #a3a6b0; }
+li::before { content: ""; position: absolute; left: 0; top: 50%; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; background: currentColor; }
+li.on { color: var(--ink); }
+li.on::before { background: var(--tip-red); width: 12px; height: 12px; margin-top: -6px; left: -2px; }
+li .bar { position: absolute; left: 26px; right: 30px; bottom: 4px; height: 3px; background: var(--rule); border-radius: 2px; overflow: hidden; opacity: 0; }
+li.on .bar { opacity: 1; }
+li .bar i { display: block; height: 100%; width: 0; background: var(--tip-red); }
+
+/* right column: the app */
+.app { padding: 70px 80px 26px 30px; position: relative; }
+.window { position: absolute; inset: 70px 80px 26px 30px; background: #fff; border: 1px solid var(--rule); border-radius: 18px; overflow: hidden; box-shadow: 0 30px 60px -30px rgb(30 20 10 / .35); display: grid; grid-template-rows: 54px 1fr; }
+.chrome { display: flex; align-items: center; gap: 18px; padding: 0 20px; border-bottom: 1px solid var(--rule); background: #f6f5f2; }
+.dots { display: flex; gap: 8px; } .dots i { width: 13px; height: 13px; border-radius: 50%; background: #d9d6d0; }
+.url { flex: 1; font: 500 18px/1 var(--mono); color: var(--muted); background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 9px 14px; }
+.url b { color: var(--ink); font-weight: 500; }
+.view { position: relative; overflow: hidden; background: #fff; }
+.shot { position: absolute; inset: 0; opacity: 0; will-change: transform, opacity; }
+.shot img { position: absolute; left: 0; top: 0; max-width: none; width: 100%; height: auto; transform-origin: 0 0; }
+.caption { position: absolute; left: 30px; bottom: 30px; max-width: 78%; background: var(--ink); color: #fff; border-radius: 14px; padding: 20px 26px; opacity: 0; display: grid; gap: 6px; box-shadow: 0 16px 40px -16px rgb(0 0 0 / .5); }
+.caption .fig { font: 800 50px/1 var(--display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.caption .fig em { font-style: normal; color: #ff8a80; }
+.caption .txt { font: 400 23px/1.3 var(--body); color: #d8d9de; }
+
+/* bottom: the next step */
+.next { grid-column: 1 / -1; background: var(--tip-red); color: #fff; display: flex; align-items: center; gap: 44px; padding: 0 96px; }
+.next .label { font: 600 20px/1 var(--body); letter-spacing: .16em; text-transform: uppercase; opacity: .8; white-space: nowrap; }
+.next .steps { display: flex; gap: 40px; font: 500 27px/1.25 var(--body); }
+.next code { font: 500 25px/1 var(--mono); background: rgb(255 255 255 / .16); padding: 6px 12px; border-radius: 8px; }
+.next .who { margin-left: auto; font: 500 20px/1.3 var(--body); opacity: .85; text-align: right; white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { .shot img { transition: none; } }
+</style>
+
+<div id="fit"><div id="slide">
+  <section class="lede">
+    <div class="kicker">PATLIB TIP Working Group</div>
+    <h1>TIP Explorer</h1>
+    <p class="claim">All of PATSTAT, searchable in your browser, right inside TIP. No SQL needed.</p>
+    <ol id="list">
+      <li>Merge an applicant's name variants<span class="bar"><i></i></span></li>
+      <li>Map a technology field<span class="bar"><i></i></span></li>
+      <li>See who files with whom<span class="bar"><i></i></span></li>
+      <li>Follow the citations<span class="bar"><i></i></span></li>
+      <li>Compare countries<span class="bar"><i></i></span></li>
+      <li>Ask in plain English<span class="bar"><i></i></span></li>
+    </ol>
+  </section>
+  <section class="app">
+    <div class="window">
+      <div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url">tip.epo.org › <b>PATSTAT Explorer</b> · PATSTAT Global, Autumn 2025</div></div>
+      <div class="view" id="view"></div>
+    </div>
+  </section>
+  <footer class="next">
+    <span class="label">Try it</span>
+    <div class="steps"><span>Open TIP, run one notebook cell</span><span>Free course: <code>github.com/mtcberlin/epo-tip4patlibs</code></span></div>
+    <span class="who">Built by Arne Krüger<br>depa.tech / piznet</span>
+  </footer>
+</div></div>
+
+<script>
+// Each beat: screenshot, focus point (fx, fy as share of the image), zoom from/to, and the caption.
+// Every figure is read off the screenshot it sits on.
+const BEATS = [
+  { src: "shots/consolidate.png", fx: .55, fy: .20, z0: 1.00, z1: 1.12, fig: "146 <em>→</em> 1", txt: "Siemens name variants grouped into one portfolio: 361,456 families" },
+  { src: "shots/technology.png",  fx: .50, fy: .30, z0: 1.00, z1: 1.16, fig: "H01M", txt: "Battery filings 1990–2024, and who leads: LG Energy Solution, 11,731 families" },
+  { src: "shots/network.png",     fx: .50, fy: .62, z0: 1.15, z1: 1.45, fig: "30 partners", txt: "Siemens' co-applicants, from Siemens Energy to Fraunhofer" },
+  { src: "shots/citations.png",   fx: .55, fy: .60, z0: 1.10, z1: 1.32, fig: "Who cites whom", txt: "Siemens → turbine technology (F01D) → General Electric" },
+  { src: "shots/countries.png",   fx: .50, fy: .45, z0: 1.05, z1: 1.20, fig: "CN · DE · JP · KR · US", txt: "Cables and conductors (H01B): five filing trends side by side" },
+  { src: "shots/ai.png",          fx: .45, fy: .25, z0: 1.12, z1: 1.30, fig: "Question → SQL", txt: "Claude writes and runs the PATSTAT query for you" },
+];
+const BEAT = 3.6, FADE = 0.55, TOTAL = BEATS.length * BEAT;   // 21.6 s loop
+
+const view = document.getElementById("view");
+const items = [...document.querySelectorAll("#list li")];
+const shots = BEATS.map(b => {
+  const d = document.createElement("div"); d.className = "shot";
+  const img = new Image(); img.src = b.src; img.alt = b.txt; d.appendChild(img);
+  const c = document.createElement("div"); c.className = "caption";
+  c.innerHTML = `<div class="fig">${b.fig}</div><div class="txt">${b.txt}</div>`;
+  d.appendChild(c); view.appendChild(d); return { d, img, c };
+});
+
+const ease = x => x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3) / 2;
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+
+function render(t) {
+  t = ((t % TOTAL) + TOTAL) % TOTAL;
+  const W = view.clientWidth, H = view.clientHeight;
+  BEATS.forEach((b, i) => {
+    const start = i * BEAT;
+    let local = t - start; if (local < -FADE) local += TOTAL;     // wrap: beat 0 fades in at the loop end
+    const fadeIn = clamp((local + FADE) / FADE), fadeOut = clamp((BEAT - local) / FADE);
+    const op = Math.min(fadeIn, fadeOut);
+    const s = shots[i]; s.d.style.opacity = op;
+    const p = ease(clamp((local + FADE) / (BEAT + FADE)));
+    const z = b.z0 + (b.z1 - b.z0) * p;
+    const iw = W * z, ih = iw * (s.img.naturalHeight || 1000) / (s.img.naturalWidth || 1340);
+    const x = clamp(W / 2 - b.fx * iw, W - iw, 0), y = clamp(H / 2 - b.fy * ih, Math.min(0, H - ih), 0);
+    s.img.style.width = iw + "px"; s.img.style.transform = `translate(${x}px, ${y}px)`;
+    const cIn = clamp((local - 0.35) / 0.4), cOut = clamp((BEAT - 0.25 - local) / 0.3);
+    s.c.style.opacity = Math.min(cIn, cOut);
+    s.c.style.transform = `translateY(${(1 - ease(cIn)) * 18}px)`;
+    const on = local >= 0 && local < BEAT;
+    items[i].classList.toggle("on", on);
+    items[i].querySelector(".bar i").style.width = on ? (local / BEAT * 100) + "%" : "0";
+  });
+}
+
+function fit() {
+  if (document.body.classList.contains("capture")) return;
+  const w = document.getElementById("fit").clientWidth;
+  document.getElementById("slide").style.transform = `scale(${w / 1920})`;
+}
+const q = new URLSearchParams(location.search);
+if (q.has("t")) {                       // capture mode: render one still frame at time t (seconds)
+  document.body.classList.add("capture");
+  Promise.all(shots.map(s => s.img.decode().catch(() => {}))).then(() => {
+    render(parseFloat(q.get("t"))); document.title = "ready";
+  });
+} else {
+  addEventListener("resize", fit); fit();
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const t0 = performance.now();
+  Promise.all(shots.map(s => s.img.decode().catch(() => {}))).then(() => {
+    if (reduce) { render(0.8); return; }
+    const loop = now => { render((now - t0) / 1000); requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+  });
+  render(0.8);
+}
+</script>
