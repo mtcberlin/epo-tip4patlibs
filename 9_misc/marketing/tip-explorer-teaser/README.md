@@ -7,6 +7,7 @@ Jens Hoheisel's five minutes at the PATLIB "Shaping the Future" session on 10 No
 |---|---|
 | `tip-explorer-teaser.mp4` | The slide as a 23.4 s loop, 1920×1080. In PowerPoint: insert on a blank slide, full size, Playback → Start automatically, Loop until stopped |
 | `tip-explorer-teaser-still.png` | A still of the same slide, for print or as a fallback |
+| `tip-explorer-teaser-standalone.html` | The slide as one file with the images embedded: mail it, double-click it, present it full screen in the browser. Rebuilt by `make_standalone.py` |
 | `tip-explorer-teaser.html` | The source: open it in a browser to see it play |
 | `shots/` | `live-*.jpg`: taken in TIP on 4 November 2026 (search, consolidation, trend, network). The other four come from `2_patstat_explorer/3_explorer-documentation.pdf` |
 | `build.sh` | Renders the HTML into the MP4 and the still (headless Chromium + ffmpeg) |
