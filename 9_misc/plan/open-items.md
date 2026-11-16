@@ -1,7 +1,7 @@
 # Open items
 
 What is still outstanding in this repository, and what is deliberately not.
-Last reviewed **25 September 2026**. The five modules themselves are complete and
+Last reviewed **25 September 2026**; section 1.1 updated 16 November 2026. The five modules themselves are complete and
 were delivered in Warsaw on 16–17 September 2026.
 
 ---
@@ -29,8 +29,8 @@ Two checks would have caught both on the day they were introduced:
    reference — `getattr`, not a regex. This is what found `save_questionnaire`.
 2. Assert the three `tip_tools.py` copies are byte-identical and all compile.
 
-**Both are in CI since 16 November 2026** (Arne's yes of that day), as part of `check`:
-check 2 in `.github/scripts/check_course.py`, check 1 in
+**Both are in CI**, as part of `check`: check 2 since 4 November 2026 in
+`.github/scripts/check_course.py`, check 1 since Arne's yes of 16 November 2026 in
 `.github/scripts/check_notebook_refs.py`, called from it.
 
 Check 1 was built differently from the proposal above, for two reasons. It **reads** the
@@ -58,8 +58,10 @@ could not reach need `epo.tipdata`, which exists only inside TIP:
 - `1_querylib/1_query-library.ipynb` → `TIP_for_PATLIBs_QueryLib_core.py`
 - `1_querylib/2_interactive-demo.ipynb` → `tip4patlibs_core.py`
 
-Since 16 November 2026 the reference guard of 1.1 reads these two as well, so a missing
-function in either module fails `check`. Whether they still *run* remains a TIP question.
+Since 16 November 2026 the reference guard of 1.1 reads these two as well: a function they
+call that is missing from its module fails `check`, including the names
+`2_interactive-demo.ipynb` uses bare after `from tip4patlibs_core import *`. Methods of the
+objects they build are out of its reach, and whether they still *run* remains a TIP question.
 
 Also untested since the restructure: `3_lead_generation/2_national-coverage.ipynb`,
 which needs `DPMA_USER` / `DPMA_PASS` in the environment. Module 3's main notebook

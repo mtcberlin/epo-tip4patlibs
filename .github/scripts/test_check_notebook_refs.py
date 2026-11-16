@@ -111,6 +111,117 @@ class GuardTest(unittest.TestCase):
         }).problems()
         self.assertEqual(found, [])
 
+    K = "def load():\n    pass\n"
+
+    def test_quiet_when_the_name_means_something_else_there(self):
+        """A parameter, a loop variable or a later import of the same name is not the module."""
+        found = Repo({
+            "5/kit.py": self.K, "5/fetch.py": self.K, "5/err.py": self.K, "5/dpma/__init__.py": "",
+            "5/dpma/parse.py": self.K,
+            "5/1.ipynb": notebook(
+                "import kit, fetch, err\nkit.load()",
+                "def show(kit):\n    return kit.title",
+                "f = lambda fetch: fetch.status",
+                "try:\n    pass\nexcept Exception as err:\n    print(err.args)",
+                "rows = [fetch.real for fetch in range(3)]",
+                "from dpma import parse\nparse.load()\nfrom urllib import parse\nparse.quote('a')",
+                "import pandas as kit\nkit.DataFrame",
+                "class kit:\n    x = 1\nkit.x",
+            ),
+        }).problems()
+        self.assertEqual(found, [])
+
+    def test_a_shadow_elsewhere_does_not_switch_the_check_off(self):
+        for other_cell in ("def helper():\n    kit = 3", "rows = [kit for kit in range(3)]", "getattr(kit, 'gone', None)"):
+            with self.subTest(other_cell):
+                found = Repo({"5/kit.py": self.K, "5/1.ipynb": notebook("import kit\nkit.gone()", other_cell)}).problems()
+                self.assertEqual(len(found), 1, found)
+                self.assertIn("kit.gone", found[0])
+
+    def test_ipython_syntax_does_not_hide_the_cell(self):
+        for cell in (
+            "%%time\nkit.gone()",
+            "%%capture out\nkit.gone()",
+            "%time kit.gone()",
+            "files = !ls\nkit.gone()",
+            "kit.load?\nkit.gone()",
+            "t = %timeit -o 1\nkit.gone()",
+            "!pip install \\\n    pandas\nkit.gone()",
+            "await kit.gone()",
+        ):
+            with self.subTest(cell):
+                found = Repo({"5/kit.py": self.K, "5/1.ipynb": notebook("import kit", cell)}).problems()
+                self.assertEqual(len(found), 1, found)
+                self.assertIn("kit.gone", found[0])
+
+    def test_a_cell_the_guard_cannot_read_fails(self):
+        found = Repo({"5/1.ipynb": notebook("this is ?? not python")}).problems()
+        self.assertEqual(len(found), 1, found)
+        self.assertIn("cell 0 cannot be read", found[0])
+
+    def test_bare_name_after_star_import(self):
+        """Module 1's demo notebook: `from tip4patlibs_core import *`, then `init_patstat()`."""
+        files = {
+            "1/core.py": "__all__ = ['init']\ndef init():\n    pass\ndef hidden():\n    pass\n",
+            "1/2.ipynb": notebook("from core import *\nimport pandas as pd\nx = init()\nprint(len([x]), pd)", "gone()", "hidden()"),
+        }
+        found = Repo(files).problems()
+        self.assertEqual(len(found), 2, found)
+        self.assertIn("`gone`", found[0])
+        self.assertIn("`hidden`", found[1])
+        files["1/2.ipynb"] = notebook("from core import *\nfrom ipywidgets import *\ngone()")
+        self.assertEqual(Repo(files).problems(), [])  # a third-party star may define anything
+
+    def test_submodule_chain_and_alias_of_an_alias(self):
+        found = Repo({
+            "3/dpma/__init__.py": "", "3/dpma/fetch.py": self.K, "3/kit.py": self.K,
+            "3/1.ipynb": notebook("import dpma.fetch\ndpma.fetch.load()\ndpma.fetch.gone()", "import kit\nk = kit\nk.lost()"),
+        }).problems()
+        self.assertEqual(len(found), 2, found)
+        self.assertIn("dpma.fetch.gone", found[0])
+        self.assertIn("k.lost", found[1])
+
+    def test_function_locals_are_not_module_names(self):
+        found = Repo({
+            "5/kit.py": "try:\n    def load():\n        gone = 1\nexcept ImportError:\n    pass\n",
+            "5/1.ipynb": notebook("import kit\nkit.load()\nkit.gone"),
+        }).problems()
+        self.assertEqual(len(found), 1, found)
+
+    def test_names_a_module_builds_in_ways_python_allows(self):
+        found = Repo({
+            "5/base.py": "__all__ = ['a']\n__all__ += ['b']\na = b = 1\n",
+            "5/kit.py": "from base import *\nmatch 1:\n    case int() as val:\n        pass\n",
+            "5/dyn.py": "globals()['made'] = 1\n",
+            "5/1.ipynb": notebook("from kit import a, b, val\nimport dyn\ndyn.made"),
+        }).problems()
+        self.assertEqual(found, [])
+
+    def test_local_file_does_not_hijack_the_standard_library(self):
+        found = Repo({
+            "5/build/copy.py": self.K, "types.py": self.K,
+            "5/1.ipynb": notebook("import copy, types\ncopy.deepcopy([1])\ntypes.SimpleNamespace()"),
+        }).problems()
+        self.assertEqual(found, [])
+
+    def test_reports_instead_of_crashing(self):
+        found = Repo({
+            "5/a.py": "from b import *\n", "5/b.py": "from a import *\n", "5/c.py": "from c import *\n",
+            "5/p/__init__.py": "from . import *\n",
+            "5/null.ipynb": '{"cells": null}', "5/src.ipynb": '{"cells": [{"cell_type": "code", "source": 5}]}',
+            "5/str.ipynb": '{"cells": [{"cell_type": "code", "source": "import a\\na.x"}]}',
+        }).problems()
+        self.assertEqual(len(found), 3, found)
+        self.assertIn("5/null.ipynb: not a notebook", found[0])
+        self.assertIn("5/src.ipynb: not a notebook", found[1])
+        self.assertIn("a.x", found[2])
+
+    def test_untracked_folder_takes_no_part(self):
+        repo = Repo({"5/1.ipynb": notebook("import render\nrender.main()")})
+        (repo.root / "5/scratch").mkdir()
+        (repo.root / "5/scratch/render.py").write_text("")
+        self.assertEqual(repo.problems(), [])
+
     def test_the_course_itself(self):
         self.assertEqual(guard.problems(REAL_ROOT), [])
 
