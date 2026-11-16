@@ -25,7 +25,7 @@ What it does not see, so a green result is not a test run:
   * attributes of objects (`kit.Answer.label`) and whether a function still behaves;
   * a module of ours that is missing altogether: it looks like a third-party package. The
     search is also wider than Python's own, so a module that exists but is not on `sys.path`
-    passes;
+    passes, and a course file named like a third-party package would be taken for it;
   * a name whose binding it cannot follow: one that is a module in one branch and something
     else in another, one a function rebinds through `global`, or a module that builds its
     names at run time (`globals()`, `__getattr__`, a third-party `import *`);
@@ -56,7 +56,7 @@ PYTHON_LINE_MAGICS = {"time", "timeit", "prun"}  # `%time expr`: the rest of the
 NAMESPACE_MAGICS = {"run", "pylab", "load", "store"}  # bring names in that nobody can see here
 GIVEN = set(dir(builtins)) | {"display", "get_ipython", "In", "Out", "exit", "quit", "_", "__", "___"}
 GIVEN |= {"_i", "_ii", "_iii", "_ih", "_oh", "_dh", "_exit_code", "WindowsError"}
-MISSING_IS_HANDLED = {"ImportError", "ModuleNotFoundError", "AttributeError", "NameError", "Exception", "BaseException"}
+MISSING_IS_HANDLED = {"ImportError", "ModuleNotFoundError", "AttributeError"}
 SCOPES = (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Lambda)
 COMPREHENSIONS = (ast.ListComp, ast.SetComp, ast.DictComp, ast.GeneratorExp)
 
@@ -229,6 +229,8 @@ def find_module(dotted: str, dirs: list[Path], level: int = 0) -> Module | None:
 
 
 ASSIGNED_MAGIC = re.compile(r"^(\s*)([A-Za-z_][\w, ]*?)\s*=\s*[%!].*$")
+MAGIC_OPTIONS = re.compile(r"^\s*(?:-[A-Za-z]+(?:\s+\d+)?\s+)*")  # `-n 3 -r 2 -q ` before the statement
+PARSE = ast.PyCF_ONLY_AST | ast.PyCF_ALLOW_TOP_LEVEL_AWAIT
 HELP = re.compile(r"^\s*(\?{1,2}\s*[\w.]+|[\w.]+\s*\?{1,2})\s*$")
 
 
@@ -240,8 +242,12 @@ def rewrite(line: str) -> tuple[str | None, bool]:
         return indent + "pass", False
     if text[:1] == "%":
         magic, _, rest = text[1:].partition(" ")
-        keep = rest if magic in PYTHON_LINE_MAGICS and not rest.lstrip().startswith("-") else ""
-        return indent + (keep.strip() or "pass"), magic in NAMESPACE_MAGICS
+        keep = MAGIC_OPTIONS.sub("", rest).strip() if magic in PYTHON_LINE_MAGICS else ""
+        try:
+            compile(keep, "<magic>", "exec", flags=PARSE)
+        except (SyntaxError, ValueError):
+            keep = ""  # options this guard does not know, or not Python after all
+        return indent + (keep or "pass"), magic in NAMESPACE_MAGICS
     if ASSIGNED_MAGIC.match(line):
         return ASSIGNED_MAGIC.sub(r"\1\2 = None", line), False
     return None, False
@@ -257,27 +263,29 @@ def cell_tree(source: str, label: str) -> tuple[ast.AST | None, bool, str | None
         magic, _, rest = lines[first].lstrip()[2:].partition(" ")
         if magic not in PYTHON_CELL_MAGICS:
             return None, False, None
-        name = rest.split()[0] if magic == "capture" and rest.split() else ""
+        name = next((w for w in rest.split() if not w.startswith("-")), "") if magic == "capture" else ""
         lines[first] = f"{name} = None" if name.isidentifier() else ""
-    flags = ast.PyCF_ONLY_AST | ast.PyCF_ALLOW_TOP_LEVEL_AWAIT
     done: set[int] = set()
     while True:
         try:
-            return compile("\n".join(lines), label, "exec", flags=flags), unseen, None
+            return compile("\n".join(lines), label, "exec", flags=PARSE), unseen, None
         except (SyntaxError, ValueError) as e:
             at = (getattr(e, "lineno", None) or 0) - 1
-            python, line_unseen = rewrite(lines[at]) if 0 <= at < len(lines) and at not in done else (None, False)
+            if not 0 <= at < len(lines):
+                return None, unseen, str(e)
+            while at and at not in done and original[at - 1].rstrip().endswith("\\") and rewrite(lines[at])[0] is None:
+                at -= 1  # Python stumbled inside the continuation of a `!command \`: go to its head
+            python, line_unseen = rewrite(lines[at]) if at not in done else (None, False)
             if python is None:
-                return None, unseen, f"line {at + 1}: {getattr(e, 'msg', e)}"
+                return None, unseen, f"line {(e.lineno or 0)}: {e.msg}" if isinstance(e, SyntaxError) else str(e)
             done.add(at)
             unseen = unseen or line_unseen
-            shell = lines[at].lstrip()[:1] == "!"
             lines[at] = python
-            follow = at
-            while shell and original[follow].rstrip().endswith("\\") and follow + 1 < len(lines):
-                follow += 1  # the rest of a `!command \` that runs over several lines
-                lines[follow] = ""
-                done.add(follow)
+            if python.strip() == "pass" or python.rstrip().endswith("= None"):
+                while original[at].rstrip().endswith("\\") and at + 1 < len(lines):
+                    at += 1  # IPython joins the lines of a magic or shell command that ends in `\`
+                    lines[at] = ""
+                    done.add(at)
 
 
 def notebook_code(path: Path, label: str) -> tuple[list[ast.AST], list[str], bool]:
@@ -318,6 +326,7 @@ class Checker(ast.NodeVisitor):
         self.unseen = unseen
         self.loads: set[str] = set()
         self.bound: set[str] = set()
+        self.later: list[tuple] = []  # function bodies: they run when called, so they are read last
         for node in (n for tree in trees for n in ast.walk(tree)):
             if isinstance(node, ast.Attribute) and isinstance(node.ctx, ast.Store):
                 self.set_here.add((ast.unparse(node.value), node.attr))
@@ -334,6 +343,10 @@ class Checker(ast.NodeVisitor):
                     self.bound.update(name for name, _ in bindings(list(ast.iter_child_nodes(node))))
         for tree in trees:
             self.visit(tree)
+        while self.later:
+            names, body, self.scopes, self.guards = self.later.pop(0)
+            self.tolerant = self.branches = 0
+            self._enter("function", names, body)
         self._bare_names()
 
     @staticmethod
@@ -373,6 +386,8 @@ class Checker(ast.NodeVisitor):
         if isinstance(node, ast.Attribute):
             base = self.resolve(node.value)
             return base.submodule(node.attr) if base else None
+        if isinstance(node, ast.Call) and len(node.args) == 1 and ast.unparse(node.func) in ("importlib.reload", "reload"):
+            return self.resolve(node.args[0])
         return None
 
     def imported(self, node: ast.Import | ast.ImportFrom, report: bool) -> list[tuple[str, Module | None]]:
@@ -468,7 +483,7 @@ class Checker(ast.NodeVisitor):
     visit_MatchStar = visit_MatchMapping = visit_MatchAs
 
     def visit_Try(self, node: ast.AST) -> None:
-        caught = {n.id for h in node.handlers for n in ast.walk(h.type or ast.Name("Exception")) if isinstance(n, ast.Name)}
+        caught = {n.id for h in node.handlers if h.type for n in ast.walk(h.type) if isinstance(n, ast.Name)}
         handled = bool(caught & MISSING_IS_HANDLED)
         self.branches += 1
         self.tolerant += handled
@@ -506,7 +521,11 @@ class Checker(ast.NodeVisitor):
             self.bind(node.name, None)
         params = [a.arg for a in [*args.posonlyargs, *args.args, *args.kwonlyargs, args.vararg, args.kwarg] if a]
         body = node.body if isinstance(node.body, list) else [node.body]
-        self._enter("function", self.inner_scope(body, params), body)
+        names = self.inner_scope(body, params)
+        if any(kind == "function" for kind, _ in self.scopes):
+            self._enter("function", names, body)
+        else:  # against what the module level holds once every cell has run
+            self.later.append((names, body, list(self.scopes), list(self.guards)))
 
     visit_AsyncFunctionDef = visit_Lambda = visit_FunctionDef
 
@@ -550,8 +569,9 @@ class Checker(ast.NodeVisitor):
             self.generic_visit(node)
 
     # -- the check --------------------------------------------------------------------------
-    def visit_Attribute(self, node: ast.Attribute) -> None:
-        self.visit(node.value)
+    def visit_Attribute(self, node: ast.Attribute, again: bool = False) -> None:
+        if not again:
+            self.visit(node.value)
         module = self.resolve(node.value)
         if module is None or isinstance(node.ctx, ast.Store) or node.attr.startswith("__"):
             return
@@ -565,13 +585,18 @@ class Checker(ast.NodeVisitor):
             f"{module.path.relative_to(ROOT)} defines no `{node.attr}`"
         )
 
+    def visit_Call(self, node: ast.Call) -> None:
+        self.generic_visit(node)
+        if self._call(node, "getattr") and len(node.args) == 2:  # no default: it must exist
+            self.visit_Attribute(ast.Attribute(node.args[0], node.args[1].value, ast.Load()), again=True)
+
     def _bare_names(self) -> None:
         if not self.stars or self.unseen or any(m.is_open() for _, m in self.stars):
             return
         provided = set().union(*(m.star_names() for _, m in self.stars))
         sources = ", ".join(sorted({shown for shown, _ in self.stars}))
         for name in sorted(self.loads - self.bound - provided - GIVEN):
-            if not (name.startswith("__") and name.endswith("__")):
+            if not (name.startswith("__") and name.endswith("__")) and not re.fullmatch(r"_i?\d+", name):
                 self.errors.append(
                     f"{self.label}: uses `{name}` — neither this file nor `from {sources} import *` defines it"
                 )

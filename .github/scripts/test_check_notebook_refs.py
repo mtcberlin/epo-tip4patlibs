@@ -253,6 +253,44 @@ class GuardTest(unittest.TestCase):
         found = Repo({"5/kit.py": self.K, "5/1.ipynb": notebook("import kit\ndef f(a: kit.Nope) -> kit.Nope2:\n    pass")}).problems()
         self.assertEqual(len(found), 2, found)
 
+    def test_commands_that_run_over_several_lines(self):
+        """Python stumbles inside the continuation (`5_ipscore`), not on the `!` line."""
+        for cell in (
+            "!python build.py \\\n    5_ipscore/4_tool\nkit.load()",
+            "!python build.py -q \\\n    --x 1 \\\n    --since 2026-01-05\nkit.load()",
+            "%pip install -q \\\n    pandas \\\n    plotly\nkit.load()",
+            "out = !ls \\\n   -la\nkit.load()",
+        ):
+            with self.subTest(cell):
+                files = {"5/kit.py": self.K, "5/1.ipynb": notebook("import kit", cell)}
+                self.assertEqual(Repo(files).problems(), [])
+                files["5/1.ipynb"] = notebook("import kit", cell.replace("kit.load()", "kit.gone()"))
+                self.assertEqual(len(Repo(files).problems()), 1)
+
+    def test_only_a_handler_for_the_miss_makes_it_quiet(self):
+        for cell in (
+            "try:\n    kit.gone()\nexcept Exception as e:\n    print(e)",
+            "try:\n    kit.gone()\nexcept:\n    print('failed')",
+            "try:\n    from kit import gone\nexcept Exception as e:\n    print(e)",
+            "try:\n    import os\n    def cb(b):\n        kit.gone()\nexcept ImportError:\n    pass",
+            "%timeit -n 1 kit.gone()",
+            "getattr(kit, 'gone')()",
+            "import importlib\nkit = importlib.reload(kit)\nkit.gone()",
+        ):
+            with self.subTest(cell):
+                found = Repo({"5/kit.py": self.K, "5/1.ipynb": notebook("import kit", cell)}).problems()
+                self.assertEqual(len(found), 1, found)
+                self.assertIn("gone", found[0])
+
+    def test_function_bodies_see_what_the_module_level_ends_with(self):
+        found = Repo({"5/kit.py": self.K, "5/1.ipynb": notebook("def run():\n    return kit.gone()", "import kit\nrun()")}).problems()
+        self.assertEqual(len(found), 1, found)
+        found = Repo({"5/kit.py": self.K, "5/1.ipynb": notebook(
+            "import kit\ndef show():\n    return kit.result\nkit = kit.load()",
+            "class A:\n    kit = 1\n    def m(self, fetch):\n        return fetch.x, getattr(kit, 'load', None)",
+        )}).problems()
+        self.assertEqual(found, [])
+
     def test_the_course_itself(self):
         self.assertEqual(guard.problems(REAL_ROOT), [])
 
