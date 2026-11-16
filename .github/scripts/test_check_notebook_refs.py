@@ -222,6 +222,37 @@ class GuardTest(unittest.TestCase):
         (repo.root / "5/scratch/render.py").write_text("")
         self.assertEqual(repo.problems(), [])
 
+    def test_percent_and_bang_inside_python_are_left_alone(self):
+        """Formatters put operators at the start of a line; Markdown images start with `!`."""
+        found = Repo({"5/kit.py": self.K + "DEFAULT = 1\n", "5/1.ipynb": notebook(
+            "import kit",
+            'msg = (\n    "%d rows"\n    % len([1])\n)',
+            "ok = (\n    kit.DEFAULT is not None\n    and kit.DEFAULT\n    != 0\n)",
+            "x = 7 \\\n    % 3",
+            'text = """Stand:\n!wichtig\n%s rows\n![chart](chart.png)"""',
+            "%matplotlib inline\nbucket = (\n    hash(str(kit.DEFAULT))\n    % 10\n)\n!ls\nkit.load()",
+        )}).problems()
+        self.assertEqual(found, [])
+
+    def test_magic_beside_such_python_still_does_not_hide_the_cell(self):
+        found = Repo({"5/kit.py": self.K, "5/1.ipynb": notebook(
+            "import kit", '%matplotlib inline\ns = """\n%s rows"""\nx = (1\n    % 2)\n!ls\nkit.gone()',
+        )}).problems()
+        self.assertEqual(len(found), 1, found)
+        self.assertIn("kit.gone", found[0])
+
+    def test_quiet_when_the_file_handles_the_miss_itself(self):
+        found = Repo({"5/kit.py": self.K, "5/other.py": "def run():\n    pass\n", "5/1.ipynb": notebook(
+            "import kit\ntry:\n    from kit import fast_path\nexcept ImportError:\n    fast_path = None",
+            "try:\n    kit.nope\nexcept AttributeError:\n    pass",
+            "try:\n    import kit as k\nexcept ImportError:\n    import other as k\nk.load()\nk.run()",
+        ), "5/2.ipynb": notebook("from kit import *", "%%capture out\nload()", "out.show()\nprint(_i, _oh)")}).problems()
+        self.assertEqual(found, [])
+
+    def test_annotation_on_a_missing_name(self):
+        found = Repo({"5/kit.py": self.K, "5/1.ipynb": notebook("import kit\ndef f(a: kit.Nope) -> kit.Nope2:\n    pass")}).problems()
+        self.assertEqual(len(found), 2, found)
+
     def test_the_course_itself(self):
         self.assertEqual(guard.problems(REAL_ROOT), [])
 

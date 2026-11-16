@@ -29,6 +29,8 @@ What it does not see, so a green result is not a test run:
   * a name whose binding it cannot follow: one that is a module in one branch and something
     else in another, one a function rebinds through `global`, or a module that builds its
     names at run time (`globals()`, `__getattr__`, a third-party `import *`);
+  * a name that is missing inside `try:` when the `except` catches `ImportError` or
+    `AttributeError`: the file handles that case itself;
   * the body of a cell magic other than `%%time`, `%%timeit`, `%%capture`, `%%prun`.
 Only running the notebook on TIP shows that it works.
 
@@ -53,6 +55,8 @@ PYTHON_CELL_MAGICS = {"time", "timeit", "capture", "prun"}  # the cell below the
 PYTHON_LINE_MAGICS = {"time", "timeit", "prun"}  # `%time expr`: the rest of the line is Python
 NAMESPACE_MAGICS = {"run", "pylab", "load", "store"}  # bring names in that nobody can see here
 GIVEN = set(dir(builtins)) | {"display", "get_ipython", "In", "Out", "exit", "quit", "_", "__", "___"}
+GIVEN |= {"_i", "_ii", "_iii", "_ih", "_oh", "_dh", "_exit_code", "WindowsError"}
+MISSING_IS_HANDLED = {"ImportError", "ModuleNotFoundError", "AttributeError", "NameError", "Exception", "BaseException"}
 SCOPES = (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Lambda)
 COMPREHENSIONS = (ast.ListComp, ast.SetComp, ast.DictComp, ast.GeneratorExp)
 
@@ -228,34 +232,52 @@ ASSIGNED_MAGIC = re.compile(r"^(\s*)([A-Za-z_][\w, ]*?)\s*=\s*[%!].*$")
 HELP = re.compile(r"^\s*(\?{1,2}\s*[\w.]+|[\w.]+\s*\?{1,2})\s*$")
 
 
-def cell_source(source: str) -> tuple[str | None, bool]:
-    """A cell as plain Python (None: not Python), and whether it pulls in unseen names."""
-    lines, unseen = source.split("\n"), False
+def rewrite(line: str) -> tuple[str | None, bool]:
+    """An IPython-only line as Python (None: it is not one), and whether it pulls in names
+    that cannot be seen here."""
+    indent, text = line[: len(line) - len(line.lstrip())], line.strip()
+    if text[:1] == "!" or HELP.match(line):
+        return indent + "pass", False
+    if text[:1] == "%":
+        magic, _, rest = text[1:].partition(" ")
+        keep = rest if magic in PYTHON_LINE_MAGICS and not rest.lstrip().startswith("-") else ""
+        return indent + (keep.strip() or "pass"), magic in NAMESPACE_MAGICS
+    if ASSIGNED_MAGIC.match(line):
+        return ASSIGNED_MAGIC.sub(r"\1\2 = None", line), False
+    return None, False
+
+
+def cell_tree(source: str, label: str) -> tuple[ast.AST | None, bool, str | None]:
+    """A cell's tree (None: not Python, or unreadable), the unseen-names flag, and the reason
+    it is unreadable. Python is tried as it stands; only the line Python stumbles over is
+    rewritten, so a `%` or `!` that continues an expression or sits in a string is left alone."""
+    lines, original, unseen = source.split("\n"), source.split("\n"), False
     first = next((i for i, line in enumerate(lines) if line.strip()), None)
     if first is not None and lines[first].lstrip().startswith("%%"):
-        magic = lines[first].lstrip()[2:].split(" ")[0].strip()
+        magic, _, rest = lines[first].lstrip()[2:].partition(" ")
         if magic not in PYTHON_CELL_MAGICS:
-            return None, False
-        lines[first] = ""
-    out, continued = [], False
-    for line in lines:
-        indent, text = line[: len(line) - len(line.lstrip())], line.strip()
-        if continued:  # the rest of a `!command \` that runs over several lines
-            continued = text.endswith("\\")
-            out.append("")
-        elif text[:1] == "!" or HELP.match(line):
-            continued = text[:1] == "!" and text.endswith("\\")
-            out.append(indent + "pass")
-        elif text[:1] == "%":
-            magic, _, rest = text[1:].partition(" ")
-            unseen = unseen or magic in NAMESPACE_MAGICS
-            keep = rest if magic in PYTHON_LINE_MAGICS and not rest.lstrip().startswith("-") else ""
-            out.append(indent + (keep.strip() or "pass"))
-        elif ASSIGNED_MAGIC.match(line):
-            out.append(ASSIGNED_MAGIC.sub(r"\1\2 = None", line))
-        else:
-            out.append(line)
-    return "\n".join(out), unseen
+            return None, False, None
+        name = rest.split()[0] if magic == "capture" and rest.split() else ""
+        lines[first] = f"{name} = None" if name.isidentifier() else ""
+    flags = ast.PyCF_ONLY_AST | ast.PyCF_ALLOW_TOP_LEVEL_AWAIT
+    done: set[int] = set()
+    while True:
+        try:
+            return compile("\n".join(lines), label, "exec", flags=flags), unseen, None
+        except (SyntaxError, ValueError) as e:
+            at = (getattr(e, "lineno", None) or 0) - 1
+            python, line_unseen = rewrite(lines[at]) if 0 <= at < len(lines) and at not in done else (None, False)
+            if python is None:
+                return None, unseen, f"line {at + 1}: {getattr(e, 'msg', e)}"
+            done.add(at)
+            unseen = unseen or line_unseen
+            shell = lines[at].lstrip()[:1] == "!"
+            lines[at] = python
+            follow = at
+            while shell and original[follow].rstrip().endswith("\\") and follow + 1 < len(lines):
+                follow += 1  # the rest of a `!command \` that runs over several lines
+                lines[follow] = ""
+                done.add(follow)
 
 
 def notebook_code(path: Path, label: str) -> tuple[list[ast.AST], list[str], bool]:
@@ -268,18 +290,14 @@ def notebook_code(path: Path, label: str) -> tuple[list[ast.AST], list[str], boo
         if cell.get("cell_type") != "code":
             continue
         source = cell.get("source") or ""
-        python, cell_unseen = cell_source(source if isinstance(source, str) else "".join(source))
+        tree, cell_unseen, reason = cell_tree(source if isinstance(source, str) else "".join(source), label)
         unseen = unseen or cell_unseen
-        if python is None:
-            continue
-        try:
-            flags = ast.PyCF_ONLY_AST | ast.PyCF_ALLOW_TOP_LEVEL_AWAIT
-            trees.append(compile(python, label, "exec", flags=flags))
-        except (SyntaxError, ValueError) as e:
+        if tree is not None:
+            trees.append(tree)
+        elif reason:
             errors.append(
-                f"{label}: cell {number} cannot be read by the reference guard "
-                f"(line {getattr(e, 'lineno', '?')}: {getattr(e, 'msg', e)}); teach "
-                "check_notebook_refs.py the syntax rather than leaving the cell unchecked"
+                f"{label}: cell {number} cannot be read by the reference guard ({reason}); "
+                "teach check_notebook_refs.py the syntax rather than leaving the cell unchecked"
             )
     return trees, errors, unseen
 
@@ -293,6 +311,8 @@ class Checker(ast.NodeVisitor):
         self.scopes: list[tuple[str, dict[str, Module | None]]] = [("module", {})]
         self.untraceable: set[str] = set()  # rebound through `global` inside a function
         self.guards: list[set[tuple[str, str]]] = []
+        self.tolerant = 0  # inside `try:` with `except ImportError/AttributeError`: a miss is handled
+        self.branches = 0  # inside if/try/for/while/match: the statement may not have run
         self.set_here: set[tuple[str, str]] = set()  # `kit.x = ...` anywhere in the file
         self.stars: list[tuple[str, Module]] = []
         self.unseen = unseen
@@ -305,6 +325,8 @@ class Checker(ast.NodeVisitor):
                 self.bound.add(node.arg)
             elif self._call(node, "setattr"):
                 self.set_here.add((ast.unparse(node.args[0]), node.args[1].value))
+            elif isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in ("exec", "globals"):
+                self.unseen = True  # the file makes names at run time
         for tree in trees:
             self.bound.update(name for name, _ in bindings([tree]))
             for node in ast.walk(tree):
@@ -338,8 +360,12 @@ class Checker(ast.NodeVisitor):
         return None
 
     def bind(self, name: str, value: Module | None) -> None:
-        if len(self.scopes) == 1:  # module level runs top to bottom; inner scopes are precomputed
-            self.scopes[0][1][name] = value
+        if len(self.scopes) > 1:  # module level runs top to bottom; inner scopes are precomputed
+            return
+        names = self.scopes[0][1]
+        if self.branches and name in names and names[name] is not value:
+            value = None  # one thing on this path, another on that: not followed
+        names[name] = value
 
     def resolve(self, node: ast.AST) -> Module | None:
         if isinstance(node, ast.Name):
@@ -382,7 +408,7 @@ class Checker(ast.NodeVisitor):
                 bound.append((a.asname or a.name, None))
                 continue
             bound.append((a.asname or a.name, module.submodule(a.name)))
-            if report and not module.has(a.name):
+            if report and not module.has(a.name) and not self.tolerant:
                 self.errors.append(
                     f"{self.label}: `from {shown} import {a.name}` — "
                     f"{module.path.relative_to(ROOT)} defines no `{a.name}`"
@@ -441,6 +467,27 @@ class Checker(ast.NodeVisitor):
 
     visit_MatchStar = visit_MatchMapping = visit_MatchAs
 
+    def visit_Try(self, node: ast.AST) -> None:
+        caught = {n.id for h in node.handlers for n in ast.walk(h.type or ast.Name("Exception")) if isinstance(n, ast.Name)}
+        handled = bool(caught & MISSING_IS_HANDLED)
+        self.branches += 1
+        self.tolerant += handled
+        for child in node.body:
+            self.visit(child)
+        self.tolerant -= handled
+        for child in [*node.handlers, *node.orelse, *node.finalbody]:
+            self.visit(child)
+        self.branches -= 1
+
+    visit_TryStar = visit_Try
+
+    def visit_For(self, node: ast.AST) -> None:
+        self.branches += 1
+        self.generic_visit(node)
+        self.branches -= 1
+
+    visit_AsyncFor = visit_Match = visit_For
+
     # -- scopes -----------------------------------------------------------------------------
     def _enter(self, kind: str, names: dict[str, Module | None], body: list[ast.AST]) -> None:
         self.scopes.append((kind, names))
@@ -450,7 +497,9 @@ class Checker(ast.NodeVisitor):
 
     def visit_FunctionDef(self, node: ast.AST) -> None:
         args = node.args
-        for outside in [*getattr(node, "decorator_list", []), *args.defaults, *args.kw_defaults]:
+        every = [*args.posonlyargs, *args.args, *args.kwonlyargs, args.vararg, args.kwarg]
+        notes = [a.annotation for a in every if a] + [getattr(node, "returns", None)]
+        for outside in [*getattr(node, "decorator_list", []), *args.defaults, *args.kw_defaults, *notes]:
             if outside is not None:
                 self.visit(outside)
         if hasattr(node, "name"):
@@ -486,9 +535,11 @@ class Checker(ast.NodeVisitor):
     def visit_If(self, node: ast.AST) -> None:
         body = node.body if isinstance(node.body, list) else [node.body]
         orelse = node.orelse if isinstance(node.orelse, list) else [node.orelse]
+        self.branches += 1
         self._guarded(node.test, [node.test, *body])
         for child in orelse:
             self.visit(child)
+        self.branches -= 1
 
     visit_IfExp = visit_While = visit_If
 
@@ -507,6 +558,8 @@ class Checker(ast.NodeVisitor):
         key = (ast.unparse(node.value), node.attr)
         if key in self.set_here or any(key in g for g in self.guards) or module.has(node.attr):
             return
+        if self.tolerant:
+            return
         self.errors.append(
             f"{self.label}: uses `{key[0]}.{node.attr}` — "
             f"{module.path.relative_to(ROOT)} defines no `{node.attr}`"
@@ -522,6 +575,13 @@ class Checker(ast.NodeVisitor):
                 self.errors.append(
                     f"{self.label}: uses `{name}` — neither this file nor `from {sources} import *` defines it"
                 )
+
+
+def checked(label: str, *args) -> list[str]:
+    try:
+        return Checker(label, *args).errors
+    except RecursionError:
+        return [f"{label}: nested too deeply for the reference guard to read"]
 
 
 def problems(root: Path = ROOT) -> list[str]:
@@ -543,13 +603,13 @@ def problems(root: Path = ROOT) -> list[str]:
                 errors.append(f"{f}: not a notebook the reference guard can read ({type(e).__name__}: {e})")
                 continue
             errors += unreadable
-            errors += Checker(f, trees, search_dirs(path.parent), None, unseen).errors
+            errors += checked(f, trees, search_dirs(path.parent), None, unseen)
             continue
         module = _cache.get(path) or Module(path)
         for name in module.exported or []:
             if not module.has(name):
                 errors.append(f"{f}: `__all__` lists `{name}`, which the module does not define")
-        errors += Checker(f, [module.tree], search_dirs(path.parent), path.parent, False).errors
+        errors += checked(f, [module.tree], search_dirs(path.parent), path.parent, False)
     return list(dict.fromkeys(errors))
 
 
