@@ -15,6 +15,9 @@ import subprocess
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import check_notebook_refs  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[2]
 TIP_TOOLS = [
     "4_patentreports/antibiotic_resistance/tip_tools.py",
@@ -50,6 +53,10 @@ def main() -> int:
     for p in tracked("*tip_tools.py"):
         if p not in TIP_TOOLS:
             errors.append(f"unlisted tip_tools copy (add it to its header and here): {p}")
+
+    # Rule: every name a notebook takes from the course's own modules exists there (this is
+    # what the missing ipscore_kit.save_questionnaire failed). Reads the files, runs nothing.
+    errors += check_notebook_refs.problems(ROOT)
 
     # Rule: every notebook is valid JSON with cells; guest reports ship executed and folded.
     for f in tracked("*.ipynb"):

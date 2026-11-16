@@ -48,9 +48,14 @@ Kind: a document and data project. Nothing runs on a server, so there is **no st
    cited source (PATSTAT Global, Autumn 2025, unless stated).
 7. Prices and terms of the offering are Arne's decisions; never write or change them yourself.
 8. Never weaken a gate (the check script, gitleaks, CI) to get green.
+9. ✓ Every name a notebook takes from the course's own modules (`kit.save_questionnaire`,
+   `from dpma import fetch`) exists in that module. `check_notebook_refs.py` reads the files and
+   runs nothing, so it also covers the notebooks that import only on TIP and never executes
+   guest material. It proves the callee exists, not that the notebook still runs.
 
 ## Run and verify
 - `python3 .github/scripts/check_course.py` — the invariants above, standard library only.
+  The reference guard's own tests: `python3 -m unittest discover -s .github/scripts -p 'test_*.py'`.
 - The query-library tests: `python -m pytest 1_querylib/tests` (needs `epo.tipdata`, so fully
   only on TIP).
 - The notebooks themselves only run on TIP. A green check doesn't mean a notebook still runs or

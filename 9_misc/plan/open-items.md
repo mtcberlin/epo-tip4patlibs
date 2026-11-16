@@ -8,7 +8,7 @@ were delivered in Warsaw on 16–17 September 2026.
 
 ## 1 · Needs a decision from Arne
 
-### 1.1 A regression guard for the module code
+### 1.1 A regression guard for the module code — decided and built
 
 Two defects were found on 20 September, both introduced by the restructuring of
 17 September, and both invisible until someone re-ran a cell:
@@ -29,8 +29,16 @@ Two checks would have caught both on the day they were introduced:
    reference — `getattr`, not a regex. This is what found `save_questionnaire`.
 2. Assert the three `tip_tools.py` copies are byte-identical and all compile.
 
-Proposed home: `1_querylib/tests/`, beside the query-library tests that already
-exist. **Not yet written — awaiting a yes.**
+**Both are in CI since 16 November 2026** (Arne's yes of that day), as part of `check`:
+check 2 in `.github/scripts/check_course.py`, check 1 in
+`.github/scripts/check_notebook_refs.py`, called from it.
+
+Check 1 was built differently from the proposal above, for two reasons. It **reads** the
+modules and notebooks instead of importing them, because CI has no `epo.tipdata` and an
+import would have skipped exactly the two notebooks of section 2. And it lives beside the
+course check instead of in `1_querylib/tests/`, because those tests run fully only on TIP and
+CI does not run them. What it cannot see is listed at the top of the script; the short
+version: it proves the callee exists, not that the notebook still runs.
 
 ### 1.2 The four commercial decisions
 
@@ -49,6 +57,9 @@ could not reach need `epo.tipdata`, which exists only inside TIP:
 
 - `1_querylib/1_query-library.ipynb` → `TIP_for_PATLIBs_QueryLib_core.py`
 - `1_querylib/2_interactive-demo.ipynb` → `tip4patlibs_core.py`
+
+Since 16 November 2026 the reference guard of 1.1 reads these two as well, so a missing
+function in either module fails `check`. Whether they still *run* remains a TIP question.
 
 Also untested since the restructure: `3_lead_generation/2_national-coverage.ipynb`,
 which needs `DPMA_USER` / `DPMA_PASS` in the environment. Module 3's main notebook

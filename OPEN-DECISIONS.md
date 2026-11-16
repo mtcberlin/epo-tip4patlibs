@@ -9,7 +9,9 @@ compile and match) is now in CI, part 1 (every attribute a notebook uses exists)
 PR #36 proposes it, but comes from an outside tracker bot (East Agile Tracker) that advertises
 itself in the PR text, so it is not merged.
 Default: write our own version on `develop`, close #36 with thanks.
-Answer:
+Answer: 16 November 2026, relayed by Jarvis: write our own version on `develop`, do not take
+PR #36; Jarvis closes it with thanks. Built as `.github/scripts/check_notebook_refs.py`, part
+of `check`.
 
 ## 2. The four commercial decisions of the offering
 Why it matters: offerings 4 and 5 can't be published without them; see
@@ -22,4 +24,8 @@ Answer:
 Why it matters: participants clone it without login, which needs public; the licence line reads
 as if it should not be.
 Default: stays public; reword the licence line in a later PR to what EPO agreed.
-Answer:
+Answer: 16 November 2026, relayed by Jarvis: the repository stays public; reword the licence
+line to what was agreed with the EPO, and Arne approves the wording before it is merged.
+Still open: the agreement itself is not in this repository, so the line is unchanged until
+Arne supplies what was agreed. It stands in `README.md`, `CLAUDE.md`, the handout overview and
+the footer of all seven handouts.

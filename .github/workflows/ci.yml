@@ -52,5 +52,7 @@ jobs:
           opts=(--redact --no-banner --verbose --gitleaks-ignore-path "$RUNNER_TEMP/no-ignore")
           "$RUNNER_TEMP/gitleaks" git "${opts[@]}" --log-opts="${range}" .
           "$RUNNER_TEMP/gitleaks" dir "${opts[@]}" .
-      - name: Course invariants (compile, tip_tools copies, notebooks, guest outputs, install.sh)
+      - name: Course invariants (compile, tip_tools copies, notebook references, guest outputs, install.sh)
         run: python3 .github/scripts/check_course.py
+      - name: The notebook-reference guard still bites (its own tests)
+        run: python3 -m unittest discover -s .github/scripts -p 'test_*.py'
